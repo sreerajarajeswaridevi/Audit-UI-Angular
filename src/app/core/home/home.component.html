@@ -1,2 +1,4 @@
-<app-login *ngIf="!(isLoggedIn$ | async)"></app-login>
-<app-dashboard *ngIf="(isLoggedIn$ | async)"></app-dashboard>
+<div class="document-body">
+    <app-login *ngIf="!(isLoggedIn$ | async)"></app-login>
+    <app-dashboard *ngIf="(isLoggedIn$ | async)"></app-dashboard>
+</div>

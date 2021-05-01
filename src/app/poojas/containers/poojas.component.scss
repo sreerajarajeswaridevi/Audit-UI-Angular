@@ -3,6 +3,7 @@
     display: inline-block;
     height: 150px;
     width: 300px;
+    max-width: 300px;
     color: black;
   }
 
@@ -11,5 +12,22 @@
   }
   >:nth-child(odd) {
     background-color: white!important;
+  }
+}
+
+.right-section {
+  table {
+    tr {
+      cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .left-section {
+    a.pooja-box {
+      height: auto;
+      width: auto;
+    }
   }
 }

@@ -4,6 +4,10 @@
   padding-left: 50px;
 }
 
+.navbar-nav {
+  align-items: center;
+}
+
 .nav-link.active {
   background-color: rgba(0,0,0,0.2);
   border-radius: 3px;
@@ -15,6 +19,14 @@
 
 .avatar-dropdown {
   display: block;
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .nav-item a {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
 }
 
 @media (max-width: 992px) {

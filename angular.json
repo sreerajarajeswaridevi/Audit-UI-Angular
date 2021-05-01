@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mdb-angular-boilerplate": {
+    "audit-UI-Angular": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/mdb-angular-boilerplate",
+            "outputPath": "dist/audit-UI-Angular",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -48,6 +48,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "baseHref": "_self",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -63,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mdb-angular-boilerplate:build"
+            "browserTarget": "audit-UI-Angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mdb-angular-boilerplate:build:production"
+              "browserTarget": "audit-UI-Angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mdb-angular-boilerplate:build"
+            "browserTarget": "audit-UI-Angular:build"
           }
         },
         "test": {
@@ -108,7 +109,7 @@
         }
       }
     },
-    "mdb-angular-boilerplate-e2e": {
+    "audit-UI-Angular-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -116,11 +117,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mdb-angular-boilerplate:serve"
+            "devServerTarget": "audit-UI-Angular:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mdb-angular-boilerplate:serve:production"
+              "devServerTarget": "audit-UI-Angular:serve:production"
             }
           }
         },
@@ -136,7 +137,7 @@
       }
     }
   },
-  "defaultProject": "mdb-angular-boilerplate",
+  "defaultProject": "audit-UI-Angular",
   "cli": {
     "defaultCollection": "@ngrx/schematics"
   }

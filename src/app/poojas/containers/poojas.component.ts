@@ -21,6 +21,11 @@ export class PoojasComponent implements OnInit {
 
   modalRef: MDBModalRef;
 
+  dates: {
+    today: string,
+    tomorrow: string
+  }
+
   modalConfig = {
     backdrop: true,
     keyboard: true,
@@ -30,15 +35,22 @@ export class PoojasComponent implements OnInit {
     containerClass: 'right',
     animated: true,
     data: {
-        heading: 'Modal heading',
-        content: { heading: 'Content heading', description: 'Content description'},
-        role: 'document'
+      heading: 'Modal heading',
+      content: { heading: 'Content heading', description: 'Content description' },
+      role: 'document'
     }
   };
 
   constructor(
     private store: Store<AppState>
-  ) {}
+  ) {
+    let date = new Date();
+    date.setDate(date.getDate() + 1);
+    this.dates = {
+      today: new Date().toLocaleDateString(),
+      tomorrow: date.toLocaleDateString()
+    }
+  }
 
   ngOnInit(): void {
     this.store.select(getPoojas).subscribe((poojas: Poojas[]) => {
@@ -47,5 +59,4 @@ export class PoojasComponent implements OnInit {
     this.isLoading$ = this.store.select(getIsLoading);
     this.store.dispatch(new fromPoojas.PoojasQuery());
   }
-
 }

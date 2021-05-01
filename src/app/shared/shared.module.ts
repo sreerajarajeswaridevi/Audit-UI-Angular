@@ -13,13 +13,15 @@ import { CustomersModalComponent } from './components/customers-modal/customers-
 import { FormsModule } from '@angular/forms';
 import { CustomersListComponent } from './components/customers-list/customers-list.component';
 import { PoojasModalComponent } from './components/poojas-modal/poojas-modal.component';
+import { RightCardComponent } from './components/right-card/right-card.component';
 
 @NgModule({
   declarations: [
     ConfirmModalComponent,
     CustomersModalComponent,
     CustomersListComponent,
-    PoojasModalComponent
+    PoojasModalComponent,
+    RightCardComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,7 @@ import { PoojasModalComponent } from './components/poojas-modal/poojas-modal.com
     ButtonsModule,
     CardsModule
   ],
-  exports: [CustomersListComponent, PoojasModalComponent],
+  exports: [CustomersListComponent, PoojasModalComponent, RightCardComponent],
   providers: [],
   entryComponents: [
     ConfirmModalComponent,

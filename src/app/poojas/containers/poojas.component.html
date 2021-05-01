@@ -6,19 +6,49 @@
     </a>
   </div>
   <div class="right-section">
-    <div class="card text-center my-1">
-      <div class="card-header">Featured</div>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">
-          With supporting text below as a natural lead-in to additional content.
-        </p>
-        <a href="#" class="btn btn-primary">Button</a>
-      </div>
-      <div class="card-footer text-muted">2 days ago</div>
-    </div>
+    <app-right-card>
+      <div class="card-header">Todays Poojas ({{dates?.today}})</div>
+      <table mdbTable small="true" striped="true">
+        <tbody>
+          <tr>
+            <th scope="row">Name 1</th>
+            <td>Star 1</td>
+          </tr>
+          <tr>
+            <th scope="row">Name 2</th>
+            <td>Star 2</td>
+          </tr>
+          <tr>
+            <th scope="row">Name 3</th>
+            <td>Star 3</td>
+          </tr>
+        </tbody>
+      </table>
+    </app-right-card>
+   
+    <app-right-card [header]="dates?.tomorrow">
+      <div class="card-header">Todays Bookings ({{dates?.today}})</div>
+      <table mdbTable small="true" striped="true">
+        <tbody>
+          <tr>
+            <th scope="row">Name 1</th>
+            <td>Star 1</td>
+          </tr>
+          <tr>
+            <th scope="row">Name 2</th>
+            <td>Star 2</td>
+          </tr>
+          <tr>
+            <th scope="row">Name 3</th>
+            <td>Star 3</td>
+          </tr>
+        </tbody>
+      </table>
+    </app-right-card>
+   
+
     <div class="card text-center my-3">
-      <div class="card-header">Featured</div>
+      <div class="card-header">Tomorrows poojas ({{this.dates?.tomorrow}})</div>
       <div class="card-body">
         <h5 class="card-title">Special title treatment</h5>
         <p class="card-text">
