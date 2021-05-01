@@ -1,0 +1,20 @@
+{
+    "endpoints" : {
+        "dev": "https://api.sreerajarajeswaridevi.org/dev/api_exec",
+        "prod": "https://api.sreerajarajeswaridevi.org/prod/api_exec"
+    },
+    "api_login": {
+        "input": {
+            "api" : ["login"],
+            "temple": "Name of the temple as string",
+            "user": "user name as string",
+            "pass": "password as string"
+        },
+        "output" : {
+            "role" : ["root","admin","manager"]
+        },
+        "exceptions": [
+            "401 access denied"
+        ]
+    }
+}
