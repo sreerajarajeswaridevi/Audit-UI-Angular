@@ -10,6 +10,12 @@ export function adminReducer(state = adminInitialState, action: AdminActions): A
       });
     }
 
+    case AdminActionTypes.DELETE_USER: {
+      return Object.assign({}, state, {
+        usersListLoading: true
+      });
+    }
+
     case AdminActionTypes.USERS_LIST_FETCHED: {
       return Object.assign({}, state, {
         usersList: action.payload.usersList,

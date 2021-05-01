@@ -25,7 +25,11 @@ export class AdminEffects {
               email: res.email,
               first_name: res.first_name,
               last_name: res.last_name,
-              avatar: res.avatar
+              avatar: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y',
+              isAdmin: false,
+              role: 'manager'
+              // isAdmin: res.role === 'admin'    ********uncomment theesese these 2
+              // role: res.role
             };
           });
           return (new fromAdmin.UsersListFetched({ usersList }));
@@ -55,6 +59,19 @@ export class AdminEffects {
           return (new fromAdmin.UserProjectsLoaded({ uid: payload.uid, userProjects: projectsData }));
         }),
         catchError(error => of(new fromAdmin.AdminError({ error })))
+      )
+    )
+  );
+
+  @Effect({ dispatch: false })
+  deleteUser$ = this.actions$.pipe(
+    ofType(fromAdmin.AdminActionTypes.DELETE_USER),
+    map( (action: fromAdmin.DeleteUser) => action.payload),
+    switchMap( (payload: any) => this.adminService.deleteUser(payload.user)
+      .pipe(map((data: any) => {
+        return (new fromAdmin.GetUsersList);
+        }),
+        catchError( (error: any) => of(new fromAdmin.AdminError({ error })))
       )
     )
   );

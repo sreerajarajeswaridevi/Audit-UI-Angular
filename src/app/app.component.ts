@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(getUser).subscribe((user) => {
-
       console.log({user: user});
     })
     this.user$ = this.store.select(getUser);
