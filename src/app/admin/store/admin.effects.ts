@@ -5,13 +5,15 @@ import * as fromAdmin from './../store/admin.actions';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { AdminService } from '../services/admin.service';
 import { of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AdminEffects {
 
   constructor(
     private actions$: Actions, 
-    private adminService: AdminService
+    private adminService: AdminService,
+    private toastr: ToastrService
     ) { }
 
   @Effect()
@@ -35,7 +37,9 @@ export class AdminEffects {
           });
           return (new fromAdmin.UsersListFetched({ usersList }));
         }),
-        catchError( (error: any) => of(new fromAdmin.AdminError({ error })))
+        catchError( (error: any) => {
+          this.toastr.error('Something went wrong. Please try after sometime');
+          return of(new fromAdmin.AdminError({ error }))})
       )
     )
   );
@@ -50,7 +54,9 @@ export class AdminEffects {
         console.log('result came', res);
         return (new fromAdmin.GetUsersList());
         }),
-        catchError( (error: any) => of(new fromAdmin.AdminError({ error })))
+        catchError( (error: any) => {
+          this.toastr.error('Something went wrong. Please try after sometime');
+          return of(new fromAdmin.AdminError({ error }))})
       )
     )
   );

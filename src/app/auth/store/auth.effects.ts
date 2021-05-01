@@ -8,6 +8,7 @@ import { map, switchMap, catchError, tap, take, mergeMap } from 'rxjs/operators'
 import * as auth from './../store/auth.actions';
 import { mockUser, User } from '../models/user.model';
 import { GravatarService } from '../../shared/services/gravatar.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthEffects {
@@ -16,6 +17,7 @@ export class AuthEffects {
     private authService: AuthService,
     private gravatarService: GravatarService,
     private router: Router,
+    private toastr: ToastrService
   ) { }
 
   @Effect()
@@ -45,6 +47,7 @@ export class AuthEffects {
         }),
         tap(() => { this.router.navigateByUrl(''); }),
         catchError(error => {
+          this.toastr.error('Auth Error. Please try after sometime');
           this.authService.clearLocalData();
           return of(new auth.AuthError({ error }))
         })
@@ -75,7 +78,9 @@ export class AuthEffects {
         map((isAdmin: boolean) => {
           return new auth.UpdateUserRole({ isAdmin });
         }),
-        catchError((error: any) => of(new auth.AuthError({ error })))
+          catchError((error: any) => {
+            this.toastr.error('Auth Error. Please try after sometime'); 
+            return of(new auth.AuthError({ error }))})
       )
     )
   );
@@ -96,7 +101,9 @@ export class AuthEffects {
           };
           return new auth.UpdateProfileSuccess({ user: updatedUser });
         }),
-        catchError((error) => of(new auth.AuthError(error)))
+        catchError((error) => {
+          this.toastr.error('Auth Error. Please try after sometime');
+          return of(new auth.AuthError(error))})
       )
     )
   );
@@ -132,7 +139,9 @@ export class AuthEffects {
         return [new auth.LoginSuccess({ user }), new auth.SaveUser({ user }), new auth.CheckUserRole({ isAdmin: user.isAdmin })];
       }),
       tap(() => this.router.navigateByUrl('')),
-      catchError(error => { this.authService.clearLocalData(); return of(new auth.AuthError({ error })) })
+      catchError(error => { 
+        this.toastr.error('Auth Error. Please try after sometime');
+        this.authService.clearLocalData(); return of(new auth.AuthError({ error })) })
     )
     )
   );
@@ -161,6 +170,7 @@ export class AuthEffects {
           tap(() => this.authService.clearLocalData()),
           tap(() => this.router.navigateByUrl('')),
           catchError(error => {
+            this.toastr.error('Auth Error. Please try after sometime');
             return of(new auth.AuthError({ error }));
           }
           )
@@ -189,7 +199,9 @@ export class AuthEffects {
             return new auth.LoginFailed();
           }
         }),
-        catchError(error => of(new auth.AuthError({ error })))
+        catchError(error => {
+          this.toastr.error('Auth Error. Please try after sometime');
+          return of(new auth.AuthError({ error }))})
       )
     )
   );

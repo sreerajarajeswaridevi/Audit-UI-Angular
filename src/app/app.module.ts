@@ -19,6 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './admin/admin.module';
 import { ModalModule } from 'angular-bootstrap-md';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +36,12 @@ import { ModalModule } from 'angular-bootstrap-md';
     // AngularFireAuthModule,
     // AngularFirestoreModule,
     // AngularFireDatabaseModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }), // ToastrModule added
     CoreModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {

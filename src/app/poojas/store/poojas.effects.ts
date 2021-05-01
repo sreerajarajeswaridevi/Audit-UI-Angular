@@ -11,11 +11,17 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from '../../reducers/index';
 import { getUser } from '../../auth/store/auth.selectors';
 import { getPoojas } from './poojas.selectors';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class PoojasEffects {
 
-  constructor(private actions$: Actions, private poojasService: PoojasService, private store: Store<AppState>) {}
+  constructor(
+    private actions$: Actions,
+    private poojasService: PoojasService,
+    private store: Store<AppState>,
+    private toastr: ToastrService
+    ) {}
 
   @Effect()
   query$ = this.actions$.pipe(
@@ -36,6 +42,7 @@ export class PoojasEffects {
           return (new fromPoojas.PoojasLoaded({ poojas: PoojasData }));
         }),
         catchError(error => {
+          this.toastr.error('Something went wrong. Please try after sometime');
           return of(new fromPoojas.PoojasError({ error }));
         })
       )
@@ -58,7 +65,8 @@ export class PoojasEffects {
     switchMap(([payload, user]: any) => this.poojasService.update(payload.customer, user.temple)
     .pipe(
       catchError( error => {
-      return of(new fromPoojas.PoojasError({ error }));
+        this.toastr.error('Something went wrong. Please try after sometime');
+        return of(new fromPoojas.PoojasError({ error }));
     }))
     )
   );
