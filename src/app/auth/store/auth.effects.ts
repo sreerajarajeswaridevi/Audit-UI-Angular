@@ -57,7 +57,7 @@ export class AuthEffects {
   saveUser$ = this.actions$.pipe(
     ofType(auth.AuthActionTypes.SAVE_USER),
     map((action: auth.SaveUser) => action.payload),
-    switchMap((payload: any) => this.authService.saveUser(payload.user.username, payload.user.password))
+    switchMap((payload: any) => this.authService.saveUser(payload.user.username, payload.user.password, payload.user.role))
   );
 
   @Effect({ dispatch: false })
@@ -118,7 +118,8 @@ export class AuthEffects {
           uid: mockUser.user.uid,
           displayName: mockUser.user.displayName,
           photoUrl: mockUser.user.photoUrl,
-          isAdmin: mockUser.user.isAdmin,
+          isAdmin: mockUser.user.role === 'admin',
+          role: mockUser.user.role,
           username: payload.username,
           password: payload.password
         };
@@ -128,7 +129,7 @@ export class AuthEffects {
       switchMap((user: any) => {
         console.log('login complete');
         console.log({ user });
-        this.authService.saveUser(user.username, user.password);
+        this.authService.saveUser(user.username, user.password, user.role);
         return [new auth.LoginSuccess({ user }), new auth.SaveUser({ user }), new auth.CheckUserRole({ isAdmin: user.isAdmin })];
       }),
       tap(() => this.router.navigateByUrl('')),

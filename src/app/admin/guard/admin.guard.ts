@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { Observable, of} from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/services/auth.service';
 // import { AdminService } from '../services/admin.service';
 // import { AngularFireAuth } from '@angular/fire/auth';
 // import { take, switchMap, map, catchError } from 'rxjs/operators';
@@ -10,37 +12,23 @@ import { Observable, of} from 'rxjs';
 })
 export class AdminGuard implements CanActivate {
 
-  constructor() {}
-
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> | boolean {
-
-    return of(true);
-
-    // return this.afAuth.authState
-    //   .pipe(
-    //     take(1),
-    //     switchMap( (user: any) => {
-    //       if (!user) {
-    //         this.router.navigateByUrl('/login');
-    //         return of(false);
-    //       }
-    //       return this.adminService.checkAdminRole(user.uid)
-    //       .pipe(
-    //         map( (isAdmin) => {
-    //           if (isAdmin) {
-    //             return true;
-    //           } else {
-    //             this.router.navigateByUrl('');
-    //             return false;
-    //           }
-    //         }),
-    //         catchError( () => {
-    //           this.router.navigateByUrl('');
-    //           return of(false);
-    //         })
-    //       );
-    //       }),
-    //   );
+    return this.authService.checkUserRole(false)
+    .pipe(
+      map( (isAdmin) => {
+        if (isAdmin) {
+          return true;
+        } else {
+          this.router.navigateByUrl('login');
+          return false;
+        }
+      }),
+      catchError( () => {
+        this.router.navigateByUrl('');
+        return of(false);
+      })
+    );
   }
 }

@@ -128,6 +128,31 @@ export class AdminComponent implements OnInit {
       });
   }
 
+  openUserConfirmModal(user: User) {
+    this.modalRef = this.modalService.show(
+      ConfirmModalComponent,
+      this.modalConfig
+    );
+
+    this.modalRef.content.confirmation
+      .pipe(take(1))
+      .subscribe((confirmation: boolean) => {
+        if (confirmation) {
+          this.store.dispatch(
+            new fromAdmin.DeleteUserCustomer({
+              userId: this.selectedUser.key,
+              customerId: customer.key
+            })
+          );
+        }
+      });
+  }
+
+  onDeleteUser(user: User) {
+    console.log('user', user)
+    this.openUserConfirmModal(user);
+  }
+
   onCustomerDelete(customer: Customer) {
     this.openCustomerConfirmModal(customer);
   }

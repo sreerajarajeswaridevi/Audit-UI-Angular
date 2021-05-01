@@ -41,6 +41,12 @@ export class AdminService {
 
   }
 
+  deleteUser(user: string) {
+    return this.http.get(
+      `${environment.apiUrl}/users/2`
+    );
+  }
+
   addAdminPrivileges(uid: string) {
     return of(uid);
   }

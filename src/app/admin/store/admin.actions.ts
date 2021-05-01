@@ -1,8 +1,10 @@
 import { Action } from '@ngrx/store';
+import { User } from 'src/app/auth/models/user.model';
 import { Customer } from '../../customers/models/customer.model';
 
 export enum AdminActionTypes {
   GET_USERS_LIST = '[Admin] Get Users List',
+  DELETE_USER = '[Admin] DELETE User',
   USERS_LIST_FETCHED = '[Admin] Users list fetched',
 
   GET_USER_PROJECTS = '[Admin] Get user projects',
@@ -21,6 +23,11 @@ export enum AdminActionTypes {
 
 export class GetUsersList implements Action {
   readonly type = AdminActionTypes.GET_USERS_LIST;
+}
+
+export class DeleteUser implements Action {
+  readonly type = AdminActionTypes.DELETE_USER;
+  constructor(public payload: { user: User }) {}
 }
 
 export class UsersListFetched implements Action {
@@ -85,6 +92,7 @@ export class AdminError implements Action {
 
 export type AdminActions =
   | GetUsersList
+  | DeleteUser
   | UsersListFetched
   | GetUserProjects
   | UserProjectsLoaded

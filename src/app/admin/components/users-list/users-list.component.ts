@@ -10,7 +10,7 @@ export class UsersListComponent implements OnInit {
   @Input() users: any[];
   @Output() userSelected = new EventEmitter<any>();
   @Output() addAdmin = new EventEmitter<any>();
-  @Output() removeAdmin = new EventEmitter<any>();
+  @Output() deleteUser = new EventEmitter<any>();
 
   constructor() { }
 
@@ -25,8 +25,8 @@ export class UsersListComponent implements OnInit {
     this.addAdmin.emit(user);
   }
 
-  onRemoveAdmin(user: any) {
-    this.removeAdmin.emit(user);
+  onDeleteUser(user: any) {
+    this.deleteUser.emit(user);
   }
 
   trackByFn(index: any) {

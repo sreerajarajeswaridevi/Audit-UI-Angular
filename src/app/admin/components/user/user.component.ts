@@ -11,6 +11,7 @@ export class UserComponent implements OnInit {
   @Output() userSelected = new EventEmitter<any>();
   @Output() addAdmin = new EventEmitter<any>();
   @Output() removeAdmin = new EventEmitter<any>();
+  @Output() removeUser = new EventEmitter<any>();
 
   constructor() { }
 
@@ -27,6 +28,10 @@ export class UserComponent implements OnInit {
 
   removeAdminPrivileges() {
     this.removeAdmin.emit(this.user);
+  }
+
+  deleteUser() {
+    this.removeUser.emit(this.user);
   }
 
 }

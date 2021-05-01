@@ -11,8 +11,9 @@
 
 <div *ngIf="!(usersListLoading$ | async)" class="container-fluid mt-3 pb-5">
   <app-users-list *ngIf="!selectedUser" [users]="users$ | async" (userSelected)="onUserSelect($event)" (addAdmin)="addAdminPrivileges($event)"
-    (removeAdmin)="removeAdminPrivileges($event)"></app-users-list>
-  <app-user-detail
+    (deleteUser)="onDeleteUser($event)"></app-users-list>
+  
+    <!-- <app-user-detail
     *ngIf="selectedUser"
     [user]="selectedUser$ | async"
     [customers]="userCustomers$ | async"
@@ -24,5 +25,5 @@
     (projectDeleted)="onProjectDelete($event)"
     (customerDeleted)="onCustomerDelete($event)"
     (addAdmin)="addAdminPrivileges($event)"
-    (removeAdmin)="removeAdminPrivileges($event)"></app-user-detail>
+    (removeAdmin)="removeAdminPrivileges($event)"></app-user-detail> -->
 </div>

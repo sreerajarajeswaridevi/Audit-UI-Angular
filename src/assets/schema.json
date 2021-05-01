@@ -7,8 +7,8 @@
         "input": {
             "api" : ["login"],
             "temple": "Name of the temple as string",
-            "user": "user name as string",
-            "pass": "password as string"
+            "username": "user name as string",
+            "password": "password as string"
         },
         "output" : {
             "role" : ["root","admin","manager"]

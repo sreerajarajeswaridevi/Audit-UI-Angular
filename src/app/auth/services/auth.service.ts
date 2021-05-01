@@ -53,6 +53,7 @@ export class AuthService {
         ...mockUser.user,
         username: localStorage.getItem('username'),
         password: localStorage.getItem('password'),
+        role: localStorage.getItem('role'),
       }
     };
     if (data.user.username && data.user.password) {
@@ -62,10 +63,11 @@ export class AuthService {
     }
   }
 
-  saveUser(username: string, password: string) {
+  saveUser(username: string, password: string, role: string) {
     localStorage.setItem('username', username)
     localStorage.setItem('password', password)
-    return of({ username, password });
+    localStorage.setItem('role', role)
+    return of({ username, password, role });
   }
 
   clearLocalData() {
@@ -83,7 +85,10 @@ export class AuthService {
 
   checkUserRole(isAdmin: boolean) {
     // return this.db.object('admins/' + uid).valueChanges();
-    return of(isAdmin);
+    if (localStorage.getItem('role') === 'admin') {
+      return of(true);
+    }
+    return of(false);
   }
 
   getAuthState() {
