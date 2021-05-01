@@ -13,7 +13,9 @@
         },
         "output" : {
             "HTTP_RESPONSE_CODE": 200,
-            "role" : ["root","admin","manager"]
+            "BODY":{
+                "role" : ["root","admin","manager"]
+            }
         },
         "exceptions": [
             "401 access denied"
@@ -33,7 +35,9 @@
         },
         "output" : {
             "HTTP_RESPONSE_CODE": 200,
-            "deleted": "ok"
+            "BODY":{
+                "deleted": "ok"
+            }
         },
         "exceptions": [
             "401 access denied"
