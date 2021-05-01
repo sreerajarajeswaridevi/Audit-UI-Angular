@@ -6,7 +6,7 @@
     "api_login": {
         "HTTP_METHOD": "GET",
         "input": {
-            "api" : ["login"],
+            "api" : "login",
             "temple": "Name of the temple as string",
             "username": "user name as string",
             "password": "password as string"
@@ -22,7 +22,7 @@
     "api_delete_user": {
         "HTTP_METHOD": "GET",
         "input": {
-            "api" : ["deleteUser"],
+            "api" : "deleteUser",
             "temple": "root",
             "user": "user name of root user as string",
             "pass": "password of root user as string",
@@ -32,7 +32,8 @@
             }
         },
         "output" : {
-            "HTTP_RESPONSE_CODE": 200
+            "HTTP_RESPONSE_CODE": 200,
+            "deleted": "ok"
         },
         "exceptions": [
             "401 access denied"
