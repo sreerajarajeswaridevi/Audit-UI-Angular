@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { PoojasService } from '../services/Poojas.service';
+import { PoojasService } from '../services/poojas.service';
 import { PoojasActionTypes } from './poojas.actions';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { Poojas } from '../models/poojas.model';

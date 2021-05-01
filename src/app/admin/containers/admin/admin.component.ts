@@ -17,6 +17,7 @@ import { map, delay, take } from 'rxjs/operators';
 import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
 import { Customer } from '../../../customers/models/customer.model';
+import { UserModalComponent } from 'src/app/shared/components/user-modal/user-modal.component';
 
 @Component({
   selector: 'app-admin',
@@ -128,7 +129,29 @@ export class AdminComponent implements OnInit {
       });
   }
 
-  openUserConfirmModal(user: User) {
+  openAddUserModal(user: any) {
+    this.modalRef = this.modalService.show(
+      UserModalComponent,
+      {...this.modalConfig,
+      data: {
+        heading: 'Add User'
+      }}
+    );
+
+    this.modalRef.content.userData
+      .pipe(take(1))
+      .subscribe((user: User) => {
+        if (user) {
+          this.store.dispatch(
+            new fromAdmin.AddUser({
+              user
+            })
+          );
+        }
+      });
+  }
+
+  openUserDeleteConfirmModal(user: User) {
     this.modalRef = this.modalService.show(
       ConfirmModalComponent,
       this.modalConfig
@@ -139,10 +162,7 @@ export class AdminComponent implements OnInit {
       .subscribe((confirmation: boolean) => {
         if (confirmation) {
           this.store.dispatch(
-            new fromAdmin.DeleteUserCustomer({
-              userId: this.selectedUser.key,
-              customerId: customer.key
-            })
+            new fromAdmin.DeleteUser({ user })
           );
         }
       });
@@ -150,7 +170,7 @@ export class AdminComponent implements OnInit {
 
   onDeleteUser(user: User) {
     console.log('user', user)
-    this.openUserConfirmModal(user);
+    this.openUserDeleteConfirmModal(user);
   }
 
   onCustomerDelete(customer: Customer) {
@@ -161,8 +181,8 @@ export class AdminComponent implements OnInit {
     this.openProjectConfirmModal(project);
   }
 
-  addAdminPrivileges(user: any) {
-    this.store.dispatch(new fromAdmin.AddAdminPrivileges({ userId: user.key }));
+  addNewUser(user: any) {
+    // this.store.dispatch(new fromAdmin.AddAdminPrivileges({ userId: user.key }));
   }
 
   removeAdminPrivileges(user: any) {

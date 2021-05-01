@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomersListComponent } from './components/customers-list/customers-list.component';
 import { PoojasModalComponent } from './components/poojas-modal/poojas-modal.component';
 import { RightCardComponent } from './components/right-card/right-card.component';
+import { UserModalComponent } from './components/user-modal/user-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RightCardComponent } from './components/right-card/right-card.component
     CustomersModalComponent,
     CustomersListComponent,
     PoojasModalComponent,
-    RightCardComponent
+    RightCardComponent,
+    UserModalComponent
   ],
   imports: [
     CommonModule,
@@ -33,12 +35,13 @@ import { RightCardComponent } from './components/right-card/right-card.component
     ButtonsModule,
     CardsModule
   ],
-  exports: [CustomersListComponent, PoojasModalComponent, RightCardComponent],
+  exports: [CustomersListComponent, PoojasModalComponent, RightCardComponent, UserModalComponent],
   providers: [],
   entryComponents: [
     ConfirmModalComponent,
     CustomersModalComponent,
-    PoojasModalComponent
+    PoojasModalComponent,
+    UserModalComponent
   ]
 })
 export class SharedModule {}

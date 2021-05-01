@@ -9,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 export class UsersListComponent implements OnInit {
   @Input() users: any[];
   @Output() userSelected = new EventEmitter<any>();
-  @Output() addAdmin = new EventEmitter<any>();
+  @Output() addUser = new EventEmitter<any>();
   @Output() deleteUser = new EventEmitter<any>();
 
   constructor() { }
@@ -21,8 +21,8 @@ export class UsersListComponent implements OnInit {
     this.userSelected.emit(user);
   }
 
-  onAddAdmin(user: any) {
-    this.addAdmin.emit(user);
+  onAddUser(event: any) {
+    this.addUser.emit(event);
   }
 
   onDeleteUser(user: any) {

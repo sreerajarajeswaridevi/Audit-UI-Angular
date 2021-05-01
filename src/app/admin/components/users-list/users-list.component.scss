@@ -6,6 +6,13 @@
 .user {
   width: 80%;
   margin: 1rem;
+
+  .add-card {
+    &:hover {
+      background-color: whitesmoke;
+      cursor: pointer;
+    }
+  }
 }
 
 @media (min-width: 768px) {

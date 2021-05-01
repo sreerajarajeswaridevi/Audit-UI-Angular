@@ -42,6 +42,7 @@ export class AdminService {
   }
 
   deleteUser(user: string) {
+    console.log('deleted', user);
     return this.http.get(
       `${environment.apiUrl}/users/2`
     );

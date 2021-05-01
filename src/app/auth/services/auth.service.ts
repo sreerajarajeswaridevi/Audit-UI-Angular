@@ -86,6 +86,7 @@ export class AuthService {
   checkUserRole(isAdmin: boolean) {
     // return this.db.object('admins/' + uid).valueChanges();
     if (localStorage.getItem('role') === 'admin') {
+      console.log(isAdmin);
       return of(true);
     }
     return of(false);

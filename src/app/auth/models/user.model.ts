@@ -1,9 +1,9 @@
 export interface User {
-  uid: string;
-  displayName: string;
+  uid?: string;
+  displayName?: string;
   username: string;
   password: string;
-  photoUrl: string;
+  photoUrl?: string;
   isAdmin?: boolean;
   role?: string;
 }

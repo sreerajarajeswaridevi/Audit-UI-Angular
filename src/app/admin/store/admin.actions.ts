@@ -6,6 +6,7 @@ export enum AdminActionTypes {
   GET_USERS_LIST = '[Admin] Get Users List',
   DELETE_USER = '[Admin] DELETE User',
   USERS_LIST_FETCHED = '[Admin] Users list fetched',
+  ADD_USER = '[Admin] Add User',
 
   GET_USER_PROJECTS = '[Admin] Get user projects',
   USERS_PROJECTS_LOADED = '[Admin] User projects loaded',
@@ -27,6 +28,13 @@ export class GetUsersList implements Action {
 
 export class DeleteUser implements Action {
   readonly type = AdminActionTypes.DELETE_USER;
+  
+  constructor(public payload: { user: User }) {}
+}
+
+export class AddUser implements Action {
+  readonly type = AdminActionTypes.ADD_USER;
+
   constructor(public payload: { user: User }) {}
 }
 
@@ -46,6 +54,12 @@ export class DeleteUserProject implements Action {
   readonly type = AdminActionTypes.DELETE_USER_PROJECT;
 
   constructor(public payload: { userId: string, projectId: string}) {}
+}
+
+export class AddAdminPrivileges implements Action {
+  readonly type = AdminActionTypes.ADD_ADMIN_PRIVILEGES;
+
+  constructor(public payload: { userId: string }) {}
 }
 
 export class UserProjectsLoaded implements Action {
@@ -72,11 +86,6 @@ export class UserCustomersLoaded implements Action {
   constructor(public payload: { uid: string, userCustomers: Customer[] }) {}
 }
 
-export class AddAdminPrivileges implements Action {
-  readonly type = AdminActionTypes.ADD_ADMIN_PRIVILEGES;
-
-  constructor(public payload: { userId: string }) {}
-}
 
 export class RemoveAdminPrivileges implements Action {
   readonly type = AdminActionTypes.REMOVE_ADMIN_PRIVILEGES;

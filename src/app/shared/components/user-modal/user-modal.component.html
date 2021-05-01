@@ -1,0 +1,36 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title w-100" id="myModalLabel">{{ heading }}</h4>
+  </div>
+  <div class="modal-body">
+    <form #userForm="ngForm">
+      <div class="md-form">
+        <input type="text" id="username" name="username" class="form-control" [(ngModel)]="user.username" mdbInput mdbValidate [validateSuccess]="false" #username="ngModel" required>
+        <label for="username">Username</label>
+        <mdb-error *ngIf="username && username.invalid && (username.dirty || username.touched)">username is required</mdb-error>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="password" name="password" class="form-control" [(ngModel)]="user.password" mdbInput mdbValidate [validateSuccess]="false" #password="ngModel" required>
+        <label for="password">password</label>
+        <mdb-error *ngIf="password && password.invalid && (password.dirty || password.touched)">password is required</mdb-error>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="role" name="role" class="form-control" [(ngModel)]="user.role" mdbInput mdbValidate [validateSuccess]="false" #role="ngModel" required>
+        <label for="role">Role</label>
+        <mdb-error *ngIf="role && role.invalid && (role.dirty || role.touched)">role is required</mdb-error>
+      </div>
+
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="white" class="black-text waves-light" aria-label="Close" (click)="modalRef.hide()"
+      mdbWavesEffect>Close</button>
+    <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save</button>
+  </div>
+</div>
