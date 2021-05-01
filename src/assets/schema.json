@@ -4,6 +4,7 @@
         "prod": "https://api.sreerajarajeswaridevi.org/prod/api_exec"
     },
     "api_login": {
+        "HTTP_METHOD": "GET",
         "input": {
             "api" : ["login"],
             "temple": "Name of the temple as string",
@@ -11,7 +12,27 @@
             "pass": "password as string"
         },
         "output" : {
+            "HTTP_RESPONSE_CODE": 200,
             "role" : ["root","admin","manager"]
+        },
+        "exceptions": [
+            "401 access denied"
+        ]
+    },
+    "api_delete_user": {
+        "HTTP_METHOD": "GET",
+        "input": {
+            "api" : ["deleteUser"],
+            "temple": "root",
+            "user": "user name of root user as string",
+            "pass": "password of root user as string",
+            "delete_user": {
+                "user": "the username to be deleted. This operation will be done if current user has root role",
+                "temple": "Name of the temple as string where the deleted user is present"
+            }
+        },
+        "output" : {
+            "HTTP_RESPONSE_CODE": 200
         },
         "exceptions": [
             "401 access denied"
