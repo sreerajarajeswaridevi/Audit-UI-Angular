@@ -1,0 +1,23 @@
+<div class="container-fluid split-body" *ngIf="!isLoading; else spinner">
+    <div class="row">
+        <div class="col-md-8 left-section">
+            <ng-content select=".left-section"></ng-content>
+        </div>
+        <div class="col-md-4 right-section">
+            <ng-content select=".right-section"></ng-content>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #spinner>
+    <div class="container-fluid pt-5 pb-5">
+        <div class="pt-3 pb-5">
+            <div class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
+                <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

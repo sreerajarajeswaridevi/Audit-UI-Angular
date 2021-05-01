@@ -1,0 +1,60 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.full-page-container {
+  height: calc(100vh - 114px);
+}
+
+app-root {
+  min-height: 100%;
+  // overflow: hidden;
+  display: block;
+  position: relative;
+  background-color: #eee;
+}
+
+.section-header {
+  padding-top: 70px;
+  padding-bottom: 40px;
+}
+
+.footer-absolute {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+app-welcome {
+  background-color: white;
+}
+
+.md-form > input[type]:-webkit-autofill:not(.browser-default):not([type=search]) + label, .md-form > input[type=time]:not(.browser-default) + label {
+  width: auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

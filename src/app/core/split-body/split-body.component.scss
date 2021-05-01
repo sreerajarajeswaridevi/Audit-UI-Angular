@@ -1,0 +1,12 @@
+
+.split-body {
+    height: calc(100vh - 60px);
+    padding-top: 10px;
+    overflow: hidden;
+  
+    .left-section, .right-section {
+      height: calc(100vh - 115px);
+      overflow-y: auto;
+    }
+  }
+  

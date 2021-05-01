@@ -1,0 +1,15 @@
+.left-section {
+  a.pooja-box {
+    display: inline-block;
+    height: 150px;
+    width: 300px;
+    color: black;
+  }
+
+  >:nth-child(even) {
+    background-color: #ceeef3 !important;
+  }
+  >:nth-child(odd) {
+    background-color: white!important;
+  }
+}
