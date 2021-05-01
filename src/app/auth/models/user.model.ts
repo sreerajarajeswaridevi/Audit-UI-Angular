@@ -14,6 +14,6 @@ export const mockUser = {
     username: '',
     password: '',
     photoUrl: 'https://img.icons8.com/bubbles/2x/user-male.png',
-    isAdmin: false
+    isAdmin: true
   },
 };

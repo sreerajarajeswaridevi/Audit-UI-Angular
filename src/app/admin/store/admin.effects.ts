@@ -19,16 +19,13 @@ export class AdminEffects {
     switchMap( () => this.adminService.getUsersList()
       .pipe(
         map( (users: any) => {
-          const usersList: any[] = users.map((res: any) => {
-            const key = res.payload.key;
-            const user: any = res.payload.val();
+          const usersList: any[] = users.data.map((res: any) => {
             return {
-              key: key,
-              uid: user.uid,
-              displayName: user.displayName,
-              username: user.username,
-              photoUrl: user.photoUrl,
-              isAdmin: user.isAdmin,
+              id: res.id,
+              email: res.email,
+              first_name: res.first_name,
+              last_name: res.last_name,
+              avatar: res.avatar
             };
           });
           return (new fromAdmin.UsersListFetched({ usersList }));

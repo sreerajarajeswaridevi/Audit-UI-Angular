@@ -1,20 +1,23 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // import { AngularFireDatabase } from '@angular/fire/database';
 import { of, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   selectedUser = new Subject();
   selectedUser$ = this.selectedUser.asObservable();
 
   getUsersList() {
-    
-    return of(true);
+    return this.http.get(
+      `${environment.apiUrl}/users?page=2`
+    );
   }
 
   getUserProjects(uid: string) {
