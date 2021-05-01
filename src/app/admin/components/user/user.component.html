@@ -1,8 +1,12 @@
 <mdb-card>
-  <mdb-card-body class="text-center py-4">
+  <mdb-card-header class="text-center bg-primary white-text">
+    {{ user?.temple }}
+    VKSR Temple
+  </mdb-card-header>
+  <mdb-card-body class="text-center py-2">
     <div>
       <span class="float-left">
-        <mdb-badge *ngIf="user.role" color="purple">{{ user.role }}</mdb-badge>
+        <mdb-badge *ngIf="user.role" [color]="getColor(user.role)">{{ user.role }}</mdb-badge>
       </span>
       <mdb-icon fas icon="trash" class="float-right delete grey-text" (click)="deleteUser()" alt="Delete user"></mdb-icon>
     </div>

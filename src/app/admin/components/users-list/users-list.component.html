@@ -3,7 +3,7 @@
     <app-user [user]="user" (userSelected)="onUserSelected($event)" (addAdmin)="onAddAdmin($event)" (removeUser)="onDeleteUser($event)"></app-user>
   </div>
   <div class="user">
-    <mdb-card class="flex-wrap py-4 add-card" (click)="onAddUser($event)">
+    <mdb-card class="flex-wrap py-2 add-card h-100" (click)="onAddUser($event)">
       <mdb-card-body class="text-center my-4 py-4 d-flex flex-column align-items-center justify-content-center">
         <div class="my-4">
           <mdb-icon fas icon="plus" class="float-right mt-1 add fa-lg grey-text" alt="Add user"></mdb-icon>

@@ -47,7 +47,7 @@ export class PoojasEffects {
     ofType(PoojasActionTypes.POOJAS_ADDED),
     map((action: fromPoojas.PoojasAdded) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.poojasService.add(payload.customer, user.uid))
+    switchMap(([payload, user]: any) => this.poojasService.add(payload.customer, user.temple))
   );
 
   @Effect({ dispatch: false })
@@ -55,7 +55,7 @@ export class PoojasEffects {
     ofType(PoojasActionTypes.POOJAS_EDITED),
     map((action: fromPoojas.PoojasEdited) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.poojasService.update(payload.customer, user.uid)
+    switchMap(([payload, user]: any) => this.poojasService.update(payload.customer, user.temple)
     .pipe(
       catchError( error => {
       return of(new fromPoojas.PoojasError({ error }));
@@ -68,6 +68,6 @@ export class PoojasEffects {
     ofType(PoojasActionTypes.POOJAS_DELETED),
     map((action: fromPoojas.PoojasDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.poojasService.delete(payload.customer, user.uid))
+    switchMap(([payload, user]: any) => this.poojasService.delete(payload.customer, user.temple))
   );
 }

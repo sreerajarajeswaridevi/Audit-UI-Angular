@@ -10,7 +10,7 @@
 </div>
 
 <div *ngIf="!(usersListLoading$ | async)" class="container-fluid mt-3 pb-5">
-  <app-users-list *ngIf="!selectedUser" [users]="users$ | async" (userSelected)="onUserSelect($event)" (addUser)="openAddUserModal($event)"
+  <app-users-list *ngIf="!selectedUser" [users]="users$ | async" (addUser)="openAddUserModal($event)"
     (deleteUser)="onDeleteUser($event)"></app-users-list>
   
     <!-- <app-user-detail

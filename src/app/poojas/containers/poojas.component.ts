@@ -5,7 +5,9 @@ import { AppState } from 'src/app/reducers';
 import { getIsLoading, getPoojas } from '../store/poojas.selectors';
 import * as fromPoojas from '../store/poojas.actions';
 import { Poojas } from '../models/poojas.model';
-import { MDBModalRef } from 'angular-bootstrap-md';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
+import { PoojasModalComponent } from 'src/app/shared/components/poojas-modal/poojas-modal.component';
+import { take } from 'rxjs/operators';
 // import { PoojasModalComponent } from 'src/app/shared/components/poojas-modal/poojas-modal.component';
 
 @Component({
@@ -26,23 +28,30 @@ export class PoojasComponent implements OnInit {
     tomorrow: string
   }
 
+  // modalConfig = {
+  //   // backdrop: true,
+  //   // keyboard: true,/
+  //   // show: false,
+  //   // ignoreBackdropClick: false,
+  //   // containerClass: 'top',
+  //   animated: true,
+  //   data: {
+  //     heading: 'New Pooja'
+  //   }
+  // };
+
   modalConfig = {
-    backdrop: true,
-    keyboard: true,
-    show: false,
-    ignoreBackdropClick: false,
-    class: 'modal-side modal-top-right',
-    containerClass: 'right',
+    containerClass: 'center',
+    class: 'modal-dialog-centered center',
     animated: true,
     data: {
-      heading: 'Modal heading',
-      content: { heading: 'Content heading', description: 'Content description' },
-      role: 'document'
-    }
+        heading: 'New Pooja'
+      }
   };
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private modalService: MDBModalService
   ) {
     let date = new Date();
     date.setDate(date.getDate() + 1);
@@ -58,5 +67,15 @@ export class PoojasComponent implements OnInit {
     })
     this.isLoading$ = this.store.select(getIsLoading);
     this.store.dispatch(new fromPoojas.PoojasQuery());
+  }
+
+  newPooja(poojaId: string) {
+    this.modalRef = this.modalService.show(PoojasModalComponent, this.modalConfig);
+
+    this.modalRef.content.pooja.id = poojaId;
+
+    this.modalRef.content.poojasData.pipe(take(1)).subscribe( (pooja: Poojas) => {
+      this.store.dispatch(new fromPoojas.PoojasAdded({ poojas: pooja }));
+    });
   }
 }

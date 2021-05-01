@@ -20,7 +20,7 @@ export class ExpensesEffects {
   query$ = this.actions$.pipe(
     ofType(ExpensesActionTypes.POOJAS_QUERY),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([, user]: any) => this.expensesService.get(user.uid)
+    switchMap(([, user]: any) => this.expensesService.get(user.temple)
       .pipe(
         map((data: any) => {
           const ExpensesData: Expenses[] = data.map((res: any) => {
@@ -47,7 +47,7 @@ export class ExpensesEffects {
     ofType(ExpensesActionTypes.POOJAS_ADDED),
     map((action: fromExpenses.ExpensesAdded) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.expensesService.add(payload.customer, user.uid))
+    switchMap(([payload, user]: any) => this.expensesService.add(payload.customer, user.temple))
   );
 
   @Effect({ dispatch: false })
@@ -55,7 +55,7 @@ export class ExpensesEffects {
     ofType(ExpensesActionTypes.POOJAS_EDITED),
     map((action: fromExpenses.ExpensesEdited) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.expensesService.update(payload.customer, user.uid)
+    switchMap(([payload, user]: any) => this.expensesService.update(payload.customer, user.temple)
     .pipe(
       catchError( error => {
       return of(new fromExpenses.ExpensesError({ error }));
@@ -68,6 +68,6 @@ export class ExpensesEffects {
     ofType(ExpensesActionTypes.POOJAS_DELETED),
     map((action: fromExpenses.ExpensesDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.expensesService.delete(payload.customer, user.uid))
+    switchMap(([payload, user]: any) => this.expensesService.delete(payload.customer, user.temple))
   );
 }

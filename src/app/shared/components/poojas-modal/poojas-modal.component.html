@@ -1,37 +1,40 @@
-<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title w-100" id="myModalLabel">{{ heading }}</h4>
+  </div>
+  <div class="modal-body">
+    <form #poojasForm="ngForm">
+      <div class="md-form">
+        <input type="text" id="id" name="id" class="form-control" [(ngModel)]="pooja.id" mdbInput mdbValidate
+          [validateSuccess]="false" #id="ngModel" required>
+        <label for="id">Id</label>
+        <mdb-error *ngIf="id && id.invalid && (id.dirty || id.touched)">Id is required</mdb-error>
       </div>
-      <div class="modal-body">
-        <form #poojasForm="ngForm">
-          <div class="md-form">
-            <input type="text" id="id" name="id" class="form-control" [(ngModel)]="poojas.id" mdbInput mdbValidate [validateSuccess]="false" #id="ngModel" required>
-            <label for="id">Id</label>
-            <mdb-error *ngIf="id && id.invalid && (id.dirty || id.touched)">Id is required</mdb-error>
-          </div>
-    
-          <div class="md-form">
-            <input type="text" id="name" name="name" class="form-control" [(ngModel)]="poojas.name" mdbInput mdbValidate [validateSuccess]="false" #name="ngModel" required>
-            <label for="name">Name</label>
-            <mdb-error *ngIf="name && name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
-          </div>
-    
-          <div class="md-form">
-            <textarea type="text" id="description" name="description" class="md-textarea form-control" [(ngModel)]="poojas.description" mdbInput mdbValidate [validateSuccess]="false" #description="ngModel" required></textarea>
-            <label for="description">Description</label>
-            <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">Description is required</mdb-error>
-          </div>
-        </form>
+
+      <div class="md-form">
+        <input type="text" id="name" name="name" class="form-control" [(ngModel)]="pooja.name" mdbInput mdbValidate
+          [validateSuccess]="false" #name="ngModel" required>
+        <label for="name">Name</label>
+        <mdb-error *ngIf="name && name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
       </div>
-      <div class="modal-footer">
-        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save changes</button>
+
+      <div class="md-form">
+        <textarea type="text" id="description" name="description" class="md-textarea form-control"
+          [(ngModel)]="pooja.description" mdbInput mdbValidate [validateSuccess]="false" #description="ngModel"
+          required></textarea>
+        <label for="description">Description</label>
+        <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">Description
+          is required</mdb-error>
       </div>
-    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="modalRef.hide()"
+      mdbWavesEffect>Close</button>
+    <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
+      changes</button>
   </div>
 </div>

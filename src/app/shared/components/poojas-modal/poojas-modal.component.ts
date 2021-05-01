@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MDBModalRef } from 'angular-bootstrap-md';
+import { Subject } from 'rxjs';
 import { Poojas } from 'src/app/poojas/models/poojas.model';
 // import { MDBModalRef } from 'angular-bootstrap-md';
 // import { Poojas } from '../../../poojas/models/poojas.model';
@@ -14,28 +16,25 @@ import { Poojas } from 'src/app/poojas/models/poojas.model';
 export class PoojasModalComponent implements OnInit {
   @ViewChild('poojasForm', { static: true }) poojasForm: NgForm;
   
-  @ViewChild('basicModal', { static: true }) basicModal: any;
+  pooja: Poojas = {};
+  poojasData: Subject<Poojas> = new Subject();
 
-  poojas: Poojas = {};
+  constructor(public modalRef: MDBModalRef) { }
 
   ngOnInit() {
   }
 
   onClose() {
-    this.basicModal.hide();
+    this.modalRef.hide();
   }
 
   onSave() {
     if (this.poojasForm.valid) {
-      // this.poojasData.next(this.poojas);
-      this.basicModal.hide();
+      this.poojasData.next(this.pooja);
+      this.modalRef.hide();
     } else {
       const controls = this.poojasForm.controls;
       Object.keys(controls).forEach(controlName => controls[controlName].markAsTouched());
     }
-  }
-
-  public show = () => {
-    this.basicModal.show();
   }
 }

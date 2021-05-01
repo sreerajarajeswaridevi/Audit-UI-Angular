@@ -15,7 +15,7 @@ export class AdminGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> | boolean {
-    return this.authService.checkUserRole(false)
+    return this.authService.checkUserRole()
     .pipe(
       map( (isAdmin) => {
         if (isAdmin) {

@@ -34,4 +34,15 @@ export class UserComponent implements OnInit {
     this.removeUser.emit(this.user);
   }
 
+  getColor(role: string) {
+    switch(role) {
+      case 'admin':
+        return 'red';
+        case 'manager':
+          return 'orange';
+        default:
+          return 'blue'
+    }
+  }
+
 }

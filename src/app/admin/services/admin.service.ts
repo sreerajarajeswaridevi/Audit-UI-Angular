@@ -15,6 +15,7 @@ export class AdminService {
   selectedUser$ = this.selectedUser.asObservable();
 
   getUsersList() {
+    // original users list api call goes here
     return this.http.get(
       `${environment.apiUrl}/users?page=2`
     );

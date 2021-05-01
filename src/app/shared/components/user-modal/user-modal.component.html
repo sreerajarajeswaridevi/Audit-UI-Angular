@@ -19,11 +19,17 @@
         <mdb-error *ngIf="password && password.invalid && (password.dirty || password.touched)">password is required</mdb-error>
       </div>
 
-      <div class="md-form">
-        <input type="text" id="role" name="role" class="form-control" [(ngModel)]="user.role" mdbInput mdbValidate [validateSuccess]="false" #role="ngModel" required>
-        <label for="role">Role</label>
+      <label for="role">Role</label>
+      <div class="md-form mt-0">
+        <select class="browser-default custom-select form-control pl-1" type="select" id="role" name="role" [(ngModel)]="user.role" mdbSelect mdbValidate [validateSuccess]="false" #role="ngModel" required>
+          <option value="" disabled selected hidden>Select user role</option>
+          <option value="'admin'">admin</option>
+          <option value="'manager'">manager</option>
+          <option value="'user'">user</option>
+        </select>
         <mdb-error *ngIf="role && role.invalid && (role.dirty || role.touched)">role is required</mdb-error>
-      </div>
+    </div>
+
 
 
     </form>

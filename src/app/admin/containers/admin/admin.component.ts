@@ -6,10 +6,8 @@ import * as fromAdmin from '../../store/admin.actions';
 import { Observable } from 'rxjs';
 import {
   getUsersList,
-  getSelectedUser,
   getUsersListLoading,
   getUserProjectsLoading,
-  getUserCustomers,
   getUserCustomersLoading
 } from '../../store/admin.selectors';
 import { User } from '../../../auth/models/user.model';
@@ -59,22 +57,6 @@ export class AdminComponent implements OnInit {
     this.usersListLoading$ = this.store.select(getUsersListLoading);
     this.userProjectsLoading$ = this.store.select(getUserProjectsLoading);
     this.userCustomersLoading$ = this.store.select(getUserCustomersLoading);
-  }
-
-  onUserSelect(user: any) {
-    this.uid = user.uid;
-    this.selectedUser = user;
-    this.selectedUser$ = this.store.select(getSelectedUser, user.uid);
-
-    this.userCustomers$ = this.store.select(getUserCustomers, user.uid).pipe(
-      map(customers => {
-        if (customers && customers.length !== 0) {
-          return customers;
-        } else {
-          return null;
-        }
-      })
-    );
   }
 
   onProjectsLoad() {
@@ -129,7 +111,7 @@ export class AdminComponent implements OnInit {
       });
   }
 
-  openAddUserModal(user: any) {
+  openAddUserModal() {
     this.modalRef = this.modalService.show(
       UserModalComponent,
       {...this.modalConfig,
@@ -179,10 +161,6 @@ export class AdminComponent implements OnInit {
 
   onProjectDelete(project: any) {
     this.openProjectConfirmModal(project);
-  }
-
-  addNewUser(user: any) {
-    // this.store.dispatch(new fromAdmin.AddAdminPrivileges({ userId: user.key }));
   }
 
   removeAdminPrivileges(user: any) {

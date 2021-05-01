@@ -27,7 +27,7 @@ export class AuthEffects {
         map((res: any) => {
           const gravatarUrl = this.gravatarService.getUserGravatar(res.user.username);
           const user = {
-            uid: res.user.uid,
+            uid: res.user.temple,
             displayName: payload.username || res.user.displayName,
             username: res.user.username,
             password: res.user.password,
@@ -40,7 +40,6 @@ export class AuthEffects {
           return [
             new auth.RegisterCompleted(),
             new auth.LoginSuccess({ user }),
-            new auth.UpdateProfile({ displayName: payload.username, photoUrl: user.photoUrl }),
             new auth.SaveUser({ user })
           ];
         }),
@@ -71,7 +70,7 @@ export class AuthEffects {
   checkUserRole$ = this.actions$.pipe(
     ofType(auth.AuthActionTypes.CHECK_USER_ROLE),
     map((action: auth.CheckUserRole) => action.payload),
-    switchMap((payload: any) => this.authService.checkUserRole(payload.isAdmin)
+    switchMap(() => this.authService.checkUserRole()
       .pipe(
         map((isAdmin: boolean) => {
           return new auth.UpdateUserRole({ isAdmin });
@@ -115,7 +114,7 @@ export class AuthEffects {
         // }
         console.log(res);
         const user = {
-          uid: mockUser.user.uid,
+          temple: mockUser.user.temple,
           displayName: mockUser.user.displayName,
           photoUrl: mockUser.user.photoUrl,
           isAdmin: mockUser.user.role === 'admin',
@@ -144,7 +143,7 @@ export class AuthEffects {
     map((action: auth.SaveUser) => action.payload),
     switchMap((payload: any) => {
       return [
-        new auth.UpdateOnlineStatus({ uid: payload.user.uid, status: true }),
+        new auth.UpdateOnlineStatus({ uid: payload.user.temple, status: true }),
         new auth.CheckUserRole({ isAdmin: payload.user.isAdmin })
       ];
     })
@@ -156,7 +155,7 @@ export class AuthEffects {
     map((action: auth.LogoutRequested) => action.payload),
     switchMap((payload: any) => {
       console.log('payload', payload);
-      return this.authService.logout(payload.user.uid)
+      return this.authService.logout(payload.user.temple)
         .pipe(
           map(() => new auth.LogoutCompleted()),
           tap(() => this.authService.clearLocalData()),
@@ -179,7 +178,7 @@ export class AuthEffects {
         map((authData: any) => {
           if (authData) {
             const user = {
-              uid: mockUser.user.uid,
+              temple: mockUser.user.temple,
               displayName: mockUser.user.displayName,
               photoUrl: authData.photoURL,
               username: authData.username,

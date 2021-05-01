@@ -1,5 +1,5 @@
 export interface User {
-  uid?: string;
+  temple?: string;
   displayName?: string;
   username: string;
   password: string;
@@ -10,7 +10,7 @@ export interface User {
 
 export const mockUser = {
   user: {
-    uid: 'username',
+    temple: 'RR',
     displayName: 'MANAGER',
     username: '',
     password: '',

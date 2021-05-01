@@ -15,7 +15,7 @@ export const getUsersListLoading = createSelector(
 
 export const getSelectedUser = createSelector(
   getUsersList,
-  (usersList: any, uid: string) => usersList.filter( (user: any) => user.uid === uid)[0]
+  (usersList: any, uid: string) => usersList.filter( (user: any) => user.temple === uid)[0]
 );
 
 export const getUserProjects = createSelector(

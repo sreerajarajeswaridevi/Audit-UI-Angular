@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   getUser() {
-    // const users = this.db.object('users/' + user.uid);
+    // const users = this.db.object('users/' + user.temple);
     const data = {
       user: {
         ...mockUser.user,
@@ -83,10 +83,9 @@ export class AuthService {
     return of([uid, status]);
   }
 
-  checkUserRole(isAdmin: boolean) {
+  checkUserRole() {
     // return this.db.object('admins/' + uid).valueChanges();
     if (localStorage.getItem('role') === 'admin') {
-      console.log(isAdmin);
       return of(true);
     }
     return of(false);
