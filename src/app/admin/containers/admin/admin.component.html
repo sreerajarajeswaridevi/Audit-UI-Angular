@@ -1,6 +1,8 @@
-<div class="white p-4">
-  <h3>Admin panel</h3>
-  <p class="grey-text pt-3">Change settings for every user in your application</p>
+<div class="white py-2 px-4">
+  <blockquote class="blockquote bq-success">
+    <h3 class="header">Users List</h3>
+    <p class="grey-text py-0">Change settings for every user in your application</p>
+  </blockquote>
 </div>
 
 <div *ngIf="usersListLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 300px">
@@ -12,7 +14,8 @@
 <div *ngIf="!(usersListLoading$ | async)" class="container-fluid mt-3 pb-5">
   <app-users-list *ngIf="!selectedUser" [users]="users$ | async" (addUser)="openAddUserModal($event)"
     (deleteUser)="onDeleteUser($event)"></app-users-list>
-  
+    <app-pooja-list></app-pooja-list>
+    <app-temple-list></app-temple-list>
     <!-- <app-user-detail
     *ngIf="selectedUser"
     [user]="selectedUser$ | async"

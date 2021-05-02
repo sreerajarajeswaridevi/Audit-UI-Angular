@@ -1,0 +1,24 @@
+.poojas-list {
+  box-sizing: border-box;
+  justify-content: center;
+
+  mdb-card {
+    min-width: 50%;
+  }
+}
+
+.pooja {
+  width: 80%;
+  margin: 1rem;
+
+  .add-card {
+    &:hover {
+      background-color: whitesmoke;
+      cursor: pointer;
+    }
+  }
+}
+
+.add {
+  height: 40px;
+}

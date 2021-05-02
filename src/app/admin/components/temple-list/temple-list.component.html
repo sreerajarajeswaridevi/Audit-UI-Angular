@@ -1,0 +1,69 @@
+<div class="temples-list d-flex flex-wrap my-4" ngif="temples?.length > 0">
+      <mdb-card>
+        <mdb-card-header class="text-left bg-primary white-text w-100">
+          <blockquote class="blockquote bq-success">
+            <h3 class="header">Temples List</h3>
+            <p class="py-0">Add or remove temples (for Admin)</p>
+          </blockquote>
+        </mdb-card-header>
+        <mdb-card-body class="py-2">
+          <form #poojasForm="ngForm">
+          <table mdbTable striped="true">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of temples">
+                <td scope="row">{{ item.name }}</td>
+                <td>{{ item.pantone_value }}</td>
+                <td>{{ item.pantone_value }}</td>
+              </tr>
+              <tr class="bg-white">
+                <td>
+                  <div class="md-form">
+                    <input type="text" id="name" name="name" class="form-control" 
+                    #name="ngModel" [(ngModel)]="newTemple.name" mdbInput mdbValidate
+                      [validateSuccess]="false" required>
+                    <label for="name">Name</label>
+                    <mdb-error *ngIf="name && name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
+                  </div>
+                </td>
+                <td>
+                  <div class="md-form">
+                    <input type="text" id="code" name="code" class="form-control" 
+                    #code="ngModel" [(ngModel)]="newTemple.code" mdbInput mdbValidate
+                      [validateSuccess]="false" required>
+                    <label for="code">Code</label>
+                    <mdb-error *ngIf="code && code.invalid && (code.dirty || code.touched)">Code is required</mdb-error>
+                  </div>
+                </td>
+                <td class="d-flex align-content-center justify-items-center">
+                  <div class="md-form" style="margin-top: 15px;">
+                    <textarea type="text" id="address" name="address" class="my-0 py-0 md-textarea form-control" 
+                    #address="ngModel" [(ngModel)]="newTemple.address" mdbInput mdbValidate
+                      [validateSuccess]="false" required></textarea>
+                    <label for="address">Address</label>
+                    <mdb-error *ngIf="address && address.invalid && (address.dirty || address.touched)">Address is required</mdb-error>
+                  </div>
+                  <button mdbBtn [disabled]="poojasForm?.invalid || loadingAddTemple" class="mt-4 btn btn-floating add" (click)="onAddTemple()" size="sm" gradient="purple" mdbWavesEffect>
+                    <mdb-icon fas icon="plus" class="white-text"></mdb-icon> <span class="pl-2 white-text">Add</span>
+                  </button>
+                  <!-- <a class="btn btn-primary btn-floating" (click)="onAddTemple()" style="background-color: #3b5998; height: 45px" href="javascript:void(0)" role="button"
+                    >
+                    Add
+                  </a> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </form>
+        </mdb-card-body>
+      </mdb-card>
+      
+
+

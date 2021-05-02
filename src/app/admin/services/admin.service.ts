@@ -21,8 +21,34 @@ export class AdminService {
     );
   }
 
-  getUserProjects(uid: string) {
-    return of(uid);
+  getPoojaList() {
+    return this.http.get(
+      `${environment.apiUrl}/unknown`
+    );
+  }
+
+  addPooja(temple: any) {
+    return this.http.post(
+      `${environment.apiUrl}/users`,
+      {
+        ...temple
+      }
+    );
+  }
+
+  getTempleList() {
+    return this.http.get(
+      `${environment.apiUrl}/unknown`
+    );
+  }
+
+  addTemple(temple: any) {
+    return this.http.post(
+      `${environment.apiUrl}/users`,
+      {
+        ...temple
+      }
+    );
   }
 
   getUserCustomers(uid: string) {

@@ -12,7 +12,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.router);
-    // this.router.navigateByUrl('poojas'); // for dev purpose only so that current working page loads first
+    this.router.navigateByUrl('admin-panel'); // for dev purpose only so that current working page loads first
   }
 
 }

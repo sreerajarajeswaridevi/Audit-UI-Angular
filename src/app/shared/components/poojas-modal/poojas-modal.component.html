@@ -77,7 +77,7 @@
     <button type="button" mdbBtn class="waves-light" color="secondary" aria-label="Close" (click)="addPerson()"
       mdbWavesEffect [disabled]="poojasForm?.invalid">Add Person</button>
 
-      <div>
+      <div class="d-flex">
         <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="modalRef.hide()"
           mdbWavesEffect>Close</button>
         <button type="button" mdbBtn color="primary" [disabled]="response.persons.length === 0 " class="relative waves-light" mdbWavesEffect (click)="onSave()">Save

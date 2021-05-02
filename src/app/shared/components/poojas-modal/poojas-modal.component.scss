@@ -33,12 +33,30 @@
     overflow: auto;
     display: flex;
     max-height: 65vh;
+  
     .left-section {
         width: 50%;
     }
     .right-section {
         width: 50%;
         padding: 10px 20px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        flex-direction: column;
+        .left-section {
+            width: 100%;
+        }
+        .right-section {
+            width: 100%;
+         }
+    }
+
+    
+}
+@media only screen and (max-height: 500px) {
+    .modal-body {
+        max-height: 45vh !important;
     }
 }
 
