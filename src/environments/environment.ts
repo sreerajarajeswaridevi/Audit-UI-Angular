@@ -16,3 +16,4 @@ export const environment = {
  * because it will have performance impact when throw error
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// https://api.sreerajarajeswaridevi.org/dev/api_exec?api=login&user=kiranbose&pass=Littlepalace30&temple=root

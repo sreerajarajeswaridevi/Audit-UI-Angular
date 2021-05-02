@@ -29,6 +29,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http.get(
+      // `${environment.apiUrl}/api_exec?api=login&user=${username}&pass=${password}&temple=root`,
       `${environment.apiUrl}/login`,
       {
         params: {

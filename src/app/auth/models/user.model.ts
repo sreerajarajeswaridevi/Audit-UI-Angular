@@ -6,6 +6,7 @@ export interface User {
   photoUrl?: string;
   isAdmin?: boolean;
   role?: string;
+  email?: string;
 }
 
 export const mockUser = {
@@ -15,7 +16,7 @@ export const mockUser = {
     username: '',
     password: '',
     photoUrl: 'https://img.icons8.com/bubbles/2x/user-male.png',
-    // isAdmin: true,
-    role: 'admin'
+    role: 'admin',
+    email: 'test@gmail.com'
   },
 };

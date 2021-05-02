@@ -7,6 +7,7 @@
   </div>
   <div class="modal-body">
     <form #userForm="ngForm">
+
       <div class="md-form">
         <input type="text" id="username" name="username" class="form-control" [(ngModel)]="user.username" mdbInput mdbValidate [validateSuccess]="false" #username="ngModel" required>
         <label for="username">Username</label>
@@ -17,6 +18,18 @@
         <input type="text" id="password" name="password" class="form-control" [(ngModel)]="user.password" mdbInput mdbValidate [validateSuccess]="false" #password="ngModel" required>
         <label for="password">password</label>
         <mdb-error *ngIf="password && password.invalid && (password.dirty || password.touched)">password is required</mdb-error>
+      </div>
+
+      <div class="md-form">
+        <input type="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" class="form-control" [(ngModel)]="user.email" mdbInput mdbValidate [validateSuccess]="false" #email="ngModel" required>
+        <label for="email">Email</label>
+        <mdb-error *ngIf="email && email.invalid && (email.dirty || email.touched)">Email is required</mdb-error>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="temple" name="temple" class="form-control" [(ngModel)]="user.temple" mdbInput mdbValidate [validateSuccess]="false" #temple="ngModel" required>
+        <label for="temple">Temple</label>
+        <mdb-error *ngIf="temple && temple.invalid && (temple.dirty || temple.touched)">Temple is required</mdb-error>
       </div>
 
       <label for="role">Role</label>

@@ -7,7 +7,8 @@ import {
   CardsModule,
   InputUtilitiesModule,
   IconsModule,
-  ModalModule
+  ModalModule,
+  TableModule
 } from 'angular-bootstrap-md';
 import { CustomersModalComponent } from './components/customers-modal/customers-modal.component';
 import { FormsModule } from '@angular/forms';
@@ -30,6 +31,7 @@ import { UserModalComponent } from './components/user-modal/user-modal.component
     InputsModule,
     InputUtilitiesModule,
     IconsModule,
+    TableModule,
     FormsModule,
     ModalModule,
     ButtonsModule,

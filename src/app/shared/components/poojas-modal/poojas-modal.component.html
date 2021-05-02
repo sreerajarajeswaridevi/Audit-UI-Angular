@@ -3,38 +3,87 @@
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">×</span>
     </button>
-    <h4 class="modal-title w-100" id="myModalLabel">{{ heading }}</h4>
+    <div class="d-flex flex-column">
+      <h3 class="modal-title w-100" id="myModalLabel">{{ heading }}</h3>
+      <span class="price">&#x20B9; {{ price }}</span>
+    </div>
   </div>
   <div class="modal-body">
-    <form #poojasForm="ngForm">
-      <div class="md-form">
-        <input type="text" id="id" name="id" class="form-control" [(ngModel)]="pooja.id" mdbInput mdbValidate
-          [validateSuccess]="false" #id="ngModel" required>
-        <label for="id">Id</label>
-        <mdb-error *ngIf="id && id.invalid && (id.dirty || id.touched)">Id is required</mdb-error>
-      </div>
+    <div class="left-section">
+      <form #poojasForm="ngForm">
+        <div class="md-form">
+          <input type="text" id="name" name="name" class="form-control" [(ngModel)]="pooja.name" mdbInput mdbValidate
+            [validateSuccess]="false" #name="ngModel" required>
+          <label for="name">Name</label>
+          <mdb-error *ngIf="name && name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
+        </div>
 
-      <div class="md-form">
-        <input type="text" id="name" name="name" class="form-control" [(ngModel)]="pooja.name" mdbInput mdbValidate
-          [validateSuccess]="false" #name="ngModel" required>
-        <label for="name">Name</label>
-        <mdb-error *ngIf="name && name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
-      </div>
-
-      <div class="md-form">
-        <textarea type="text" id="description" name="description" class="md-textarea form-control"
-          [(ngModel)]="pooja.description" mdbInput mdbValidate [validateSuccess]="false" #description="ngModel"
-          required></textarea>
-        <label for="description">Description</label>
-        <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">Description
-          is required</mdb-error>
-      </div>
-    </form>
+        <div class="btn-toolbar star-container" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="md-form hidden">
+            <input type="text" id="star" name="star" class="form-control" [(ngModel)]="pooja.star" mdbInput mdbValidate
+              [validateSuccess]="false" #star="ngModel" required>
+            <label for="star">Star</label>
+            <mdb-error *ngIf="star && star.invalid && (star.dirty || star.touched)">Star is required</mdb-error>
+          </div>
+          <div class="btn-group mr-2" role="group" aria-label="First group">
+              <button (click)="selectStar(star)"
+              *ngFor="let star of starSigns" mdbBtn type="button" color="grey" [outline]="star !== pooja.star" [class.selected]="star === pooja.star"
+               mdbWavesEffect>{{star}}</button>
+          </div>
+        </div>
+      </form>
+        <div class="md-form">
+          <textarea type="text" id="address" name="address" class="md-textarea form-control"
+            [(ngModel)]="response.address" mdbInput mdbValidate [validateSuccess]="false"></textarea>
+          <label for="address">Address (Optional)</label>
+        </div>
+  
+      
+    </div>
+    <div class="right-section">
+      <mdb-card class="text-center">
+        <mdb-card-header>
+          <div class="md-form phone">
+            <input type="number" id="phone" name="phone" class="form-control" [(ngModel)]="response.phoneNumber" mdbInput mdbValidate
+              [validateSuccess]="false">
+            <label for="phone">Phone Number(Optional)</label>
+          </div>
+        </mdb-card-header>
+        <mdb-card-body>
+          <table mdbTable small="true" striped="true">
+            <tbody>
+              <tr *ngFor="let item of response.persons">
+                <th scope="row">{{ item.name }}</th>
+                <td>{{ item.star }}</td>
+                <td>
+                  <mdb-icon fas icon="times" class="float-right delete red-text" (click)="deletePooja(item)" alt="Delete"></mdb-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="response.persons.length === 0">
+            <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
+              <p class="grey-text">No data added</p>
+          </div>
+        </mdb-card-body>
+        <mdb-card-footer *ngIf="response.persons.length">
+          <span>Total Price: </span> <span class="price">&#x20B9; {{response.totalPrice}}</span>
+        </mdb-card-footer>
+      </mdb-card>
+    </div>
+    
   </div>
   <div class="modal-footer">
-    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="modalRef.hide()"
-      mdbWavesEffect>Close</button>
-    <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
-      changes</button>
+    <button type="button" mdbBtn class="waves-light" color="secondary" aria-label="Close" (click)="addPerson()"
+      mdbWavesEffect [disabled]="poojasForm?.invalid">Add Person</button>
+
+      <div>
+        <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="modalRef.hide()"
+          mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="primary" [disabled]="response.persons.length === 0 " class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
+          changes</button>
+
+      </div>
+
   </div>
 </div>

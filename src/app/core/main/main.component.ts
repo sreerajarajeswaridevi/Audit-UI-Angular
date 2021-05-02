@@ -11,7 +11,8 @@ export class MainComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.router.navigateByUrl('admin-panel'); // for dev purpose only so that current working page loads first
+    console.log(this.router);
+    // this.router.navigateByUrl('poojas'); // for dev purpose only so that current working page loads first
   }
 
 }

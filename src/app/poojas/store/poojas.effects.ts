@@ -36,7 +36,9 @@ export class PoojasEffects {
               id: res.id,
               name: res.name,
               color: res.color,
-              pantone_value: res.pantone_value
+              pantone_value: res.pantone_value,
+
+              price: 20
             };
           });
           return (new fromPoojas.PoojasLoaded({ poojas: PoojasData }));

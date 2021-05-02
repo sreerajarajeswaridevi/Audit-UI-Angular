@@ -13,7 +13,7 @@ export class UserModalComponent implements OnInit {
   @ViewChild('userForm', { static: true }) userForm: NgForm;
 
   heading: string;
-  user: User = { username: '', password: '', role: ''};
+  user: User = { username: '', password: '', email:'', role: '', temple: ''};
 
   userData: Subject<User> = new Subject();
 

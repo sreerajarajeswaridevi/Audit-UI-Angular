@@ -33,6 +33,7 @@ export class AuthEffects {
             displayName: payload.username || res.user.displayName,
             username: res.user.username,
             password: res.user.password,
+            email: res.user.email,
             photoUrl: res.user.photoURL || gravatarUrl,
             isAdmin: false
           };
@@ -126,6 +127,7 @@ export class AuthEffects {
           photoUrl: mockUser.user.photoUrl,
           isAdmin: mockUser.user.role === 'admin',
           role: mockUser.user.role,
+          email: mockUser.user.email,
           username: payload.username,
           password: payload.password
         };
@@ -193,6 +195,7 @@ export class AuthEffects {
               photoUrl: authData.photoURL,
               username: authData.username,
               password: authData.password,
+              email: authData.email
             };
             return new auth.LoginSuccess({ user });
           } else {

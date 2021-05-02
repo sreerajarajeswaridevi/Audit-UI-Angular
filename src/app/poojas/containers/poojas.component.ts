@@ -42,11 +42,8 @@ export class PoojasComponent implements OnInit {
 
   modalConfig = {
     containerClass: 'center',
-    class: 'modal-dialog-centered center',
+    class: 'modal-dialog-centered center modal-lg',
     animated: true,
-    data: {
-        heading: 'New Pooja'
-      }
   };
 
   constructor(
@@ -69,10 +66,15 @@ export class PoojasComponent implements OnInit {
     this.store.dispatch(new fromPoojas.PoojasQuery());
   }
 
-  newPooja(poojaId: string) {
-    this.modalRef = this.modalService.show(PoojasModalComponent, this.modalConfig);
-
-    this.modalRef.content.pooja.id = poojaId;
+  newPooja(pooja: Poojas) {
+    this.modalRef = this.modalService.show(PoojasModalComponent, {
+      ...this.modalConfig,
+      data: {
+        id: pooja.id,
+        heading: pooja.name,
+        price: pooja.price
+      }
+    });
 
     this.modalRef.content.poojasData.pipe(take(1)).subscribe( (pooja: Poojas) => {
       this.store.dispatch(new fromPoojas.PoojasAdded({ poojas: pooja }));
