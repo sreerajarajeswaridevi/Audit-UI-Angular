@@ -21,20 +21,14 @@ export class AdminService {
     );
   }
 
-  getPoojaList() {
-    return this.http.get(
-      `${environment.apiUrl}/unknown`
-    );
-  }
-
-  addPooja(temple: any) {
-    return this.http.post(
-      `${environment.apiUrl}/users`,
-      {
-        ...temple
-      }
-    );
-  }
+  // addPooja(temple: any) {
+  //   return this.http.post(
+  //     `${environment.apiUrl}/users`,
+  //     {
+  //       ...temple
+  //     }
+  //   );
+  // }
 
   getTempleList() {
     return this.http.get(

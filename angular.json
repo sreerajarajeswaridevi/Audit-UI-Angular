@@ -24,6 +24,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
+              "src/assets/datepicker",
               "src/assets"
             ],
             "styles": [
@@ -38,7 +39,10 @@
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
-              "node_modules/hammerjs/hammer.min.js"
+              "node_modules/hammerjs/hammer.min.js",
+              "src/assets/datepicker/moment.js",
+              "src/assets/datepicker/material-datetime-picker.js",
+              "src/assets/datepicker/rome.standalone.js"
             ]
           },
           "configurations": {

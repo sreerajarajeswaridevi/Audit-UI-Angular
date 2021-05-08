@@ -5,6 +5,7 @@ export enum PoojasActionTypes {
   POOJAS_QUERY = '[Poojas] Query',
   POOJAS_LOADED = '[Poojas] Fetched',
 
+  POOJAS_ADD_QUERY = '[Poojas] Add new Pooja',
   POOJAS_ADDED = '[Poojas] Added',
   POOJAS_EDITED = '[Poojas] Edited',
   POOJAS_DELETED = '[Poojas] Deleted',
@@ -22,10 +23,10 @@ export class PoojasLoaded implements Action {
   constructor(public payload: { poojas: Poojas[] }) {}
 }
 
-export class PoojasAdded implements Action {
-  readonly type = PoojasActionTypes.POOJAS_ADDED;
+export class PoojasAddQuery implements Action {
+  readonly type = PoojasActionTypes.POOJAS_ADD_QUERY;
 
-  constructor(public payload: { poojas: Poojas }) {}
+  constructor(public payload: { poojas: any }) {}
 }
 
 export class PoojasEdited implements Action {
@@ -46,10 +47,18 @@ export class PoojasError implements Action {
   constructor(public payload: { error: any }) {}
 }
 
+export class RegisterPooja implements Action {
+  readonly type = PoojasActionTypes.POOJAS_ADD_QUERY;
+
+  constructor(public payload: { poojas: any }) {}
+}
+
+
 export type PoojasActions =
   | PoojasQuery
   | PoojasLoaded
-  | PoojasAdded
+  | PoojasAddQuery
   | PoojasEdited
   | PoojasDeleted
+  | RegisterPooja
   | PoojasError;

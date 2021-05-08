@@ -6,9 +6,7 @@ import * as fromAdmin from '../../store/admin.actions';
 import { Observable } from 'rxjs';
 import {
   getUsersList,
-  getUsersListLoading,
-  getUserProjectsLoading,
-  getUserCustomersLoading
+  getUsersListLoading
 } from '../../store/admin.selectors';
 import { User } from '../../../auth/models/user.model';
 import { map, delay, take } from 'rxjs/operators';
@@ -55,8 +53,6 @@ export class AdminComponent implements OnInit {
       })
     );
     this.usersListLoading$ = this.store.select(getUsersListLoading);
-    this.userProjectsLoading$ = this.store.select(getUserProjectsLoading);
-    this.userCustomersLoading$ = this.store.select(getUserCustomersLoading);
   }
 
   onProjectsLoad() {
@@ -64,7 +60,6 @@ export class AdminComponent implements OnInit {
   }
 
   onCustomersLoad() {
-    this.store.dispatch(new fromAdmin.GetUserCustomers({ uid: this.uid }));
   }
 
   onDetailsClose() {
@@ -85,26 +80,6 @@ export class AdminComponent implements OnInit {
             new fromAdmin.DeleteUserProject({
               userId: this.selectedUser.key,
               projectId: project.key
-            })
-          );
-        }
-      });
-  }
-
-  openCustomerConfirmModal(customer: Customer) {
-    this.modalRef = this.modalService.show(
-      ConfirmModalComponent,
-      this.modalConfig
-    );
-
-    this.modalRef.content.confirmation
-      .pipe(take(1))
-      .subscribe((confirmation: boolean) => {
-        if (confirmation) {
-          this.store.dispatch(
-            new fromAdmin.DeleteUserCustomer({
-              userId: this.selectedUser.key,
-              customerId: customer.key
             })
           );
         }
@@ -155,17 +130,4 @@ export class AdminComponent implements OnInit {
     this.openUserDeleteConfirmModal(user);
   }
 
-  onCustomerDelete(customer: Customer) {
-    this.openCustomerConfirmModal(customer);
-  }
-
-  onProjectDelete(project: any) {
-    this.openProjectConfirmModal(project);
-  }
-
-  removeAdminPrivileges(user: any) {
-    this.store.dispatch(
-      new fromAdmin.RemoveAdminPrivileges({ userId: user.key })
-    );
-  }
 }

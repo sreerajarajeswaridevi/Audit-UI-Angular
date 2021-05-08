@@ -1,8 +1,3 @@
-.price {
-    color: orange;
-    font-weight: bold;
-    font-size: large;
-}
 
 .star-container {
 
@@ -70,4 +65,11 @@
 
 .delete {
     cursor: pointer;
+}
+.datepicker {
+    position: absolute;
+    right: 20px;
+    button {
+        font-size: large;
+    }
 }

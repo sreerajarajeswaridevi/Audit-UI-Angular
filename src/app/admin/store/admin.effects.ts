@@ -61,40 +61,56 @@ export class AdminEffects {
     )
   );
 
-   @Effect({ dispatch: false })
-  addAdminPrivileges$ = this.actions$.pipe(
-    ofType(fromAdmin.AdminActionTypes.ADD_ADMIN_PRIVILEGES),
-    map( (action: fromAdmin.AddAdminPrivileges) => action.payload),
-    switchMap( (payload: any) => this.adminService.addAdminPrivileges(payload.userId)
+  //  @Effect({ dispatch: false })
+  // addAdminPrivileges$ = this.actions$.pipe(
+  //   ofType(fromAdmin.AdminActionTypes.ADD_ADMIN_PRIVILEGES),
+  //   map( (action: fromAdmin.AddAdminPrivileges) => action.payload),
+  //   switchMap( (payload: any) => this.adminService.addAdminPrivileges(payload.userId)
+  //     .pipe(
+  //       catchError( (error: any) => of(new fromAdmin.AdminError({ error })))
+  //     )
+  //   )
+  // );
+
+  @Effect()
+  getTemples$ = this.actions$.pipe(
+    ofType(fromAdmin.AdminActionTypes.GET_TEMPLES),
+    switchMap( () => this.adminService.getTempleList()
       .pipe(
-        catchError( (error: any) => of(new fromAdmin.AdminError({ error })))
+        map((list: any) => {
+          console.log(list.data);
+          return (new fromAdmin.TemplesLoaded({ temples: list.data }));
+        }),
+        catchError((error) => {
+          this.toastr.error('Something went wrong. Please try after sometime');
+          return of(new fromAdmin.AdminError({ error }));
+        })
       )
     )
   );
 
-  // @Effect()
-  // getUserProjects$ = this.actions$.pipe(
-  //   ofType(fromAdmin.AdminActionTypes.GET_USER_PROJECTS),
-  //   map((action: fromAdmin.GetUserProjects) => action.payload),
-  //   mergeMap( (payload: any) => this.adminService.getUserProjects(payload.uid)
-  //     .pipe(
-  //       map((data: any) => {
-  //         const projectsData: any[] = data.map((res: any) => {
-  //           const key = res.payload.key;
-  //           const project: any = res.payload.val();
-  //           return {
-  //             key: key || null,
-  //             title: project.title || null,
-  //             description: project.description || null,
-  //             photoUrl: project.photoUrl || null
-  //           };
-  //         });
-  //         return (new fromAdmin.UserProjectsLoaded({ uid: payload.uid, userProjects: projectsData }));
-  //       }),
-  //       catchError(error => of(new fromAdmin.AdminError({ error })))
-  //     )
-  //   )
-  // );
+  
+  @Effect()
+  addTemple$ = this.actions$.pipe(
+    ofType(fromAdmin.AdminActionTypes.ADD_TEMPLE_QUERY),
+    map((action: fromAdmin.AddTemple) => action.payload),
+    switchMap((payload: any) => {
+      console.log(payload);
+      return this.adminService.addTemple(payload.temple)
+    .pipe(
+      map((list: any) => {
+        console.log(list.data);
+        return (new fromAdmin.GetTemples());
+      }),
+      catchError(error => {
+        this.toastr.error('Something went wrong. Please try after sometime');
+        return of(new fromAdmin.AdminError({ error }));
+      })
+    )}
+    
+    )
+  );
+
 
   // @Effect({ dispatch: false })
   // deleteUserProject$ = this.actions$.pipe(

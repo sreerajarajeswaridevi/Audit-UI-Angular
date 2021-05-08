@@ -23,31 +23,64 @@ export function adminReducer(state = adminInitialState, action: AdminActions): A
       });
     }
 
-    case AdminActionTypes.GET_USER_PROJECTS: {
+    case AdminActionTypes.GET_TEMPLES: {
       return Object.assign({}, state, {
-        userProjectsLoading: true
+        templesListLoading: true
       });
     }
 
-    case AdminActionTypes.USERS_PROJECTS_LOADED: {
+    case AdminActionTypes.DELETE_TEMPLES: {
       return Object.assign({}, state, {
-        userProjects: {...state.userProjects, [action.payload.uid]: action.payload.userProjects},
-        userProjectsLoading: false
+        templesListLoading: true
       });
     }
 
-    case AdminActionTypes.GET_USER_CUSTOMERS: {
+    case AdminActionTypes.ADD_TEMPLE_QUERY: {
       return Object.assign({}, state, {
-        userCustomersLoading: true
+        templesListLoading: true,
+        temple: action.payload.temple
       });
     }
 
-    case AdminActionTypes.USERS_CUSTOMERS_LOADED: {
+    // case AdminActionTypes.TEMPLE_ADDED: {
+    //   return Object.assign({}, state, {
+    //     temples: action.payload.temple,
+    //   });
+    // }
+
+    case AdminActionTypes.TEMPLES_LOADED: {
       return Object.assign({}, state, {
-        userCustomers: {...state.userCustomers, [action.payload.uid]: action.payload.userCustomers},
-        userCustomersLoading: false
+        temples: action.payload.temples,
+        templesListLoading: false
       });
     }
+
+
+    // case AdminActionTypes.GET_USER_PROJECTS: {
+    //   return Object.assign({}, state, {
+    //     userProjectsLoading: true
+    //   });
+    // }
+
+    // case AdminActionTypes.USERS_PROJECTS_LOADED: {
+    //   return Object.assign({}, state, {
+    //     userProjects: {...state.userProjects, [action.payload.uid]: action.payload.userProjects},
+    //     userProjectsLoading: false
+    //   });
+    // }
+
+    // case AdminActionTypes.GET_USER_CUSTOMERS: {
+    //   return Object.assign({}, state, {
+    //     userCustomersLoading: true
+    //   });
+    // }
+
+    // case AdminActionTypes.USERS_CUSTOMERS_LOADED: {
+    //   return Object.assign({}, state, {
+    //     userCustomers: {...state.userCustomers, [action.payload.uid]: action.payload.userCustomers},
+    //     userCustomersLoading: false
+    //   });
+    // }
 
     case AdminActionTypes.ADMIN_ERROR: {
       return Object.assign({}, state, {

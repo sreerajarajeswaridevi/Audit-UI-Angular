@@ -17,9 +17,13 @@ export class PoojasService {
     return 'uid';
   }
 
-  add(poojas: Poojas, userId: string) {
-    return of([poojas, userId]);
-
+  add(newPooja: any) {
+    return this.http.post(
+      `${environment.apiUrl}/users`,
+      {
+        ...newPooja
+      }
+    );
   }
 
   addPoojas(poojas: Poojas[]) {

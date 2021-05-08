@@ -1,7 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { AdminService } from '../../services/admin.service';
+import { Store } from '@ngrx/store';
+import { Poojas } from 'src/app/poojas/models/poojas.model';
+import { getPoojas } from 'src/app/poojas/store/poojas.selectors';
+import { AppState } from 'src/app/reducers';
+import * as fromPoojas from '../../../poojas/store/poojas.actions';
+import { getIsLoading } from 'src/app/poojas/store/poojas.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pooja-list',
@@ -10,14 +15,14 @@ import { AdminService } from '../../services/admin.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PoojaListComponent implements OnInit {
-  poojas = [];
+  poojas: Poojas[] = [];
   newPooja: FormGroup;
-  loadingAddPooja = false;
+  isLoading$: Observable<boolean>;
 
-  constructor(private admimService: AdminService,
-    private cdr: ChangeDetectorRef,
+  constructor(
     private formBuilder: FormBuilder,
-    private toastr: ToastrService) { 
+    private store: Store<AppState>,
+    ) { 
    this.initFormGroup();
   }
 
@@ -32,33 +37,25 @@ export class PoojaListComponent implements OnInit {
 
   ngOnInit() {
     this.getPoojaList();
+    this.isLoading$ = this.store.select(getIsLoading);
   }
 
   getPoojaList() {
-    this.admimService.getPoojaList().subscribe((list: any) => {
-      if (list && list.data) {
-        this.poojas = list.data;
-        this.cdr.detectChanges();
-      }
-    },
-    () => { this.toastr.error('Error adding pooja. Please try later')})
+    this.store.select(getPoojas).subscribe((poojas: Poojas[]) => {
+      this.poojas = poojas;
+      this.initFormGroup();
+    })
+    this.store.dispatch(new fromPoojas.PoojasQuery());
+    
   }
 
 
   onAddPooja() {
-    this.loadingAddPooja = true;
-    this.admimService.addPooja({
+
+    this.store.dispatch(new fromPoojas.PoojasAddQuery({ poojas: {
       "name": "morpheus",
       "job": "leader"
-    }).subscribe(() => {
-      this.loadingAddPooja = false;
-      this.getPoojaList();
-      this.initFormGroup();
-    },
-    () => { 
-      this.loadingAddPooja = false;
-      this.toastr.error('Error adding pooja. Please try later');
-    })
+    }}));
   }
 
 }

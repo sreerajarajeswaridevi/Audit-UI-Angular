@@ -77,7 +77,7 @@ export class PoojasComponent implements OnInit {
     });
 
     this.modalRef.content.poojasData.pipe(take(1)).subscribe( (pooja: Poojas) => {
-      this.store.dispatch(new fromPoojas.PoojasAdded({ poojas: pooja }));
+      this.store.dispatch(new fromPoojas.RegisterPooja({ poojas: pooja }));
     });
   }
 }

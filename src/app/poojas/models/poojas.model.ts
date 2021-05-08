@@ -12,7 +12,8 @@ export interface NewPoojaResponse {
     phoneNumber?: string;
     address?: string;
     persons: any[];
-    totalPrice: number
+    totalPrice: number,
+    date: string
 }
 
 export const starSigns = [

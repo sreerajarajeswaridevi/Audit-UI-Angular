@@ -10,13 +10,20 @@ export function PoojasReducer(state = PoojasInitialState, action: PoojasActions)
       });
     }
 
+    
     case PoojasActionTypes.POOJAS_LOADED: {
       return Object.assign({}, state, {
         poojas: action.payload.poojas,
         isLoading: false,
       });
     }
-
+    
+    case PoojasActionTypes.POOJAS_ADD_QUERY: {
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
+    }
+    
     case PoojasActionTypes.POOJAS_ERROR: {
       return Object.assign({}, state, {
         isLoading: false,

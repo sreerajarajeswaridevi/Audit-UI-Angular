@@ -1,0 +1,84 @@
+.justify-space-between {
+    justify-content: space-between;
+}
+
+.amount {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.star-container {
+
+    .hidden {
+        display: none;
+    }
+    .btn-group {
+        display: inline-block;
+        button {
+            padding: 5px;
+        }
+
+        button.selected {
+            background-color: darkgreen;
+            border: 1px solid darkgreen;
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+        }
+    }
+}
+
+#address {
+    height: 20px;
+}
+
+.modal-body {
+    overflow: auto;
+    display: flex;
+    max-height: 65vh;
+  
+    .left-section {
+        width: 50%;
+    }
+    .right-section {
+        width: 50%;
+        padding: 10px 20px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        flex-direction: column;
+        .left-section {
+            width: 100%;
+        }
+        .right-section {
+            width: 100%;
+         }
+    }
+
+    
+}
+@media only screen and (max-height: 500px) {
+    .modal-body {
+        max-height: 45vh !important;
+    }
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+.phone {
+    margin: 0;
+}
+
+.delete {
+    cursor: pointer;
+}
+.datepicker {
+    position: absolute;
+    right: 20px;
+    button {
+        font-size: large;
+    }
+}

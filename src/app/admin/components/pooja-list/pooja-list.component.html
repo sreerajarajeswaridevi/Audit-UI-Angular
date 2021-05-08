@@ -1,4 +1,4 @@
-<div class="poojas-list d-flex flex-wrap my-4" ngif="poojas?.length > 0">
+<div class="poojas-list d-flex flex-wrap my-4">
       <mdb-card>
         <mdb-card-header class="text-left bg-primary white-text w-100">
           <blockquote class="blockquote bq-success">
@@ -7,13 +7,13 @@
           </blockquote>
         </mdb-card-header>
         <mdb-card-body class="py-2">
-          <form #poojasForm="ngForm">
+          <form #poojasForm="ngForm" *ngIf="!(isLoading$ | async)">
           <table mdbTable striped="true">
             <thead>
               <tr>
                 <th>Name</th>
                 <th>prize</th>
-                <th>Description</th>
+                <th>{{ isLoading$ | async }}</th>
               </tr>
             </thead>
             <tbody>
@@ -49,7 +49,7 @@
                     <label for="address">Address</label>
                     <mdb-error *ngIf="address && address.invalid && (address.dirty || address.touched)">Address is required</mdb-error>
                   </div>
-                  <button mdbBtn [disabled]="poojasForm?.invalid || loadingAddPooja" class="mt-4 btn btn-floating add" (click)="onAddPooja()" size="sm" gradient="purple" mdbWavesEffect>
+                  <button mdbBtn [disabled]="poojasForm?.invalid || (isLoading$ | async)" class="mt-4 btn btn-floating add" (click)="onAddPooja()" size="sm" gradient="purple" mdbWavesEffect>
                     <mdb-icon fas icon="plus" class="white-text"></mdb-icon> <span class="pl-2 white-text">Add</span>
                   </button>
                   <!-- <a class="btn btn-primary btn-floating" (click)="onAddPooja()" style="background-color: #3b5998; height: 45px" href="javascript:void(0)" role="button"
@@ -62,6 +62,14 @@
           </table>
 
         </form>
+
+        <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 300px">
+          <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
+        
         </mdb-card-body>
       </mdb-card>
       

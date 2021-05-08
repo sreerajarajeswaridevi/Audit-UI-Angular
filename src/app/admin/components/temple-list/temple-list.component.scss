@@ -1,6 +1,7 @@
 .temples-list {
   box-sizing: border-box;
   justify-content: center;
+  user-select: none;
 
   mdb-card {
     min-width: 50%;

@@ -16,6 +16,7 @@ import { CustomersListComponent } from './components/customers-list/customers-li
 import { PoojasModalComponent } from './components/poojas-modal/poojas-modal.component';
 import { RightCardComponent } from './components/right-card/right-card.component';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UserModalComponent } from './components/user-modal/user-modal.component
     CustomersListComponent,
     PoojasModalComponent,
     RightCardComponent,
-    UserModalComponent
+    UserModalComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { UserModalComponent } from './components/user-modal/user-modal.component
     FormsModule,
     ModalModule,
     ButtonsModule,
-    CardsModule
+    CardsModule,
+    CoreModule
   ],
   exports: [CustomersListComponent, PoojasModalComponent, RightCardComponent, UserModalComponent],
   providers: [],

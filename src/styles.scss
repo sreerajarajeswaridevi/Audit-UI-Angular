@@ -58,3 +58,16 @@ app-welcome {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+@import './app/directives/datepicker.scss';
+
+blockquote {
+  margin: 0!important;
+  padding: 0 15px!important;
+}
+
+.price {
+  color: orange;
+  font-weight: bold;
+  font-size: 28px;
+}

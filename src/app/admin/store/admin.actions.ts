@@ -1,12 +1,17 @@
 import { Action } from '@ngrx/store';
 import { User } from 'src/app/auth/models/user.model';
-import { Customer } from '../../customers/models/customer.model';
 
 export enum AdminActionTypes {
   GET_USERS_LIST = '[Admin] Get Users List',
   DELETE_USER = '[Admin] DELETE User',
   USERS_LIST_FETCHED = '[Admin] Users list fetched',
   ADD_USER = '[Admin] Add User',
+
+  GET_TEMPLES = '[Admin] Get TEMPLES',
+  TEMPLES_LOADED = '[Admin] TEMPLES loaded',
+  DELETE_TEMPLES = '[Admin] Delete TEMPLES',
+  ADD_TEMPLE_QUERY = '[Admin] Add TEMPLE Query',
+  TEMPLE_ADDED = '[Admin] temple added',
 
   GET_USER_PROJECTS = '[Admin] Get user projects',
   USERS_PROJECTS_LOADED = '[Admin] User projects loaded',
@@ -38,6 +43,33 @@ export class AddUser implements Action {
   constructor(public payload: { user: User }) {}
 }
 
+
+export class GetTemples implements Action {
+  readonly type = AdminActionTypes.GET_TEMPLES;
+}
+
+export class DeleteTemples implements Action {
+  readonly type = AdminActionTypes.DELETE_TEMPLES;
+
+  constructor(public payload: { templeId: string }) {}
+}
+export class AddTemple implements Action {
+  readonly type = AdminActionTypes.ADD_TEMPLE_QUERY;
+  
+  constructor(public payload: { temple: any }) {}
+}
+// export class TempleAdded implements Action {
+//   readonly type = AdminActionTypes.TEMPLE_ADDED;
+
+//   constructor(public payload: { temple: any }) {}
+// }
+export class TemplesLoaded implements Action {
+  readonly type = AdminActionTypes.TEMPLES_LOADED;
+
+  constructor(public payload: { temples: any[] }) {}
+}
+
+
 export class UsersListFetched implements Action {
   readonly type = AdminActionTypes.USERS_LIST_FETCHED;
 
@@ -56,43 +88,6 @@ export class DeleteUserProject implements Action {
   constructor(public payload: { userId: string, projectId: string}) {}
 }
 
-export class AddAdminPrivileges implements Action {
-  readonly type = AdminActionTypes.ADD_ADMIN_PRIVILEGES;
-
-  constructor(public payload: { userId: string }) {}
-}
-
-export class UserProjectsLoaded implements Action {
-  readonly type = AdminActionTypes.USERS_PROJECTS_LOADED;
-
-  constructor(public payload: { uid: string, userProjects: any[] }) {}
-}
-
-export class GetUserCustomers implements Action {
-  readonly type = AdminActionTypes.GET_USER_CUSTOMERS;
-
-  constructor(public payload: { uid: string }) {}
-}
-
-export class DeleteUserCustomer implements Action {
-  readonly type = AdminActionTypes.DELETE_USER_CUSTOMER;
-
-  constructor(public payload: { userId: string, customerId: string}) {}
-}
-
-export class UserCustomersLoaded implements Action {
-  readonly type = AdminActionTypes.USERS_CUSTOMERS_LOADED;
-
-  constructor(public payload: { uid: string, userCustomers: Customer[] }) {}
-}
-
-
-export class RemoveAdminPrivileges implements Action {
-  readonly type = AdminActionTypes.REMOVE_ADMIN_PRIVILEGES;
-
-  constructor(public payload: { userId: string }) {}
-}
-
 export class AdminError implements Action {
   readonly type = AdminActionTypes.ADMIN_ERROR;
 
@@ -103,12 +98,9 @@ export type AdminActions =
   | GetUsersList
   | DeleteUser
   | UsersListFetched
-  | GetUserProjects
-  | UserProjectsLoaded
-  | DeleteUserProject
-  | GetUserCustomers
-  | UserCustomersLoaded
-  | DeleteUserCustomer
-  | AddAdminPrivileges
-  | RemoveAdminPrivileges
-  | AdminError;
+  | GetTemples
+  | AddTemple
+  // | TempleAdded
+  | DeleteTemples
+  | TemplesLoaded
+  | AdminError

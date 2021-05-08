@@ -1,16 +1,113 @@
-<app-split-body [isLoading$]="isLoading$">
+<app-split-body [isLoading$]="!isLoading$">
   <div class="left-section">
-    <div class="white px-4 section-header">
-      <h3>Donation LIST</h3>
-      <p class="grey-text pt-3">Manage your Donations list</p>
-    </div>
+    <mdb-card>
+      <mdb-card-header class="w-100 d-flex justify-space-between bg-primary white-text">
+        <div>
+          <blockquote class="text-left  blockquote bq-success">
+            <h3 class="header">Add Donations</h3>
+            <p class="py-0" *ngIf="donationForm.valid">Adding a donation of <span class="price">&#x20B9;{{donationForm?.value.amount}}</span> from {{donationForm?.value.name}}</p>
+          </blockquote>
+        </div>
+        <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="endDate"
+        (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
+        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ selectedDate }}
+      </button>
+      </mdb-card-header>
+      <mdb-card-body class="py-2">
+        <div class="modal-content">
+          <form #donationForm="ngForm">
+          <div class="modal-body">
+            <div class="left-section">
+                <div class="md-form">
+                  <input type="text" id="name" name="name" class="form-control" [(ngModel)]="donation.name" mdbInput mdbValidate
+                    [validateSuccess]="false" #name="ngModel" required>
+                  <label for="name">Name</label>
+                  <mdb-error *ngIf="name && name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
+                </div>
+        
+                <div class="btn-toolbar star-container" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="md-form hidden">
+                    <input type="text" id="star" name="star" class="form-control" [(ngModel)]="donation.star" mdbInput mdbValidate
+                      [validateSuccess]="false" #star="ngModel">
+                    <label for="star">Star</label>
+                  </div>
+                  <div class="btn-group mr-2" role="group" aria-label="First group">
+                      <button (click)="selectStar(star)"
+                      *ngFor="let star of starSigns" mdbBtn type="button" color="grey" [outline]="star !== donation.star" [class.selected]="star === donation.star"
+                       mdbWavesEffect>{{star}}</button>
+                  </div>
+                </div>
+                <div class="md-form">
+                  <textarea type="text" id="address" name="address" class="md-textarea form-control" #address="ngModel"
+                    [(ngModel)]="donation.address" mdbInput mdbValidate [validateSuccess]="false"></textarea>
+                  <label for="address">Address (Optional)</label>
+                </div>
+          
+              
+            </div>
+            <div class="right-section">
+              <mdb-card class="text-center">
+                <mdb-card-body>
+                  <div class="md-form phone">
+                    <input type="number" id="phone" name="phone" class="form-control" #phone="ngModel" [(ngModel)]="donation.phoneNumber" mdbInput mdbValidate
+                      [validateSuccess]="false">
+                    <label for="phone">Phone Number(Optional)</label>
+                  </div>
+                  <div class="text-lg mt-4 amount">
+                    <label for="amount" class="grey-text">Amount</label>
+                    <div class="md-form d-flex mt-0">
+                      <span class="price">&#x20B9;</span>
+                      <input type="number" class="price" id="amount" name="amount" [(ngModel)]="donation.amount" #amount="ngModel" required mdbValidate>
+                      <mdb-error *ngIf="amount && amount.invalid && (amount.dirty || amount.touched)">Amount is required</mdb-error>
+                    </div>
+                  </div>
+                </mdb-card-body>
+              </mdb-card>
+            </div>
+          </div>
+        </form>
+
+        </div>
+      </mdb-card-body>
+      <mdb-card-footer class="modal-footer">
+          <div class="d-flex">
+            <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="donationForm.reset()"
+              mdbWavesEffect>Clear</button>
+            <button type="button" mdbBtn color="success" [disabled]="donationForm.invalid" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
+              changes</button>
+    
+          </div>
+    
+      </mdb-card-footer>
+    </mdb-card>
+    
   </div>
   <div class="right-section">
-    <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
+    <app-right-card [header]="'Todays Donations'">
+      <div class="card-header">Todays Donations</div>
+      <table mdbTable small="true" striped="true">
+        <tbody>
+          <tr>
+            <th scope="row">Name 1</th>
+            <td>Star 1</td>
+          </tr>
+          <tr>
+            <th scope="row">Name 2</th>
+            <td>Star 2</td>
+          </tr>
+          <tr>
+            <th scope="row">Name 3</th>
+            <td>Star 3</td>
+          </tr>
+        </tbody>
+      </table>
+    </app-right-card>
+
+    <!-- <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
       <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
         <span class="sr-only">Loading...</span>
       </div>
-    </div>
+    </div> -->
   </div>
 </app-split-body>
 

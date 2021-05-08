@@ -17,6 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthModule } from '../auth/auth.module';
 import { SplitBodyComponent } from './split-body/split-body.component';
+import { DatePickerDirective } from '../directives/date-picker.directive';
 
 @NgModule({
   imports: [
@@ -36,14 +37,16 @@ import { SplitBodyComponent } from './split-body/split-body.component';
     HomeComponent,
     DashboardComponent,
     PageNotFoundComponent,
-    SplitBodyComponent
+    SplitBodyComponent,
+    DatePickerDirective
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     MainComponent,
     HomeComponent,
-    SplitBodyComponent
+    SplitBodyComponent,
+    DatePickerDirective
   ]
 })
 export class CoreModule {}

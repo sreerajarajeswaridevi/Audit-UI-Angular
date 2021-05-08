@@ -1,16 +1,86 @@
-<app-split-body [isLoading$]="isLoading$">
+<app-split-body [isLoading$]="!isLoading$">
   <div class="left-section">
-    <div class="white px-4 section-header">
-      <h3>EXPENSES LIST</h3>
-      <p class="grey-text pt-3">Manage your Expenses</p>
-    </div>
+    <mdb-card>
+      <mdb-card-header class="w-100 d-flex justify-space-between bg-primary white-text">
+        <div>
+          <blockquote class="text-left  blockquote bq-success">
+            <h3 class="header">Add Expense</h3>
+            <p class="py-0">Add any expense here</p>
+          </blockquote>
+        </div>
+        <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="endDate"
+        (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
+        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ selectedDate }}
+      </button>
+      </mdb-card-header>
+  
+      <mdb-card-body class="py-2">
+        <form #expenseForm="ngForm">
+
+          <div class="d-flex">
+          <div class="md-form">
+            <input type="text" id="item" name="item" class="form-control" [(ngModel)]="expense.item" mdbInput mdbValidate [validateSuccess]="false" #item="ngModel" required>
+            <label for="item">Item</label>
+            <mdb-error *ngIf="item && item.invalid && (item.dirty || item.touched)">item is required</mdb-error>
+          </div>
+
+          </div>
+
+          <div class="md-form" style="margin-top: 15px;">
+            <textarea type="text" id="description" name="description" class="my-0 py-0 md-textarea form-control" 
+            #description="ngModel" [(ngModel)]="expense.description" mdbInput mdbValidate
+              [validateSuccess]="false" required></textarea>
+            <label for="description">Description</label>
+            <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">Description is required</mdb-error>
+          </div>
+
+          <div class="text-lg">
+            <label for="cost" class="grey-text">Cost</label>
+            <div class="md-form d-flex mt-0">
+              <span class="price">&#x20B9;</span>
+              <input type="number" class="price" id="cost" name="cost" [(ngModel)]="expense.cost" #cost="ngModel" required>
+              <mdb-error *ngIf="cost && cost.invalid && (cost.dirty || cost.touched)">Cost is required</mdb-error>
+            </div>
+          </div>
+
+        </form>
+      </mdb-card-body>
+      <mdb-card-footer class="d-flex">
+        <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="expenseForm.reset()">Clear
+          </button>
+        <button type="button" mdbBtn color="success" [disabled]="expenseForm.invalid" class="relative waves-light pull-right" mdbWavesEffect (click)="onSave()">Save
+          </button>
+
+      </mdb-card-footer>
+    </mdb-card>
+    
   </div>
   <div class="right-section">
-    <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
+    <app-right-card [header]="'Todays Expenses'">
+      <div class="card-header">Todays Expenses</div>
+      <table mdbTable small="true" striped="true">
+        <tbody>
+          <tr>
+            <th scope="row">Name 1</th>
+            <td>Star 1</td>
+          </tr>
+          <tr>
+            <th scope="row">Name 2</th>
+            <td>Star 2</td>
+          </tr>
+          <tr>
+            <th scope="row">Name 3</th>
+            <td>Star 3</td>
+          </tr>
+        </tbody>
+      </table>
+    </app-right-card>
+
+    <!-- <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
       <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
         <span class="sr-only">Loading...</span>
       </div>
-    </div>
+    </div> -->
   </div>
 </app-split-body>
 

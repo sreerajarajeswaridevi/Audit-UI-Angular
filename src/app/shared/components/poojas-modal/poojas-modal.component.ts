@@ -7,7 +7,7 @@ import { NewPoojaResponse, Poojas, starSigns } from 'src/app/poojas/models/pooja
 // import { Poojas } from '../../../poojas/models/poojas.model';
 // import { Subject } from 'rxjs';
 // import { NgForm } from '@angular/forms';
-
+var moment = require('../../../../assets/datepicker/moment.js');
 @Component({
   selector: 'app-poojas-modal',
   templateUrl: './poojas-modal.component.html',
@@ -15,7 +15,11 @@ import { NewPoojaResponse, Poojas, starSigns } from 'src/app/poojas/models/pooja
 })
 export class PoojasModalComponent implements OnInit {
   @ViewChild('poojasForm', { static: true }) poojasForm: NgForm;
-  
+
+  defaultDate = moment();
+  startDate = moment();
+  endDate = moment().add('30', 'days');
+  selectedDate = moment();
   pooja: Poojas = {};
   poojasData: Subject<Poojas> = new Subject();
   heading: string;
@@ -25,7 +29,8 @@ export class PoojasModalComponent implements OnInit {
     phoneNumber: '',
     address: '',
     persons: [],
-    totalPrice: 0
+    totalPrice: 0,
+    date: moment().format('dddd DD/MM/YYYY')
   }
 
   constructor(public modalRef: MDBModalRef) { }
@@ -35,6 +40,15 @@ export class PoojasModalComponent implements OnInit {
 
   onClose() {
     this.modalRef.hide();
+  }
+
+  datePicked(date: any) {
+    console.log(this.response);
+    this.response.date = date.format('DD/MM/YYYY');
+  }
+
+  dateClicked(date: any) {
+    console.log(date);
   }
 
   onSave() {

@@ -1,8 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { AdminService } from '../../services/admin.service';
-
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from 'src/app/reducers';
+import * as fromAdmin from '../../store/admin.actions';
+import { getTemplesList, getTemplesListLoading,  } from '../../store/admin.selectors';
 @Component({
   selector: 'app-temple-list',
   templateUrl: './temple-list.component.html',
@@ -10,14 +12,15 @@ import { AdminService } from '../../services/admin.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TempleListComponent implements OnInit {
-  temples = [];
+  temples: any = [];
   newTemple: FormGroup;
   loadingAddTemple = false;
+  isLoading$: Observable<boolean>;
 
-  constructor(private admimService: AdminService,
-    private cdr: ChangeDetectorRef,
+  constructor(
     private formBuilder: FormBuilder,
-    private toastr: ToastrService) { 
+    private store: Store<AppState>,
+    ) { 
    this.initFormGroup();
   }
 
@@ -32,33 +35,23 @@ export class TempleListComponent implements OnInit {
 
   ngOnInit() {
     this.getTempleList();
+    this.isLoading$ = this.store.select(getTemplesListLoading);
   }
 
   getTempleList() {
-    this.admimService.getTempleList().subscribe((list: any) => {
-      if (list && list.data) {
-        this.temples = list.data;
-        this.cdr.detectChanges();
-      }
-    },
-    () => { this.toastr.error('Error adding temple. Please try later')})
+    this.store.select(getTemplesList).subscribe((temples: any[]) => {
+      this.temples = temples;
+      this.initFormGroup();
+    })
+    this.store.dispatch(new fromAdmin.GetTemples());
   }
 
 
   onAddTemple() {
-    this.loadingAddTemple = true;
-    this.admimService.addTemple({
+    this.store.dispatch(new fromAdmin.AddTemple({ temple: {
       "name": "morpheus",
       "job": "leader"
-    }).subscribe(() => {
-      this.loadingAddTemple = false;
-      this.getTempleList();
-      this.initFormGroup();
-    },
-    () => { 
-      this.loadingAddTemple = false;
-      this.toastr.error('Error adding temple. Please try later');
-    })
+    }}));
   }
 
 }

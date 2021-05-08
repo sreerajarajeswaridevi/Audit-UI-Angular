@@ -1,11 +1,18 @@
 <div class="modal-content">
-  <div class="modal-header">
+  <div class="modal-header bg-primary white-text">
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">×</span>
     </button>
+    <div class="d-flex mr-4 align-items-center justify-content-center datepicker">
+      
+      <button mdbWavesEffect mdbBtn type="button" color="white" rounded="true" class="pull-right text-lg" rrDatePicker [date]="selectedDate" 
+      (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
+      <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ response.date}}
+    </button>
+    </div>
     <div class="d-flex flex-column">
       <h3 class="modal-title w-100" id="myModalLabel">{{ heading }}</h3>
-      <span class="price">&#x20B9; {{ price }}</span>
+      <span class="price">&#x20B9;{{ price }}</span>
     </div>
   </div>
   <div class="modal-body">
@@ -71,7 +78,6 @@
         </mdb-card-footer>
       </mdb-card>
     </div>
-    
   </div>
   <div class="modal-footer">
     <button type="button" mdbBtn class="waves-light" color="secondary" aria-label="Close" (click)="addPerson()"
@@ -80,7 +86,7 @@
       <div class="d-flex">
         <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="modalRef.hide()"
           mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="primary" [disabled]="response.persons.length === 0 " class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
+        <button type="button" mdbBtn color="success" [disabled]="response.persons.length === 0 " class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
           changes</button>
 
       </div>

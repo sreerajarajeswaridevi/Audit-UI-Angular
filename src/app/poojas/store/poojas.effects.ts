@@ -51,12 +51,22 @@ export class PoojasEffects {
     ),
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   added$ = this.actions$.pipe(
-    ofType(PoojasActionTypes.POOJAS_ADDED),
-    map((action: fromPoojas.PoojasAdded) => action.payload),
-    withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.poojasService.add(payload.customer, user.temple))
+    ofType(PoojasActionTypes.POOJAS_ADD_QUERY),
+    map((action: fromPoojas.PoojasAddQuery) => action.payload),
+    withLatestFrom(this.store.pipe(select(getPoojas))),
+    switchMap((payload: any) => this.poojasService.add(payload.poojas)
+    .pipe(
+      map((list: any) => {
+        console.log(list.data);
+        return (new fromPoojas.PoojasQuery());
+      }),
+      catchError(error => {
+        this.toastr.error('Something went wrong. Please try after sometime');
+        return of(new fromPoojas.PoojasError({ error }));
+      })
+    ))
   );
 
   @Effect({ dispatch: false })

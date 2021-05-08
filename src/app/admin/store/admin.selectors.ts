@@ -40,12 +40,22 @@ export const getUserCustomers = createSelector(
   }
 );
 
-export const getUserProjectsLoading = createSelector(
+export const getTemplesList = createSelector(
   getAdminState,
-  admin => admin.userProjectsLoading
+  admin => admin.temples
 );
 
-export const getUserCustomersLoading = createSelector(
+export const getTemplesListLoading = createSelector(
   getAdminState,
-  admin => admin.userCustomersLoading
+  admin => admin.templesListLoading
 );
+
+// export const getUserProjectsLoading = createSelector(
+//   getAdminState,
+//   admin => admin.userProjectsLoading
+// );
+
+// export const getUserCustomersLoading = createSelector(
+//   getAdminState,
+//   admin => admin.userCustomersLoading
+// );

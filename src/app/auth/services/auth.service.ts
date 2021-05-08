@@ -3,16 +3,18 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 // import * as firebase from 'firebase/app';
 // import { AngularFireDatabase } from '@angular/fire/database';
-import { mockUser } from '../models/user.model';
+// import { mockUser } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-
+import { AppState } from 'src/app/reducers';
+import { Store } from '@ngrx/store';
+import { getUser } from '../store/auth.selectors';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private store: Store<AppState>) { }
 
   register(username: string, password: string) {
     return of([username, password]);
@@ -29,7 +31,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http.get(
-      // `${environment.apiUrl}/api_exec?api=login&user=${username}&pass=${password}&temple=root`,
+      // `${environment.apiUrl}/api_exec?api=login&user=${username}&pass=${password}`,
       `${environment.apiUrl}/login`,
       {
         params: {
@@ -49,19 +51,20 @@ export class AuthService {
 
   getUser() {
     // const users = this.db.object('users/' + user.temple);
-    const data = {
-      user: {
-        ...mockUser.user,
-        username: localStorage.getItem('username'),
-        password: localStorage.getItem('password'),
-        role: localStorage.getItem('role'),
-      }
-    };
-    if (data.user.username && data.user.password) {
-      return of(data);
-    } else {
-      return of(null);
-    }
+    return this.store.select(getUser);
+    // const data = {
+    //   user: {
+    //     ...mockUser.user,
+    //     username: localStorage.getItem('username'),
+    //     password: localStorage.getItem('password'),
+    //     role: localStorage.getItem('role'),
+    //   }
+    // };
+    // if (data.user.username && data.user.password) {
+    //   return of(data);
+    // } else {
+    //   return of(null);
+    // }
   }
 
   saveUser(username: string, password: string, role: string) {

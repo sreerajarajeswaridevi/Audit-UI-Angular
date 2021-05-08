@@ -13,7 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { AngularFirestoreModule } from '@angular/fire/firestore';
 // import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { SharedModule } from './shared/shared.module';
@@ -21,6 +21,7 @@ import { AdminModule } from './admin/admin.module';
 import { ModalModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { APIInterceptor } from './interceptors/api.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,6 +54,7 @@ import { ToastrModule } from 'ngx-toastr';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([])
   ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
