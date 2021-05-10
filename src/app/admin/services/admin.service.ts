@@ -17,7 +17,7 @@ export class AdminService {
   getUsersList() {
     // original users list api call goes here
     return this.http.get(
-      `${environment.apiUrl}/users?page=2`
+      `${environment.apiUrl}?api=listUsers`
     );
   }
 
@@ -30,15 +30,31 @@ export class AdminService {
   //   );
   // }
 
+  
+  addUser(user: any) {
+    return this.http.post(
+      `${environment.apiUrl}?api=addUser`,
+      // {
+      //   ...user
+      // }
+      {
+        "add_username": `${user.username}@${user.temple}`,
+        "add_password": user.password,
+        "add_role": user.role,
+        "add_email": user.email,
+      }
+    );
+  }
+
   getTempleList() {
     return this.http.get(
-      `${environment.apiUrl}/unknown`
+      `${environment.apiUrl}?api=listTemples`
     );
   }
 
   addTemple(temple: any) {
     return this.http.post(
-      `${environment.apiUrl}/users`,
+      `${environment.apiUrl}?api=addTemple`,
       {
         ...temple
       }

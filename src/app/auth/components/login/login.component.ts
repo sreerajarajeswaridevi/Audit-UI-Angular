@@ -6,6 +6,7 @@ import * as actions from './../../store/auth.actions';
 import { Observable } from 'rxjs';
 import { getError } from '../../store/auth.selectors';
 import { map } from 'rxjs/operators';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -51,7 +52,9 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     if (this.loginForm.valid) {
-      this.store.dispatch(new actions.LoginRequested(this.loginForm.value));
+      const request = {...this.loginForm.value};
+      request.password = CryptoJS.SHA256(request.password)
+      this.store.dispatch(new actions.LoginRequested(request));
     }
   }
 

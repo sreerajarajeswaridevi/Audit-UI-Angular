@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { getUser } from 'src/app/auth/store/auth.selectors';
 import { AppState } from 'src/app/reducers';
 import * as fromAdmin from '../../store/admin.actions';
 import { getTemplesList, getTemplesListLoading,  } from '../../store/admin.selectors';
@@ -12,30 +13,32 @@ import { getTemplesList, getTemplesListLoading,  } from '../../store/admin.selec
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TempleListComponent implements OnInit {
+  @ViewChild('templeForm', { static: true }) templeForm: NgForm;
+
   temples: any = [];
-  newTemple: FormGroup;
+  newTemple: any = {};
   loadingAddTemple = false;
   isLoading$: Observable<boolean>;
+  isAdmin = false;
 
   constructor(
-    private formBuilder: FormBuilder,
     private store: Store<AppState>,
     ) { 
-   this.initFormGroup();
+  //  this.initFormGroup();
   }
 
   initFormGroup() {
-    this.newTemple = this.formBuilder.group({
-      name: new FormControl('', Validators.required),
-      code:  new FormControl('', Validators.required),
-      address:  new FormControl('', Validators.required),
-    });   
-    this.newTemple.reset();
+    // if (this.templeForm) {
+    //   this.templeForm.reset();
+    // }
   }
 
   ngOnInit() {
     this.getTempleList();
     this.isLoading$ = this.store.select(getTemplesListLoading);
+    this.store.select(getUser).subscribe((user: any) => {
+      this.isAdmin = user.isAdmin;
+    })
   }
 
   getTempleList() {
@@ -48,10 +51,7 @@ export class TempleListComponent implements OnInit {
 
 
   onAddTemple() {
-    this.store.dispatch(new fromAdmin.AddTemple({ temple: {
-      "name": "morpheus",
-      "job": "leader"
-    }}));
+    this.store.dispatch(new fromAdmin.AddTemple({ temple: this.templeForm.value}));
   }
 
 }

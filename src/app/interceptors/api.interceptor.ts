@@ -24,10 +24,10 @@ export class APIInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
         if (this.user && !req.url.includes('login')) {
-            // const authReq = req.clone({
-            //     url: `${req.url}?username=${this.user.username}&&password={this.user.password}`
-            //   });
-            // return next.handle(authReq);
+            const authReq = req.clone({
+                url: `${req.url}&username=${this.user.username}&password=${this.user.password}`
+              });
+            return next.handle(authReq);
         }
     return next.handle(req);
   }

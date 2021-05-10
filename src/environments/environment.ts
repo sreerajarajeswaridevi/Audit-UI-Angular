@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   firebase: {},
-  apiUrl: 'https://reqres.in/api'
-  // apiUrl: 'https://api.sreerajarajeswaridevi.org/dev'
+  // apiUrl: 'https://reqres.in/api'
+  apiUrl: 'https://api.sreerajarajeswaridevi.org/dev/api_exec'
 };
 
 /*

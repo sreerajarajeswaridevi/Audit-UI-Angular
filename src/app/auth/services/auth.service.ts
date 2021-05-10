@@ -31,14 +31,14 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http.get(
-      // `${environment.apiUrl}/api_exec?api=login&user=${username}&pass=${password}`,
-      `${environment.apiUrl}/login`,
-      {
-        params: {
-          'email': 'eve.holt@reqres.in' || username,
-          'password': 'cityslicka' || password
-        }
-      }
+      `${environment.apiUrl}?api=login&username=${username}&password=${password}`,
+      // `${environment.apiUrl}/login`,
+      // {
+      //   params: {
+      //     'email': 'eve.holt@reqres.in' || username,
+      //     'password': 'cityslicka' || password
+      //   }
+      // }
     );
   }
 
@@ -104,4 +104,5 @@ export class AuthService {
     // return this.afAuth.auth.currentUser;
     return of(null);
   }
+
 }

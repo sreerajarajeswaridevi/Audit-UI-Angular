@@ -25,7 +25,7 @@
               <tr class="bg-white">
                 <td>
                   <div class="md-form">
-                    <input type="text" id="name" name="name" class="form-control" 
+                    <input type="text" id="add_pooja_name" name="name" class="form-control" 
                     #name="ngModel" [(ngModel)]="newPooja.name" mdbInput mdbValidate
                       [validateSuccess]="false" required>
                     <label for="name">Name</label>
@@ -34,7 +34,7 @@
                 </td>
                 <td>
                   <div class="md-form">
-                    <input type="text" id="code" name="code" class="form-control" 
+                    <input type="text" id="add_pooja_code" name="code" class="form-control" 
                     #code="ngModel" [(ngModel)]="newPooja.code" mdbInput mdbValidate
                       [validateSuccess]="false" required>
                     <label for="code">Code</label>
@@ -43,7 +43,7 @@
                 </td>
                 <td class="d-flex align-content-center justify-items-center">
                   <div class="md-form" style="margin-top: 15px;">
-                    <textarea type="text" id="address" name="address" class="my-0 py-0 md-textarea form-control" 
+                    <textarea type="text" id="add_pooja_address" name="address" class="my-0 py-0 md-textarea form-control" 
                     #address="ngModel" [(ngModel)]="newPooja.address" mdbInput mdbValidate
                       [validateSuccess]="false" required></textarea>
                     <label for="address">Address</label>

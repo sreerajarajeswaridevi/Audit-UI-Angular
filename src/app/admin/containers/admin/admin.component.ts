@@ -5,6 +5,7 @@ import { AppState } from '../../../../app/reducers';
 import * as fromAdmin from '../../store/admin.actions';
 import { Observable } from 'rxjs';
 import {
+  getTemplesList,
   getUsersList,
   getUsersListLoading
 } from '../../store/admin.selectors';
@@ -34,6 +35,7 @@ export class AdminComponent implements OnInit {
   selectedUser$: Observable<any>;
   selectedUser: any;
   uid: any;
+  templeList: any;
 
   private modalRef: MDBModalRef;
 
@@ -53,6 +55,9 @@ export class AdminComponent implements OnInit {
       })
     );
     this.usersListLoading$ = this.store.select(getUsersListLoading);
+    this.store.select(getTemplesList).subscribe((temples: any[]) => {
+      this.templeList = temples;
+    })
   }
 
   onProjectsLoad() {
@@ -91,7 +96,8 @@ export class AdminComponent implements OnInit {
       UserModalComponent,
       {...this.modalConfig,
       data: {
-        heading: 'Add User'
+        heading: 'Add User',
+        templeList: this.templeList
       }}
     );
 

@@ -22,17 +22,11 @@ export class AdminEffects {
     switchMap( () => this.adminService.getUsersList()
       .pipe(
         map( (users: any) => {
-          const usersList: any[] = users.data.map((res: any) => {
+          const usersList: any[] = users.userList.map((res: any) => {
             return {
-              id: res.id,
-              email: res.email,
-              first_name: res.first_name,
-              last_name: res.last_name,
+              ...res,
               avatar: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y',
-              isAdmin: false,
-              role: 'manager'
-              // isAdmin: res.role === 'admin'    ********uncomment theesese these 2
-              // role: res.role
+              isAdmin: res.role === 'admin'
             };
           });
           return (new fromAdmin.UsersListFetched({ usersList }));
@@ -61,6 +55,22 @@ export class AdminEffects {
     )
   );
 
+  @Effect()
+  addUser$ = this.actions$.pipe(
+    ofType(fromAdmin.AdminActionTypes.ADD_USER),
+    map( (action: fromAdmin.AddUser) => action.payload),
+    switchMap( (payload: any) => this.adminService.addUser(payload.user)
+      .pipe(map((res) => {
+        console.log('result came', res);
+        return (new fromAdmin.GetUsersList());
+        }),
+        catchError( (error: any) => {
+          this.toastr.error('Something went wrong. Please try after sometime');
+          return of(new fromAdmin.AdminError({ error }))})
+      )
+    )
+  );
+
   //  @Effect({ dispatch: false })
   // addAdminPrivileges$ = this.actions$.pipe(
   //   ofType(fromAdmin.AdminActionTypes.ADD_ADMIN_PRIVILEGES),
@@ -77,9 +87,17 @@ export class AdminEffects {
     ofType(fromAdmin.AdminActionTypes.GET_TEMPLES),
     switchMap( () => this.adminService.getTempleList()
       .pipe(
-        map((list: any) => {
-          console.log(list.data);
-          return (new fromAdmin.TemplesLoaded({ temples: list.data }));
+        map((data: any) => {
+          const templeMap = data.templeList.map((temple: any) => {
+            return {
+              addedBy: temple.added_by,
+              address: temple.address,
+              email: temple.email,
+              templeCode: temple.temple_code,
+              templeName: temple.temple_name
+            }
+          });
+          return (new fromAdmin.TemplesLoaded({ temples: templeMap }));
         }),
         catchError((error) => {
           this.toastr.error('Something went wrong. Please try after sometime');
