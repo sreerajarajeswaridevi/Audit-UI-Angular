@@ -18,7 +18,7 @@ $primary-color: #33b5e5;
 
 .c-datepicker {
   user-select: none;
-  min-height: 550px;
+  // min-height: 550px;
   position: fixed;
   left: 50%;
   top: 50%;
@@ -43,7 +43,7 @@ $primary-color: #33b5e5;
   position: relative; }
 
 .c-datepicker__header-day {
-  height: 32px;
+  // height: 32px;
   background: $primary-color;
   color: white;
   line-height: 32px;
@@ -145,10 +145,11 @@ $primary-color: #33b5e5;
   opacity: 1; }
 
 .modal-btns {
-  padding: 20px;
-  position: absolute;
-  bottom: 0;
-  right: 0; }
+  position: relative;
+  bottom: 19px;
+  padding: 10px 0;
+  right: 0;
+}
 
 .c-datepicker__day-body {
   font-size: 12px;

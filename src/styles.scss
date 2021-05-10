@@ -8,6 +8,10 @@ body {
   box-sizing: border-box;
 }
 
+label, div {
+  user-select: none; 
+}
+
 .full-page-container {
   height: calc(100vh - 114px);
 }
