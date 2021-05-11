@@ -35,7 +35,8 @@ export function authReducer(state = authInitialState, action: AuthAction): AuthS
 
     case AuthActionTypes.AUTH_ERROR: {
       return Object.assign({}, state, {
-        error: action.payload.error
+        error: action.payload.error,
+        isLoading: false
       });
     }
 
