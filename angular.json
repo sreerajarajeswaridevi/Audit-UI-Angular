@@ -25,7 +25,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets/datepicker",
-              "src/assets"
+              "src/assets/images",
+              "src/assets "
             ],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",

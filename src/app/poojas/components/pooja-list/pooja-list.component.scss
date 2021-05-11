@@ -5,7 +5,9 @@
 
   mdb-card {
     min-width: 50%;
-    overflow: auto;
+    mdb-card-body {
+      overflow: auto;
+    }
   }
 }
 
