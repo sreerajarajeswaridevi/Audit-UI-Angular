@@ -70,7 +70,6 @@ export class PoojasComponent implements OnInit {
     this.modalRef = this.modalService.show(PoojasModalComponent, {
       ...this.modalConfig,
       data: {
-        id: pooja.id,
         heading: pooja.pooja_name,
         price: pooja.pooja_price
       }

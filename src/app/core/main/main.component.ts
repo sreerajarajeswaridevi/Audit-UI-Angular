@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { getUser } from 'src/app/auth/store/auth.selectors';
 import { AppState } from 'src/app/reducers';
@@ -13,7 +12,7 @@ export class MainComponent implements OnInit {
   isAdmin = false;
   role = '';
 
-  constructor(private router: Router, private store: Store<AppState>,) { }
+  constructor(private store: Store<AppState>,) { }
 
   ngOnInit() {
     // this.router.navigateByUrl('expenses'); // for dev purpose only so that current working page loads first
