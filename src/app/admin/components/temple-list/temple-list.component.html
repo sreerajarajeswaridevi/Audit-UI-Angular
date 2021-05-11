@@ -54,7 +54,7 @@
                   </mdb-error>
                 </div>
               </td>
-              <td class="d-flex align-content-center justify-items-center">
+              <td>
                 <div class="md-form" style="margin-top: 15px;">
                   <textarea type="text" id="add_temple_address" name="temple_address" class="my-0 py-0 md-textarea form-control"
                     #temple_address="ngModel" [(ngModel)]="newTemple.temple_address" mdbInput mdbValidate
@@ -62,16 +62,17 @@
                   <label for="temple_address">Address</label>
                   <!-- <mdb-error *ngIf="address && address.invalid && (address.dirty || address.touched)">Address is required</mdb-error> -->
                 </div>
-                <button mdbBtn [disabled]="templeForm?.invalid || loadingAddTemple" class="mt-4 btn btn-floating add"
-                  (click)="onAddTemple()" size="sm" gradient="purple" mdbWavesEffect>
-                  <mdb-icon fas icon="plus" class="white-text"></mdb-icon> <span class="pl-2 white-text">Add</span>
-                </button>
                 <!-- <a class="btn btn-primary btn-floating" (click)="onAddTemple()" style="background-color: #3b5998; height: 45px" href="javascript:void(0)" role="button"
                     >
                     Add
                   </a> -->
               </td>
-              <td></td>
+              <td>
+                <button mdbBtn [disabled]="templeForm?.invalid || loadingAddTemple" class="mt-4 btn btn-floating add"
+                  (click)="onAddTemple()" size="sm" gradient="purple" mdbWavesEffect>
+                  <mdb-icon fas icon="plus" class="white-text"></mdb-icon> <span class="pl-2 white-text">Add</span>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
