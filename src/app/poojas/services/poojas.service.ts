@@ -17,11 +17,13 @@ export class PoojasService {
     return 'uid';
   }
 
-  add(newPooja: any) {
-    return this.http.post(
-      `${environment.apiUrl}/users`,
-      {
-        ...newPooja
+  addPoojaType(newPooja: any) {
+    return this.http.get(
+      `${environment.apiUrl}?api=addPoojaType`,
+      { 
+        params: {
+          ...newPooja
+        }
       }
     );
   }
@@ -31,9 +33,9 @@ export class PoojasService {
 
   }
 
-  getPoojas() {
+  getPoojaTypes() {
     return this.http.get(
-      `${environment.apiUrl}/unknown`
+      `${environment.apiUrl}?api=listPoojaTypes`
     );
   }
 

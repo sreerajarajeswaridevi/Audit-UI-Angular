@@ -48,7 +48,15 @@ export function authReducer(state = authInitialState, action: AuthAction): AuthS
     }
 
     case AuthActionTypes.LOGOUT_REQUESTED: {
-      return Object.assign({}, state);
+      return Object.assign({}, state, {
+        isLoading: true
+      });
+    }
+    
+    case AuthActionTypes.LOGIN_REQUESTED: {
+      return Object.assign({}, state, {
+        isLoading: true
+      });
     }
 
     default:

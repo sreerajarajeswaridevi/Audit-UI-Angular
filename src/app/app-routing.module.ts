@@ -18,7 +18,7 @@ const routes: Routes = [
     { path: 'expenses', loadChildren: './expenses/expenses.module#ExpensesModule'},
     { path: 'donations', loadChildren: './donations/donations.module#DonationsModule'},
     { path: 'customers', loadChildren: './customers/customers.module#CustomersModule'},
-    { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' },
+    { path: 'settings', loadChildren: './profile/profile.module#ProfileModule' },
     { path: 'charts', loadChildren: './charts/charts.module#ChartsDataModule' },
     { path: 'admin-panel', component: AdminComponent, canActivate: [AdminGuard] }
     // { path: 'projects', loadChildren: './projects/projects.module#ProjectsModule', canActivate: [AuthGuard]},

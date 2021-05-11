@@ -1,14 +1,17 @@
 export interface Poojas {
-    id?: number;
-    name?: string;
-    color?: string;
-    pantone_value?: string;
+    pooja_name?: string;
+    pooja_price?: string;
+    pooja_code?: string;
+    pooja_description?: string;
+    added_by?: string;
+
 
     address?: string;
     star?: string;
     price?: number
 }
 export interface NewPoojaResponse {
+    pooja_code?: string;
     phoneNumber?: string;
     address?: string;
     persons: any[];

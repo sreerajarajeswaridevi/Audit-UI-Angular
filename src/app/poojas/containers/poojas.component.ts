@@ -71,8 +71,8 @@ export class PoojasComponent implements OnInit {
       ...this.modalConfig,
       data: {
         id: pooja.id,
-        heading: pooja.name,
-        price: pooja.price
+        heading: pooja.pooja_name,
+        price: pooja.pooja_price
       }
     });
 

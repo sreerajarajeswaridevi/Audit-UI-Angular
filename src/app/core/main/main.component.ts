@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { getUser } from 'src/app/auth/store/auth.selectors';
+import { AppState } from 'src/app/reducers';
 
 @Component({
   selector: 'app-main',
@@ -7,12 +10,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+  isAdmin = false;
+  role = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private store: Store<AppState>,) { }
 
   ngOnInit() {
-    console.log(this.router);
     // this.router.navigateByUrl('expenses'); // for dev purpose only so that current working page loads first
+    this.store.select(getUser).subscribe((user: any) => {
+      this.isAdmin = user.isAdmin;
+      this.role = user.role
+    })
   }
 
 }

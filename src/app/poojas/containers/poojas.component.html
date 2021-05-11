@@ -1,8 +1,9 @@
 <app-split-body [isLoading$]="isLoading$">
   <div class="left-section">
     <a href="javascript:void(0)" role="button" class="p-4 m-1 btn btn-primary pooja-box" mdbWavesEffect *ngFor="let item of poojas" (click)="newPooja(item)">
-      <h3>{{item.name}}</h3>
-      <p class="grey-text pt-3">{{item.pantone_value}}</p>
+      <h5>{{item.pooja_name}}</h5>
+      <p class="grey-text">{{item.pooja_description}}</p>
+      <h3 class="price">&#x20B9;{{ item.pooja_price }}</h3>
     </a>
   </div>
   <div class="right-section">

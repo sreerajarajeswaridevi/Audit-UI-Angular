@@ -14,10 +14,9 @@ import { SharedModule } from '../shared/shared.module';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { TempleListComponent } from './components/temple-list/temple-list.component';
 import { FormsModule } from '@angular/forms';
-import { PoojaListComponent } from './components/pooja-list/pooja-list.component';
 
 @NgModule({
-  declarations: [AdminComponent, UsersListComponent, UserComponent, UserDetailComponent, TempleListComponent, PoojaListComponent],
+  declarations: [AdminComponent, UsersListComponent, UserComponent, UserDetailComponent, TempleListComponent],
   imports: [
     CommonModule,
     SharedModule,

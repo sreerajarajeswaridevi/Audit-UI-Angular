@@ -2,13 +2,13 @@ import { Action } from '@ngrx/store';
 import { Poojas } from '../models/poojas.model';
 
 export enum PoojasActionTypes {
-  POOJAS_QUERY = '[Poojas] Query',
-  POOJAS_LOADED = '[Poojas] Fetched',
+  POOJAS_QUERY = '[Poojas] Query Pooja Types',
+  POOJAS_LOADED = '[Poojas] Fetched Pooja Types',
 
-  POOJAS_ADD_QUERY = '[Poojas] Add new Pooja',
-  POOJAS_ADDED = '[Poojas] Added',
-  POOJAS_EDITED = '[Poojas] Edited',
-  POOJAS_DELETED = '[Poojas] Deleted',
+  POOJAS_ADD_QUERY = '[Poojas] Add new Pooja Type',
+  POOJAS_ADDED = '[Poojas] Added New Pooja Type',
+  POOJAS_EDITED = '[Poojas] Edited Pooja Type',
+  POOJAS_DELETED = '[Poojas] Deleted Pooja Type',
 
   POOJAS_ERROR = '[Poojas] Error'
 }

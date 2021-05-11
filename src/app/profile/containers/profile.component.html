@@ -1,7 +1,12 @@
-<div class="white px-4 section-header">
-  <h3>Profile</h3>
-  <p class="grey-text pt-3">Change your personal information</p>
+<div class="white px-4 py-2">
+  <blockquote class="text-left  blockquote bq-success">
+    <h3 class="header">Settings</h3>
+    <p class="py-0">Change your pooja and profile settings here</p>
+  </blockquote>
 </div>
+
+<app-pooja-list *ngIf="user.role === 'manager'"></app-pooja-list>
+
 
 <div class="container py-5">
   <div class="row mx-auto py-5">
@@ -9,7 +14,7 @@
       <app-profile-user [user]="user$ | async" (logout)="logoutUser($event)"></app-profile-user>
     </div>
     <div class="col-md-8 mt-3">
-        <app-main-profile [user]="user$ | async" (profileUpdate)="updateProfile($event)"></app-main-profile>
+      <app-main-profile [user]="user$ | async" (profileUpdate)="updateProfile($event)"></app-main-profile>
     </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SHA256 } from 'crypto-js';
 // import { AngularFireDatabase } from '@angular/fire/database';
 import { of, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -32,16 +33,26 @@ export class AdminService {
 
   
   addUser(user: any) {
-    return this.http.post(
+    const enc = SHA256(user.password).toString();
+    return this.http.get(
       `${environment.apiUrl}?api=addUser`,
-      // {
-      //   ...user
-      // }
+      { params: {
+          "add_username": `${user.username}@${user.temple}`,
+          "add_password": enc,
+          "add_role": user.role,
+          "add_email": user.email
+        }
+      }
+    );
+  }
+
+  deleteUser(username: string) {
+    return this.http.get(
+      `${environment.apiUrl}?api=deleteUser`,
       {
-        "add_username": `${user.username}@${user.temple}`,
-        "add_password": user.password,
-        "add_role": user.role,
-        "add_email": user.email,
+        params: {
+          'delete_username': username
+        }
       }
     );
   }
@@ -53,10 +64,12 @@ export class AdminService {
   }
 
   addTemple(temple: any) {
-    return this.http.post(
+    return this.http.get(
       `${environment.apiUrl}?api=addTemple`,
       {
-        ...temple
+        params: {
+          ...temple
+        }
       }
     );
   }
@@ -76,13 +89,6 @@ export class AdminService {
   deleteUserCustomer(uid: string, customerId: string) {
     return of([uid, customerId]);
 
-  }
-
-  deleteUser(user: string) {
-    console.log('deleted', user);
-    return this.http.get(
-      `${environment.apiUrl}/users/2`
-    );
   }
 
   addAdminPrivileges(uid: string) {

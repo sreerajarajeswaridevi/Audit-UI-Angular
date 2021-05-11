@@ -14,7 +14,6 @@
 <div *ngIf="!(usersListLoading$ | async)" class="container-fluid mt-3 pb-5">
   <app-users-list *ngIf="!selectedUser" [users]="users$ | async" (addUser)="openAddUserModal($event)"
     (deleteUser)="onDeleteUser($event)"></app-users-list>
-    <app-pooja-list></app-pooja-list>
     <app-temple-list></app-temple-list>
     <!-- <app-user-detail
     *ngIf="selectedUser"

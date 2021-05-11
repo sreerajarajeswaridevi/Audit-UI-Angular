@@ -2,10 +2,16 @@
   color: white;
   padding-right: 50px;
   padding-left: 50px;
+  user-select: none;
 }
 
 .navbar-nav {
   align-items: center;
+}
+
+.navbar-brand img {
+  // background: white;
+  // border-radius: 50%;
 }
 
 .nav-link.active {

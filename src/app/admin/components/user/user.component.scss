@@ -1,3 +1,6 @@
 .delete {
     cursor: pointer;
 }
+:host, .username {
+    user-select: text;
+}

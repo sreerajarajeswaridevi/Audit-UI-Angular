@@ -6,6 +6,7 @@ import { ProfileComponent } from './containers/profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { MainProfileComponent } from './components/main-profile/main-profile.component';
 import { ProfileUserComponent } from './components/profile-user/profile-user.component';
+import { PoojasModule } from '../poojas/poojas.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ProfileUserComponent } from './components/profile-user/profile-user.com
     ButtonsModule,
     InputsModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    PoojasModule
   ],
   declarations: [ProfileComponent, MainProfileComponent, ProfileUserComponent],
   exports: [ProfileComponent]

@@ -15,6 +15,7 @@ import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
 import { Customer } from '../../../customers/models/customer.model';
 import { UserModalComponent } from 'src/app/shared/components/user-modal/user-modal.component';
+import { getUser } from 'src/app/auth/store/auth.selectors';
 
 @Component({
   selector: 'app-admin',
@@ -36,6 +37,7 @@ export class AdminComponent implements OnInit {
   selectedUser: any;
   uid: any;
   templeList: any;
+  isAdmin = false;
 
   private modalRef: MDBModalRef;
 
@@ -58,38 +60,11 @@ export class AdminComponent implements OnInit {
     this.store.select(getTemplesList).subscribe((temples: any[]) => {
       this.templeList = temples;
     })
+    this.store.select(getUser).subscribe((user: any) => {
+      this.isAdmin = user.isAdmin;
+    })
   }
 
-  onProjectsLoad() {
-    this.store.dispatch(new fromAdmin.GetUserProjects({ uid: this.uid }));
-  }
-
-  onCustomersLoad() {
-  }
-
-  onDetailsClose() {
-    this.selectedUser = null;
-  }
-
-  openProjectConfirmModal(project: any) {
-    this.modalRef = this.modalService.show(
-      ConfirmModalComponent,
-      this.modalConfig
-    );
-
-    this.modalRef.content.confirmation
-      .pipe(take(1))
-      .subscribe((confirmation: boolean) => {
-        if (confirmation) {
-          this.store.dispatch(
-            new fromAdmin.DeleteUserProject({
-              userId: this.selectedUser.key,
-              projectId: project.key
-            })
-          );
-        }
-      });
-  }
 
   openAddUserModal() {
     this.modalRef = this.modalService.show(

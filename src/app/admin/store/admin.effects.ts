@@ -25,7 +25,7 @@ export class AdminEffects {
           const usersList: any[] = users.userList.map((res: any) => {
             return {
               ...res,
-              avatar: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y',
+              avatar: 'https://img.icons8.com/bubbles/2x/user-male.png',
               isAdmin: res.role === 'admin'
             };
           });
@@ -44,8 +44,7 @@ export class AdminEffects {
     ofType(fromAdmin.AdminActionTypes.DELETE_USER),
     map( (action: fromAdmin.DeleteUser) => action.payload),
     switchMap( (payload: any) => this.adminService.deleteUser(payload.user.username)
-      .pipe(map((res) => {
-        console.log('result came', res);
+      .pipe(map(() => {
         return (new fromAdmin.GetUsersList());
         }),
         catchError( (error: any) => {
@@ -88,16 +87,7 @@ export class AdminEffects {
     switchMap( () => this.adminService.getTempleList()
       .pipe(
         map((data: any) => {
-          const templeMap = data.templeList.map((temple: any) => {
-            return {
-              addedBy: temple.added_by,
-              address: temple.address,
-              email: temple.email,
-              templeCode: temple.temple_code,
-              templeName: temple.temple_name
-            }
-          });
-          return (new fromAdmin.TemplesLoaded({ temples: templeMap }));
+          return (new fromAdmin.TemplesLoaded({ temples: data.templeList }));
         }),
         catchError((error) => {
           this.toastr.error('Something went wrong. Please try after sometime');

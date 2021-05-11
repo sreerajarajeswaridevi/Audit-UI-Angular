@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { getError } from '../../store/auth.selectors';
 import { map } from 'rxjs/operators';
 import * as CryptoJS from 'crypto-js';
+import { getIsLoading } from 'src/app/auth/store/auth.selectors';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   error$: Observable<string | null>;
+  isLoading$: Observable<boolean>;
 
   constructor(private store: Store<AppState>) { }
 
@@ -33,6 +35,8 @@ export class LoginComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', Validators.required)
     });
+    this.isLoading$ = this.store.select(getIsLoading);
+
 
     this.error$ = this.store
       .pipe(

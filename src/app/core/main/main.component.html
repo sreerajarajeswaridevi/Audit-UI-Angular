@@ -1,12 +1,12 @@
 <div class="container py-5 pages">
   <div class="row">
-    <div class="col-lg-6 col-sm-6">
+    <div class="col-lg-6 col-sm-6" *ngIf="!isAdmin">
       <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
         <a routerLink="/poojas" mdbBtn gradient="purple">Poojas</a>
       </mdb-card>
     </div>
 
-    <div class="col-lg-6 col-sm-6">
+    <div class="col-lg-6 col-sm-6" *ngIf="!isAdmin">
       <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
         <a routerLink="/expenses" mdbBtn gradient="blue">Expenses</a>
       </mdb-card>
@@ -14,7 +14,7 @@
   <!-- </div> -->
   <!-- <div class="row"> -->
 
-    <div class="col-lg-6 col-sm-6">
+    <div class="col-lg-6 col-sm-6" *ngIf="!isAdmin">
       <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
         <a routerLink="/donations" mdbBtn gradient="aqua">Donations</a>
       </mdb-card>
@@ -22,7 +22,13 @@
 
     <div class="col-lg-6 col-sm-6">
       <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
-        <a routerLink="/profile" mdbBtn gradient="purple">Profile</a>
+        <a routerLink="/settings" mdbBtn gradient="purple">Settings</a>
+      </mdb-card>
+    </div>
+
+    <div class="col-lg-6 col-sm-6" *ngIf="isAdmin">
+      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
+        <a routerLink="/admin-panel" mdbBtn gradient="aqua">Admin Panel</a>
       </mdb-card>
     </div>
 

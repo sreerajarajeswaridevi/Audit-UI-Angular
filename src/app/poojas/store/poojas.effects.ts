@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { PoojasService } from '../services/poojas.service';
 import { PoojasActionTypes } from './poojas.actions';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
-import { Poojas } from '../models/poojas.model';
+// import { Poojas } from '../models/poojas.model';
 
 import * as fromPoojas from './poojas.actions';
 import { of } from 'rxjs';
@@ -27,21 +27,10 @@ export class PoojasEffects {
   query$ = this.actions$.pipe(
     ofType(PoojasActionTypes.POOJAS_QUERY),
     withLatestFrom(this.store.pipe(select(getPoojas))),
-    switchMap(([]: any) => this.poojasService.getPoojas()
+    switchMap(([]: any) => this.poojasService.getPoojaTypes()
       .pipe(
         map((list: any) => {
-          const PoojasData: Poojas[] = list.data.map((res: any) => {
-            return {
-              year: res.year,
-              id: res.id,
-              name: res.name,
-              color: res.color,
-              pantone_value: res.pantone_value,
-
-              price: 20
-            };
-          });
-          return (new fromPoojas.PoojasLoaded({ poojas: PoojasData }));
+          return (new fromPoojas.PoojasLoaded({ poojas: list.poojaTypesList }));
         }),
         catchError(error => {
           this.toastr.error('Something went wrong. Please try after sometime');
@@ -52,11 +41,11 @@ export class PoojasEffects {
   );
 
   @Effect()
-  added$ = this.actions$.pipe(
+  addPoojaType$ = this.actions$.pipe(
     ofType(PoojasActionTypes.POOJAS_ADD_QUERY),
     map((action: fromPoojas.PoojasAddQuery) => action.payload),
-    withLatestFrom(this.store.pipe(select(getPoojas))),
-    switchMap((payload: any) => this.poojasService.add(payload.poojas)
+    // withLatestFrom(this.store.pipe(select(getPoojas))),
+    switchMap((payload: any) => this.poojasService.addPoojaType(payload.poojas)
     .pipe(
       map((list: any) => {
         console.log(list.data);

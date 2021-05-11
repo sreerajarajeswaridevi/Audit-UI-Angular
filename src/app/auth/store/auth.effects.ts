@@ -140,7 +140,7 @@ export class AuthEffects {
       }),
       tap(() => this.router.navigateByUrl('')),
       catchError(error => { 
-        this.toastr.error('Auth Error. Please try after sometime');
+        this.toastr.error('Login failed. Please check your username and password.');
         this.authService.clearLocalData(); return of(new auth.AuthError({ error })) })
     )
     )

@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Poojas } from 'src/app/poojas/models/poojas.model';
 import { getPoojas } from 'src/app/poojas/store/poojas.selectors';
 import { AppState } from 'src/app/reducers';
-import * as fromPoojas from '../../../poojas/store/poojas.actions';
+import * as fromPoojas from '../../store/poojas.actions';
 import { getIsLoading } from 'src/app/poojas/store/poojas.selectors';
 import { Observable } from 'rxjs';
 
@@ -15,47 +15,49 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PoojaListComponent implements OnInit {
+  @ViewChild('poojasForm', { static: true }) poojasForm: NgForm;
+
   poojas: Poojas[] = [];
-  newPooja: FormGroup;
+  newPooja: any = {};
   isLoading$: Observable<boolean>;
 
   constructor(
-    private formBuilder: FormBuilder,
     private store: Store<AppState>,
-    ) { 
-   this.initFormGroup();
-  }
-
-  initFormGroup() {
-    this.newPooja = this.formBuilder.group({
-      name: new FormControl('', Validators.required),
-      code:  new FormControl('', Validators.required),
-      address:  new FormControl('', Validators.required),
-    });   
-    this.newPooja.reset();
+  ) {
   }
 
   ngOnInit() {
     this.getPoojaList();
     this.isLoading$ = this.store.select(getIsLoading);
+    this.initFormGroup();
   }
-
+  
+  initFormGroup() {
+    this.newPooja = {};
+    this.poojasForm && this.poojasForm.reset();
+  }
+  
   getPoojaList() {
     this.store.select(getPoojas).subscribe((poojas: Poojas[]) => {
       this.poojas = poojas;
       this.initFormGroup();
     })
     this.store.dispatch(new fromPoojas.PoojasQuery());
-    
+
+  }
+  onAddPoojaType() {
+    const req = this.newPooja;
+    this.store.dispatch(new fromPoojas.PoojasAddQuery({ poojas: req }));
   }
 
-
-  onAddPooja() {
-
-    this.store.dispatch(new fromPoojas.PoojasAddQuery({ poojas: {
-      "name": "morpheus",
-      "job": "leader"
-    }}));
+  generateCode(str: string) {
+    let code = '';
+    str.split('').forEach((char: string, index: number) => {
+      if (index % 2 === 0 && char !== ' ') {
+        code += char;
+      }
+    });
+    return `${code.slice(0, 5)}-${this.poojas.length + 1}`;
   }
 
 }

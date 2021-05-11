@@ -20,46 +20,46 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of temples">
-              <td scope="row">{{ item.templeName }}</td>
-              <td>{{ item.templeCode }}</td>
-              <td>{{ item.email }}</td>
-              <td>{{ item.address }}</td>
-              <td *ngIf="isAdmin">{{ item.addedBy }}</td>
+              <td scope="row">{{ item.temple_name }}</td>
+              <td>{{ item.temple_code }}</td>
+              <td>{{ item.temple_email }}</td>
+              <td>{{ item.temple_address }}</td>
+              <td *ngIf="isAdmin">{{ item.added_by }}</td>
             </tr>
             <tr class="bg-white" *ngIf="!(isLoading$ | async)">
               <td>
                 <div class="md-form">
-                  <input type="text" id="add_temple_templeName" name="templeName" class="form-control" #templeName="ngModel"
-                    [(ngModel)]="newTemple.templeName" mdbInput mdbValidate [validateSuccess]="false" required>
-                  <label for="templeName">Temple Name</label>
-                  <mdb-error *ngIf="templeName && templeName.invalid && (templeName.dirty || templeName.touched)">Temple
+                  <input type="text" id="add_temple_temple_name" name="temple_name" class="form-control" #temple_name="ngModel"
+                    [(ngModel)]="newTemple.temple_name" mdbInput mdbValidate [validateSuccess]="false" required>
+                  <label for="temple_name">Temple Name</label>
+                  <mdb-error *ngIf="temple_name && temple_name.invalid && (temple_name.dirty || temple_name.touched)">Temple
                     name is required</mdb-error>
                 </div>
               </td>
               <td>
                 <div class="md-form">
-                  <input type="text" id="add_temple_templeCode" name="templeCode" class="form-control" #templeCode="ngModel"
-                    [(ngModel)]="newTemple.templeCode" mdbInput mdbValidate [validateSuccess]="false" required>
-                  <label for="templeCode">Temple Code</label>
-                  <mdb-error *ngIf="templeCode && templeCode.invalid && (templeCode.dirty || templeCode.touched)">Temple
+                  <input type="text" id="add_temple_temple_code" name="temple_code" class="form-control" #temple_code="ngModel"
+                    [(ngModel)]="newTemple.temple_code" mdbInput mdbValidate [validateSuccess]="false" required>
+                  <label for="temple_code">Temple Code</label>
+                  <mdb-error *ngIf="temple_code && temple_code.invalid && (temple_code.dirty || temple_code.touched)">Temple
                     Code is required</mdb-error>
                 </div>
               </td>
               <td>
                 <div class="md-form">
-                  <input type="text" id="add_temple_email" name="email" class="form-control" #email="ngModel"
-                    [(ngModel)]="newTemple.email" mdbInput mdbValidate [validateSuccess]="false" required>
-                  <label for="email">Email</label>
-                  <mdb-error *ngIf="email && email.invalid && (email.dirty || email.touched)">Email is required
+                  <input type="text" id="add_temple_email" name="temple_email" class="form-control" #temple_email="ngModel"
+                    [(ngModel)]="newTemple.temple_email" mdbInput mdbValidate [validateSuccess]="false" required>
+                  <label for="temple_email">Email</label>
+                  <mdb-error *ngIf="temple_email && temple_email.invalid && (temple_email.dirty || temple_email.touched)">Email is required
                   </mdb-error>
                 </div>
               </td>
               <td class="d-flex align-content-center justify-items-center">
                 <div class="md-form" style="margin-top: 15px;">
-                  <textarea type="text" id="add_temple_address" name="address" class="my-0 py-0 md-textarea form-control"
-                    #address="ngModel" [(ngModel)]="newTemple.address" mdbInput mdbValidate
+                  <textarea type="text" id="add_temple_address" name="temple_address" class="my-0 py-0 md-textarea form-control"
+                    #temple_address="ngModel" [(ngModel)]="newTemple.temple_address" mdbInput mdbValidate
                     [validateSuccess]="false"></textarea>
-                  <label for="address">Address</label>
+                  <label for="temple_address">Address</label>
                   <!-- <mdb-error *ngIf="address && address.invalid && (address.dirty || address.touched)">Address is required</mdb-error> -->
                 </div>
                 <button mdbBtn [disabled]="templeForm?.invalid || loadingAddTemple" class="mt-4 btn btn-floating add"
@@ -76,8 +76,7 @@
           </tbody>
         </table>
         
-        <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center"
-        style="margin-top: 300px">
+        <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center my-4">
         <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
           <span class="sr-only">Loading...</span>
         </div>

@@ -9,12 +9,19 @@ import { environment } from 'src/environments/environment';
 import { AppState } from 'src/app/reducers';
 import { Store } from '@ngrx/store';
 import { getUser } from '../store/auth.selectors';
+import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private store: Store<AppState>) { }
+  private user: User;
+
+  constructor(private http: HttpClient, private store: Store<AppState>) { 
+    this.store.select(getUser).subscribe((user: User) => {
+      this.user = user;
+    })
+  }
 
   register(username: string, password: string) {
     return of([username, password]);
@@ -89,7 +96,7 @@ export class AuthService {
 
   checkUserRole() {
     // return this.db.object('admins/' + uid).valueChanges();
-    if (localStorage.getItem('role') === 'admin') {
+    if (this.user && this.user.role === 'admin') {
       return of(true);
     }
     return of(false);

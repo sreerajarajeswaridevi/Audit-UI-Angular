@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PoojasRoutingModule } from './poojas-routing.module';
 import { PoojasComponent } from './containers/poojas.component';
 import { FormsModule } from '@angular/forms';
-import { ButtonsModule, InputsModule, TableModule, IconsModule, ModalModule } from 'angular-bootstrap-md';
+import { ButtonsModule, InputsModule, TableModule, IconsModule, ModalModule, CardsModule, DropdownModule, InputUtilitiesModule } from 'angular-bootstrap-md';
 
 import * as fromPoojas from './store/poojas.reducer';
 import { StoreModule } from '@ngrx/store';
@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { PoojasEffects } from './store/poojas.effects';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
+import { PoojaListComponent } from './components/pooja-list/pooja-list.component';
 
 @NgModule({
   imports: [
@@ -24,11 +25,14 @@ import { SharedModule } from '../shared/shared.module';
     IconsModule,
     TableModule,
     CoreModule,
-    SharedModule,
+    CardsModule,
+    SharedModule,    
+    DropdownModule,
+    InputUtilitiesModule,
     StoreModule.forFeature('poojas', fromPoojas.PoojasReducer),
     EffectsModule.forFeature([PoojasEffects])
   ],
-  declarations: [PoojasComponent],
-  exports: [PoojasComponent]
+  declarations: [PoojasComponent, PoojaListComponent],
+  exports: [PoojasComponent, PoojaListComponent]
 })
 export class PoojasModule { }

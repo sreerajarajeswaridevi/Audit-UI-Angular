@@ -13,8 +13,13 @@ import * as fromAuth from './../../auth/store/auth.actions';
 })
 export class ProfileComponent implements OnInit {
   user$: Observable<User | null>;
+  public user: User;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) { 
+    this.store.select(getUser).subscribe((user: User) => {
+      this.user = user;
+    })
+  }
 
   ngOnInit() {
     this.user$ = this.store.select(getUser);

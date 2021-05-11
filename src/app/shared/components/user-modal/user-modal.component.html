@@ -36,7 +36,7 @@
       <div class="md-form mt-0">
         <select class="browser-default custom-select form-control pl-1" type="select" id="add_user_temple" name="temple" [(ngModel)]="user.temple" mdbSelect mdbValidate [validateSuccess]="false" #temple="ngModel" required>
           <option value="" disabled selected hidden>Select user temple</option>
-          <option [value]="temple.templeCode" *ngFor="let temple of templeList">{{ temple.templeName }}</option>
+          <option [value]="temple.temple_code" *ngFor="let temple of templeList">{{ temple.temple_name }}</option>
         </select>
         <mdb-error *ngIf="temple && temple.invalid && (temple.dirty || temple.touched)">temple is required</mdb-error>
     </div>
@@ -45,9 +45,9 @@
       <div class="md-form mt-0">
         <select class="browser-default custom-select form-control pl-1" type="select" id="add_user_role" name="role" [(ngModel)]="user.role" mdbSelect mdbValidate [validateSuccess]="false" #role="ngModel" required>
           <option value="" disabled selected hidden>Select user role</option>
-          <option value="'admin'" *ngIf="isAdmin">admin</option>
-          <option value="'manager'">manager</option>
-          <option value="'user'">user</option>
+          <option value="admin" *ngIf="isAdmin">admin</option>
+          <option value="manager">manager</option>
+          <option value="user">user</option>
         </select>
         <mdb-error *ngIf="role && role.invalid && (role.dirty || role.touched)">role is required</mdb-error>
     </div>
