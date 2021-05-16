@@ -8,7 +8,7 @@ export enum PoojasActionTypes {
   POOJAS_ADD_QUERY = '[Poojas] Add new Pooja Type',
   POOJAS_ADDED = '[Poojas] Added New Pooja Type',
   POOJAS_EDITED = '[Poojas] Edited Pooja Type',
-  POOJAS_DELETED = '[Poojas] Deleted Pooja Type',
+  POOJA_DELETE_QUERY = '[Poojas] Delete Pooja Type',
 
   POOJAS_ERROR = '[Poojas] Error'
 }
@@ -36,9 +36,9 @@ export class PoojasEdited implements Action {
 }
 
 export class PoojasDeleted implements Action {
-  readonly type = PoojasActionTypes.POOJAS_DELETED;
+  readonly type = PoojasActionTypes.POOJA_DELETE_QUERY;
 
-  constructor(public payload: { poojas: Poojas }) {}
+  constructor(public payload: { pooja_code: string }) {}
 }
 
 export class PoojasError implements Action {

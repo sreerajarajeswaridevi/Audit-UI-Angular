@@ -74,9 +74,17 @@ export class PoojasEffects {
 
   @Effect({ dispatch: false })
   delete$ = this.actions$.pipe(
-    ofType(PoojasActionTypes.POOJAS_DELETED),
+    ofType(PoojasActionTypes.POOJA_DELETE_QUERY),
     map((action: fromPoojas.PoojasDeleted) => action.payload),
-    withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.poojasService.delete(payload.customer, user.temple_code))
+    switchMap((pooja: any) => {
+      return this.poojasService.deletePooja(pooja.pooja_code)
+    .pipe(map(() => {
+        return (new fromPoojas.PoojasQuery());
+        }),
+        catchError( (error: any) => {
+          this.toastr.error('Something went wrong. Please try after sometime');
+          return of(new fromPoojas.PoojasError({ error }))})
+      )}
+    )
   );
 }

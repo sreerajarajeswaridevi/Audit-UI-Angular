@@ -25,6 +25,11 @@
                 <td>{{ item.pooja_description }}</td>
                 <td class="text-warning"><b>&#x20B9;{{ item.pooja_price }}</b></td>
                 <td>{{ item.added_by }}</td>
+                <td>
+                  <mdb-icon fas icon="trash" class="float-right delete grey-text" (click)="onDeletePooja(item.pooja_code)" alt="Delete Pooja"></mdb-icon>
+                </td>
+                
+
               </tr>
               <tr class="bg-white">
                 <td>

@@ -7,6 +7,9 @@ import { AppState } from 'src/app/reducers';
 import * as fromPoojas from '../../store/poojas.actions';
 import { getIsLoading } from 'src/app/poojas/store/poojas.selectors';
 import { Observable } from 'rxjs';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
+import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pooja-list',
@@ -21,8 +24,15 @@ export class PoojaListComponent implements OnInit {
   newPooja: any = {};
   isLoading$: Observable<boolean>;
 
+  private modalRef: MDBModalRef;
+
+  modalConfig = {
+    class: 'modal-dialog-centered',
+  };
+
   constructor(
     private store: Store<AppState>,
+    private modalService: MDBModalService
   ) {
   }
 
@@ -58,6 +68,26 @@ export class PoojaListComponent implements OnInit {
       }
     });
     return `${code.slice(0, 5)}-${this.poojas.length + 1}`;
+  }
+
+  
+  openUserDeleteConfirmModal(pooja_code: string) {
+    this.modalRef = this.modalService.show(
+      ConfirmModalComponent,
+      this.modalConfig
+    );
+
+    this.modalRef.content.confirmation
+      .pipe(take(1))
+      .subscribe((confirmation: boolean) => {
+        if (confirmation) {
+          this.store.dispatch(new fromPoojas.PoojasDeleted({ pooja_code: pooja_code }));
+        }
+      });
+  }
+
+  onDeletePooja(pooja_code: string) {
+    this.openUserDeleteConfirmModal(pooja_code);
   }
 
 }

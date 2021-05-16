@@ -1,19 +1,22 @@
 <div class="white px-4 py-2">
   <blockquote class="text-left  blockquote bq-success">
     <h3 class="header">Settings</h3>
-    <p class="py-0">Change your pooja and profile settings here</p>
+    <p class="py-0" *ngIf="user.role === 'manager'">Change your pooja and profile settings here</p>
   </blockquote>
 </div>
 
-<app-pooja-list *ngIf="user.role === 'manager'"></app-pooja-list>
+<ng-container *ngIf="user.role === 'manager'">
+  <app-pooja-list></app-pooja-list>
+  
+  <div class="white px-4 py-2" >
+    <blockquote class="text-left  blockquote bq-success">
+      <h3 class="header">Add or remove Users</h3>
+    </blockquote>
+    <app-users-list [users]="users$ | async" (addUser)="openAddUserModal($event)"
+    (deleteUser)="onDeleteUser($event)"></app-users-list>
+  </div>
 
-<div class="white px-4 py-2">
-  <blockquote class="text-left  blockquote bq-success">
-    <h3 class="header">Add or remove Users</h3>
-  </blockquote>
-  <app-users-list *ngIf="user.role === 'manager'" [users]="users$ | async" (addUser)="openAddUserModal($event)"
-  (deleteUser)="onDeleteUser($event)"></app-users-list>
-</div>
+</ng-container>
 
 <div class="container py-5">
   <div class="row mx-auto py-5">

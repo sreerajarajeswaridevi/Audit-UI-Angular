@@ -65,7 +65,7 @@ export class DonationsEffects {
 
   @Effect({ dispatch: false })
   delete$ = this.actions$.pipe(
-    ofType(DonationsActionTypes.POOJAS_DELETED),
+    ofType(DonationsActionTypes.POOJA_DELETE_QUERY),
     map((action: fromDonations.DonationsDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
     switchMap(([payload, user]: any) => this.donationsService.delete(payload.customer, user.temple_code))

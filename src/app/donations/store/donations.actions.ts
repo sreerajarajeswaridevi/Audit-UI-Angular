@@ -7,7 +7,7 @@ export enum DonationsActionTypes {
 
   POOJAS_ADDED = '[Donations] Added',
   POOJAS_EDITED = '[Donations] Edited',
-  POOJAS_DELETED = '[Donations] Deleted',
+  POOJA_DELETE_QUERY = '[Donations] Deleted',
 
   POOJAS_ERROR = '[Donations] Error'
 }
@@ -35,7 +35,7 @@ export class DonationsEdited implements Action {
 }
 
 export class DonationsDeleted implements Action {
-  readonly type = DonationsActionTypes.POOJAS_DELETED;
+  readonly type = DonationsActionTypes.POOJA_DELETE_QUERY;
 
   constructor(public payload: { donations: Donations }) {}
 }

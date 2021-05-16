@@ -65,7 +65,7 @@ export class ExpensesEffects {
 
   @Effect({ dispatch: false })
   delete$ = this.actions$.pipe(
-    ofType(ExpensesActionTypes.POOJAS_DELETED),
+    ofType(ExpensesActionTypes.POOJA_DELETE_QUERY),
     map((action: fromExpenses.ExpensesDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
     switchMap(([payload, user]: any) => this.expensesService.delete(payload.customer, user.temple_code))

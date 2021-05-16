@@ -7,7 +7,7 @@ export enum ExpensesActionTypes {
 
   POOJAS_ADDED = '[Expenses] Added',
   POOJAS_EDITED = '[Expenses] Edited',
-  POOJAS_DELETED = '[Expenses] Deleted',
+  POOJA_DELETE_QUERY = '[Expenses] Deleted',
 
   POOJAS_ERROR = '[Expenses] Error'
 }
@@ -35,7 +35,7 @@ export class ExpensesEdited implements Action {
 }
 
 export class ExpensesDeleted implements Action {
-  readonly type = ExpensesActionTypes.POOJAS_DELETED;
+  readonly type = ExpensesActionTypes.POOJA_DELETE_QUERY;
 
   constructor(public payload: { expenses: Expenses }) {}
 }

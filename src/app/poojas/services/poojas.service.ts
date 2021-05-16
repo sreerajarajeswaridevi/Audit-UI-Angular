@@ -44,8 +44,14 @@ export class PoojasService {
 
   }
 
-  delete(poojas: Poojas, userId: string) {
-    return of([poojas, userId]);
-
+  deletePooja(pooja_code: string) {
+    return this.http.get(
+      `${environment.apiUrl}?api=deletePoojaType`,
+      { 
+        params: {
+          pooja_code: pooja_code
+        }
+      }
+    );
   }
 }
