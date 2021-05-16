@@ -7,6 +7,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { MainProfileComponent } from './components/main-profile/main-profile.component';
 import { ProfileUserComponent } from './components/profile-user/profile-user.component';
 import { PoojasModule } from '../poojas/poojas.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { PoojasModule } from '../poojas/poojas.module';
     InputsModule,
     ReactiveFormsModule,
     FormsModule,
-    PoojasModule
+    PoojasModule,
+    SharedModule
   ],
   declarations: [ProfileComponent, MainProfileComponent, ProfileUserComponent],
   exports: [ProfileComponent]

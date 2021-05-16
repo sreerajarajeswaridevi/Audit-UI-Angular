@@ -28,9 +28,9 @@ export class TempleListComponent implements OnInit {
   }
 
   initFormGroup() {
-    // if (this.templeForm) {
-    //   this.templeForm.reset();
-    // }
+    if (this.templeForm) {
+      this.templeForm.reset();
+    }
   }
 
   ngOnInit() {
@@ -38,6 +38,7 @@ export class TempleListComponent implements OnInit {
     this.isLoading$ = this.store.select(getTemplesListLoading);
     this.store.select(getUser).subscribe((user: any) => {
       this.isAdmin = user.isAdmin;
+      this.initFormGroup();
     })
   }
 

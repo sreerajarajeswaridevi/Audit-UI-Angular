@@ -28,6 +28,10 @@ export class UserModalComponent implements OnInit {
     this.store.select(getUser).subscribe((user: any) => {
       this.isAdmin = user.isAdmin;
     })
+
+    if (this.templeList.length === 1) {
+      this.user.temple_code = this.templeList[0].temple_code;
+    }
   }
 
   onSave() {

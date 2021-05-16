@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from './containers/admin/admin.component';
-import { UsersListComponent } from './components/users-list/users-list.component';
-import { UserComponent } from './components/user/user.component';
 
 import * as fromAdmin from './store/admin.reducer';
 import { StoreModule } from '@ngrx/store';
@@ -16,7 +14,7 @@ import { TempleListComponent } from './components/temple-list/temple-list.compon
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AdminComponent, UsersListComponent, UserComponent, UserDetailComponent, TempleListComponent],
+  declarations: [AdminComponent, UserDetailComponent, TempleListComponent],
   imports: [
     CommonModule,
     SharedModule,

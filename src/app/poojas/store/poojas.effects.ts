@@ -63,7 +63,7 @@ export class PoojasEffects {
     ofType(PoojasActionTypes.POOJAS_EDITED),
     map((action: fromPoojas.PoojasEdited) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.poojasService.update(payload.customer, user.temple)
+    switchMap(([payload, user]: any) => this.poojasService.update(payload.customer, user.temple_code)
     .pipe(
       catchError( error => {
         this.toastr.error('Something went wrong. Please try after sometime');
@@ -77,6 +77,6 @@ export class PoojasEffects {
     ofType(PoojasActionTypes.POOJAS_DELETED),
     map((action: fromPoojas.PoojasDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.poojasService.delete(payload.customer, user.temple))
+    switchMap(([payload, user]: any) => this.poojasService.delete(payload.customer, user.temple_code))
   );
 }

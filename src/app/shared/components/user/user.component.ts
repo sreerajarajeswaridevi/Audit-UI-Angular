@@ -1,4 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { User } from 'src/app/auth/models/user.model';
+import { getUser } from 'src/app/auth/store/auth.selectors';
+import { AppState } from 'src/app/reducers';
 
 @Component({
   selector: 'app-user',
@@ -13,9 +17,14 @@ export class UserComponent implements OnInit {
   @Output() removeAdmin = new EventEmitter<any>();
   @Output() removeUser = new EventEmitter<any>();
 
-  constructor() { }
+  loggedInUser: User;
+
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
+    this.store.select(getUser).subscribe((user: User) => {
+      this.loggedInUser = user;
+    })
   }
 
   selectUser() {

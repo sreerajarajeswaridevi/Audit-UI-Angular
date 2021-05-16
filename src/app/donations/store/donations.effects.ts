@@ -20,7 +20,7 @@ export class DonationsEffects {
   query$ = this.actions$.pipe(
     ofType(DonationsActionTypes.POOJAS_QUERY),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([, user]: any) => this.donationsService.get(user.temple)
+    switchMap(([, user]: any) => this.donationsService.get(user.temple_code)
       .pipe(
         map((data: any) => {
           const DonationsData: Donations[] = data.map((res: any) => {
@@ -47,7 +47,7 @@ export class DonationsEffects {
     ofType(DonationsActionTypes.POOJAS_ADDED),
     map((action: fromDonations.DonationsAdded) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.donationsService.add(payload.customer, user.temple))
+    switchMap(([payload, user]: any) => this.donationsService.add(payload.customer, user.temple_code))
   );
 
   @Effect({ dispatch: false })
@@ -55,7 +55,7 @@ export class DonationsEffects {
     ofType(DonationsActionTypes.POOJAS_EDITED),
     map((action: fromDonations.DonationsEdited) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.donationsService.update(payload.customer, user.temple)
+    switchMap(([payload, user]: any) => this.donationsService.update(payload.customer, user.temple_code)
     .pipe(
       catchError( error => {
       return of(new fromDonations.DonationsError({ error }));
@@ -68,6 +68,6 @@ export class DonationsEffects {
     ofType(DonationsActionTypes.POOJAS_DELETED),
     map((action: fromDonations.DonationsDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.donationsService.delete(payload.customer, user.temple))
+    switchMap(([payload, user]: any) => this.donationsService.delete(payload.customer, user.temple_code))
   );
 }

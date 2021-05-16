@@ -20,7 +20,7 @@ export class CustomersEffects {
   query$ = this.actions$.pipe(
     ofType(CustomersActionTypes.CUSTOMERS_QUERY),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([, user]: any) => this.customersService.get(user.temple)
+    switchMap(([, user]: any) => this.customersService.get(user.temple_code)
       .pipe(
         map((data: any) => {
           const customersData: Customer[] = data.map((res: any) => {
@@ -47,7 +47,7 @@ export class CustomersEffects {
     ofType(CustomersActionTypes.CUSTOMERS_ADDED),
     map((action: fromCustomers.CustomersAdded) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.customersService.add(payload.customer, user.temple))
+    switchMap(([payload, user]: any) => this.customersService.add(payload.customer, user.temple_code))
   );
 
   @Effect({ dispatch: false })
@@ -55,7 +55,7 @@ export class CustomersEffects {
     ofType(CustomersActionTypes.CUSTOMERS_EDITED),
     map((action: fromCustomers.CustomersEdited) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.customersService.update(payload.customer, user.temple)
+    switchMap(([payload, user]: any) => this.customersService.update(payload.customer, user.temple_code)
     .pipe(
       catchError( error => {
       return of(new fromCustomers.CustomersError({ error }));
@@ -68,6 +68,6 @@ export class CustomersEffects {
     ofType(CustomersActionTypes.CUSTOMERS_DELETED),
     map((action: fromCustomers.CustomersDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.customersService.delete(payload.customer, user.temple))
+    switchMap(([payload, user]: any) => this.customersService.delete(payload.customer, user.temple_code))
   );
 }

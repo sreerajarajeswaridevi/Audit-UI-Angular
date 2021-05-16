@@ -120,7 +120,8 @@ export class AuthEffects {
           return of(new auth.AuthError({ error: 'Username and password do not match' }));
         }
         const user = {
-          temple: mockUser.user.temple,
+          temple_name: res.temple_name,
+          temple_code: res.temple_code,
           displayName: payload.username,
           photoUrl: mockUser.user.photoUrl,
           isAdmin: res.role === 'admin',
@@ -152,7 +153,6 @@ export class AuthEffects {
     map((action: auth.SaveUser) => action.payload),
     switchMap((payload: any) => {
       return [
-        new auth.UpdateOnlineStatus({ uid: payload.user.temple, status: true }),
         new auth.CheckUserRole({ isAdmin: payload.user.isAdmin })
       ];
     })
@@ -164,7 +164,7 @@ export class AuthEffects {
     map((action: auth.LogoutRequested) => action.payload),
     switchMap((payload: any) => {
       console.log('payload', payload);
-      return this.authService.logout(payload.user.temple)
+      return this.authService.logout(payload.user.username)
         .pipe(
           map(() => new auth.LogoutCompleted()),
           tap(() => this.authService.clearLocalData()),
@@ -182,14 +182,15 @@ export class AuthEffects {
   @Effect()
   getUser$ = this.actions$.pipe(
     ofType(auth.AuthActionTypes.GET_USER),
-    switchMap(() => this.authService.getAuthState()
+    switchMap(() => this.authService.getUser()
       .pipe(
         take(1),
         map((authData: any) => {
           if (authData) {
             const user = {
-              temple: mockUser.user.temple,
-              displayName: mockUser.user.displayName,
+              temple_code: authData.temple_code,
+              temple_name: authData.temple_name,
+              displayName: authData.username,
               photoUrl: authData.photoURL,
               username: authData.username,
               password: authData.password,

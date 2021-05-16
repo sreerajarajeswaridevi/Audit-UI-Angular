@@ -17,7 +17,6 @@ const routes: Routes = [
     { path: 'poojas', loadChildren: './poojas/poojas.module#PoojasModule'},
     { path: 'expenses', loadChildren: './expenses/expenses.module#ExpensesModule'},
     { path: 'donations', loadChildren: './donations/donations.module#DonationsModule'},
-    { path: 'customers', loadChildren: './customers/customers.module#CustomersModule'},
     { path: 'settings', loadChildren: './profile/profile.module#ProfileModule' },
     { path: 'charts', loadChildren: './charts/charts.module#ChartsDataModule' },
     { path: 'admin-panel', component: AdminComponent, canActivate: [AdminGuard] }

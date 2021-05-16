@@ -7,6 +7,13 @@
 
 <app-pooja-list *ngIf="user.role === 'manager'"></app-pooja-list>
 
+<div class="white px-4 py-2">
+  <blockquote class="text-left  blockquote bq-success">
+    <h3 class="header">Add or remove Users</h3>
+  </blockquote>
+  <app-users-list *ngIf="user.role === 'manager'" [users]="users$ | async" (addUser)="openAddUserModal($event)"
+  (deleteUser)="onDeleteUser($event)"></app-users-list>
+</div>
 
 <div class="container py-5">
   <div class="row mx-auto py-5">

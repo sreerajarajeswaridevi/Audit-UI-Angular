@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         select(getUser),
         switchMap((user: any) => {
           if (user) {
-            return this.customersService.get(user.temple);
+            return this.customersService.get(user.temple_code);
           } else {
             return empty();
           }

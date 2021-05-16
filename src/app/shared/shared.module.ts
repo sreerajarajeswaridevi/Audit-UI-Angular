@@ -8,7 +8,10 @@ import {
   InputUtilitiesModule,
   IconsModule,
   ModalModule,
-  TableModule
+  TableModule,
+  CollapseModule,
+  DropdownModule,
+  BadgeModule
 } from 'angular-bootstrap-md';
 import { CustomersModalComponent } from './components/customers-modal/customers-modal.component';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +20,8 @@ import { PoojasModalComponent } from './components/poojas-modal/poojas-modal.com
 import { RightCardComponent } from './components/right-card/right-card.component';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
 import { CoreModule } from '../core/core.module';
+import { UsersListComponent } from './components/users-list/users-list.component';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,8 @@ import { CoreModule } from '../core/core.module';
     PoojasModalComponent,
     RightCardComponent,
     UserModalComponent,
-    
+    UsersListComponent,
+    UserComponent
   ],
   imports: [
     CommonModule,
@@ -37,10 +43,14 @@ import { CoreModule } from '../core/core.module';
     FormsModule,
     ModalModule,
     ButtonsModule,
-    CardsModule,
+    CardsModule,    
+    CollapseModule,
+    DropdownModule,
+    BadgeModule,
+
     CoreModule
   ],
-  exports: [CustomersListComponent, PoojasModalComponent, RightCardComponent, UserModalComponent],
+  exports: [CustomersListComponent, PoojasModalComponent, RightCardComponent, UserModalComponent, UsersListComponent, UserComponent],
   providers: [],
   entryComponents: [
     ConfirmModalComponent,

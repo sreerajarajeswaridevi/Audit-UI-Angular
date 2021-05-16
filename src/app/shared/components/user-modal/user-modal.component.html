@@ -8,10 +8,13 @@
   <div class="modal-body">
     <form #userForm="ngForm">
 
-      <div class="md-form">
-        <input type="text" id="add_user_username" name="username" class="form-control" [(ngModel)]="user.username" mdbInput mdbValidate [validateSuccess]="false" #username="ngModel" required>
-        <label for="username">Username</label>
-        <mdb-error *ngIf="username && username.invalid && (username.dirty || username.touched)">username is required</mdb-error>
+      <div class="d-flex align-items-center">
+      <div class="md-form w-100">
+          <input type="text" id="add_user_username" name="username" class="form-control" [(ngModel)]="user.username" mdbInput mdbValidate [validateSuccess]="false" #username="ngModel" required>
+          <label for="username">Username</label>
+          <mdb-error *ngIf="username && username.invalid && (username.dirty || username.touched)">username is required</mdb-error>
+        </div>
+        <span *ngIf="user.temple_code">@{{ user.temple_code }}</span>
       </div>
 
       <div class="md-form">
@@ -32,9 +35,9 @@
         <mdb-error *ngIf="temple && temple.invalid && (temple.dirty || temple.touched)">Temple is required</mdb-error>
       </div> -->
 
-      <label for="role">Temple</label>
-      <div class="md-form mt-0">
-        <select class="browser-default custom-select form-control pl-1" type="select" id="add_user_temple" name="temple" [(ngModel)]="user.temple" mdbSelect mdbValidate [validateSuccess]="false" #temple="ngModel" required>
+      <label for="role" *ngIf="templeList.length > 1">Temple</label>
+      <div class="md-form mt-0" *ngIf="templeList.length > 1">
+        <select class="browser-default custom-select form-control pl-1" type="select" id="add_user_temple" name="temple" [(ngModel)]="user.temple_code" mdbSelect mdbValidate [validateSuccess]="false" #temple="ngModel" required>
           <option value="" disabled selected hidden>Select user temple</option>
           <option [value]="temple.temple_code" *ngFor="let temple of templeList">{{ temple.temple_name }}</option>
         </select>

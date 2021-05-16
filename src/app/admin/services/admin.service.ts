@@ -37,7 +37,7 @@ export class AdminService {
     return this.http.get(
       `${environment.apiUrl}?api=addUser`,
       { params: {
-          "add_username": `${user.username}@${user.temple}`,
+          "add_username": `${user.username}@${user.temple_code}`,
           "add_password": enc,
           "add_role": user.role,
           "add_email": user.email

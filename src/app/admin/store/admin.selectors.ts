@@ -13,32 +13,6 @@ export const getUsersListLoading = createSelector(
   admin => admin.usersListLoading
 );
 
-export const getSelectedUser = createSelector(
-  getUsersList,
-  (usersList: any, uid: string) => usersList.filter( (user: any) => user.temple === uid)[0]
-);
-
-export const getUserProjects = createSelector(
-  getAdminState,
-  (admin: any, uid: string) => {
-    if (admin.userProjects.hasOwnProperty(uid)) {
-      return admin.userProjects[uid];
-    } else {
-      return null;
-    }
-  }
-);
-
-export const getUserCustomers = createSelector(
-  getAdminState,
-  (admin: any, uid: string) => {
-    if (admin.userCustomers.hasOwnProperty(uid)) {
-      return admin.userCustomers[uid];
-    } else {
-      return null;
-    }
-  }
-);
 
 export const getTemplesList = createSelector(
   getAdminState,
@@ -49,13 +23,3 @@ export const getTemplesListLoading = createSelector(
   getAdminState,
   admin => admin.templesListLoading
 );
-
-// export const getUserProjectsLoading = createSelector(
-//   getAdminState,
-//   admin => admin.userProjectsLoading
-// );
-
-// export const getUserCustomersLoading = createSelector(
-//   getAdminState,
-//   admin => admin.userCustomersLoading
-// );
