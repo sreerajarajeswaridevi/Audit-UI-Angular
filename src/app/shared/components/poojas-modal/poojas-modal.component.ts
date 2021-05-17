@@ -71,7 +71,7 @@ export class PoojasModalComponent implements OnInit {
 
   addPerson() {
     this.response.persons.push(this.poojasForm.value);
-    this.response.totalPrice += this.price;
+    this.response.totalPrice += +(this.price);
     this.poojasForm.reset();
   }
 }
