@@ -3,13 +3,14 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ExpensesService } from '../services/expenses.service';
 import { ExpensesActionTypes } from './expenses.actions';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
-import { Expenses } from '../models/expenses.model';
 
 import * as fromExpenses from './expenses.actions';
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../reducers/index';
 import { getUser } from '../../auth/store/auth.selectors';
+
+var moment = require('../../../assets/datepicker/moment.js');
 
 @Injectable()
 export class ExpensesEffects {
@@ -18,22 +19,11 @@ export class ExpensesEffects {
 
   @Effect()
   query$ = this.actions$.pipe(
-    ofType(ExpensesActionTypes.POOJAS_QUERY),
-    withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([, user]: any) => this.expensesService.get(user.temple_code)
+    ofType(ExpensesActionTypes.EXPENSES_QUERY),
+    switchMap((payload: any) => this.expensesService.get(payload)
       .pipe(
         map((data: any) => {
-          const ExpensesData: Expenses[] = data.map((res: any) => {
-            const key = res.payload.key;
-            const customer: Expenses = res.payload.val();
-            return {
-              key: key,
-              id: customer.id,
-              name: customer.name,
-              description: customer.description
-            };
-          });
-          return (new fromExpenses.ExpensesLoaded({ Expenses: ExpensesData }));
+          return (new fromExpenses.ExpensesLoaded({ expenses: data.expensesList }));
         }),
         catchError(error => {
           return of(new fromExpenses.ExpensesError({ error }));
@@ -42,17 +32,24 @@ export class ExpensesEffects {
     ),
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   added$ = this.actions$.pipe(
-    ofType(ExpensesActionTypes.POOJAS_ADDED),
-    map((action: fromExpenses.ExpensesAdded) => action.payload),
-    withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.expensesService.add(payload.customer, user.temple_code))
+    ofType(ExpensesActionTypes.EXPENSES_ADD_QUERY),
+    map((action: fromExpenses.ExpensesAddQuery) => action.payload),
+    switchMap((payload: any) => this.expensesService.addExpenses(payload)
+    .pipe(
+      (map(() => {
+        return (new fromExpenses.ExpensesQuery(moment().format('YYYY-MM-DD')));
+      })),
+      catchError(error => {
+        return of(new fromExpenses.ExpensesError({ error }));
+      })
+    ))
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   edit$ = this.actions$.pipe(
-    ofType(ExpensesActionTypes.POOJAS_EDITED),
+    ofType(ExpensesActionTypes.EXPENSES_EDITED),
     map((action: fromExpenses.ExpensesEdited) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
     switchMap(([payload, user]: any) => this.expensesService.update(payload.customer, user.temple_code)
@@ -63,11 +60,19 @@ export class ExpensesEffects {
     )
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   delete$ = this.actions$.pipe(
-    ofType(ExpensesActionTypes.POOJA_DELETE_QUERY),
+    ofType(ExpensesActionTypes.EXPENSES_DELETED),
     map((action: fromExpenses.ExpensesDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.expensesService.delete(payload.customer, user.temple_code))
+    switchMap(([payload]: any) => this.expensesService.deleteExpense(payload.uuid)
+    .pipe(
+      (map(() => {
+        return (new fromExpenses.ExpensesQuery(moment().format('YYYY-MM-DD')));
+      })),
+      catchError(error => {
+        return of(new fromExpenses.ExpensesError({ error }));
+      })
+    ))
   );
 }

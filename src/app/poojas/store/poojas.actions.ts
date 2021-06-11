@@ -1,42 +1,47 @@
 import { Action } from '@ngrx/store';
-import { Poojas } from '../models/poojas.model';
+import { PoojaList, PoojaList as Poojas } from '../models/poojas.model';
 
 export enum PoojasActionTypes {
-  POOJAS_QUERY = '[Poojas] Query Pooja Types',
-  POOJAS_LOADED = '[Poojas] Fetched Pooja Types',
+  POOJA_TYPE_QUERY = '[Pooja Type] Query Pooja Types',
+  POOJA_TYPE_LOADED = '[Pooja Type] Fetched Pooja Types',
+  POOJA_TYPE_ADD_QUERY = '[Pooja Type] Add new Pooja Type',
+  POOJA_TYPE_ADDED = '[Pooja Type] Added New Pooja Type',
+  POOJA_TYPE_EDITED = '[Pooja Type] Edited Pooja Type',
+  POOJA_TYPE_DELETED = '[Pooja Type] Delete Pooja Type',
 
-  POOJAS_ADD_QUERY = '[Poojas] Add new Pooja Type',
-  POOJAS_ADDED = '[Poojas] Added New Pooja Type',
-  POOJAS_EDITED = '[Poojas] Edited Pooja Type',
-  POOJA_DELETE_QUERY = '[Poojas] Delete Pooja Type',
+  POOJA_LIST_QUERY = '[Pooja Type] Query Pooja List',
+  POOJA_LIST_LOADED = '[Pooja Type] Query Pooja Loaded',
+  POOJA_ADD_QUERY = '[Pooja] Add new Pooja',
+  POOJA_ADDED = '[Pooja] Added New Pooja',
+  POOJA_DELETED = '[Pooja] Delete Pooja',
 
   POOJAS_ERROR = '[Poojas] Error'
 }
 
-export class PoojasQuery implements Action {
-  readonly type = PoojasActionTypes.POOJAS_QUERY;
+export class PoojasTypeQuery implements Action {
+  readonly type = PoojasActionTypes.POOJA_TYPE_QUERY;
 }
 
-export class PoojasLoaded implements Action {
-  readonly type = PoojasActionTypes.POOJAS_LOADED;
+export class PoojaTypesLoaded implements Action {
+  readonly type = PoojasActionTypes.POOJA_TYPE_LOADED;
 
   constructor(public payload: { poojas: Poojas[] }) {}
 }
 
-export class PoojasAddQuery implements Action {
-  readonly type = PoojasActionTypes.POOJAS_ADD_QUERY;
+export class PoojaTypeAddQuery implements Action {
+  readonly type = PoojasActionTypes.POOJA_TYPE_ADD_QUERY;
 
   constructor(public payload: { poojas: any }) {}
 }
 
-export class PoojasEdited implements Action {
-  readonly type = PoojasActionTypes.POOJAS_EDITED;
+export class PoojaTypeEdited implements Action {
+  readonly type = PoojasActionTypes.POOJA_TYPE_EDITED;
 
   constructor(public payload: { poojas: Poojas }) {}
 }
 
-export class PoojasDeleted implements Action {
-  readonly type = PoojasActionTypes.POOJA_DELETE_QUERY;
+export class PoojaTypeDeleted implements Action {
+  readonly type = PoojasActionTypes.POOJA_TYPE_DELETED;
 
   constructor(public payload: { pooja_code: string }) {}
 }
@@ -48,17 +53,31 @@ export class PoojasError implements Action {
 }
 
 export class RegisterPooja implements Action {
-  readonly type = PoojasActionTypes.POOJAS_ADD_QUERY;
+  readonly type = PoojasActionTypes.POOJA_ADD_QUERY;
 
-  constructor(public payload: { poojas: any }) {}
+  constructor(public payload: { pooja: any }) {}
+}
+
+export class PoojaListQuery implements Action {
+  readonly type = PoojasActionTypes.POOJA_LIST_QUERY;
+
+  constructor(public payload: { date: any }) {}
+}
+
+export class PoojaListLoaded implements Action {
+  readonly type = PoojasActionTypes.POOJA_LIST_LOADED;
+
+  constructor(public payload: { poojaList: PoojaList[] }) {}
 }
 
 
 export type PoojasActions =
-  | PoojasQuery
-  | PoojasLoaded
-  | PoojasAddQuery
-  | PoojasEdited
-  | PoojasDeleted
+  | PoojasTypeQuery
+  | PoojaTypesLoaded
+  | PoojaTypeAddQuery
+  | PoojaTypeEdited
+  | PoojaTypeDeleted
   | RegisterPooja
+  | PoojaListQuery
+  | PoojaListLoaded
   | PoojasError;

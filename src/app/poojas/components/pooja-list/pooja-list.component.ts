@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Poojas } from 'src/app/poojas/models/poojas.model';
-import { getPoojas } from 'src/app/poojas/store/poojas.selectors';
+import { PoojaTypes as Poojas } from 'src/app/poojas/models/poojas.model';
+import { getPoojaTypes } from 'src/app/poojas/store/poojas.selectors';
 import { AppState } from 'src/app/reducers';
 import * as fromPoojas from '../../store/poojas.actions';
 import { getIsLoading } from 'src/app/poojas/store/poojas.selectors';
@@ -48,16 +48,16 @@ export class PoojaListComponent implements OnInit {
   }
   
   getPoojaList() {
-    this.store.select(getPoojas).subscribe((poojas: Poojas[]) => {
+    this.store.select(getPoojaTypes).subscribe((poojas: Poojas[]) => {
       this.poojas = poojas;
       this.initFormGroup();
     })
-    this.store.dispatch(new fromPoojas.PoojasQuery());
+    this.store.dispatch(new fromPoojas.PoojasTypeQuery());
 
   }
   onAddPoojaType() {
     const req = this.newPooja;
-    this.store.dispatch(new fromPoojas.PoojasAddQuery({ poojas: req }));
+    this.store.dispatch(new fromPoojas.PoojaTypeAddQuery({ poojas: req }));
   }
 
   generateCode(str: string) {
@@ -81,7 +81,7 @@ export class PoojaListComponent implements OnInit {
       .pipe(take(1))
       .subscribe((confirmation: boolean) => {
         if (confirmation) {
-          this.store.dispatch(new fromPoojas.PoojasDeleted({ pooja_code: pooja_code }));
+          this.store.dispatch(new fromPoojas.PoojaTypeDeleted({ pooja_code: pooja_code }));
         }
       });
   }

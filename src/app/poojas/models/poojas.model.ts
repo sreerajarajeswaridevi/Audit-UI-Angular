@@ -1,22 +1,34 @@
-export interface Poojas {
+export interface PoojaTypes {
     pooja_name?: string;
     pooja_price?: string;
     pooja_code?: string;
     pooja_description?: string;
     added_by?: string;
 
-
+    phone_number?: string;
     address?: string;
-    star?: string;
+    nakshatram?: string;
     price?: number
 }
-export interface NewPoojaResponse {
+export interface NewPoojaRequest {
     pooja_code?: string;
-    phoneNumber?: string;
+    phone_number?: string;
     address?: string;
-    persons: any[];
-    totalPrice: number,
-    date: string
+    bhakthar: any[];
+    pooja_price: string,
+    date?: string
+}
+
+export interface PoojaList {
+    name: string;
+    nakshatram: string;
+    address: string;
+    pooja_price: string;
+    added_by: string;
+    pooja_code: string;
+    phone_number: string;
+    uuid: string;
+    pooja_date: string;
 }
 
 export const starSigns = [

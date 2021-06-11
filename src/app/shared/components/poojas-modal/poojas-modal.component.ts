@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MDBModalRef } from 'angular-bootstrap-md';
 import { Subject } from 'rxjs';
-import { NewPoojaResponse, Poojas, starSigns } from 'src/app/poojas/models/poojas.model';
+import { NewPoojaRequest, PoojaTypes, starSigns } from 'src/app/poojas/models/poojas.model';
 // import { MDBModalRef } from 'angular-bootstrap-md';
 // import { Poojas } from '../../../poojas/models/poojas.model';
 // import { Subject } from 'rxjs';
@@ -20,22 +20,25 @@ export class PoojasModalComponent implements OnInit {
   startDate = moment();
   endDate = moment().add('30', 'days');
   selectedDate = moment();
-  pooja: Poojas = {};
-  poojasData: Subject<Poojas> = new Subject();
+  pooja: PoojaTypes = {};
+  poojasData: Subject<NewPoojaRequest> = new Subject();
   heading: string;
   price: number;
   starSigns = starSigns;
-  response: NewPoojaResponse  = {
-    phoneNumber: '',
+  code: string;
+  response: NewPoojaRequest  = {
+    pooja_code: '',
+    phone_number: '',
     address: '',
-    persons: [],
-    totalPrice: 0,
-    date: moment().format('dddd DD/MM/YYYY')
+    bhakthar: [],
+    pooja_price: '0',
+    // date: moment().format('dddd DD/MM/YYYY') // uncomment for bookings
   }
 
   constructor(public modalRef: MDBModalRef) { }
 
   ngOnInit() {
+    this.response.pooja_code = this.code;
   }
 
   onClose() {
@@ -43,8 +46,8 @@ export class PoojasModalComponent implements OnInit {
   }
 
   datePicked(date: any) {
-    console.log(this.response);
-    this.response.date = date.format('DD/MM/YYYY');
+    console.log(date);
+    // this.response.date = date.format('DD/MM/YYYY'); // uncomment for bookings
   }
 
   dateClicked(date: any) {
@@ -52,7 +55,7 @@ export class PoojasModalComponent implements OnInit {
   }
 
   onSave() {
-    if (this.poojasForm.valid && this.response.persons.length > 0) {
+    if (this.response.bhakthar.length > 0) {
       this.poojasData.next(this.response);
       this.modalRef.hide();
     } else {
@@ -62,16 +65,16 @@ export class PoojasModalComponent implements OnInit {
   }
 
   selectStar(star: string) {
-    this.pooja.star = star;
+    this.pooja.nakshatram = star;
   }
 
-  deletePooja(item: any) {
-    this.response.persons.splice(this.response.persons.indexOf(item), 1);
+  deleteEntry(item: any) {
+    this.response.bhakthar.splice(this.response.bhakthar.indexOf(item), 1);
   }
 
   addPerson() {
-    this.response.persons.push(this.poojasForm.value);
-    this.response.totalPrice += +(this.price);
+    this.response.bhakthar.push(this.poojasForm.value);
+    this.response.pooja_price = `${+(this.price) + +(this.response.pooja_price)}`;
     this.poojasForm.reset();
   }
 }

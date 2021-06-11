@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-// import { AngularFireDatabase } from '@angular/fire/database';
-import { Poojas } from '../models/poojas.model';
+import { NewPoojaRequest, PoojaTypes } from '../models/poojas.model';
 import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-// import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +26,11 @@ export class PoojasService {
     );
   }
 
-  addPoojas(poojas: Poojas[]) {
-    return of(poojas);
-
+  addPooja(newPooja: NewPoojaRequest) {
+    return this.http.post(
+      `${environment.apiUrl}?api=addPooja`, { 
+        ...newPooja }
+    );
   }
 
   getPoojaTypes() {
@@ -39,12 +39,22 @@ export class PoojasService {
     );
   }
 
-  update(poojas: Poojas, userId: string) {
+  getPoojas(date: string) {
+    return this.http.get(
+      `${environment.apiUrl}?api=listPoojas`, {
+        params: {
+          'ist_YYYYMMDD': date
+        }
+      }
+    );
+  }
+
+  update(poojas: PoojaTypes, userId: string) {
     return of([poojas, userId]);
 
   }
 
-  deletePooja(pooja_code: string) {
+  deletePoojaType(pooja_code: string) {
     return this.http.get(
       `${environment.apiUrl}?api=deletePoojaType`,
       { 

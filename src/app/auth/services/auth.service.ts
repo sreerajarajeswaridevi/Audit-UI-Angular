@@ -84,6 +84,7 @@ export class AuthService {
   clearLocalData() {
     localStorage.removeItem('username');
     localStorage.removeItem('password');
+    localStorage.removeItem('role');
   }
 
   updateOnlineStatus(uid: string, status: boolean) {

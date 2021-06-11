@@ -22,6 +22,8 @@ import { UserModalComponent } from './components/user-modal/user-modal.component
 import { CoreModule } from '../core/core.module';
 import { UsersListComponent } from './components/users-list/users-list.component';
 import { UserComponent } from './components/user/user.component';
+import { TabsComponent } from './components/tabs/tabs.component';
+import { TabComponent } from './components/tabs/tab.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { UserComponent } from './components/user/user.component';
     RightCardComponent,
     UserModalComponent,
     UsersListComponent,
-    UserComponent
+    UserComponent,
+    TabsComponent,
+    TabComponent
   ],
   imports: [
     CommonModule,
@@ -43,14 +47,22 @@ import { UserComponent } from './components/user/user.component';
     FormsModule,
     ModalModule,
     ButtonsModule,
-    CardsModule,    
+    CardsModule,
     CollapseModule,
     DropdownModule,
     BadgeModule,
-
     CoreModule
   ],
-  exports: [CustomersListComponent, PoojasModalComponent, RightCardComponent, UserModalComponent, UsersListComponent, UserComponent],
+  exports: [
+    CustomersListComponent,
+    PoojasModalComponent,
+    RightCardComponent,
+    UserModalComponent,
+    UsersListComponent,
+    UserComponent,
+    TabsComponent,
+    TabComponent
+  ],
   providers: [],
   entryComponents: [
     ConfirmModalComponent,
@@ -59,4 +71,4 @@ import { UserComponent } from './components/user/user.component';
     UserModalComponent
   ]
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -3,14 +3,24 @@ import { PoojasState } from './poojas.state';
 
 export const getPoojasState = createFeatureSelector<PoojasState>('poojas');
 
-export const getPoojas = createSelector(
+export const getPoojaTypes = createSelector(
   getPoojasState,
-  poojas => poojas.poojas
+  poojas => poojas.poojaTypes
+);
+
+export const getPoojaList = createSelector(
+  getPoojasState,
+  poojas => poojas.poojaList
 );
 
 export const getIsLoading = createSelector(
   getPoojasState,
   poojas => poojas.isLoading
+);
+
+export const getIsListLoading = createSelector(
+  getPoojasState,
+  poojas => poojas.isListLoading
 );
 
 export const getError = createSelector(

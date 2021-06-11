@@ -1,0 +1,23 @@
+.nav li {
+  cursor: pointer;
+
+  a {
+    font-size: large;
+    padding: 10px;
+    font-weight: bold;
+    color: gray;
+  }
+  a.active {
+    color: #4285f4;
+  }
+}
+
+.tab.active {
+  color: gray;
+}
+
+.tab-close {
+  color: gray;
+  text-align: right;
+  cursor: pointer;
+}

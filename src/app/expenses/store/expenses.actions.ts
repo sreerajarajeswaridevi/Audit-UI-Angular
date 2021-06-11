@@ -2,46 +2,48 @@ import { Action } from '@ngrx/store';
 import { Expenses } from '../models/expenses.model';
 
 export enum ExpensesActionTypes {
-  POOJAS_QUERY = '[Expenses] Query',
-  POOJAS_LOADED = '[Expenses] Fetched',
+  EXPENSES_QUERY = '[Expenses] Query',
+  EXPENSES_LOADED = '[Expenses] Fetched',
 
-  POOJAS_ADDED = '[Expenses] Added',
-  POOJAS_EDITED = '[Expenses] Edited',
-  POOJA_DELETE_QUERY = '[Expenses] Deleted',
+  EXPENSES_ADD_QUERY = '[Expenses] Added',
+  EXPENSES_EDITED = '[Expenses] Edited',
+  EXPENSES_DELETED = '[Expenses] Deleted',
 
-  POOJAS_ERROR = '[Expenses] Error'
+  EXPENSES_ERROR = '[Expenses] Error'
 }
 
 export class ExpensesQuery implements Action {
-  readonly type = ExpensesActionTypes.POOJAS_QUERY;
+  readonly type = ExpensesActionTypes.EXPENSES_QUERY;
+  
+  constructor(public payload: { date: any }) {}
 }
 
 export class ExpensesLoaded implements Action {
-  readonly type = ExpensesActionTypes.POOJAS_LOADED;
+  readonly type = ExpensesActionTypes.EXPENSES_LOADED;
 
-  constructor(public payload: { Expenses: Expenses[] }) {}
+  constructor(public payload: { expenses: Expenses[] }) {}
 }
 
-export class ExpensesAdded implements Action {
-  readonly type = ExpensesActionTypes.POOJAS_ADDED;
+export class ExpensesAddQuery implements Action {
+  readonly type = ExpensesActionTypes.EXPENSES_ADD_QUERY;
 
   constructor(public payload: { expenses: Expenses }) {}
 }
 
 export class ExpensesEdited implements Action {
-  readonly type = ExpensesActionTypes.POOJAS_EDITED;
+  readonly type = ExpensesActionTypes.EXPENSES_EDITED;
 
   constructor(public payload: { expenses: Expenses }) {}
 }
 
 export class ExpensesDeleted implements Action {
-  readonly type = ExpensesActionTypes.POOJA_DELETE_QUERY;
+  readonly type = ExpensesActionTypes.EXPENSES_DELETED;
 
-  constructor(public payload: { expenses: Expenses }) {}
+  constructor(public payload: { uuid: string }) {}
 }
 
 export class ExpensesError implements Action {
-  readonly type = ExpensesActionTypes.POOJAS_ERROR;
+  readonly type = ExpensesActionTypes.EXPENSES_ERROR;
 
   constructor(public payload: { error: any }) {}
 }
@@ -49,7 +51,7 @@ export class ExpensesError implements Action {
 export type ExpensesActions =
   | ExpensesQuery
   | ExpensesLoaded
-  | ExpensesAdded
+  | ExpensesAddQuery
   | ExpensesEdited
   | ExpensesDeleted
   | ExpensesError;

@@ -4,20 +4,26 @@ import { ExpensesActions, ExpensesActionTypes } from './expenses.actions';
 export function ExpensesReducer(state = ExpensesInitialState, action: ExpensesActions): ExpensesState {
   switch (action.type) {
 
-    case ExpensesActionTypes.POOJAS_QUERY: {
+    case ExpensesActionTypes.EXPENSES_QUERY: {
       return Object.assign({}, state, {
         isLoading: true,
       });
     }
 
-    case ExpensesActionTypes.POOJAS_LOADED: {
+    case ExpensesActionTypes.EXPENSES_ADD_QUERY: {
       return Object.assign({}, state, {
-        Expenses: action.payload.Expenses,
+        isLoading: true,
+      });
+    }
+
+    case ExpensesActionTypes.EXPENSES_LOADED: {
+      return Object.assign({}, state, {
+        expenses: action.payload.expenses,
         isLoading: false,
       });
     }
 
-    case ExpensesActionTypes.POOJAS_ERROR: {
+    case ExpensesActionTypes.EXPENSES_ERROR: {
       return Object.assign({}, state, {
         isLoading: false,
         error: action.payload.error

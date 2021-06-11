@@ -18,7 +18,7 @@ export class DonationsEffects {
 
   @Effect()
   query$ = this.actions$.pipe(
-    ofType(DonationsActionTypes.POOJAS_QUERY),
+    ofType(DonationsActionTypes.POOJA_TYPE_QUERY),
     withLatestFrom(this.store.pipe(select(getUser))),
     switchMap(([, user]: any) => this.donationsService.get(user.temple_code)
       .pipe(
@@ -44,7 +44,7 @@ export class DonationsEffects {
 
   @Effect({ dispatch: false })
   added$ = this.actions$.pipe(
-    ofType(DonationsActionTypes.POOJAS_ADDED),
+    ofType(DonationsActionTypes.POOJA_TYPE_ADDED),
     map((action: fromDonations.DonationsAdded) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
     switchMap(([payload, user]: any) => this.donationsService.add(payload.customer, user.temple_code))
@@ -52,7 +52,7 @@ export class DonationsEffects {
 
   @Effect({ dispatch: false })
   edit$ = this.actions$.pipe(
-    ofType(DonationsActionTypes.POOJAS_EDITED),
+    ofType(DonationsActionTypes.POOJA_TYPE_EDITED),
     map((action: fromDonations.DonationsEdited) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
     switchMap(([payload, user]: any) => this.donationsService.update(payload.customer, user.temple_code)
@@ -65,7 +65,7 @@ export class DonationsEffects {
 
   @Effect({ dispatch: false })
   delete$ = this.actions$.pipe(
-    ofType(DonationsActionTypes.POOJA_DELETE_QUERY),
+    ofType(DonationsActionTypes.POOJA_TYPE_DELETED),
     map((action: fromDonations.DonationsDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
     switchMap(([payload, user]: any) => this.donationsService.delete(payload.customer, user.temple_code))

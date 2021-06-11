@@ -6,3 +6,27 @@
     font-size: 24px;
 }
 
+.table-price {
+    font-weight: bold;
+}
+
+.right-section {
+ 
+    table {
+        text-align: left;
+        margin-bottom: 0;
+
+        .total-amount {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .delete {
+            cursor: pointer;
+        }
+    }
+}
+
+   
+.card-body {
+    padding: 0 1.25rem;
+}

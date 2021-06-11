@@ -1,7 +1,9 @@
 <div class="card text-center mt-1 mb-2">
     <ng-content select=".card-header"></ng-content>
-    <div class="card-body">
+    <div class="card-body p-0">
       <ng-content></ng-content>
     </div>
-    <div class="card-footer text-muted" *ngIf="footer">{{ footer }}</div>
+    <div class="card-footer text-muted" *ngIf="footer">{{ footer }}
+    </div>
+    <ng-content select="div[role=footer]"></ng-content>
   </div>

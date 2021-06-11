@@ -1,68 +1,82 @@
-<app-split-body [isLoading$]="isLoading$">
-  <div class="left-section">
-    <a href="javascript:void(0)" role="button" class="p-4 m-1 btn btn-primary pooja-box" mdbWavesEffect *ngFor="let item of poojas" (click)="newPooja(item)">
-      <h5>{{item.pooja_name}}</h5>
-      <p class="grey-text">{{item.pooja_description}}</p>
-      <h3 class="price">&#x20B9;{{ item.pooja_price }}</h3>
-    </a>
-  </div>
-  <div class="right-section">
-    <app-right-card>
-      <div class="card-header">Todays Poojas ({{dates?.today}})</div>
-      <table mdbTable small="true" striped="true">
-        <tbody>
-          <tr>
-            <th scope="row">Name 1</th>
-            <td>Star 1</td>
-          </tr>
-          <tr>
-            <th scope="row">Name 2</th>
-            <td>Star 2</td>
-          </tr>
-          <tr>
-            <th scope="row">Name 3</th>
-            <td>Star 3</td>
-          </tr>
-        </tbody>
-      </table>
-    </app-right-card>
-   
-    <app-right-card [header]="dates?.tomorrow">
-      <div class="card-header">Todays Bookings ({{dates?.today}})</div>
-      <table mdbTable small="true" striped="true">
-        <tbody>
-          <tr>
-            <th scope="row">Name 1</th>
-            <td>Star 1</td>
-          </tr>
-          <tr>
-            <th scope="row">Name 2</th>
-            <td>Star 2</td>
-          </tr>
-          <tr>
-            <th scope="row">Name 3</th>
-            <td>Star 3</td>
-          </tr>
-        </tbody>
-      </table>
-    </app-right-card>
-   
+<!-- <rr-tabs> -->
+  <!-- <rr-tab tabTitle="Poojas"> -->
+    <app-split-body [isLoading$]="isLoading$">
+      <div class="left-section">
+        <a href="javascript:void(0)" role="button" class="p-4 m-1 btn btn-primary pooja-box" mdbWavesEffect *ngFor="let item of poojaTypes" (click)="newPooja(item)">
+          <h5>{{item.pooja_name}}</h5>
+          <p class="grey-text">{{item.pooja_description}}</p>
+          <h3 class="price">&#x20B9;{{ item.pooja_price }}</h3>
+        </a>
+      </div>
+      <div class="right-section pb-4">
+        <app-right-card>
+          <div class="card-header bg-primary white-text">Todays Poojas ({{dates?.today}})</div>
+          <div *ngIf="isListLoading$ | async" class="d-flex justify-content-center align-items-center my-4">
+            <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          <table mdbTable small="true" striped="true" *ngIf="!(isListLoading$ | async) && poojaList.length > 0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Nakshathram</th>
+                <th>Pooja</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of poojaList">
+                <td scope="row">{{ item.name }}</td>
+                <td>{{ item.nakshatram }}</td>
+                <td>{{ getPoojaNameFromCode(item.pooja_code)  }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!(isListLoading$ | async) && poojaList.length === 0">
+            <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
+              <p class="grey-text">No Poojas</p>
+          </div>
+        </app-right-card>
 
-    <div class="card text-center my-3">
-      <div class="card-header">Tomorrows poojas ({{this.dates?.tomorrow}})</div>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">
-          With supporting text below as a natural lead-in to additional content.
-        </p>
-        <a href="#" class="btn btn-secondary">Button</a>
+        <app-right-card *ngIf="tomorrowsPoojaList?.length > 0">
+          <div class="card-header bg-secondary white-text">Tomorrows poojas ({{this.dates?.tomorrow}})</div>
+          <div *ngIf="isListLoading$ | async" class="d-flex justify-content-center align-items-center my-4">
+            <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          <table mdbTable small="true" striped="true" *ngIf="!(isListLoading$ | async) && poojaList.length > 0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Nakshathram</th>
+                <th>Pooja</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of tomorrowsPoojaList">
+                <td scope="row">{{ item.name }}</td>
+                <td>{{ item.nakshatram }}</td>
+                <td>{{ getPoojaNameFromCode(item.pooja_code)  }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!(isListLoading$ | async) && poojaList.length === 0">
+            <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
+              <p class="grey-text">No Poojas</p>
+          </div>
+        </app-right-card>
+       
+        <!-- <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
+          <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div> -->
       </div>
-      <div class="card-footer text-muted">2 days ago</div>
-    </div>
-    <!-- <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
-      <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div> -->
-  </div>
-</app-split-body>
+    </app-split-body>
+<!--     
+  </rr-tab>
+  <rr-tab tabTitle="Bookings">
+    Tab 2 content
+  </rr-tab>
+</rr-tabs> -->

@@ -5,7 +5,6 @@
         <div>
           <blockquote class="text-left  blockquote bq-success">
             <h3 class="header">Add Expense</h3>
-            <p class="py-0">Add any expense here</p>
           </blockquote>
         </div>
         <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="endDate"
@@ -16,7 +15,6 @@
   
       <mdb-card-body class="py-2">
         <form #expenseForm="ngForm">
-
           <div class="d-flex">
           <div class="md-form">
             <input type="text" id="item" name="item" class="form-control" [(ngModel)]="expense.item" mdbInput mdbValidate [validateSuccess]="false" #item="ngModel" required>
@@ -48,32 +46,47 @@
       <mdb-card-footer class="d-flex">
         <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="expenseForm.reset()">Clear
           </button>
-        <button type="button" mdbBtn color="success" [disabled]="expenseForm.invalid" class="relative waves-light pull-right" mdbWavesEffect (click)="onSave()">Save
+        <button type="button" mdbBtn color="success" [disabled]="expenseForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSave()">Save
           </button>
 
       </mdb-card-footer>
     </mdb-card>
     
   </div>
-  <div class="right-section">
-    <app-right-card [header]="'Todays Expenses'">
-      <div class="card-header">Todays Expenses</div>
-      <table mdbTable small="true" striped="true">
+  <div class="right-section pb-4">
+    <app-right-card [header]="'Todays Expenses'" >
+      <div class="card-header bg-primary white-text">Todays Expense</div>
+      <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center">
+        <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <table mdbTable small="true" striped="true" *ngIf="!(isLoading$ | async)">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Description</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr>
-            <th scope="row">Name 1</th>
-            <td>Star 1</td>
+          <tr *ngFor="let item of todaysExpenseList">
+            <td scope="row">{{ item?.item }}</td>
+            <td>{{ item?.description }}</td>
+            <td class="table-price">&#x20B9;{{ item?.cost }}
+              <mdb-icon *ngIf="isManager$ | async" fas icon="trash" class="ml-1 float-right delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
+            </td>
           </tr>
+
           <tr>
-            <th scope="row">Name 2</th>
-            <td>Star 2</td>
-          </tr>
-          <tr>
-            <th scope="row">Name 3</th>
-            <td>Star 3</td>
           </tr>
         </tbody>
       </table>
+      <div role="footer" *ngIf="!(isLoading$ | async)">
+        <div class="card-footer text-muted">
+          Total: <b class="price total-amount">&#x20B9;{{getTotalExpense()}}</b>
+        </div>
+      </div>
     </app-right-card>
 
     <!-- <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">

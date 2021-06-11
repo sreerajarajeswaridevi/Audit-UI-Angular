@@ -1,6 +1,8 @@
 export interface Expenses {
-    key?: any;
-    id?: number;
-    name?: string;
+    item?: any;
+    uuid?: number;
+    cost?: string;
     description?: string;
+    added_by?: string;
+    expense_date?: string;
 }

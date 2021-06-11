@@ -4,13 +4,13 @@ import { DonationsActions, DonationsActionTypes } from './donations.actions';
 export function DonationsReducer(state = DonationsInitialState, action: DonationsActions): DonationsState {
   switch (action.type) {
 
-    case DonationsActionTypes.POOJAS_QUERY: {
+    case DonationsActionTypes.POOJA_TYPE_QUERY: {
       return Object.assign({}, state, {
         isLoading: true,
       });
     }
 
-    case DonationsActionTypes.POOJAS_LOADED: {
+    case DonationsActionTypes.POOJA_TYPE_LOADED: {
       return Object.assign({}, state, {
         Donations: action.payload.Donations,
         isLoading: false,

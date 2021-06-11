@@ -10,8 +10,10 @@ import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../reducers/index';
 import { getUser } from '../../auth/store/auth.selectors';
-import { getPoojas } from './poojas.selectors';
+import { getPoojaTypes } from './poojas.selectors';
 import { ToastrService } from 'ngx-toastr';
+
+var moment = require('../../../assets/datepicker/moment.js');
 
 @Injectable()
 export class PoojasEffects {
@@ -24,13 +26,30 @@ export class PoojasEffects {
     ) {}
 
   @Effect()
-  query$ = this.actions$.pipe(
-    ofType(PoojasActionTypes.POOJAS_QUERY),
-    withLatestFrom(this.store.pipe(select(getPoojas))),
+  queryPoojaType$ = this.actions$.pipe(
+    ofType(PoojasActionTypes.POOJA_TYPE_QUERY),
+    withLatestFrom(this.store.pipe(select(getPoojaTypes))),
     switchMap(([]: any) => this.poojasService.getPoojaTypes()
       .pipe(
         map((list: any) => {
-          return (new fromPoojas.PoojasLoaded({ poojas: list.poojaTypesList }));
+          return (new fromPoojas.PoojaTypesLoaded({ poojas: list.poojaTypesList }));
+        }),
+        catchError(error => {
+          this.toastr.error('Something went wrong. Please try after sometime');
+          return of(new fromPoojas.PoojasError({ error }));
+        })
+      )
+    ),
+  );
+
+  @Effect()
+  queryPoojas$ = this.actions$.pipe(
+    ofType(PoojasActionTypes.POOJA_LIST_QUERY),
+    map((action: any) => action.payload),
+    switchMap((payload) => this.poojasService.getPoojas(payload)
+      .pipe(
+        map((list: any) => {
+          return (new fromPoojas.PoojaListLoaded({ poojaList: list.poojaList }));
         }),
         catchError(error => {
           this.toastr.error('Something went wrong. Please try after sometime');
@@ -42,14 +61,14 @@ export class PoojasEffects {
 
   @Effect()
   addPoojaType$ = this.actions$.pipe(
-    ofType(PoojasActionTypes.POOJAS_ADD_QUERY),
-    map((action: fromPoojas.PoojasAddQuery) => action.payload),
-    // withLatestFrom(this.store.pipe(select(getPoojas))),
+    ofType(PoojasActionTypes.POOJA_TYPE_ADD_QUERY),
+    map((action: fromPoojas.PoojaTypeAddQuery) => action.payload),
+    // withLatestFrom(this.store.pipe(select(getPoojaTypes))),
     switchMap((payload: any) => this.poojasService.addPoojaType(payload.poojas)
     .pipe(
       map((list: any) => {
         console.log(list.data);
-        return (new fromPoojas.PoojasQuery());
+        return (new fromPoojas.PoojasTypeQuery());
       }),
       catchError(error => {
         this.toastr.error('Something went wrong. Please try after sometime');
@@ -58,10 +77,27 @@ export class PoojasEffects {
     ))
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
+  addPooja$ = this.actions$.pipe(
+    ofType(PoojasActionTypes.POOJA_ADD_QUERY),
+    map((action: any) => action.payload),
+    switchMap((payload: any) => this.poojasService.addPooja(payload.pooja)
+    .pipe(
+      map((list: any) => {
+        console.log(list.data);
+        return (new fromPoojas.PoojaListQuery(moment().format('YYYY-MM-DD')));
+      }),
+      catchError(error => {
+        this.toastr.error('Something went wrong. Please try after sometime');
+        return of(new fromPoojas.PoojasError({ error }));
+      })
+    ))
+  );
+
+  @Effect()
   edit$ = this.actions$.pipe(
-    ofType(PoojasActionTypes.POOJAS_EDITED),
-    map((action: fromPoojas.PoojasEdited) => action.payload),
+    ofType(PoojasActionTypes.POOJA_TYPE_EDITED),
+    map((action: fromPoojas.PoojaTypeEdited) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
     switchMap(([payload, user]: any) => this.poojasService.update(payload.customer, user.temple_code)
     .pipe(
@@ -74,12 +110,12 @@ export class PoojasEffects {
 
   @Effect()
   delete$ = this.actions$.pipe(
-    ofType(PoojasActionTypes.POOJA_DELETE_QUERY),
-    map((action: fromPoojas.PoojasDeleted) => action.payload),
+    ofType(PoojasActionTypes.POOJA_TYPE_DELETED),
+    map((action: fromPoojas.PoojaTypeDeleted) => action.payload),
     switchMap((pooja: any) => {
-      return this.poojasService.deletePooja(pooja.pooja_code)
+      return this.poojasService.deletePoojaType(pooja.pooja_code)
       .pipe(map(() => {
-          return (new fromPoojas.PoojasQuery());
+          return (new fromPoojas.PoojasTypeQuery());
           }),
           catchError( (error: any) => {
             this.toastr.error('Something went wrong. Please try after sometime');

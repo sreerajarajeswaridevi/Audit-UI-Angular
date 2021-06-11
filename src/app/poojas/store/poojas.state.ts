@@ -1,13 +1,17 @@
-import { Poojas } from '../models/poojas.model';
+import { PoojaList, PoojaTypes } from '../models/poojas.model';
 
 export interface PoojasState {
-    poojas: Poojas[] | null;
+    poojaList: PoojaList[] | null;
+    poojaTypes: PoojaTypes[] | null;
     isLoading: boolean;
+    isListLoading: boolean;
     error: any;
 }
 
 export const PoojasInitialState: PoojasState = {
-    poojas: null,
+    poojaTypes: null,
+    poojaList: null,
     isLoading: true,
+    isListLoading: true,
     error: null
 };
