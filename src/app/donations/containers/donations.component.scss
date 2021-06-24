@@ -2,6 +2,16 @@
     justify-content: space-between;
 }
 
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+   
+.card-body {
+    padding: 0 1.25rem;
+}
+
 .amount {
     display: flex;
     align-items: flex-start;
@@ -68,9 +78,6 @@
     justify-content: space-between;
 }
 
-.phone {
-    margin: 0;
-}
 
 .delete {
     cursor: pointer;

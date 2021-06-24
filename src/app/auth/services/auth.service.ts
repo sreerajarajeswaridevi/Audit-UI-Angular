@@ -75,13 +75,15 @@ export class AuthService {
   }
 
   saveUser(username: string, password: string, role: string) {
+    (window as any).user_id = username;
     localStorage.setItem('username', username)
     localStorage.setItem('password', password)
     localStorage.setItem('role', role)
     return of({ username, password, role });
   }
-
+  
   clearLocalData() {
+    (window as any).user_id = undefined;
     localStorage.removeItem('username');
     localStorage.removeItem('password');
     localStorage.removeItem('role');

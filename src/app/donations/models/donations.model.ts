@@ -1,6 +1,10 @@
 export interface Donations {
-    key?: any;
-    id?: number;
-    name?: string;
-    description?: string;
+    uuid?: number;
+    name?: any;
+    nakshathram?: string;
+    address?: string;
+    phoneNumber?: string;
+    amount?: string;
+    added_by?: string;
+    expense_date?: string;
 }

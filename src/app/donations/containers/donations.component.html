@@ -10,12 +10,12 @@
         </div>
         <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="endDate"
         (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
-        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ selectedDate }}
+        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ defaultDate.format('dddd DD/MM/YYYY') }}
       </button>
       </mdb-card-header>
       <mdb-card-body class="py-2">
+        <form #donationForm="ngForm">
         <div class="modal-content">
-          <form #donationForm="ngForm">
           <div class="modal-body">
             <div class="left-section">
                 <div class="md-form">
@@ -27,13 +27,13 @@
         
                 <div class="btn-toolbar star-container" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="md-form hidden">
-                    <input type="text" id="star" name="star" class="form-control" [(ngModel)]="donation.star" mdbInput mdbValidate
-                      [validateSuccess]="false" #star="ngModel">
+                    <input type="text" id="star" name="star" class="form-control" [(ngModel)]="donation.nakshathram" mdbInput mdbValidate
+                      [validateSuccess]="false" #star="ngModel" required>
                     <label for="star">Star</label>
                   </div>
                   <div class="btn-group mr-2" role="group" aria-label="First group">
                       <button (click)="selectStar(star)"
-                      *ngFor="let star of starSigns" mdbBtn type="button" color="grey" [outline]="star !== donation.star" [class.selected]="star === donation.star"
+                      *ngFor="let star of starSigns" mdbBtn type="button" color="grey" [outline]="star !== donation.nakshathram" [class.selected]="star === donation.nakshathram"
                        mdbWavesEffect>{{star}}</button>
                   </div>
                 </div>
@@ -50,59 +50,89 @@
                 <mdb-card-body>
                   <div class="md-form phone">
                     <input type="number" id="phone" name="phone" class="form-control" #phone="ngModel" [(ngModel)]="donation.phoneNumber" mdbInput mdbValidate
-                      [validateSuccess]="false">
-                    <label for="phone">Phone Number(Optional)</label>
+                      [validateSuccess]="false" required>
+                    <label for="phone">Phone Number</label>
+                    <mdb-error *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">phone number is required</mdb-error>
                   </div>
                   <div class="text-lg mt-4 amount">
                     <label for="amount" class="grey-text">Amount</label>
-                    <div class="md-form d-flex mt-0">
-                      <span class="price">&#x20B9;</span>
-                      <input type="number" class="price" id="amount" name="amount" [(ngModel)]="donation.amount" #amount="ngModel" required mdbValidate>
-                      <mdb-error *ngIf="amount && amount.invalid && (amount.dirty || amount.touched)">Amount is required</mdb-error>
+                    <div class="md-form mt-0">
+                      <span class="d-flex">
+                        <span class="price">&#x20B9;</span>
+                        <input type="number" class="form-control price" id="amount" name="amount" [(ngModel)]="donation.amount" #amount="ngModel" mdbValidate [validateSuccess]="false" required>
+                      </span>
+                      <mdb-error class="ml-3" *ngIf="amount && amount.invalid && (amount.dirty || amount.touched)">Amount is required</mdb-error>
                     </div>
                   </div>
                 </mdb-card-body>
               </mdb-card>
             </div>
           </div>
-        </form>
+       
 
         </div>
+      </form>
       </mdb-card-body>
       <mdb-card-footer class="modal-footer">
           <div class="d-flex">
-            <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="donationForm.reset()"
+            <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="resetForm()"
               mdbWavesEffect>Clear</button>
             <button type="button" mdbBtn color="success" [disabled]="donationForm.invalid" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
               changes</button>
-    
           </div>
-    
       </mdb-card-footer>
     </mdb-card>
     
   </div>
   <div class="right-section">
-    <app-right-card [header]="'Todays Donations'">
-      <div class="card-header">Todays Donations</div>
-      <table mdbTable small="true" striped="true">
+    <app-right-card [header]="'Todays Donations'" >
+      <div class="card-header bg-primary white-text">
+        <span class="icon-button" (click)="prevDate()">
+          <mdb-icon *ngIf="isManager$ | async" fas icon="chevron-left" class="ml-1 float-left delete cursor-pointer white-text" alt="Left"></mdb-icon>
+        </span>
+        <span>
+          Donations on 
+          <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="defaultDate"
+          (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
+            <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ formattedDate }}
+          </button>
+        </span>
+        <span class="icon-button" (click)="nextDate()">
+          <mdb-icon *ngIf="(isManager$ | async) && selectedDate.format('DD/MM/YYYY') !== defaultDate.format('DD/MM/YYYY')" mdbtn fas icon="chevron-right" class="ml-1 float-right delete cursor-pointer white-text" alt="Right"></mdb-icon>
+        </span>
+      </div>
+      <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center">
+        <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <table mdbTable small="true" striped="true" *ngIf="!(isLoading$ | async) && todaysDonationList.length > 0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Nakshathram</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr>
-            <th scope="row">Name 1</th>
-            <td>Star 1</td>
+          <tr *ngFor="let item of todaysDonationList">
+            <td scope="row">{{ item?.name }}</td>
+            <td>{{ item?.nakshathram }}</td>
+            <td class="table-price">&#x20B9;{{ item?.amount }}
+              <mdb-icon *ngIf="isManager$ | async" fas icon="trash" class="ml-1 float-right delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
+            </td>
           </tr>
+
           <tr>
-            <th scope="row">Name 2</th>
-            <td>Star 2</td>
-          </tr>
-          <tr>
-            <th scope="row">Name 3</th>
-            <td>Star 3</td>
           </tr>
         </tbody>
       </table>
+      <div role="footer" *ngIf="!(isLoading$ | async)">
+        <div class="card-footer text-muted">
+          Total: <b class="price total-amount">&#x20B9;{{getTotalAmount()}}</b>
+        </div>
+      </div>
     </app-right-card>
-
     <!-- <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
       <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
         <span class="sr-only">Loading...</span>

@@ -11,29 +11,20 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from '../../reducers/index';
 import { getUser } from '../../auth/store/auth.selectors';
 
+var moment = require('../../../assets/datepicker/moment.js');
 @Injectable()
 export class DonationsEffects {
 
   constructor(private actions$: Actions, private donationsService: DonationsService, private store: Store<AppState>) {}
 
+  
   @Effect()
   query$ = this.actions$.pipe(
-    ofType(DonationsActionTypes.POOJA_TYPE_QUERY),
-    withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([, user]: any) => this.donationsService.get(user.temple_code)
+    ofType(DonationsActionTypes.DONATIONS_QUERY),
+    switchMap((payload: any) => this.donationsService.get(payload)
       .pipe(
         map((data: any) => {
-          const DonationsData: Donations[] = data.map((res: any) => {
-            const key = res.payload.key;
-            const customer: Donations = res.payload.val();
-            return {
-              key: key,
-              id: customer.id,
-              name: customer.name,
-              description: customer.description
-            };
-          });
-          return (new fromDonations.DonationsLoaded({ Donations: DonationsData }));
+          return (new fromDonations.DonationsLoaded({ donations: data.donationsList }));
         }),
         catchError(error => {
           return of(new fromDonations.DonationsError({ error }));
@@ -42,17 +33,24 @@ export class DonationsEffects {
     ),
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   added$ = this.actions$.pipe(
-    ofType(DonationsActionTypes.POOJA_TYPE_ADDED),
-    map((action: fromDonations.DonationsAdded) => action.payload),
-    withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.donationsService.add(payload.customer, user.temple_code))
+    ofType(DonationsActionTypes.DONATIONS_ADD_QUERY),
+    map((action: fromDonations.DonationsAddQuery) => action.payload),
+    switchMap((payload: any) => this.donationsService.addDonations(payload)
+    .pipe(
+      (map(() => {
+        return (new fromDonations.DonationsQuery(moment().format('YYYY-MM-DD')));
+      })),
+      catchError(error => {
+        return of(new fromDonations.DonationsError({ error }));
+      })
+    ))
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   edit$ = this.actions$.pipe(
-    ofType(DonationsActionTypes.POOJA_TYPE_EDITED),
+    ofType(DonationsActionTypes.DONATIONS_EDITED),
     map((action: fromDonations.DonationsEdited) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
     switchMap(([payload, user]: any) => this.donationsService.update(payload.customer, user.temple_code)
@@ -63,11 +61,19 @@ export class DonationsEffects {
     )
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   delete$ = this.actions$.pipe(
-    ofType(DonationsActionTypes.POOJA_TYPE_DELETED),
+    ofType(DonationsActionTypes.DONATIONS_DELETED),
     map((action: fromDonations.DonationsDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload, user]: any) => this.donationsService.delete(payload.customer, user.temple_code))
+    switchMap(([payload]: any) => this.donationsService.deleteExpense(payload.uuid)
+    .pipe(
+      (map(() => {
+        return (new fromDonations.DonationsQuery(moment().format('YYYY-MM-DD')));
+      })),
+      catchError(error => {
+        return of(new fromDonations.DonationsError({ error }));
+      })
+    ))
   );
 }

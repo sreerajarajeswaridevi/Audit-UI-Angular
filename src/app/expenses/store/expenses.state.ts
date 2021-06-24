@@ -7,7 +7,7 @@ export interface ExpensesState {
 }
 
 export const ExpensesInitialState: ExpensesState = {
-    expenses: null,
+    expenses: [],
     isLoading: true,
     error: null
 };

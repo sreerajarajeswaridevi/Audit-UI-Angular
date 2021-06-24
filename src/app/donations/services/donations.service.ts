@@ -1,42 +1,48 @@
 import { Injectable } from '@angular/core';
-// import { AngularFireDatabase } from '@angular/fire/database';
 import { Donations } from '../models/donations.model';
 import { of } from 'rxjs';
-// import { AngularFireAuth } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DonationsService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   get userId() {
     return 'uid';
   }
 
-  add(donations: Donations, userId: string) {
-    return of([donations, userId]);
+  addDonations(expenses: Donations) {
+    return this.http.post(
+      `${environment.apiUrl}?api=addDonation`, { 
+        ...expenses }
+    );
+  }
+
+  get(request: any) {
+    return this.http.get(
+      `${environment.apiUrl}?api=listDonations`, 
+      {
+        params: {
+        'ist_YYYYMMDD': request.payload
+        }
+      }
+    );
+  }
+
+  update(expenses: Donations, userId: string) {
+    return of([expenses, userId]);
 
   }
 
-  addDonations(donationss: Donations[]) {
-    return of(donationss);
-
-  }
-
-  get(userId: string) {
-    return of(userId);
-
-  }
-
-  update(donations: Donations, userId: string) {
-    return of([donations, userId]);
-
-  }
-
-  delete(donations: Donations, userId: string) {
-    return of([donations, userId]);
-
+  deleteExpense(uuId: string) {
+    return this.http.post(
+      `${environment.apiUrl}?api=deleteExpense`, { 
+        'uuid': uuId   
+      }
+    );
   }
 }

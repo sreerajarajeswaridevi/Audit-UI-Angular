@@ -4,14 +4,18 @@
     height: 150px;
     width: auto;
     max-width: 300px;
-    color: black;
+    color: white;
   }
 
   >:nth-child(even) {
-    background-color: #ceeef3 !important;
+    background-color: #2196f3 !important;
   }
   >:nth-child(odd) {
-    background-color: white!important;
+    background-color: #2196f3 !important;
+  }
+
+  .price {
+    color: #ffeb3b;
   }
 }
 
@@ -31,4 +35,9 @@
       width: auto;
     }
   }
+}
+
+.whitesmoke-text {
+  color: whitesmoke;
+  text-transform: none;
 }

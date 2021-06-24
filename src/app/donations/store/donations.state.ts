@@ -7,7 +7,7 @@ export interface DonationsState {
 }
 
 export const DonationsInitialState: DonationsState = {
-    donations: null,
+    donations: [],
     isLoading: true,
     error: null
 };

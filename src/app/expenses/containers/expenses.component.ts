@@ -25,7 +25,7 @@ export class ExpensesComponent implements OnInit {
   defaultDate = moment();
   startDate = moment();
   endDate = moment().add('30', 'days');
-  selectedDate = moment().format('dddd DD/MM/YYYY');
+  selectedDate = moment();
 
   todaysExpenseList: Expenses[];
 
@@ -38,15 +38,26 @@ export class ExpensesComponent implements OnInit {
     private modalService: MDBModalService
   ) {}
 
+  get formattedDate() {
+    return this.selectedDate.format('dddd DD/MM/YYYY');
+  }
+
+  dateClicked(event: any) {
+    console.log(event);
+  }
   
   datePicked(date: any) {
-    this.selectedDate = date.format('dddd DD/MM/YYYY');
+    this.selectedDate = date;
+    this.store.dispatch(new fromExpenses.ExpensesQuery(date.format('YYYY-MM-DD')));
   }
 
-  dateClicked(date: any) {
-    console.log(date);
+  prevDate() {
+    this.datePicked(this.selectedDate.subtract('1', 'days'));
   }
 
+  nextDate() {
+    this.datePicked(this.selectedDate.add('1', 'days'));
+  }
 
   ngOnInit(): void {
     this.store.select(getExpenses).subscribe((exp: Expenses[]) => {
@@ -54,21 +65,21 @@ export class ExpensesComponent implements OnInit {
     });
     this.isLoading$ = this.store.select(getIsLoading);
     this.isManager$ = this.store.select(isManager);
-    this.store.dispatch(new fromExpenses.ExpensesQuery(moment().format('YYYY-MM-DD')));
-    
+    this.store.dispatch(new fromExpenses.ExpensesQuery(this.selectedDate.format('YYYY-MM-DD')));
   }
 
   onSave() {
     this.store.dispatch(new fromExpenses.ExpensesAddQuery(this.expense));
     this.expense = {};
     this.expenseForm.reset();
+    this.selectedDate = moment();
   }
 
   getTotalExpense() {
     if (this.todaysExpenseList && this.todaysExpenseList.length > 0) {
       return this.todaysExpenseList.reduce(((prev ,current: any) => +(current.cost) + prev), 0);
     }
-    return '';
+    return '0';
   }
 
   onDelete(uuid: string) {

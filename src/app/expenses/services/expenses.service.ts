@@ -15,13 +15,6 @@ export class ExpensesService {
     return 'uid';
   }
 
-  // add(expenses: Expenses, userId: string) {
-  //   return this.http.post(
-  //     `${environment.apiUrl}?api=addPooja`, { 
-  //       ...newPooja }
-  //   );
-  // }
-
   addExpenses(expenses: Expenses) {
     return this.http.post(
       `${environment.apiUrl}?api=addExpense`, { 

@@ -5,9 +5,14 @@ import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { starSigns } from 'src/app/poojas/models/poojas.model';
+import { isManager } from '../../auth/store/auth.selectors';
 import { AppState } from 'src/app/reducers';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
-import { getIsLoading } from '../store/donations.selectors';
+import { Donations } from '../models/donations.model';
+import { getDonations, getIsLoading } from '../store/donations.selectors';
+import * as fromDonations from '../store/donations.actions';
+
+
 var moment = require('../../../assets/datepicker/moment.js');
 
 @Component({
@@ -17,13 +22,16 @@ var moment = require('../../../assets/datepicker/moment.js');
 })
 export class DonationsComponent implements OnInit {
   @ViewChild('donationForm', { static: true }) donationForm: NgForm;
-  
-  
+
+
+  isManager$: Observable<boolean>;
   isLoading$: Observable<boolean>;
+
   defaultDate = moment();
   startDate = moment();
   endDate = moment().add('30', 'days');
-  selectedDate = moment().format('dddd DD/MM/YYYY');
+  selectedDate = moment();
+
   donation: any = {};
   expenseData: Subject<any> = new Subject();
   heading: string;
@@ -31,46 +39,72 @@ export class DonationsComponent implements OnInit {
   starSigns = starSigns;
   private modalRef: MDBModalRef;
 
-  
+  todaysDonationList: Donations[] = [];
+
+
   modalConfig = {
     class: 'modal-dialog-centered'
   };
+
+  get formattedDate() {
+    return this.selectedDate.format('dddd DD/MM/YYYY');
+  }
 
   constructor(
     private store: Store<AppState>,
     private modalService: MDBModalService
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.store.select(getDonations).subscribe((exp: Donations[]) => {
+      this.todaysDonationList = exp;
+    });
     this.isLoading$ = this.store.select(getIsLoading);
-    // this.donationForm.controls.date.setValue(this.defaultDate.format('dddd DD/MM/YYYY'));
-  }
-  
-  datePicked(date: any) {
-    this.donationForm.controls.date.setValue(date.format('dddd DD/MM/YYYY'));
+    this.isManager$ = this.store.select(isManager);
+    this.store.dispatch(new fromDonations.DonationsQuery(this.selectedDate.format('YYYY-MM-DD')));
   }
 
   dateClicked(date: any) {
     console.log(date);
   }
 
-  
-  onSave() {
-    if (this.donationForm.valid) {
-      this.openDonationConfirmModal();
-      //send to api
-    } else {
-      const controls = this.donationForm.controls;
-      Object.keys(controls).forEach(controlName => controls[controlName].markAsTouched());
-    }
+  datePicked(date: any) {
+    this.selectedDate = date;
+    this.store.dispatch(new fromDonations.DonationsQuery(date.format('YYYY-MM-DD')));
   }
 
-  selectStar(star: string) {
-    this.donation.star = star;
+  prevDate() {
+    this.datePicked(this.selectedDate.subtract('1', 'days'));
+  }
+
+  nextDate() {
+    this.datePicked(this.selectedDate.add('1', 'days'));
+  }
+
+  onSave() {
+    this.store.dispatch(new fromDonations.DonationsAddQuery(this.donation));
+    this.resetForm();
   }
   
-  openDonationConfirmModal() {
+  getTotalAmount() {
+    if (this.todaysDonationList && this.todaysDonationList.length > 0) {
+      return this.todaysDonationList.reduce(((prev, current: any) => +(current.cost) + prev), 0);
+    }
+    return '0';
+  }
+  
+  selectStar(star: string) {
+    this.donation.nakshathram = star;
+  }
+
+  resetForm() {
+    this.donationForm.reset(); 
+    this.donation = {}
+    this.selectedDate = moment();
+  }
+
+  onDelete(uuid: string) {
     this.modalRef = this.modalService.show(
       ConfirmModalComponent,
       this.modalConfig
@@ -80,7 +114,7 @@ export class DonationsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((confirmation: boolean) => {
         if (confirmation) {
-          //api to save conation
+          this.store.dispatch(new fromDonations.DonationsDeleted({ uuid: uuid }));
         }
       });
   }

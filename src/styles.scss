@@ -81,7 +81,6 @@ blockquote {
   font-size: 28px;
 }
 
-
 .right-section {
   table {
     th {
@@ -95,4 +94,33 @@ blockquote {
       }
     }
   }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.md-form {
+  text-align: left;
+
+  .form-control {
+    margin-bottom: 0;
+  }
+  span.price {
+    margin: 10px 5px 0 0;
+  }
+}
+
+.error-message, .success-message {
+  position: relative!important;
+  top: 0!important;
+}
+
+.icon-button {
+  height: 50px;
+  width: 20px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
 }

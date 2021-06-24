@@ -56,8 +56,9 @@
         <mdb-card-header>
           <div class="md-form phone">
             <input type="text" id="phone" name="phone" class="form-control" [(ngModel)]="response.phone_number" mdbInput mdbValidate
-              [validateSuccess]="false" required>
+              [validateSuccess]="false" required #phone="ngModel">
             <label for="phone">Phone Number *</label>
+          <mdb-error *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">phone number is required</mdb-error>
           </div>
         </mdb-card-header>
         <mdb-card-body>
