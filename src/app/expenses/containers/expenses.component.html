@@ -21,7 +21,9 @@
             <label for="item">Item</label>
             <mdb-error *ngIf="item && item.invalid && (item.dirty || item.touched)">item is required</mdb-error>
           </div>
-
+          <div class="suggestion-container" *ngIf="frequentExpenses?.length">
+            <mdb-badge class="cursor-pointer mr-1" *ngFor="let expenseName of frequentExpenses" pill="true" [info]="expense.item !== expenseName" [success]="expense.item === expenseName" (click)="expense.item = expenseName">{{ expenseName }}</mdb-badge>
+          </div>
           </div>
 
           <div class="md-form" style="margin-top: 15px;">
@@ -53,7 +55,56 @@
 
       </mdb-card-footer>
     </mdb-card>
-    
+
+
+    <mdb-card class="mt-2" *ngIf="(isManager$ | async)">
+      <!-- salary section -->
+      <mdb-card-header class="w-100 d-flex justify-space-between bg-primary white-text">
+        <div>
+          <blockquote class="text-left  blockquote bq-success">
+            <h3 class="header">Record Salary</h3>
+          </blockquote>
+        </div>
+        <!-- <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="endDate"
+        (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
+        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ defaultDate.format('dddd DD/MM/YYYY') }}
+      </button> -->
+      </mdb-card-header>
+  
+      <mdb-card-body class="py-2">
+        <form #salaryForm="ngForm">
+          <div class="d-flex">
+          <div class="md-form">
+            <input type="text" id="description" name="description" class="form-control" [(ngModel)]="salary.description" mdbInput mdbValidate [validateSuccess]="false" #description="ngModel" required>
+            <label for="description">Paid To:</label>
+            <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">Person Name is required</mdb-error>
+          </div>
+          <div class="suggestion-container" *ngIf="frequentSalaries?.length">
+            <mdb-badge class="cursor-pointer mr-1" *ngFor="let item of frequentSalaries" pill="true" [info]="item.person !== salary.description" [success]="item.person === salary.description" (click)="salary.description = item.person; salary.cost = item.amount">{{ item.person }}</mdb-badge>
+          </div>
+          </div>
+
+          <div class="text-lg">
+            <label for="cost" class="grey-text">Amount</label>
+            <div class="md-form mt-0">
+              <span class="d-flex">
+                <span class="price">&#x20B9;</span>
+                <input type="number" class="form-control price" id="cost" name="cost" [(ngModel)]="salary.cost" #cost="ngModel" mdbValidate [validateSuccess]="false" required>
+              </span>
+              <mdb-error class="ml-3" *ngIf="cost && cost.invalid && (cost.dirty || cost.touched)">Amount is required</mdb-error>
+            </div>
+          </div>
+
+        </form>
+      </mdb-card-body>
+      <mdb-card-footer class="d-flex">
+        <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="salaryForm.reset()">Clear
+          </button>
+        <button type="button" mdbBtn color="success" [disabled]="salaryForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSalarySave(salaryForm)">Save
+          </button>
+
+      </mdb-card-footer>
+    </mdb-card>
   </div>
   <div class="right-section pb-4">
     <app-right-card [header]="'Todays Expenses'" >
@@ -86,7 +137,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of todaysExpenseList">
+          <tr *ngFor="let item of todaysExpenseList" [class.salary]="item?.item === 'Salary'">
             <td scope="row">{{ item?.item }}</td>
             <td>{{ item?.description }}</td>
             <td class="table-price">&#x20B9;{{ item?.cost }}

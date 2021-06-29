@@ -10,6 +10,7 @@ import { Expenses } from '../models/expenses.model';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { take } from 'rxjs/operators';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 var moment = require('../../../assets/datepicker/moment.js');
 
@@ -22,6 +23,11 @@ export class ExpensesComponent implements OnInit {
   isLoading$: Observable<boolean>;
   isManager$: Observable<boolean>;
   expense: any = {};
+  salary: any = {
+    item: 'Salary',
+    description: '',
+    cost: ''
+  };
   defaultDate = moment();
   startDate = moment();
   endDate = moment().add('30', 'days');
@@ -29,13 +35,19 @@ export class ExpensesComponent implements OnInit {
 
   todaysExpenseList: Expenses[];
 
+  frequentExpenses: Array<string>
+  frequentSalaries: Array<any>
+
   @ViewChild('expenseForm', { static: true }) expenseForm: NgForm;
+  @ViewChild('salaryForm', { static: true }) salaryForm: NgForm;
+  
   private modalRef: MDBModalRef;
 
 
   constructor(
     private store: Store<AppState>,
-    private modalService: MDBModalService
+    private modalService: MDBModalService,
+    private idbService: NgxIndexedDBService
   ) {}
 
   get formattedDate() {
@@ -62,14 +74,68 @@ export class ExpensesComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(getExpenses).subscribe((exp: Expenses[]) => {
       this.todaysExpenseList = exp;
+      this.fetchFrequentExpenses();
+      this.fetchFrequentSalaries();
     });
     this.isLoading$ = this.store.select(getIsLoading);
     this.isManager$ = this.store.select(isManager);
     this.store.dispatch(new fromExpenses.ExpensesQuery(this.selectedDate.format('YYYY-MM-DD')));
   }
 
+  fetchFrequentExpenses() {
+    this.idbService
+      .getAll('expenses')
+      .subscribe((expense: any) => {
+        if (expense && expense.length > 0) {
+          expense = expense.sort((a: any, b: any) => {
+            if (a.frequency > b.frequency) {
+              return -1;
+            } else if (a.frequency > b.frequency){
+              return 1;
+            }
+            return 0;
+          }).splice(0, 5);
+          this.frequentExpenses = expense.map((data: any) => data.item);
+        }
+      });
+  }
+
+  fetchFrequentSalaries() {
+    this.idbService
+      .getAll('salary')
+      .subscribe((salary: any) => {
+        if (salary && salary.length > 0) {
+          this.frequentSalaries = salary.sort((a: any, b: any) => {
+            if (a.frequency > b.frequency) {
+              return -1;
+            } else if (a.frequency > b.frequency){
+              return 1;
+            }
+            return 0;
+          }).splice(0, 5);
+        }
+      });
+  }
+
   onSave() {
     this.store.dispatch(new fromExpenses.ExpensesAddQuery(this.expense));
+    const expenseCopy = JSON.parse(JSON.stringify(this.expense));
+    this.idbService
+      .getByKey('expenses', expenseCopy.item)
+      .subscribe((data) => {
+        if (!data) {
+          this.idbService.add('expenses', {
+            item: expenseCopy.item,
+            frequency: 1
+          })
+        } else {
+          this.idbService.update('expenses',
+          {
+            item: expenseCopy.item,
+            frequency: (data as any).frequency + 1
+          }, (data as any).key)
+        }
+      });
     this.expense = {};
     this.expenseForm.reset();
     this.selectedDate = moment();
@@ -94,5 +160,34 @@ export class ExpensesComponent implements OnInit {
           this.store.dispatch(new fromExpenses.ExpensesDeleted({ uuid: uuid }));
         }
       });
+  }
+
+  onSalarySave(form: NgForm) {
+    this.store.dispatch(new fromExpenses.ExpensesAddQuery(this.salary));
+    const salaryCopy = JSON.parse(JSON.stringify(this.salary));
+    this.idbService
+      .getByKey('salary', salaryCopy.description)
+      .subscribe((data) => {
+        if (!data) {
+          this.idbService.add('salary', {
+            person: salaryCopy.description,
+            amount: salaryCopy.cost,
+            frequency: 1
+          })
+        } else {
+          this.idbService.update('salary',
+          {
+            person: salaryCopy.description,
+            amount: salaryCopy.cost,
+            frequency: (data as any).frequency + 1
+          }, (data as any).key)
+        }
+      });
+    this.salary = {
+      item: 'Salary',
+      description: '',
+      cost: ''
+    };
+    form.reset();
   }
 }

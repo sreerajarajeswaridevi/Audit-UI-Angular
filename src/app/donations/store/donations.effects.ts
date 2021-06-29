@@ -3,7 +3,6 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { DonationsService } from '../services/donations.service';
 import { DonationsActionTypes } from './donations.actions';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
-import { Donations } from '../models/donations.model';
 
 import * as fromDonations from './donations.actions';
 import { of } from 'rxjs';
