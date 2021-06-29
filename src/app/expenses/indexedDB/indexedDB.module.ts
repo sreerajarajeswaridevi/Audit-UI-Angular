@@ -6,6 +6,7 @@ export function migrationFactory() {
   // to be modified so a migrator for that version is not included.
   return {
     1: (db: any, transaction: any) => {
+      console.log(db);
       const store1 = transaction.objectStore('expenses');
       store1.createIndex('item', 'item', { unique: true });
       store1.createIndex('frequency', 'frequency', { unique: false });
@@ -14,7 +15,6 @@ export function migrationFactory() {
       store2.createIndex('person', 'person', { unique: true });
       store2.createIndex('amount', 'amount', { unique: false });
       store2.createIndex('frequency', 'frequency', { unique: false });
-
     }
   };
 }
