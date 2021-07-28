@@ -16,7 +16,7 @@ export interface NewPoojaRequest {
     address?: string;
     bhakthar: any[];
     pooja_price: string,
-    date?: string
+    ist_YYYYMMDD?: string
 }
 
 export interface PoojaList {

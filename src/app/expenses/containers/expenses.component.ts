@@ -22,16 +22,24 @@ var moment = require('../../../assets/datepicker/moment.js');
 export class ExpensesComponent implements OnInit {
   isLoading$: Observable<boolean>;
   isManager$: Observable<boolean>;
-  expense: any = {};
+  
+  expenseDate = moment();
+  salaryDate = moment();
+
+  defaultDate = moment();
+  startDate = moment().subtract(60, 'days');
+  endDate = moment().add('30', 'days');
+  selectedDate = moment();
+  
+  expense: any = {
+    ist_YYYYMMDD: moment().format('YYYY-MM-DD')
+  };
   salary: any = {
     item: 'Salary',
     description: '',
-    cost: ''
+    cost: '',
+    ist_YYYYMMDD: moment().format('YYYY-MM-DD')
   };
-  defaultDate = moment();
-  startDate = moment();
-  endDate = moment().add('30', 'days');
-  selectedDate = moment();
 
   todaysExpenseList: Expenses[];
 
@@ -56,6 +64,16 @@ export class ExpensesComponent implements OnInit {
 
   dateClicked(event: any) {
     console.log(event);
+  }
+
+  expDatePicked(date: any) {
+    this.expenseDate = date;
+    this.expense.ist_YYYYMMDD = date.format('YYYY-MM-DD');
+  }
+
+  salDatePicked(date: any) {
+    this.salaryDate = date;
+    this.salary.ist_YYYYMMDD = date.format('YYYY-MM-DD');
   }
   
   datePicked(date: any) {
@@ -136,9 +154,17 @@ export class ExpensesComponent implements OnInit {
           }, (data as any).key)
         }
       });
-    this.expense = {};
-    this.expenseForm.reset();
-    this.selectedDate = moment();
+      this.expense = {
+        ist_YYYYMMDD: moment().format('YYYY-MM-DD')
+      };
+      this.expenseForm.reset();
+      this.selectedDate = moment();
+      this.expenseDate = moment();
+  }
+
+  resetAll() {
+    
+    
   }
 
   getTotalExpense() {
@@ -183,11 +209,15 @@ export class ExpensesComponent implements OnInit {
           }, (data as any).key)
         }
       });
+
     this.salary = {
       item: 'Salary',
       description: '',
-      cost: ''
+      cost: '',
+      ist_YYYYMMDD: moment().format('YYYY-MM-DD')
     };
     form.reset();
+    this.salaryDate = moment();
+    this.salary = {};
   }
 }

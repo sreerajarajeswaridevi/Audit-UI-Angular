@@ -27,12 +27,15 @@ export class DonationsComponent implements OnInit {
   isManager$: Observable<boolean>;
   isLoading$: Observable<boolean>;
 
+  donationDate = moment();
   defaultDate = moment();
-  startDate = moment();
+  startDate = moment().subtract(60, 'days');
   endDate = moment().add('30', 'days');
   selectedDate = moment();
 
-  donation: any = {};
+  donation: any = {
+    ist_YYYYMMDD: moment().format('YYYY-MM-DD')
+  };
   expenseData: Subject<any> = new Subject();
   heading: string;
   price: number;
@@ -69,6 +72,11 @@ export class DonationsComponent implements OnInit {
     console.log(date);
   }
 
+  donDatePicked(date: any) {
+    this.donationDate = date;
+    this.donation.ist_YYYYMMDD = date.format('YYYY-MM-DD');
+  }
+
   datePicked(date: any) {
     this.selectedDate = date;
     this.store.dispatch(new fromDonations.DonationsQuery(date.format('YYYY-MM-DD')));
@@ -95,13 +103,16 @@ export class DonationsComponent implements OnInit {
   }
   
   selectStar(star: string) {
-    this.donation.nakshathram = star;
+    this.donation.nakshatram = star;
   }
 
   resetForm() {
     this.donationForm.reset(); 
-    this.donation = {}
+    this.donation = {
+      ist_YYYYMMDD: moment().format('YYYY-MM-DD')
+    }
     this.selectedDate = moment();
+    this.donationDate = moment();
   }
 
   onDelete(uuid: string) {

@@ -7,9 +7,9 @@
             <h3 class="header">Add Expense</h3>
           </blockquote>
         </div>
-        <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="endDate"
-        (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
-        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ defaultDate.format('dddd DD/MM/YYYY') }}
+        <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="expenseDate" [endDate]="endDate" [startDate]="startDate"
+        header="Select Date" (dateSelected)="expDatePicked($event)">
+        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> <span appDateTransform [date]="expenseDate.format('YYYYMMDD')"></span>
       </button>
       </mdb-card-header>
   
@@ -65,10 +65,10 @@
             <h3 class="header">Record Salary</h3>
           </blockquote>
         </div>
-        <!-- <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="endDate"
-        (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
-        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ defaultDate.format('dddd DD/MM/YYYY') }}
-      </button> -->
+        <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="salaryDate" [endDate]="endDate" [startDate]="startDate"
+        header="Select Salary Given Date" (dateSelected)="salDatePicked($event)">
+        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ salaryDate.format('dddd DD/MM/YYYY') }}
+      </button>
       </mdb-card-header>
   
       <mdb-card-body class="py-2">
@@ -114,7 +114,7 @@
         </span>
         <span>
           Expense on 
-          <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="defaultDate"
+          <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="defaultDate" [startDate]="startDate"
           (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
             <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ formattedDate }}
           </button>

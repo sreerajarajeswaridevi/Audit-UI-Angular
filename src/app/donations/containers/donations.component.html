@@ -8,9 +8,9 @@
             <p class="py-0" *ngIf="donationForm.valid">Adding a donation of <span class="price">&#x20B9;{{donationForm?.value.amount}}</span> from {{donationForm?.value.name}}</p>
           </blockquote>
         </div>
-        <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="endDate"
-        (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
-        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ defaultDate.format('dddd DD/MM/YYYY') }}
+        <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="donationDate" [endDate]="endDate" [startDate]="startDate"
+        header="Select Date" (dateSelected)="donDatePicked($event)">
+        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> <span appDateTransform [date]="donationDate.format('YYYY-MM-DD')"></span>
       </button>
       </mdb-card-header>
       <mdb-card-body class="py-2">
@@ -27,13 +27,13 @@
         
                 <div class="btn-toolbar star-container" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="md-form hidden">
-                    <input type="text" id="star" name="star" class="form-control" [(ngModel)]="donation.nakshathram" mdbInput mdbValidate
+                    <input type="text" id="star" name="star" class="form-control" [(ngModel)]="donation.nakshatram" mdbInput mdbValidate
                       [validateSuccess]="false" #star="ngModel" required>
                     <label for="star">Star</label>
                   </div>
                   <div class="btn-group mr-2" role="group" aria-label="First group">
                       <button (click)="selectStar(star)"
-                      *ngFor="let star of starSigns" mdbBtn type="button" color="grey" [outline]="star !== donation.nakshathram" [class.selected]="star === donation.nakshathram"
+                      *ngFor="let star of starSigns" mdbBtn type="button" color="grey" [outline]="star !== donation.nakshatram" [class.selected]="star === donation.nakshatram"
                        mdbWavesEffect>{{star}}</button>
                   </div>
                 </div>
@@ -49,7 +49,7 @@
               <mdb-card class="text-center">
                 <mdb-card-body>
                   <div class="md-form phone">
-                    <input type="number" id="phone" name="phone" class="form-control" #phone="ngModel" [(ngModel)]="donation.phoneNumber" mdbInput mdbValidate
+                    <input type="number" id="phone" name="phone" class="form-control" #phone="ngModel" [(ngModel)]="donation.phone_number" mdbInput mdbValidate
                       [validateSuccess]="false" required>
                     <label for="phone">Phone Number</label>
                     <mdb-error *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">phone number is required</mdb-error>
@@ -110,14 +110,14 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Nakshathram</th>
+            <th>nakshatram</th>
             <th>Amount</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of todaysDonationList">
             <td scope="row">{{ item?.name }}</td>
-            <td>{{ item?.nakshathram }}</td>
+            <td>{{ item?.nakshatram }}</td>
             <td class="table-price">&#x20B9;{{ item?.amount }}
               <mdb-icon *ngIf="isManager$ | async" fas icon="trash" class="ml-1 float-right delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
             </td>
@@ -133,11 +133,6 @@
         </div>
       </div>
     </app-right-card>
-    <!-- <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
-      <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div> -->
   </div>
 </app-split-body>
 

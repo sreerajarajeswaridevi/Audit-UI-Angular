@@ -41,3 +41,14 @@
   color: whitesmoke;
   text-transform: none;
 }
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+ 

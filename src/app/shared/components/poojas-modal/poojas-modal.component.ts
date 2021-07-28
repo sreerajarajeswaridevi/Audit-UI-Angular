@@ -32,7 +32,7 @@ export class PoojasModalComponent implements OnInit {
     address: '',
     bhakthar: [],
     pooja_price: '0',
-    // date: moment().format('dddd DD/MM/YYYY') // uncomment for bookings
+    ist_YYYYMMDD: this.selectedDate.format('YYYY-MM-DD') 
   }
 
   constructor(public modalRef: MDBModalRef) { }
@@ -47,7 +47,8 @@ export class PoojasModalComponent implements OnInit {
 
   datePicked(date: any) {
     console.log(date);
-    // this.response.date = date.format('DD/MM/YYYY'); // uncomment for bookings
+    this.response.ist_YYYYMMDD = date.format('YYYY-MM-DD');
+    this.selectedDate = date; 
   }
 
   dateClicked(date: any) {

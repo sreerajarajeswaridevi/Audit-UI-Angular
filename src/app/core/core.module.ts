@@ -18,6 +18,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AuthModule } from '../auth/auth.module';
 import { SplitBodyComponent } from './split-body/split-body.component';
 import { DatePickerDirective } from '../directives/date-picker.directive';
+import { DateTransformDirective } from '../directives/date-transform.directive';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { DatePickerDirective } from '../directives/date-picker.directive';
     DashboardComponent,
     PageNotFoundComponent,
     SplitBodyComponent,
-    DatePickerDirective
+    DatePickerDirective,
+    DateTransformDirective
   ],
   exports: [
     HeaderComponent,
@@ -46,7 +48,8 @@ import { DatePickerDirective } from '../directives/date-picker.directive';
     MainComponent,
     HomeComponent,
     SplitBodyComponent,
-    DatePickerDirective
+    DatePickerDirective,
+    DateTransformDirective
   ]
 })
 export class CoreModule {}

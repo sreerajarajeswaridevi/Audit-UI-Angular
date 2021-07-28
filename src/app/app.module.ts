@@ -55,6 +55,6 @@ import { APIInterceptor } from './interceptors/api.interceptor';
     EffectsModule.forRoot([])
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true },],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

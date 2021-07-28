@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PoojasRoutingModule } from './poojas-routing.module';
 import { PoojasComponent } from './containers/poojas.component';
 import { FormsModule } from '@angular/forms';
-import { ButtonsModule, InputsModule, TableModule, IconsModule, ModalModule, CardsModule, DropdownModule, InputUtilitiesModule } from 'angular-bootstrap-md';
+import { ButtonsModule, InputsModule, TableModule, IconsModule, ModalModule, CardsModule, DropdownModule, InputUtilitiesModule, BadgeModule } from 'angular-bootstrap-md';
 
 import * as fromPoojas from './store/poojas.reducer';
 import { StoreModule } from '@ngrx/store';
@@ -29,6 +29,7 @@ import { PoojaListComponent } from './components/pooja-list/pooja-list.component
     SharedModule,    
     DropdownModule,
     InputUtilitiesModule,
+    BadgeModule,
     StoreModule.forFeature('poojas', fromPoojas.PoojasReducer),
     EffectsModule.forFeature([PoojasEffects])
   ],
