@@ -1,7 +1,7 @@
 export interface Donations {
     uuid?: number;
     name?: any;
-    nakshathram?: string;
+    nakshatram?: string;
     address?: string;
     phoneNumber?: string;
     amount?: string;
