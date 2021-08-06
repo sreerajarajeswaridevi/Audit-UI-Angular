@@ -93,6 +93,10 @@ export class ChartsComponent implements OnInit, OnDestroy {
       return;
     }
     let book: any = {};
+    let monthlyOverView: any = {
+      dataSet: [{data: [], label: 'Profit/Loss Monthly Data'}],
+      chartLabels: []
+    };
     monthBook.forEach((monthEl: any, index: number) => {
       if (monthEl) {
         if (index === 0) {
@@ -102,14 +106,14 @@ export class ChartsComponent implements OnInit, OnDestroy {
           book.expenses = book.expenses.concat(monthEl.expenses);
           book.donations = book.donations.concat(monthEl.donations);
         }
-        // const profitLoss = monthEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
-        //   monthEl.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0) +
-        //   monthEl.donations.reduce((total: number, item: any) => Number(total) + Number(item.amount), 0);
-        // monthlyOverView.dataSet[0].data.push(profitLoss);
-        // monthlyOverView.chartLabels.push(monthEl.date);
+        const profitLoss = monthEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
+          monthEl.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0) +
+          monthEl.donations.reduce((total: number, item: any) => Number(total) + Number(item.amount), 0);
+        monthlyOverView.dataSet[0].data.push(profitLoss);
+        monthlyOverView.chartLabels.push(monthEl.date);
       }
     });
-    return this.getReconsolidatedData(book);
+    return {...this.getReconsolidatedData(book), monthlyOverView};
   }
 
   getWeekData(data: any) {
@@ -173,7 +177,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
           data: [ book.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0),
           book.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0),
           book.donations.reduce((total: number, item: any) => Number(total) + Number(item.amount), 0) ],
-          label: 'Balance Sheet'
+          label: 'Total Amount'
         }],
         chartLabels: [`poojas (${book.poojas.length})`, `expenses (${book.expenses.length})`, `donations (${book.donations.length})`]
       },
@@ -234,6 +238,7 @@ interface ChartConfig{
   currentOverView: Chart | {},
   poojasOverView: Chart
   weeklyOverView?: Chart
+  monthlyOverView?: Chart
 }
 
 interface Chart {

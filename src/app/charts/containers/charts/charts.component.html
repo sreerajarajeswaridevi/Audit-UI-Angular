@@ -8,24 +8,24 @@
       <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group mr-2 mt-4 row w-100" role="group" aria-label="First group">
           <button mdbBtn type="button" (click)="activeTab = 'day'" [color]="activeTab === 'day' ? 'primary' : 'white'"
-            class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" mdbWavesEffect>
+            class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
             day
           </button>
           <button mdbBtn type="button" (click)="activeTab = 'week'" [color]="activeTab === 'week' ? 'primary' : 'white'"
-            class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" mdbWavesEffect>
+            class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
             week
           </button>
           <button mdbBtn type="button" (click)="activeTab = 'month'"
-            [color]="activeTab === 'month' ? 'primary' : 'white'" class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" mdbWavesEffect>
+            [color]="activeTab === 'month' ? 'primary' : 'white'" class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
             month
           </button>
           <button mdbBtn type="button" (click)="activeTab = 'year'" [color]="activeTab === 'year' ? 'primary' : 'white'"
-            class="waves-light col-4 col-md-4 col-lg-3 col-xl-2"
+            class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm"
             mdbWavesEffect>
             year
           </button>
           <button mdbBtn type="button" (click)="activeTab = 'custom'"
-            [color]="activeTab === 'custom' ? 'primary' : 'white'" class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" mdbWavesEffect>
+            [color]="activeTab === 'custom' ? 'primary' : 'white'" class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
             custom
           </button>
         </div>
@@ -235,6 +235,16 @@
           </tbody>
         </table>
       </div>
+
+      <div class="col-12" *ngIf="pageData.thisMonthsData">
+        <mdb-card>
+          <mdb-card-body>
+            <app-line-chart [dataset]="pageData.thisMonthsData.monthlyOverView.dataSet"
+              [labels]="pageData.thisMonthsData.monthlyOverView.chartLabels"></app-line-chart>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+
     </div>
   </div>
   <!-- this Months data ends here-->
