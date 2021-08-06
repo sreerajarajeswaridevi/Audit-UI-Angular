@@ -80,6 +80,7 @@ export class PoojasComponent implements OnInit {
       .subscribe((poojas: { poojaList: PoojaList[] }) => {
         this.tomorrowsPoojaList = poojas.poojaList;
       });
+      this.datePicked(moment());
     });
     this.isManager$ = this.store.select(isManager);
     this.isLoading$ = this.store.select(getIsLoading);
@@ -105,7 +106,7 @@ export class PoojasComponent implements OnInit {
   }
 
   getPoojaNameFromCode(pooja_code: string) {
-    const res = this.poojaTypes.find(pooja => pooja.pooja_code === pooja_code);
+    const res = this.poojaTypes && this.poojaTypes.find(pooja => pooja.pooja_code === pooja_code);
     if (res) {
       return res.pooja_name;
     }

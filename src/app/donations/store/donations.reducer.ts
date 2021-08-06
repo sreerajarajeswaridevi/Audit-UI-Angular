@@ -17,7 +17,7 @@ export function DonationsReducer(state = DonationsInitialState, action: Donation
 
     case DonationsActionTypes.DONATIONS_LOADED: {
       return Object.assign({}, state, {
-        Donations: action.payload.donations,
+        donations: action.payload.donations,
         isLoading: false,
       });
     }

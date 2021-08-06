@@ -1,28 +1,84 @@
-<div class="white px-4 section-header">
-  <h3>Charts</h3>
-  <p class="grey-text pt-3">Visualisation of data downloaded from an external API</p>
+<div class="white px-4 py-2">
+  <h3 class="pt-2">Financial Reports</h3>
+  <p class="grey-text pt-1">Visualisation of consolidated accounts data</p>
 </div>
 
-<div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 300px">
+<div *ngIf="isLoading$" class="d-flex justify-content-center align-items-center" style="margin-top: 300px">
   <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
     <span class="sr-only">Loading...</span>
   </div>
 </div>
 
-<div *ngIf="!(isLoading$ | async)" class="charts-container p-5">
+<div *ngIf="!(isLoading$)" class="charts-container p-5">
+
+  
+  <div class="row mb-3" >
+    <div class="col-md-12">
+      <mdb-card>  
+        <mdb-card-header>
+          Todays Profit/Loss <span *ngIf="pageData.todaysData" class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.todaysData) }}</span>
+        </mdb-card-header>
+        <mdb-card-body *ngIf="pageData.todaysData">
+          <div class="pl-4">
+            <button mdbBtn color="primary" size="sm" (click)="swapPoojasData(pageData.todaysData)">Poojas</button>
+          </div>
+          <app-bar-chart [dataset]="pageData.todaysData.currentOverView.dataSet" [labels]="pageData.todaysData.currentOverView.chartLabels"></app-bar-chart>
+        </mdb-card-body>
+        <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!pageData.todaysData">
+          <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
+            <p class="grey-text">No Data Today</p>
+        </div>
+      </mdb-card>
+    </div>
+   
+  
+  </div>
+
+  <div class="row mb-3" *ngIf="pageData.todaysData">
+    <div class="col-md-6">
+      <table class="white text-center z-depth-1" mdbTable>
+        <thead class="primary-color text-white">
+          <tr>
+            <td colspan="2">
+              Todays Profit/Loss <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.todaysData) }}</span>
+            </td>
+          </tr>
+          <tr *ngIf="pageData.todaysData.currentOverView === pageData.todaysData.overView; else poojasView">
+            <th>Expense Type</th>
+            <th>Profit/Loss</th>
+          </tr>
+          <ng-template #poojasView>
+            <tr>
+              <th>Poooja Name</th>
+              <th>Total Amount Received</th>
+            </tr>
+          </ng-template>
+        </thead>
+        <tbody>
+          <tr mdbTableCol *ngFor="let value of pageData.todaysData.currentOverView.dataSet[0].data; let i = index">
+            <td>{{ pageData.todaysData.currentOverView.chartLabels[i] }}</td>
+            <th scope="row">{{ value }}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+    <!-- this weeks data -->
 
   <div class="row mb-3">
     <div class="col-md-12">
-      <mdb-card>
+      <mdb-card>  
+        <mdb-card-header>
+          This Weeks Profit/Loss <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisWeeksData) }}</span>
+        </mdb-card-header>
         <mdb-card-body>
           <div class="pl-4">
-            <button mdbBtn color="primary" size="sm" (click)="getExchangeRates('USD')">USD</button>
-            <button mdbBtn color="primary" size="sm" (click)="getExchangeRates('PLN')">PLN</button>
-            <button mdbBtn color="primary" size="sm" (click)="getExchangeRates('GBP')">GBP</button>
-            <button mdbBtn color="primary" size="sm" (click)="getExchangeRates('JPY')">JPY</button>
-            <button mdbBtn color="primary" size="sm" (click)="getExchangeRates('RUB')">RUB</button>
+            <button mdbBtn color="primary" size="sm" (click)="swapPoojasData(pageData.thisWeeksData)">Poojas</button>
           </div>
-          <app-line-chart [dataset]="dataset" [labels]="labels"></app-line-chart>
+          <app-bar-chart [dataset]="pageData.thisWeeksData.currentOverView.dataSet" [labels]="pageData.thisWeeksData.currentOverView.chartLabels"></app-bar-chart>
+          <br><br>
+          <app-bar-chart [dataset]="pageData.thisWeeksData.weeklyOverView.dataSet" [labels]="pageData.thisWeeksData.weeklyOverView.chartLabels"></app-bar-chart>
         </mdb-card-body>
       </mdb-card>
     </div>
@@ -33,19 +89,85 @@
       <table class="white text-center z-depth-1" mdbTable>
         <thead class="primary-color text-white">
           <tr>
-            <th>Value</th>
-            <th>Label</th>
+            <td colspan="2">
+              This Weeks Profit/Loss <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisWeeksData) }}</span>
+            </td>
           </tr>
+          <tr *ngIf="pageData.thisWeeksData.currentOverView === pageData.thisWeeksData.overView; else poojasView">
+            <th>Expense Type</th>
+            <th>Profit/Loss</th>
+          </tr>
+          <ng-template #poojasView>
+            <tr>
+              <th>Poooja Name</th>
+              <th>Total Amount Received</th>
+            </tr>
+          </ng-template>
         </thead>
         <tbody>
-          <tr mdbTableCol *ngFor="let value of barChartDataset[0].data; let i = index">
+          <tr mdbTableCol *ngFor="let value of pageData.thisWeeksData.currentOverView.dataSet[0].data; let i = index">
+            <td>{{ pageData.thisWeeksData.currentOverView.chartLabels[i] }}</td>
             <th scope="row">{{ value }}</th>
-            <td>{{ barChartLabels[i] }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    </div>
+    <!-- this weeks data ends here-->
 
+
+    <!-- this Months data -->
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <mdb-card>  
+        <mdb-card-header>
+          This Months Profit/Loss <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisMonthsData) }}</span>
+        </mdb-card-header>
+        <mdb-card-body>
+          <div class="pl-4">
+            <button mdbBtn color="primary" size="sm" (click)="swapPoojasData(pageData.thisMonthsData)">Poojas</button>
+          </div>
+          <app-bar-chart [dataset]="pageData.thisMonthsData.currentOverView.dataSet" [labels]="pageData.thisMonthsData.currentOverView.chartLabels"></app-bar-chart>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <table class="white text-center z-depth-1" mdbTable>
+        <thead class="primary-color text-white">
+          <tr>
+            <td colspan="2">
+              This Months Profit/Loss <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisMonthsData) }}</span>
+            </td>
+          </tr>
+          <tr *ngIf="pageData.thisMonthsData.currentOverView === pageData.thisMonthsData.overView; else poojasView">
+            <th>Expense Type</th>
+            <th>Profit/Loss</th>
+          </tr>
+          <ng-template #poojasView>
+            <tr>
+              <th>Poooja Name</th>
+              <th>Total Amount Received</th>
+            </tr>
+          </ng-template>
+        </thead>
+        <tbody>
+          <tr mdbTableCol *ngFor="let value of pageData.thisMonthsData.currentOverView.dataSet[0].data; let i = index">
+            <td>{{ pageData.thisMonthsData.currentOverView.chartLabels[i] }}</td>
+            <th scope="row">{{ value }}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+    <!-- this Months data ends here-->
+
+
+
+<!-- 
     <div class="col-md-6">
       <mdb-card>
         <mdb-card-body>
@@ -71,6 +193,6 @@
         </mdb-card-body>
       </mdb-card>
     </div>
-  </div>
+  </div> -->
 
 </div>

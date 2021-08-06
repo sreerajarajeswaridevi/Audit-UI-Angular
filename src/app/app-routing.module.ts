@@ -8,6 +8,7 @@ import { MainComponent } from './core/main/main.component';
 import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
 import { AdminComponent } from './admin/containers/admin/admin.component';
 import { AdminGuard } from './admin/guard/admin.guard';
+import { ManagerGuard } from './admin/guard/manager.guard';
 // import { AdminComponent } from './admin/containers/admin/admin.component';
 // import { AdminGuard } from './admin/guard/admin.guard';
 
@@ -18,12 +19,11 @@ const routes: Routes = [
     { path: 'expenses', loadChildren: './expenses/expenses.module#ExpensesModule'},
     { path: 'donations', loadChildren: './donations/donations.module#DonationsModule'},
     { path: 'settings', loadChildren: './profile/profile.module#ProfileModule' },
-    { path: 'charts', loadChildren: './charts/charts.module#ChartsDataModule' },
-    { path: 'admin-panel', component: AdminComponent, canActivate: [AdminGuard] }
+    { path: 'admin-panel', component: AdminComponent, canActivate: [AdminGuard] },
+    { path: 'reports', loadChildren: './charts/charts.module#ChartsDataModule', canActivate: [ManagerGuard] },
     // { path: 'projects', loadChildren: './projects/projects.module#ProjectsModule', canActivate: [AuthGuard]},
     // { path: 'customers', loadChildren: './customers/customers.module#CustomersModule', canActivate: [AuthGuard]},
     // { path: 'profile', loadChildren: './profile/profile.module#ProfileModule', canActivate: [AuthGuard] },
-    // { path: 'charts', loadChildren: './charts/charts.module#ChartsDataModule', canActivate: [AuthGuard] },
     // { path: 'admin-panel', component: AdminComponent, canActivate: [AdminGuard]}
   ]},
   { path: 'register', component: RegisterComponent },

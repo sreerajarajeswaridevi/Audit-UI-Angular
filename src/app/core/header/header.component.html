@@ -25,6 +25,9 @@
       <li *ngIf="isLoggedIn && !isLoading && !user.isAdmin" class="nav-item">
         <a (click)="navbar.hide()" class="nav-link waves-light" routerLink="/donations" routerLinkActive="active" mdbWavesEffect>Donations</a>
       </li>
+      <li *ngIf="isLoggedIn && !isLoading && user.role === 'manager'" class="nav-item">
+        <a (click)="navbar.hide()" class="nav-link waves-light" routerLink="/reports" routerLinkActive="active" mdbWavesEffect>Reports</a>
+      </li>
       <li *ngIf="isLoggedIn && !isLoading" class="nav-item">
         <a (click)="navbar.hide()" class="nav-link waves-light" routerLink="/settings" routerLinkActive="active" mdbWavesEffect>Settings</a>
       </li>

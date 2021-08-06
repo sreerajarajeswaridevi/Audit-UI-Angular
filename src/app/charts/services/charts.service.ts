@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChartsService {
 
-
   constructor(private http: HttpClient) { }
+
   startDate = '2018-01-01';
   endDate = '2018-01-31';
   apiHistoryUrl = 'https://api.exchangeratesapi.io/history';
@@ -61,6 +62,18 @@ export class ChartsService {
 
         return { date, base, values, labels };
       })
+    );
+  }
+
+  getReconsiledBook(request: any) {
+    return this.http.get(
+      `${environment.apiUrl}?api=getReconciledBook`, 
+      {
+        params: {
+        'start_date_ist_YYYYMMDD': request.startDate,
+        'end_date_ist_YYYYMMDD': request.endDate
+        }
+      }
     );
   }
 }

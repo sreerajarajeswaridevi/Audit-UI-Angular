@@ -22,7 +22,7 @@
             <mdb-error *ngIf="item && item.invalid && (item.dirty || item.touched)">item is required</mdb-error>
           </div>
           <div class="suggestion-container" *ngIf="frequentExpenses?.length">
-            <mdb-badge class="cursor-pointer mr-1" *ngFor="let expenseName of frequentExpenses" pill="true" [info]="expense.item !== expenseName" [success]="expense.item === expenseName" (click)="expense.item = expenseName">{{ expenseName }}</mdb-badge>
+            <!-- <mdb-badge class="cursor-pointer mr-1" *ngFor="let expenseName of frequentExpenses" pill="true" [info]="expense.item !== expenseName" [success]="expense.item === expenseName" (click)="expense.item = expenseName">{{ expenseName }}</mdb-badge> -->
           </div>
           </div>
 
@@ -80,7 +80,7 @@
             <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">Person Name is required</mdb-error>
           </div>
           <div class="suggestion-container" *ngIf="frequentSalaries?.length">
-            <mdb-badge class="cursor-pointer mr-1" *ngFor="let item of frequentSalaries" pill="true" [info]="item.person !== salary.description" [success]="item.person === salary.description" (click)="salary.description = item.person; salary.cost = item.amount">{{ item.person }}</mdb-badge>
+            <!-- <mdb-badge class="cursor-pointer mr-1" *ngFor="let item of frequentSalaries" pill="true" [info]="item.person !== salary.description" [success]="item.person === salary.description" (click)="salary.description = item.person; salary.cost = item.amount">{{ item.person }}</mdb-badge> -->
           </div>
           </div>
 

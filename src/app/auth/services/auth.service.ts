@@ -105,6 +105,14 @@ export class AuthService {
     return of(false);
   }
 
+  checkIfManger() {
+    // return this.db.object('admins/' + uid).valueChanges();
+    if (this.user && this.user.role === 'manager') {
+      return of(true);
+    }
+    return of(false);
+  }
+
   getAuthState() {
     // return this.afAuth.authState;
     return of(null); //modify this for logged in state

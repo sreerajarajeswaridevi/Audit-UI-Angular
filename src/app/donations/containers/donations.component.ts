@@ -97,7 +97,7 @@ export class DonationsComponent implements OnInit {
   
   getTotalAmount() {
     if (this.todaysDonationList && this.todaysDonationList.length > 0) {
-      return this.todaysDonationList.reduce(((prev, current: any) => +(current.cost) + prev), 0);
+      return this.todaysDonationList.reduce(((prev, current: any) => +(current.amount) + prev), 0);
     }
     return '0';
   }

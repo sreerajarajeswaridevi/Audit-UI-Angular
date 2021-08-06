@@ -23,7 +23,7 @@ export class DonationsEffects {
     switchMap((payload: any) => this.donationsService.get(payload)
       .pipe(
         map((data: any) => {
-          return (new fromDonations.DonationsLoaded({ donations: data.donationsList }));
+          return (new fromDonations.DonationsLoaded({ donations: data.donationList }));
         }),
         catchError(error => {
           return of(new fromDonations.DonationsError({ error }));

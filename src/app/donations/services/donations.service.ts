@@ -15,10 +15,10 @@ export class DonationsService {
     return 'uid';
   }
 
-  addDonations(expenses: Donations) {
+  addDonations(donations: Donations) {
     return this.http.post(
       `${environment.apiUrl}?api=addDonation`, { 
-        ...expenses }
+        ...donations }
     );
   }
 
