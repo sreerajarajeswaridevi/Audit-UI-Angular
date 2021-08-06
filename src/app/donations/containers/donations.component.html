@@ -92,7 +92,7 @@
         </span>
         <span>
           Donations on 
-          <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="defaultDate"
+          <button [disabled]="!(isManager$ | async)" mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="defaultDate"
           (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
             <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ formattedDate }}
           </button>

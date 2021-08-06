@@ -128,3 +128,7 @@ blockquote {
 mdb-badge.count span {
   color: black;
 }
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: black;
+}

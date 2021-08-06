@@ -20,15 +20,21 @@
       </mdb-card>
     </div>
 
-    <div class="col-lg-6 col-sm-6">
-      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
-        <a routerLink="/settings" mdbBtn gradient="purple">Settings</a>
-      </mdb-card>
-    </div>
-
     <div class="col-lg-6 col-sm-6" *ngIf="isAdmin">
       <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
         <a routerLink="/admin-panel" mdbBtn gradient="aqua">Admin Panel</a>
+      </mdb-card>
+    </div>
+
+    <div class="col-lg-6 col-sm-6" *ngIf="role === 'manager'">
+      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
+        <a routerLink="/reports" mdbBtn gradient="aqua">Reports</a>
+      </mdb-card>
+    </div>
+
+    <div class="col-lg-6 col-sm-6">
+      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
+        <a routerLink="/settings" mdbBtn gradient="purple">Settings</a>
       </mdb-card>
     </div>
 

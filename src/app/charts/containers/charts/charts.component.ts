@@ -13,6 +13,7 @@ var moment = require('../../../../assets/datepicker/moment.js');
   styleUrls: ['./charts.component.scss']
 })
 export class ChartsComponent implements OnInit, OnDestroy {
+  activeTab = 'day';
   isLoading$ = false;
 
   lineChartSub: Subscription;
