@@ -64,6 +64,12 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
   initDates() {
     this.todaysDate = moment();
+    this.weekDate = moment();
+    this.monthDate = moment();
+    this.yearDate = moment();
+    this.customStartDate = moment();
+    this.customEndDate = moment();
+
     this.thisWeekStartDate = this.todaysDate.clone().startOf('isoWeek');
     this.thisWeekEndDate = this.todaysDate.clone().endOf('isoWeek');
     this.thisMonthStartDate = this.todaysDate.clone().startOf('month');
@@ -195,8 +201,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
     }
     let book: any = new Book();
     let yearlyOverView: any = {
-      dataSet: [{data: [], label: 'Yearly Profit/Loss Data'}],
-      chartLabels: []
+      dataSet: [{data: moment.months().map(() => 0), label: 'Yearly Profit/Loss Data'}],
+      chartLabels: moment.months()
     };
     yearBook.forEach((monthEl: any, index: number) => {
       if (monthEl) {
@@ -207,11 +213,11 @@ export class ChartsComponent implements OnInit, OnDestroy {
           book.expenses = book.expenses.concat(monthEl.expenses);
           book.donations = book.donations.concat(monthEl.donations);
         }
+        const indexOfMonth = moment.months().indexOf(moment(monthEl.date).format('MMMM'));
         const profitLoss = monthEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
           monthEl.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0) +
           monthEl.donations.reduce((total: number, item: any) => Number(total) + Number(item.amount), 0);
-        yearlyOverView.dataSet[0].data.push(profitLoss);
-        yearlyOverView.chartLabels.push(monthEl.date);
+        yearlyOverView.dataSet[0].data[indexOfMonth] += profitLoss;
       }
     });
     this.pageData.thisYearsData = {...this.getReconsolidatedData(book), yearlyOverView};
