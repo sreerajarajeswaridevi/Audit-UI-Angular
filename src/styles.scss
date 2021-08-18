@@ -132,3 +132,15 @@ mdb-badge.count span {
 .btn-primary.disabled, .btn-primary:disabled {
   color: black;
 }
+
+.d-flex-around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.d-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

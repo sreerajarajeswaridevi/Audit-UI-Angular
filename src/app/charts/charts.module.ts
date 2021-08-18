@@ -12,6 +12,8 @@ import { ChartsEffects } from './store/charts.effects';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
@@ -20,6 +22,8 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     ChartsModule,
     ButtonsModule,
     TableModule,
+    SharedModule,
+    CoreModule,
     ChartsRoutingModule,
     IconsModule,
     StoreModule.forFeature('charts', fromCharts.chartsReducer),

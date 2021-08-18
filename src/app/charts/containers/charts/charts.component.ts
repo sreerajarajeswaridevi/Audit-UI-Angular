@@ -34,65 +34,224 @@ export class ChartsComponent implements OnInit, OnDestroy {
     thisWeeksData?: ChartConfig,
     thisMonthsData?: ChartConfig,
     thisYearsData?: ChartConfig,
-  } = {};
+    customData?: ChartConfig,
+  } | any = {
+    todaysData: {},
+    thisWeeksData: {},
+    thisMonthsData: {},
+    thisYearsData: {},
+    customData: {},
+  };
 
   todaysDate = moment();
-  thisWeekStartDate = this.todaysDate.clone().startOf('isoWeek');
-  thisWeekEndDate = this.todaysDate.clone().endOf('isoWeek');
-  thisMonthStartDate = this.todaysDate.clone().startOf('month').format('YYYY-MM-DD');
-  thisMonthEndDate = this.todaysDate.clone().endOf('month').format('YYYY-MM-DD');
-  thisYearStartDate = this.todaysDate.clone().startOf('year').format('YYYY-MM-DD');
-  thisYearEndDate = this.todaysDate.clone().endOf('year').format('YYYY-MM-DD');
+  weekDate = moment();
+  monthDate = moment();
+  yearDate = moment();
+  customStartDate = moment();
+  customEndDate = moment();
+  datePickerStartDate = moment().subtract(3, 'year');
 
-  constructor(private cs: ChartsService) { }
+  thisWeekStartDate = moment();
+  thisWeekEndDate = moment();
+  thisMonthStartDate = moment();
+  thisMonthEndDate = moment();
+  thisYearStartDate = moment();
+  thisYearEndDate = moment();
+ 
+  constructor(private cs: ChartsService) {
+    this.initDates();
+   }
+
+  initDates() {
+    this.todaysDate = moment();
+    this.thisWeekStartDate = this.todaysDate.clone().startOf('isoWeek');
+    this.thisWeekEndDate = this.todaysDate.clone().endOf('isoWeek');
+    this.thisMonthStartDate = this.todaysDate.clone().startOf('month');
+    this.thisMonthEndDate = this.todaysDate.clone().endOf('month');
+    this.thisYearStartDate = this.todaysDate.clone().startOf('year');
+    this.thisYearEndDate = this.todaysDate.clone().endOf('year');  
+    this.customStartDate = moment();
+    this.customEndDate = moment();
+  }
+
+  initTab(tabName: string) {
+    this.initDates();
+    this.activeTab = tabName;
+    switch(tabName) {
+      case 'day': 
+        this.getData(this.todaysDate, this.todaysDate, this.getTodaysData);
+        break;
+      case 'week': 
+        this.getData(this.thisWeekStartDate, this.thisWeekEndDate, this.getWeekData);
+        break;
+      case 'month': 
+        this.getData(this.thisMonthStartDate, this.thisMonthEndDate, this.getMonthData);
+        break;
+      case 'year': 
+        this.getData(this.thisYearStartDate, this.thisYearEndDate, this.getYearlyData);
+        break;
+      case 'custom': 
+        this.getData(this.todaysDate, this.todaysDate, this.getYearlyData);
+        break;
+    }
+  }
+
+  yesterday() {
+    this.todaysDate = this.todaysDate.subtract(1, 'day');
+    this.getData(this.todaysDate, this.todaysDate, this.getTodaysData);
+  }
+
+  tomorrow() {
+    this.todaysDate = this.weekDate.subtract(1, 'day');
+    this.getData(this.todaysDate, this.todaysDate, this.getTodaysData);
+  }
+
+  prevWeek() {
+    this.weekDate = this.weekDate.subtract(1, 'week');
+    this.thisWeekStartDate = this.weekDate.clone().startOf('isoWeek');
+    this.thisWeekEndDate = this.weekDate.clone().endOf('isoWeek');
+    this.getData(this.thisWeekStartDate, this.thisWeekEndDate, this.getWeekData);
+  }
+
+  nextWeek() {
+    this.weekDate = this.weekDate.add(1, 'week');
+    this.thisWeekStartDate = this.weekDate.clone().startOf('isoWeek');
+    this.thisWeekEndDate = this.weekDate.clone().endOf('isoWeek');
+    this.getData(this.thisWeekStartDate, this.thisWeekEndDate, this.getWeekData);
+  }
+
+  prevMonth() {
+    this.monthDate = this.monthDate.subtract(1, 'month');
+    this.thisMonthStartDate = this.monthDate.clone().startOf('month');
+    this.thisMonthEndDate = this.monthDate.clone().endOf('month');
+    this.getData(this.thisMonthStartDate, this.thisMonthEndDate, this.getMonthData);
+  }
+
+  nextMonth() {
+    this.monthDate = this.monthDate.add(1, 'month');
+    this.thisMonthStartDate = this.monthDate.clone().startOf('month');
+    this.thisMonthEndDate = this.monthDate.clone().endOf('month');
+    this.getData(this.thisMonthStartDate, this.thisMonthEndDate, this.getMonthData);
+  }
+
+  prevYear() {
+    this.yearDate = this.yearDate.subtract(1, 'year');
+    this.thisYearStartDate = this.yearDate.clone().startOf('year');
+    this.thisYearEndDate = this.yearDate.clone().endOf('year');
+    this.getData(this.thisYearStartDate, this.thisYearEndDate, this.getYearlyData);
+  }
+
+  nextYear() {
+    this.yearDate = this.yearDate.add(1, 'year');
+    this.thisYearStartDate = this.yearDate.clone().startOf('year');
+    this.thisYearEndDate = this.yearDate.clone().endOf('year');
+    this.getData(this.thisYearStartDate, this.thisYearEndDate, this.getYearlyData);
+  }
+
+  getCustomData() {
+    const startDate = this.customStartDate.clone();
+    const endDate = this.customEndDate.clone();
+    this.getData(startDate, endDate, this.getRangeData);
+  }
 
   ngOnInit() {
-    this.isLoading$ = true;
-
-    // this.lineChartSub = this.store.select(getLineChartData).subscribe( (data: any) => {
-    //   if (data.values) {
-    //     this.dataset = [{ data: data.values, label: `${data.currencyName} exchange rates (base EUR)`}];
-    //     this.chartLabels = data.chartLabels;
-    //   } else {
-    //     this.getExchangeRates('USD');
-    //   }
-    // });
-
-    // this.barChartSub = this.store.select(getBarChartData).subscribe( (data: any) => {
-    //   if (data.values) {
-    //     this.barChartDataset = [{ data: data.values, label: `${data.date} exchange rates (base ${data.base})`}];
-    //     this.barChartchartLabels = data.chartLabels;
-    //   } else {
-    //     this.getLatestExchangeRates();
-    //   }
-    // });
-
-    this.cs.getReconsiledBook({startDate: this.thisYearStartDate, endDate: this.thisYearEndDate})
-    .subscribe((data: any) => {
-      const todaysBook = data.book.find((book: any) => book.date === moment().format('YYYY-MM-DD'));
-      // const monthBook = data.book.map((book: any) => moment(book.date, 'YYYY-MM-DD').isSame(moment(), 'month'));
-      // const yearBook = data.book.map((book: any) => moment(book.date, 'YYYY-MM-DD').isSame(moment(), 'year'));
-      // [
-        this.pageData.todaysData = this.getTodaysData(todaysBook);
-        this.pageData.thisWeeksData = this.getWeekData(data);
-        this.pageData.thisMonthsData = this.getMonthData(data);
-        // this.pageData.thisWeeksData = this.getTodaysData(weekBook); -- Week Data to continue tomorow
-        // this.pageData.thisMonthsData,
-        // this.pageData.thisYearsData,
-      // ] = [
-      //   this.getTodaysData(todaysBook)
     
-      // ];
+    this.getData(this.todaysDate, this.todaysDate, this.getTodaysData);
+    // this.cs.getReconsiledBook({startDate: this.thisYearStartDate, endDate: this.thisYearEndDate})
+    // .subscribe((data: any) => {
+    //   const todaysBook = data.book.find((book: any) => book.date === moment().format('YYYY-MM-DD'));
+    //   // const monthBook = data.book.map((book: any) => moment(book.date, 'YYYY-MM-DD').isSame(moment(), 'month'));
+    //   // const yearBook = data.book.map((book: any) => moment(book.date, 'YYYY-MM-DD').isSame(moment(), 'year'));
+    //   // [
+    //     this.pageData.todaysData = this.getTodaysData(todaysBook);
+    //     this.pageData.thisWeeksData = this.getWeekData(data);
+    //     this.pageData.thisMonthsData = this.getMonthData(data);
+    //     this.pageData.thisYearsData = this.getYearlyData(data);
+    //     // this.pageData.thisWeeksData = this.getTodaysData(weekBook); -- Week Data to continue tomorow
+    //     // this.pageData.thisMonthsData,
+    //     // this.pageData.thisYearsData,
+    //   // ] = [
+    //   //   this.getTodaysData(todaysBook)
+    
+    //   // ];
+    //   this.isLoading$ = false;
+    // })
+  }
+  
+
+  getData(startDate: any, endDate: any, method: any) {
+    this.isLoading$ = true;
+    this.cs.getReconsiledBook({startDate: startDate.format('YYYY-MM-DD'), endDate: endDate.format('YYYY-MM-DD')})
+    .subscribe((data: any) => {
+     method(data);
       this.isLoading$ = false;
     })
   }
 
-  getMonthData(data: any) {
-    const monthBook = data.book.filter((book: any) => moment(book.date, 'YYYY-MM-DD').isSame(this.thisMonthStartDate, 'Month'));
+  getYearlyData = (data: any) => {
+    const yearBook = data.book;
+    if(!yearBook) {
+      return;
+    }
+    let book: any = new Book();
+    let yearlyOverView: any = {
+      dataSet: [{data: [], label: 'Yearly Profit/Loss Data'}],
+      chartLabels: []
+    };
+    yearBook.forEach((monthEl: any, index: number) => {
+      if (monthEl) {
+        if (index === 0) {
+          book = {...monthEl}
+        } else {
+          book.poojas = book.poojas.concat(monthEl.poojas);
+          book.expenses = book.expenses.concat(monthEl.expenses);
+          book.donations = book.donations.concat(monthEl.donations);
+        }
+        const profitLoss = monthEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
+          monthEl.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0) +
+          monthEl.donations.reduce((total: number, item: any) => Number(total) + Number(item.amount), 0);
+        yearlyOverView.dataSet[0].data.push(profitLoss);
+        yearlyOverView.chartLabels.push(monthEl.date);
+      }
+    });
+    this.pageData.thisYearsData = {...this.getReconsolidatedData(book), yearlyOverView};
+  }
+
+  getRangeData = (data: any) => {
+    const yearBook = data.book;
+    if(!yearBook) {
+      return;
+    }
+    let book: any = new Book();
+    let yearlyOverView: any = {
+      dataSet: [{data: [], label: 'Profit/Loss Data'}],
+      chartLabels: []
+    };
+    yearBook.forEach((monthEl: any, index: number) => {
+      if (monthEl) {
+        if (index === 0) {
+          book = {...monthEl}
+        } else {
+          book.poojas = book.poojas.concat(monthEl.poojas);
+          book.expenses = book.expenses.concat(monthEl.expenses);
+          book.donations = book.donations.concat(monthEl.donations);
+        }
+        const profitLoss = monthEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
+          monthEl.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0) +
+          monthEl.donations.reduce((total: number, item: any) => Number(total) + Number(item.amount), 0);
+        yearlyOverView.dataSet[0].data.push(profitLoss);
+        yearlyOverView.chartLabels.push(monthEl.date);
+      }
+    });
+    this.pageData.thisYearsData = {...this.getReconsolidatedData(book), yearlyOverView};
+  }
+
+  getMonthData = (data: any) => {
+    const monthBook = data.book;
     if(!monthBook) {
       return;
     }
-    let book: any = {};
+    let book: any = new Book();
     let monthlyOverView: any = {
       dataSet: [{data: [], label: 'Profit/Loss Monthly Data'}],
       chartLabels: []
@@ -113,15 +272,16 @@ export class ChartsComponent implements OnInit, OnDestroy {
         monthlyOverView.chartLabels.push(monthEl.date);
       }
     });
-    return {...this.getReconsolidatedData(book), monthlyOverView};
+    this.pageData.thisMonthsData = {...this.getReconsolidatedData(book), monthlyOverView};
   }
 
-  getWeekData(data: any) {
-    const weekBook = data.book.filter((book: any) => moment(book.date, 'YYYY-MM-DD').isSame(this.thisWeekStartDate, 'isoWeek'));
+  getWeekData = (data: any) => {
+    // const weekBook = data.book.filter((book: any) => moment(book.date, 'YYYY-MM-DD').isSame(this.thisWeekStartDate, 'isoWeek'));
+    const weekBook = data.book;
     if(!weekBook) {
       return;
     }
-    let book: any = {};
+    let book: any = new Book();
     let weeklyOverView: any = {
       dataSet: [{data: [], label: 'Profit/Loss Weekly Data'}],
       chartLabels: []
@@ -142,17 +302,18 @@ export class ChartsComponent implements OnInit, OnDestroy {
         weeklyOverView.chartLabels.push(weekEl.date);
       }
     });
-    return {...this.getReconsolidatedData(book), weeklyOverView};
+    this.pageData.thisWeeksData = {...this.getReconsolidatedData(book), weeklyOverView};
   }
 
-  getTodaysData(book: any) {
-    if(!book) {
+  getTodaysData = (book: any) => {
+    if(!book[0]) {
+      this.pageData.todaysData = this.getReconsolidatedData(new Book());
       return;
     }
-    return this.getReconsolidatedData(book);
+    this.pageData.todaysData = this.getReconsolidatedData(book[0]);
   }
 
-  getReconsolidatedData(book: any) {
+  getReconsolidatedData = (book: any) => {
 
     const poojasList = Array.from(new Set(book.poojas.map((pooja: any) => pooja.pooja_name))); 
     const poojaData: any = [];
@@ -193,14 +354,6 @@ export class ChartsComponent implements OnInit, OnDestroy {
     return reconsolidatedData;
   }
 
-  // getExchangeRates(currency: string) {
-  //   this.store.dispatch(new fromCharts.LineChartQuery({ currency }));
-  // }
-
-  // getLatestExchangeRates() {
-  //   this.store.dispatch(new fromCharts.BarChartQuery());
-  // }
-
   getProfitLoss(data: any) {
     if (data.overView.dataSet[0]) {
       const allTransactions = data.overView.dataSet[0].data;
@@ -213,6 +366,14 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
   swapPoojasData(obj: any) {
     obj.currentOverView = obj.currentOverView == obj.poojasOverView ? obj.overView : obj.poojasOverView;
+  }
+
+  selectCustomStartDate(event: any) {
+    this.customStartDate = event;
+  }
+
+  selectCustomEndDate(event: any) {
+    this.customStartDate = event;
   }
 
   ngOnDestroy() {
@@ -244,4 +405,10 @@ interface ChartConfig{
 interface Chart {
   dataSet: Array<DataSet>,
   chartLabels: Array<string>
+}
+
+class Book {
+  poojas = [];
+  expenses = [];
+  donations = [];
 }

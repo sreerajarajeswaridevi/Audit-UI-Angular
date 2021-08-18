@@ -7,24 +7,24 @@
     <div class="col-md-6 col-sm-12">
       <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group mr-2 mt-4 row w-100" role="group" aria-label="First group">
-          <button mdbBtn type="button" (click)="activeTab = 'day'" [color]="activeTab === 'day' ? 'primary' : 'white'"
+          <button mdbBtn type="button" (click)="initTab('day')" [color]="activeTab === 'day' ? 'primary' : 'white'"
             class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
             day
           </button>
-          <button mdbBtn type="button" (click)="activeTab = 'week'" [color]="activeTab === 'week' ? 'primary' : 'white'"
+          <button mdbBtn type="button" (click)="initTab('week')" [color]="activeTab === 'week' ? 'primary' : 'white'"
             class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
             week
           </button>
-          <button mdbBtn type="button" (click)="activeTab = 'month'"
+          <button mdbBtn type="button" (click)="initTab('month')"
             [color]="activeTab === 'month' ? 'primary' : 'white'" class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
             month
           </button>
-          <button mdbBtn type="button" (click)="activeTab = 'year'" [color]="activeTab === 'year' ? 'primary' : 'white'"
+          <button mdbBtn type="button" (click)="initTab('year')" [color]="activeTab === 'year' ? 'primary' : 'white'"
             class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm"
             mdbWavesEffect>
             year
           </button>
-          <button mdbBtn type="button" (click)="activeTab = 'custom'"
+          <button mdbBtn type="button" (click)="initTab('custom')"
             [color]="activeTab === 'custom' ? 'primary' : 'white'" class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
             custom
           </button>
@@ -40,13 +40,24 @@
   </div>
 </div>
 
-<div *ngIf="!isLoading$" class="charts-container p-5" [ngSwitch]="activeTab">
+<div *ngIf="!isLoading$" class="charts-container pl-5 pr-5 pb-5" [ngSwitch]="activeTab">
   <div *ngSwitchCase="'day'">
+    <div class="card-header mb-2 d-flex-center">
+      <span class="icon-button" (click)="yesterday()">
+        <mdb-icon fas icon="chevron-left" class="mr-3 float-left delete cursor-pointer gray-text" alt="Left"></mdb-icon>
+      </span>
+      <h2 class="text-xl gray-text">
+        {{ todaysDate.format('DD-MMMM-YYYY')  }}
+      </h2>
+      <span class="icon-button" (click)="tomorrow()">
+        <mdb-icon *ngIf="!todaysDate.isSame(customStartDate, 'day')" mdbtn fas icon="chevron-right" class="ml-3 float-right delete cursor-pointer gray-text" alt="Right"></mdb-icon>
+      </span>
+    </div>
     <div class="row mb-3">
       <div class="col-md-12 col-lg-6 mb-2">
         <mdb-card>
           <mdb-card-header>
-            Todays Profit/Loss
+            {{ todaysDate.format('DD-MMMM-YYYY')  }} Profit/Loss
             <span *ngIf="pageData.todaysData" class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.todaysData) }}</span>
           </mdb-card-header>
           <mdb-card-body *ngIf="pageData.todaysData">
@@ -76,7 +87,7 @@
           <thead class="primary-color text-white">
             <tr>
               <td colspan="2">
-                Todays Profit/Loss
+                {{ todaysDate.format('DD-MMMM-YYYY')  }} Profit/Loss
                 <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.todaysData) }}</span>
               </td>
             </tr>
@@ -112,6 +123,17 @@
 
   <!-- this weeks data -->
   <div *ngSwitchCase="'week'">
+    <div class="card-header mb-2 d-flex-center">
+      <span class="icon-button" (click)="prevWeek()">
+        <mdb-icon fas icon="chevron-left" class="mr-3 float-left delete cursor-pointer gray-text" alt="Left"></mdb-icon>
+      </span>
+      <h2 class="text-xl gray-text">
+        {{ thisWeekStartDate.format('DD-MMMM') + ' TO ' + thisWeekEndDate.format('DD-MMMM')  }}
+      </h2>
+      <span class="icon-button" (click)="nextWeek()">
+        <mdb-icon *ngIf="!todaysDate.isSame(thisWeekStartDate, 'week')" mdbtn fas icon="chevron-right" class="ml-3 float-right delete cursor-pointer gray-text" alt="Right"></mdb-icon>
+      </span>
+    </div>
     <div class="row mb-3">
       <div class="col-md-12 col-lg-6 mb-2">
         <mdb-card>
@@ -178,11 +200,22 @@
 
   <!-- this Months data -->
   <div *ngSwitchCase="'month'">
+    <div class="card-header mb-2 d-flex-center">
+      <span class="icon-button" (click)="prevMonth()">
+        <mdb-icon fas icon="chevron-left" class="mr-3 float-left delete cursor-pointer gray-text" alt="Left"></mdb-icon>
+      </span>
+      <h2 class="text-xl gray-text">
+        {{ monthDate.format('MMMM YYYY')  }}
+      </h2>
+      <span class="icon-button" (click)="nextMonth()">
+        <mdb-icon *ngIf="!todaysDate.isSame(monthDate, 'month')" mdbtn fas icon="chevron-right" class="ml-3 float-right delete cursor-pointer gray-text" alt="Right"></mdb-icon>
+      </span>
+    </div>
     <div class="row mb-3">
       <div class="col-md-12 col-lg-6 mb-4">
         <mdb-card>
           <mdb-card-header>
-            This Months Profit/Loss
+            {{ monthDate.format('MMMM YYYY')  }} Profit/Loss
             <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisMonthsData) }}</span>
           </mdb-card-header>
           <mdb-card-body>
@@ -202,7 +235,7 @@
           <thead class="primary-color text-white">
             <tr>
               <td colspan="2">
-                This Months Profit/Loss
+                {{ monthDate.format('MMMM YYYY')  }} Profit/Loss
                 <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisMonthsData) }}</span>
               </td>
             </tr>
@@ -248,6 +281,181 @@
     </div>
   </div>
   <!-- this Months data ends here-->
+
+  <!-- this Year data -->
+  <div *ngSwitchCase="'year'">
+    <div class="card-header mb-2 d-flex-center">
+      <span class="icon-button" (click)="prevYear()">
+        <mdb-icon fas icon="chevron-left" class="mr-3 float-left delete cursor-pointer gray-text" alt="Left"></mdb-icon>
+      </span>
+      <h2 class="text-xl gray-text">
+        {{ yearDate.format('YYYY') }}
+      </h2>
+      <span class="icon-button" (click)="nextYear()">
+        <mdb-icon *ngIf="yearDate.format('YYYY')!==todaysDate.format('YYYY')" mdbtn fas icon="chevron-right" class="ml-3 float-right delete cursor-pointer gray-text" alt="Right"></mdb-icon>
+      </span>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12 col-lg-6 mb-4">
+        <mdb-card>
+          <mdb-card-header>
+            {{ yearDate.format('YYYY') }} Profit/Loss
+            <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
+          </mdb-card-header>
+          <mdb-card-body>
+            <div class="pl-4">
+              <button mdbBtn color="primary" size="sm" (click)="swapPoojasData(pageData.thisYearsData)">
+                Poojas
+              </button>
+            </div>
+            <app-bar-chart [dataset]="pageData.thisYearsData.currentOverView.dataSet"
+              [labels]="pageData.thisYearsData.currentOverView.chartLabels"></app-bar-chart>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+
+      <div class="col-md-6 col-lg-6" *ngIf="pageData.thisYearsData">
+        <table class="white text-center z-depth-1" mdbTable>
+          <thead class="primary-color text-white">
+            <tr>
+              <td colspan="2">
+                {{ yearDate.format('YYYY') }} Profit/Loss
+                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
+              </td>
+            </tr>
+            <tr *ngIf="
+                pageData.thisYearsData.currentOverView ===
+                  pageData.thisYearsData.overView;
+                else poojasView
+              ">
+              <th>Expense Type</th>
+              <th>Profit/Loss</th>
+            </tr>
+            <ng-template #poojasView>
+              <tr>
+                <th>Poooja Name</th>
+                <th>Total Amount Received</th>
+              </tr>
+            </ng-template>
+          </thead>
+          <tbody>
+            <tr mdbTableCol *ngFor="
+                let value of pageData.thisYearsData.currentOverView.dataSet[0]
+                  .data;
+                let i = index
+              ">
+              <td>
+                {{ pageData.thisYearsData.currentOverView.chartLabels[i] }}
+              </td>
+              <th scope="row">{{ value }}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-12" *ngIf="pageData.thisYearsData">
+        <mdb-card>
+          <mdb-card-body>
+            <app-line-chart [dataset]="pageData.thisYearsData.yearlyOverView.dataSet"
+              [labels]="pageData.thisYearsData.yearlyOverView.chartLabels"></app-line-chart>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+
+    </div>
+  </div>
+  <!-- this Years data ends here-->
+
+
+
+  <!-- custom data -->
+  <div *ngSwitchCase="'custom'">
+    <div class="row mb-2 text-center d-flex justify-content-center align-items-center">
+      <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="customStartDate" [startDate]="datePickerStartDate" [endDate]="todaysDate"
+      header="Select Start Date" (dateSelected)="selectCustomStartDate($event)">
+        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> 
+        <span appDateTransform [date]="customStartDate.format('YYYY-MM-DD')"></span>
+      </button> TO
+      <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="customEndDate" [startDate]="customStartDate" [endDate]="todaysDate"
+        header="Select End Date" (dateSelected)="selectCustomEndDate($event)">
+          <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> 
+          <span appDateTransform [date]="customEndDate.format('YYYY-MM-DD')"></span>
+        </button>
+
+        <button type="button" mdbBtn color="success"  class="relative waves-light" mdbWavesEffect (click)="getCustomData()">
+          GET DATA  
+        </button>
+    </div>
+    <div class="row my-3">
+      <div class="col-md-12 col-lg-6 mb-4">
+        <mdb-card>
+          <mdb-card-header>
+            This Years Profit/Loss
+            <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
+          </mdb-card-header>
+          <mdb-card-body>
+            <div class="pl-4">
+              <button mdbBtn color="primary" size="sm" (click)="swapPoojasData(pageData.thisYearsData)">
+                Poojas
+              </button>
+            </div>
+            <app-bar-chart [dataset]="pageData.thisYearsData.currentOverView.dataSet"
+              [labels]="pageData.thisYearsData.currentOverView.chartLabels"></app-bar-chart>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+
+      <div class="col-md-6 col-lg-6" *ngIf="pageData.thisYearsData">
+        <table class="white text-center z-depth-1" mdbTable>
+          <thead class="primary-color text-white">
+            <tr>
+              <td colspan="2">
+                This Years Profit/Loss
+                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
+              </td>
+            </tr>
+            <tr *ngIf="
+                pageData.thisYearsData.currentOverView ===
+                  pageData.thisYearsData.overView;
+                else poojasView
+              ">
+              <th>Expense Type</th>
+              <th>Profit/Loss</th>
+            </tr>
+            <ng-template #poojasView>
+              <tr>
+                <th>Poooja Name</th>
+                <th>Total Amount Received</th>
+              </tr>
+            </ng-template>
+          </thead>
+          <tbody>
+            <tr mdbTableCol *ngFor="
+                let value of pageData.thisYearsData.currentOverView.dataSet[0]
+                  .data;
+                let i = index
+              ">
+              <td>
+                {{ pageData.thisYearsData.currentOverView.chartLabels[i] }}
+              </td>
+              <th scope="row">{{ value }}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-12" *ngIf="pageData.thisYearsData">
+        <mdb-card>
+          <mdb-card-body>
+            <app-line-chart [dataset]="pageData.thisYearsData.yearlyOverView.dataSet"
+              [labels]="pageData.thisYearsData.yearlyOverView.chartLabels"></app-line-chart>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+
+    </div>
+  </div>
+  <!-- custom data ends here-->
 
   <!-- 
     <div class="col-md-6">
