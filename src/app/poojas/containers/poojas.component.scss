@@ -6,6 +6,32 @@
     max-width: 300px;
     color: white;
   }
+  .left-section-mobile {
+    display: none;
+    li {
+      margin-bottom: 3px;
+    }
+    li:nth-child(even) {
+      background-color: #2c79ef!important;
+    }
+    .name {
+      font-weight: bold;
+    }
+    .description {
+      font-size: small;
+      display: block;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    a.pooja-box {
+      display: none;
+    }
+    .left-section-mobile {
+      display: inline-block;
+    }
+
+  }
 
   >:nth-child(even) {
     background-color: #2196f3 !important;

@@ -7,6 +7,17 @@
           <p class="whitesmoke-text">{{item.pooja_description}}</p>
           <h3 class="price">&#x20B9;{{ item.pooja_price }}</h3>
         </a>
+
+        <ul class="left-section-mobile list-group w-100">
+          <li *ngFor="let item of poojaTypes" (click)="newPooja(item)"
+           class="bg-primary white-text list-group-item d-flex justify-content-between align-items-center">
+           <div class="d-flex flex-column">
+             <span class="name">{{item.pooja_name}}</span>
+             <span class="description">{{item.pooja_description}}</span>
+           </div>
+            <mdb-badge pill="true" class="price mini" color="white">&#x20B9;{{ item.pooja_price }}</mdb-badge>
+          </li>
+        </ul>
       </div>
       <div class="right-section pb-4">
         <app-right-card>
