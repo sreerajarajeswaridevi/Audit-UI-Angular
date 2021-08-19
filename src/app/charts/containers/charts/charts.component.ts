@@ -108,7 +108,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
   }
 
   tomorrow() {
-    this.todaysDate = this.weekDate.subtract(1, 'day');
+    this.todaysDate = this.todaysDate.add(1, 'day');
     this.getData(this.todaysDate, this.todaysDate, this.getTodaysData);
   }
 
@@ -262,6 +262,15 @@ export class ChartsComponent implements OnInit, OnDestroy {
       dataSet: [{data: [], label: 'Profit/Loss Monthly Data'}],
       chartLabels: []
     };
+    let weekRange: any = [];
+    if (monthBook[0] && monthBook[0].date) {
+      weekRange = this.getWeekRange(monthBook[0].date);
+      monthlyOverView.chartLabels = weekRange.map((item: any, index: number) => {
+        item = item;
+        return 'Week ' + (index+1)
+      });
+    }
+    monthlyOverView.dataSet[0].data = monthlyOverView.chartLabels.map(() => 0);
     monthBook.forEach((monthEl: any, index: number) => {
       if (monthEl) {
         if (index === 0) {
@@ -274,8 +283,15 @@ export class ChartsComponent implements OnInit, OnDestroy {
         const profitLoss = monthEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
           monthEl.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0) +
           monthEl.donations.reduce((total: number, item: any) => Number(total) + Number(item.amount), 0);
-        monthlyOverView.dataSet[0].data.push(profitLoss);
-        monthlyOverView.chartLabels.push(monthEl.date);
+        
+          // monthlyOverView.dataSet[0].data.push(profitLoss);
+
+          weekRange.forEach((element: any, index: number) => {
+            if(moment(monthEl.date).isSame(element[0], 'isoWeek')) {
+              monthlyOverView.dataSet[0].data[index] += profitLoss;
+              return;
+            }
+          });
       }
     });
     this.pageData.thisMonthsData = {...this.getReconsolidatedData(book), monthlyOverView};
@@ -311,12 +327,12 @@ export class ChartsComponent implements OnInit, OnDestroy {
     this.pageData.thisWeeksData = {...this.getReconsolidatedData(book), weeklyOverView};
   }
 
-  getTodaysData = (book: any) => {
-    if(!book[0]) {
+  getTodaysData = (response: any) => {
+    if(!response.book[0]) {
       this.pageData.todaysData = this.getReconsolidatedData(new Book());
       return;
     }
-    this.pageData.todaysData = this.getReconsolidatedData(book[0]);
+    this.pageData.todaysData = this.getReconsolidatedData(response.book[0]);
   }
 
   getReconsolidatedData = (book: any) => {
@@ -381,6 +397,28 @@ export class ChartsComponent implements OnInit, OnDestroy {
   selectCustomEndDate(event: any) {
     this.customStartDate = event;
   }
+
+  getWeekRange(date: string) {
+    const month = moment(date, 'YYYY-MM-DD');
+    
+    const mm = month.month() + 1;
+    const yy = month.year();
+
+
+    const first = month.day() == 0 ? 6 : month.day()-1;
+    let day = 7-first;
+
+    const last = month.daysInMonth();
+    const count = (last-day)/7;
+
+    const weeks = [];
+    weeks.push([moment(`${(1)}-${mm}-${yy}`, 'DD-MM-YYYY').format('YYYY-MM-DD'), moment(`${(day)}-${mm}-${yy}`, 'DD-MM-YYYY').format('YYYY-MM-DD')]);
+    for (let i=0; i < count; i++) {
+      weeks.push([moment(`${(day+1)}-${mm}-${yy}`, 'DD-MM-YYYY').format('YYYY-MM-DD'), moment(`${(Math.min(day+=7, last))}-${mm}-${yy}`, 'DD-MM-YYYY').format('YYYY-MM-DD')]);
+
+    }
+    return weeks;
+}
 
   ngOnDestroy() {
     if (this.lineChartSub) {

@@ -66,8 +66,14 @@
                 Poojas
               </button>
             </div>
-            <app-bar-chart [dataset]="pageData.todaysData.currentOverView.dataSet"
+            <app-bar-chart *ngIf="pageData.todaysData.currentOverView ===
+              pageData.todaysData.overView; else poojasPieChart" [dataset]="pageData.todaysData.currentOverView.dataSet"
               [labels]="pageData.todaysData.currentOverView.chartLabels"></app-bar-chart>
+
+              <ng-template #poojasPieChart>
+                <app-pie-chart [dataset]="pageData.todaysData.currentOverView.dataSet"
+                [labels]="pageData.todaysData.currentOverView.chartLabels"></app-pie-chart>
+              </ng-template>
           </mdb-card-body>
           <div class="
               p-4
@@ -97,7 +103,7 @@
                 else poojasView
               ">
               <th>Expense Type</th>
-              <th>Profit/Loss</th>
+              <th>Amount</th>
             </tr>
             <ng-template #poojasView>
               <tr>
@@ -113,7 +119,7 @@
                 let i = index
               ">
               <td>{{ pageData.todaysData.currentOverView.chartLabels[i] }}</td>
-              <th scope="row">{{ value }}</th>
+              <th scope="row">&#x20B9;{{ value }}</th>
             </tr>
           </tbody>
         </table>
@@ -147,8 +153,13 @@
                 Poojas
               </button>
             </div>
-            <app-bar-chart [dataset]="pageData.thisWeeksData.currentOverView.dataSet"
+            <app-bar-chart  *ngIf="pageData.thisWeeksData.currentOverView ===
+            pageData.thisWeeksData.overView; else poojasPieChart" [dataset]="pageData.thisWeeksData.currentOverView.dataSet"
               [labels]="pageData.thisWeeksData.currentOverView.chartLabels"></app-bar-chart>
+              <ng-template #poojasPieChart>
+                <app-pie-chart [dataset]="pageData.thisWeeksData.currentOverView.dataSet"
+                [labels]="pageData.thisWeeksData.currentOverView.chartLabels"></app-pie-chart>
+              </ng-template>
             <br /><br />
             <app-bar-chart [dataset]="pageData.thisWeeksData.weeklyOverView.dataSet"
               [labels]="pageData.thisWeeksData.weeklyOverView.chartLabels"></app-bar-chart>
@@ -171,7 +182,7 @@
                 else poojasView
               ">
               <th>Expense Type</th>
-              <th>Profit/Loss</th>
+              <th>Amount</th>
             </tr>
             <ng-template #poojasView>
               <tr>
@@ -189,7 +200,7 @@
               <td>
                 {{ pageData.thisWeeksData.currentOverView.chartLabels[i] }}
               </td>
-              <th scope="row">{{ value }}</th>
+              <th scope="row">&#x20B9;{{ value }}</th>
             </tr>
           </tbody>
         </table>
@@ -224,8 +235,14 @@
                 Poojas
               </button>
             </div>
-            <app-bar-chart [dataset]="pageData.thisMonthsData.currentOverView.dataSet"
+            <app-bar-chart *ngIf="pageData.thisMonthsData.currentOverView ===
+            pageData.thisMonthsData.overView; else poojasPieChart" [dataset]="pageData.thisMonthsData.currentOverView.dataSet"
               [labels]="pageData.thisMonthsData.currentOverView.chartLabels"></app-bar-chart>
+
+              <ng-template #poojasPieChart>
+                <app-pie-chart [dataset]="pageData.thisMonthsData.currentOverView.dataSet"
+                [labels]="pageData.thisMonthsData.currentOverView.chartLabels"></app-pie-chart>
+              </ng-template>
           </mdb-card-body>
         </mdb-card>
       </div>
@@ -245,7 +262,7 @@
                 else poojasView
               ">
               <th>Expense Type</th>
-              <th>Profit/Loss</th>
+              <th>Amount</th>
             </tr>
             <ng-template #poojasView>
               <tr>
@@ -263,7 +280,7 @@
               <td>
                 {{ pageData.thisMonthsData.currentOverView.chartLabels[i] }}
               </td>
-              <th scope="row">{{ value }}</th>
+              <th scope="row">&#x20B9;{{ value }}</th>
             </tr>
           </tbody>
         </table>
@@ -308,8 +325,14 @@
                 Poojas
               </button>
             </div>
-            <app-bar-chart [dataset]="pageData.thisYearsData.currentOverView.dataSet"
+            <app-bar-chart *ngIf="pageData.thisYearsData.currentOverView ===
+            pageData.thisYearsData.overView; else poojasPieChart" [dataset]="pageData.thisYearsData.currentOverView.dataSet"
               [labels]="pageData.thisYearsData.currentOverView.chartLabels"></app-bar-chart>
+
+                <ng-template #poojasPieChart>
+                  <app-pie-chart [dataset]="pageData.thisYearsData.currentOverView.dataSet"
+                  [labels]="pageData.thisYearsData.currentOverView.chartLabels"></app-pie-chart>
+                </ng-template>
           </mdb-card-body>
         </mdb-card>
       </div>
@@ -329,7 +352,7 @@
                 else poojasView
               ">
               <th>Expense Type</th>
-              <th>Profit/Loss</th>
+              <th>Amount</th>
             </tr>
             <ng-template #poojasView>
               <tr>
@@ -347,7 +370,7 @@
               <td>
                 {{ pageData.thisYearsData.currentOverView.chartLabels[i] }}
               </td>
-              <th scope="row">{{ value }}</th>
+              <th scope="row">&#x20B9;{{ value }}</th>
             </tr>
           </tbody>
         </table>
@@ -420,7 +443,7 @@
                 else poojasView
               ">
               <th>Expense Type</th>
-              <th>Profit/Loss</th>
+              <th>Amount</th>
             </tr>
             <ng-template #poojasView>
               <tr>
@@ -438,7 +461,7 @@
               <td>
                 {{ pageData.thisYearsData.currentOverView.chartLabels[i] }}
               </td>
-              <th scope="row">{{ value }}</th>
+              <th scope="row">&#x20B9;{{ value }}</th>
             </tr>
           </tbody>
         </table>
