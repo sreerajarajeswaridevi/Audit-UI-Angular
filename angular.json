@@ -54,7 +54,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref": "_self",
+              "baseHref": "",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
