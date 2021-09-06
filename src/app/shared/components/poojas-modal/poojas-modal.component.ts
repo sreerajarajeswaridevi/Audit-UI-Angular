@@ -67,7 +67,7 @@ export class PoojasModalComponent implements OnInit {
           pooja_name: this.heading
         }
       });
-      this.appPrinter.print();
+      this.appPrinter.triggerPrint();
       this.poojasData.next(this.response);
       this.modalRef.hide();
     } else {

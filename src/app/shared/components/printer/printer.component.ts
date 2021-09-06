@@ -23,6 +23,7 @@ export class PrinterComponent implements OnInit {
   @Input() hidden = false;
 
   @ViewChild('buttonRef', { static: true }) buttonRef: ElementRef; 
+  @ViewChild('poojaBill', { static: true }) poojaBill: ElementRef; 
 
   temple: User;
 
@@ -36,16 +37,29 @@ export class PrinterComponent implements OnInit {
   }
 
   getTotalPrice(poojas: any) {
-    return poojas.reduce((a: any, b: any) => b.pooja_price + a, 0)
+    return poojas.reduce((a: any, b: any) => +(b.pooja_price) + a, 0)
   }
 
   getCurrentDate() {
     return moment().format("DD-MM-YYYY HH:mm");
   }
 
-  public print = () => {
+  public triggerPrint = () => {
     this.cdr.detectChanges();
-    this.buttonRef.nativeElement.click();
+    setTimeout(() => {
+      this.newWindowPrint(this.poojaBill.nativeElement.innerHTML);
+    }, 0);
+  }
+
+  newWindowPrint(content: any) {
+    const printerWindow = window.open('', '', 'height=500, width=500') as any;
+    printerWindow.document.write('<html>');
+    printerWindow.document.write('<body>');
+    printerWindow.document.write(content);
+    printerWindow.document.write('</body></html>');
+    printerWindow.document.close();
+    printerWindow.print();
+
   }
 
 }
