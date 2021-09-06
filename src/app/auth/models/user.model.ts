@@ -1,6 +1,8 @@
 export interface User {
   temple_name?: string;
   temple_code?: string;
+  address?: string;
+  phone_number?: string;
   displayName?: string;
   username: string;
   password: string;

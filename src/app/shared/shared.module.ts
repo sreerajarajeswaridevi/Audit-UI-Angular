@@ -24,6 +24,8 @@ import { UsersListComponent } from './components/users-list/users-list.component
 import { UserComponent } from './components/user/user.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab.component';
+import { PrinterComponent } from './components/printer/printer.component';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { TabComponent } from './components/tabs/tab.component';
     UsersListComponent,
     UserComponent,
     TabsComponent,
-    TabComponent
+    TabComponent,
+    PrinterComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +54,8 @@ import { TabComponent } from './components/tabs/tab.component';
     CollapseModule,
     DropdownModule,
     BadgeModule,
-    CoreModule
+    CoreModule,
+    NgxPrintModule
   ],
   exports: [
     CustomersListComponent,
@@ -61,14 +65,16 @@ import { TabComponent } from './components/tabs/tab.component';
     UsersListComponent,
     UserComponent,
     TabsComponent,
-    TabComponent
+    TabComponent,
+    PrinterComponent
   ],
   providers: [],
   entryComponents: [
     ConfirmModalComponent,
     CustomersModalComponent,
     PoojasModalComponent,
-    UserModalComponent
+    UserModalComponent,
+    PrinterComponent
   ]
 })
 export class SharedModule { }

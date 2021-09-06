@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { MDBModalRef } from 'angular-bootstrap-md';
 import { Subject } from 'rxjs';
 import { NewPoojaRequest, PoojaTypes, starSigns } from 'src/app/poojas/models/poojas.model';
+import { PrinterComponent } from '../printer/printer.component';
 // import { MDBModalRef } from 'angular-bootstrap-md';
 // import { Poojas } from '../../../poojas/models/poojas.model';
 // import { Subject } from 'rxjs';
@@ -15,6 +16,7 @@ var moment = require('../../../../assets/datepicker/moment.js');
 })
 export class PoojasModalComponent implements OnInit {
   @ViewChild('poojasForm', { static: true }) poojasForm: NgForm;
+  @ViewChild('appPrinter', { static: true }) appPrinter: PrinterComponent;
 
   defaultDate = moment();
   startDate = moment();
@@ -57,6 +59,15 @@ export class PoojasModalComponent implements OnInit {
 
   onSave() {
     if (this.response.bhakthar.length > 0) {
+      const poojaDetails = this.response;
+      this.appPrinter.poojas = this.response.bhakthar.map((person: any) => {
+        return {
+          ...person,
+          ...poojaDetails,
+          pooja_name: this.heading
+        }
+      });
+      this.appPrinter.print();
       this.poojasData.next(this.response);
       this.modalRef.hide();
     } else {

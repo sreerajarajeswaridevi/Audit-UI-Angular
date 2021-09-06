@@ -93,7 +93,7 @@
           mdbWavesEffect>Close</button>
         <button type="button" mdbBtn color="success" [disabled]="response.bhakthar.length === 0 || response.phone_number === ''" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
           changes</button>
-
+          <app-printer #appPrinter [hidden]="true"></app-printer>
       </div>
 
   </div>

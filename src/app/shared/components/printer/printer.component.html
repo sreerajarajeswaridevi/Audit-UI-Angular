@@ -1,0 +1,78 @@
+<button [printSectionId]="type+'-'+size" ngxPrint [useExistingCss]="true" #buttonRef [style.display]="hidden ? 'none': ''">
+    {{text}}
+    <mdb-icon fas icon="print" class="float-left fa-lg" alt="no data"></mdb-icon>
+</button>
+
+<div class="content">
+
+    <div class="bills">
+        <div id="pooja-bill">
+        <header style="display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
+            <span style="word-wrap: break-word; font-size: 16px; border-bottom: 1px solid black; max-width: 2in;font-weight: bold;">{{temple.temple_name}}</span>
+            <span>{{temple.address}}</span>
+            <span>Ph: {{temple.phone_number}}</span>
+        </header>
+        <body style="max-width: 2in;" *ngIf="poojas?.length">
+            <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;" *ngIf="poojas[0]?.pooja_name">
+                <th><b>{{poojas[0]?.pooja_name}}</b></th>
+            </div>
+            <br>
+            <table *ngFor="let pooja of poojas" style="border-bottom: 1px dotted black; padding: 10px 0;">
+                <tr *ngIf="pooja?.name">
+                    <td>Name</td>
+                    <td>{{pooja?.name}}</td>
+                </tr>
+                <tr *ngIf="pooja?.nakshatram">
+                    <td>Nakshatram</td>
+                    <td>{{pooja?.nakshatram}}</td>
+                </tr>
+                <tr *ngIf="pooja?.pooja_price">
+                    <td>Amount</td>
+                    <td>{{pooja?.pooja_price}}</td>
+                </tr>
+            </table>
+            <table *ngIf="poojas[0]">
+                <tr *ngIf="poojas[0]?.address">
+                    <td>Address</td>
+                    <td>{{poojas[0]?.address}}</td>
+                </tr>
+                <tr *ngIf="poojas[0]?.phone_number">
+                    <td>Phone</td>
+                    <td>{{poojas[0]?.phone_number}}</td>
+                </tr>
+            </table>
+        </body>
+        <footer style="max-width: 2in;" *ngIf="poojas?.length">
+            <table>
+                <thead>
+                    <th>
+                        <tr><td><br></td></tr>
+                        <tr style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;">
+                            <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
+                            <td style="font-size: 16px; font-weight: bold;"><b>{{getTotalPrice(poojas)}}</b></td>
+                        </tr>
+                        <tr><td><br></td></tr>
+                        <tr>
+                            <td>
+                                Billed by:
+                            </td>
+                            <td>
+                                {{temple?.displayName}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Date-Time
+                            </td>
+                            <td>
+                                {{getCurrentDate()}}
+                            </td>
+                        </tr>
+                    </th>
+                </thead>
+            </table>
+        </footer>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,20 @@
+
+button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.content {
+    display: none;
+}
+
+@media print {
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
