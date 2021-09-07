@@ -100,7 +100,7 @@ export class DonationsComponent implements OnInit {
     this.store.dispatch(new fromDonations.DonationsAddQuery(this.donation));
     const printData = {
       ...this.donation,
-      donation_date: this.formattedDate,
+      donation_date: this.donationDate.format("DD-MM-YYYY"),
       added_by: this.user.displayName
     }
     this.appPrinter.donation = printData;

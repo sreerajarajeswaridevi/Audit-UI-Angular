@@ -26,6 +26,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
   barChartchartLabels: any[] = [];
   barChartDate: string;
   barChartBase: string;
+  response: any;
+  rangeText = '';
 
   currency: string;
 
@@ -86,18 +88,23 @@ export class ChartsComponent implements OnInit, OnDestroy {
     switch(tabName) {
       case 'day': 
         this.getData(this.todaysDate, this.todaysDate, this.getTodaysData);
+        this.rangeText = `${this.todaysDate.format('dddd DD-MM-YYYY')}`;
         break;
-      case 'week': 
+        case 'week': 
         this.getData(this.thisWeekStartDate, this.thisWeekEndDate, this.getWeekData);
+        this.rangeText = `1 Week = ${this.thisWeekStartDate.format('DD-MM-YYYY')} To ${this.thisWeekEndDate.format('DD-MM-YYYY')}`;
         break;
-      case 'month': 
+        case 'month': 
         this.getData(this.thisMonthStartDate, this.thisMonthEndDate, this.getMonthData);
+        this.rangeText = `1 Month = ${this.thisMonthStartDate.format('DD-MM-YYYY')} To ${this.thisMonthEndDate.format('DD-MM-YYYY')}`;
         break;
-      case 'year': 
+        case 'year': 
         this.getData(this.thisYearStartDate, this.thisYearEndDate, this.getYearlyData);
+        this.rangeText = `1 Year = ${this.thisYearStartDate.format('DD-MM-YYYY')} To ${this.thisYearEndDate.format('DD-MM-YYYY')}`;
         break;
-      case 'custom': 
+        case 'custom': 
         this.getData(this.todaysDate, this.todaysDate, this.getYearlyData);
+        this.rangeText = `${this.todaysDate.format('dddd DD-MM-YYYY')}`;
         break;
     }
   }
@@ -186,9 +193,11 @@ export class ChartsComponent implements OnInit, OnDestroy {
   
 
   getData(startDate: any, endDate: any, method: any) {
+    this.rangeText = `${startDate.format('DD-MM-YYYY')} To ${endDate.format('DD-MM-YYYY')}`;
     this.isLoading$ = true;
     this.cs.getReconsiledBook({startDate: startDate.format('YYYY-MM-DD'), endDate: endDate.format('YYYY-MM-DD')})
     .subscribe((data: any) => {
+    this.response = data.book;
      method(data);
       this.isLoading$ = false;
     })

@@ -119,6 +119,7 @@
                 <td scope="row">{{ item.name }}</td>
                 <td>{{ item.nakshatram }}</td>
                 <td>{{ getPoojaNameFromCode(item.pooja_code)  }}</td>
+                <td> <app-printer [type]="'pooja'" [size]="'bill'" [poojas]="[item]"></app-printer>  </td>
               </tr>
             </tbody>
           </table>

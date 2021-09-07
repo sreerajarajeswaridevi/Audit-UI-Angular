@@ -1,23 +1,28 @@
-<button  #buttonRef [style.display]="hidden ? 'none': ''" (click)="triggerPrint()">
-    <mdb-icon fas icon="print" class="float-left fa-lg" alt="no data"></mdb-icon>
+<button #buttonRef [style.display]="hidden ? 'none': ''" (click)="triggerPrint()">
+    <span>{{text}}</span>
+    <mdb-icon fas icon="print" class="float-left fa-lg mr-2" alt="no data"></mdb-icon>
 </button>
 
 <div class="content">
 
     <div class="bills">
         <div #bill>
-        <header style="display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
-            <span style="word-wrap: break-word; font-size: 16px; border-bottom: 1px solid black; max-width: 2in;font-weight: bold; text-align: center;justify-content: center;">{{temple.temple_name}}</span>
-            <span>{{temple.address}}</span>
-            <span>Ph: {{temple.phone_number}}</span>
-        </header>
-        <body style="max-width: 2in;" *ngIf="type === 'pooja' && size === 'bill' && poojas">
-            <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;" *ngIf="poojas[0]?.pooja_name">
-                <th><b>{{poojas[0]?.pooja_name}}</b></th>
-            </div>
-            <br>
-            <table style="border-collapse: collapse;">
-                <tbody *ngFor="let pooja of poojas" style="border-bottom: 1px dotted black">
+            <header
+                style="display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
+                <span
+                    style="word-wrap: break-word; font-size: 16px; border-bottom: 1px solid black; max-width: 2in;font-weight: bold; text-align: center;justify-content: center;">{{temple.temple_name}}</span>
+                <span>{{temple.address}}</span>
+                <span>Ph: {{temple.phone_number}}</span>
+            </header>
+
+            <body style="max-width: 2in;" *ngIf="type === 'pooja' && size === 'bill' && poojas">
+                <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;"
+                    *ngIf="poojas[0]?.pooja_name">
+                    <th><b>{{poojas[0]?.pooja_name}}</b></th>
+                </div>
+                <br>
+                <table style="border-collapse: collapse;">
+                    <tbody *ngFor="let pooja of poojas" style="border-bottom: 1px dotted black">
                         <tr *ngIf="pooja?.name">
                             <td>Name</td>
                             <td>{{pooja?.name}}</td>
@@ -30,25 +35,31 @@
                             <td>Amount</td>
                             <td>&#x20B9; {{pooja?.pooja_price}}</td>
                         </tr>
-                </tbody>
-               
-                <tbody *ngIf="poojas[0]">
-                    <tr *ngIf="poojas[0]?.address">
-                        <td>Address</td>
-                        <td>{{poojas[0]?.address}}</td>
-                    </tr>
-                    <tr *ngIf="poojas[0]?.phone_number" style="border-bottom: 1px dotted black;">
-                        <td>Phone</td>
-                        <td>{{poojas[0]?.phone_number}}</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr><td><br></td></tr>
-                        <tr style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
-                            <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
-                            <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas)}}</b></td>
+                    </tbody>
+
+                    <tbody *ngIf="poojas[0]">
+                        <tr *ngIf="poojas[0]?.address">
+                            <td>Address</td>
+                            <td>{{poojas[0]?.address}}</td>
                         </tr>
-                        <tr><td><br></td></tr>
+                        <tr *ngIf="poojas[0]?.phone_number" style="border-bottom: 1px dotted black;">
+                            <td>Phone</td>
+                            <td>{{poojas[0]?.phone_number}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><br></td>
+                        </tr>
+                        <tr
+                            style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
+                            <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
+                            <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
+                                    'pooja_price')}}</b></td>
+                        </tr>
+                        <tr>
+                            <td><br></td>
+                        </tr>
                         <tr>
                             <td>
                                 Billed by:
@@ -65,117 +76,240 @@
                                 {{getCurrentDate()}}
                             </td>
                         </tr>
-                </tfoot>
-            </table>
-        </body>
+                    </tfoot>
+                </table>
+            </body>
 
 
-        <body style="max-width: 2in;" *ngIf="type === 'expense' && size === 'bill' && expense">
-            <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
-                <th><b>{{expense?.item === 'Salary' ? 'Salary Slip' : 'Expense Receipt'}}</b></th>
-            </div>
-            <br>
-            <table style="border-collapse: collapse;">
-                <tbody style="border-bottom: 1px dotted black">
-                    <tr *ngIf="expense?.item">
-                        <td>Item</td>
-                        <td>{{expense?.item}}</td>
-                    </tr>
-                    <tr *ngIf="expense?.description">
-                        <td colspan="2" *ngIf="expense.item !== 'Salary'; else salary">{{expense?.description}}</td>
-                        <ng-template #salary>
-                            <td>Paid To:</td>
-                            <td>{{expense.description}}</td>
-                        </ng-template>
-                    </tr>
-                    <tr *ngIf="expense?.cost">
-                        <td>Cost</td>
-                        <td>&#x20B9; {{expense?.cost}}</td>
-                    </tr>
-            </tbody>
-            <tfoot>
-                <tr><td><br></td></tr>
-                    <tr style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
-                        <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
-                        <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{expense?.cost}}</b></td>
-                    </tr>
-                    <tr><td><br></td></tr>
-                    <tr>
-                        <td>
-                            Added by:
-                        </td>
-                        <td>
-                            {{expense?.added_by}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Date
-                        </td>
-                        <td>
-                            {{expense?.expense_date}}
-                        </td>
-                    </tr>
-            </tfoot>
-            </table>
-        </body>
+            <body style="max-width: 2in;" *ngIf="type === 'expense' && size === 'bill' && expense">
+                <div
+                    style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
+                    <th><b>{{expense?.item === 'Salary' ? 'Salary Slip' : 'Expense Receipt'}}</b></th>
+                </div>
+                <br>
+                <table style="border-collapse: collapse;">
+                    <tbody style="border-bottom: 1px dotted black">
+                        <tr *ngIf="expense?.item">
+                            <td>Item</td>
+                            <td>{{expense?.item}}</td>
+                        </tr>
+                        <tr *ngIf="expense?.description">
+                            <td colspan="2" *ngIf="expense.item !== 'Salary'; else salary">{{expense?.description}}</td>
+                            <ng-template #salary>
+                                <td>Paid To:</td>
+                                <td>{{expense.description}}</td>
+                            </ng-template>
+                        </tr>
+                        <tr *ngIf="expense?.cost">
+                            <td>Cost</td>
+                            <td>&#x20B9; {{expense?.cost}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><br></td>
+                        </tr>
+                        <tr
+                            style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
+                            <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
+                            <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{expense?.cost}}</b></td>
+                        </tr>
+                        <tr>
+                            <td><br></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Added by:
+                            </td>
+                            <td>
+                                {{expense?.added_by}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Date
+                            </td>
+                            <td>
+                                {{expense?.expense_date}}
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </body>
 
 
-        <body style="max-width: 2in;" *ngIf="type === 'donation' && size === 'bill' && donation">
-            <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
-                <th><b>Donation Received</b></th>
-            </div>
-            <br>
-            <table style="border-collapse: collapse;">
-                <tbody style="border-bottom: 1px dotted black">
-                    <tr *ngIf="donation?.name">
-                        <td>Name</td>
-                        <td>{{donation?.name}}</td>
-                    </tr>
-                    <tr *ngIf="donation?.nakshatram">
-                        <td>Nakshathram</td>
-                        <td>{{donation?.nakshatram}}</td>
-                    </tr>
-                    <tr *ngIf="donation?.address">
-                        <td><Address></Address></td>
-                        <td>{{donation?.address}}</td>
-                    </tr>
-                    <tr *ngIf="donation?.phone_number">
-                        <td>Phone</td>
-                        <td>{{donation?.phone_number}}</td>
-                    </tr>
-                    <tr *ngIf="donation?.amount">
-                        <td>Amount</td>
-                        <td>&#x20B9; {{donation?.amount}}</td>
-                    </tr>
-            </tbody>
-            <tfoot>
-                <tr><td><br></td></tr>
-                    <tr style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
-                        <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
-                        <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{donation?.amount}}</b></td>
-                    </tr>
-                    <tr><td><br></td></tr>
-                    <tr>
-                        <td>
-                            Added by:
-                        </td>
-                        <td>
-                            {{donation?.added_by}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Date
-                        </td>
-                        <td>
-                            {{donation?.donation_date}}
-                        </td>
-                    </tr>
-            </tfoot>
-            </table>
-        </body>
+            <body style="max-width: 2in;" *ngIf="type === 'donation' && size === 'bill' && donation">
+                <div
+                    style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
+                    <th><b>Donation Received</b></th>
+                </div>
+                <br>
+                <table style="border-collapse: collapse;">
+                    <tbody style="border-bottom: 1px dotted black">
+                        <tr *ngIf="donation?.name">
+                            <td>Name</td>
+                            <td>{{donation?.name}}</td>
+                        </tr>
+                        <tr *ngIf="donation?.nakshatram">
+                            <td>Nakshathram</td>
+                            <td>{{donation?.nakshatram}}</td>
+                        </tr>
+                        <tr *ngIf="donation?.address">
+                            <td>
+                                <Address></Address>
+                            </td>
+                            <td>{{donation?.address}}</td>
+                        </tr>
+                        <tr *ngIf="donation?.phone_number">
+                            <td>Phone</td>
+                            <td>{{donation?.phone_number}}</td>
+                        </tr>
+                        <tr *ngIf="donation?.amount">
+                            <td>Amount</td>
+                            <td>&#x20B9; {{donation?.amount}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><br></td>
+                        </tr>
+                        <tr
+                            style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
+                            <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
+                            <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{donation?.amount}}</b></td>
+                        </tr>
+                        <tr>
+                            <td><br></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Added by:
+                            </td>
+                            <td>
+                                {{donation?.added_by}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Date
+                            </td>
+                            <td>
+                                {{donation?.donation_date}}
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </body>
 
+
+            <body *ngIf="type === 'report' && reports" class="report">
+                <div
+                    style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <th><b>Consolidated Finance Report</b></th>
+                    <tr><span>period: {{reportPeriod}}</span></tr>
+                </div>
+                <br>
+                <section *ngFor="let report of reports">
+                    <p style="font-weight: bold;padding-bottom: 10px; border-bottom: 1px solid dimgray;">Date:
+                        <b>{{report.date}}</b></p>
+                    <table *ngIf="report?.poojas.length">
+                        <p class="heading">Poojas</p>
+                        <tr><br><br></tr>
+                        <tbody style="border: 1px dotted black">
+                            <th>
+                                <tr>
+                                    <td style="font-weight: bold;">Date</td>
+                                    <td style="font-weight: bold;">Pooja Name</td>
+                                    <td style="font-weight: bold;">Person</td>
+                                    <td style="font-weight: bold;">Nakshathram</td>
+                                    <td style="font-weight: bold;">Phone</td>
+                                    <td style="font-weight: bold;">Amount</td>
+                                </tr>
+                            </th>
+                            <tr *ngFor="let pooja of report.poojas">
+                                <td>{{pooja.pooja_date}}</td>
+                                <td>{{pooja.pooja_name}}</td>
+                                <td>{{pooja.name}}</td>
+                                <td>{{pooja.nakshatram}}</td>
+                                <td>{{pooja.phone_number}}</td>
+                                <td><b>&#x20B9; {{pooja.pooja_price}}</b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" style="font-weight: bold;">Total Amount</td>
+                                <td><b>&#x20B9; {{getTotalPrice(report.poojas, 'pooja_price')}}</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br><br>
+                    <table *ngIf="report?.expenses.length">
+                        <p class="heading">Expenses</p>
+                        <tr><br></tr>
+                        <tbody style="border: 1px dotted black">
+                            <th>
+                                <tr>
+                                    <td style="font-weight: bold;">Date</td>
+                                    <td style="font-weight: bold;">Item</td>
+                                    <td style="font-weight: bold;">Description</td>
+                                    <td style="font-weight: bold;">Added By</td>
+                                    <td style="font-weight: bold;">Amount</td>
+                                </tr>
+                            </th>
+                            <tr *ngFor="let expense of report.expenses">
+                                <td>{{expense.expense_date}}</td>
+                                <td>{{expense.item}}</td>
+                                <td>{{expense.description}}</td>
+                                <td>{{expense.added_by}}</td>
+                                <td><b>&#x20B9; {{expense.cost}}</b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="font-weight: bold;">Total Expense</td>
+                                <td><b>&#x20B9; {{getTotalPrice(report.expenses, 'cost')}}</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br><br>
+
+                    <table *ngIf="report?.donations.length">
+                        <p class="heading">Donations</p>
+                        <br>
+                        <tbody style="border: 1px dotted black">
+                            <th>
+                                <tr>
+                                    <td style="font-weight: bold;">Date</td>
+                                    <td style="font-weight: bold;">Name</td>
+                                    <td style="font-weight: bold;">Nakshatram</td>
+                                    <td style="font-weight: bold;">Phone Number</td>
+                                    <td style="font-weight: bold;">Address</td>
+                                    <td style="font-weight: bold;">Added By</td>
+                                    <td style="font-weight: bold;">Amount</td>
+                                </tr>
+                            </th>
+                            <tr *ngFor="let expense of report.donations">
+                                <td>{{expense.donation_date}}</td>
+                                <td>{{expense.name}}</td>
+                                <td>{{expense.nakshatram}}</td>
+                                <td>{{expense.phone_number}}</td>
+                                <td>{{expense.address}}</td>
+                                <td>{{expense.added_by}}</td>
+                                <td><b>&#x20B9; {{expense.amount}}</b></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="font-weight: bold;">Total Donations</td>
+                                <td><b>&#x20B9; {{getTotalPrice(report.donations, 'amount')}}</b></td>
+                            </tr>
+                        </tbody>
+                        <br><br>
+                    </table>
+                </section>
+                <div>
+                    <br><br>
+                    <footer>
+                        Generated Date:
+                        {{getCurrentDate()}}
+                    </footer>
+                </div>
+
+            </body>
 
         </div>
     </div>

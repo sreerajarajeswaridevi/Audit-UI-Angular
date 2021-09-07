@@ -148,7 +148,7 @@ export class ExpensesComponent implements OnInit {
     this.appPrinter.expense = {
       ...expenseCopy,
       added_by: this.user.displayName,
-      expense_date: this.expense.ist_YYYYMMDD
+      expense_date: this.expenseDate.format('DD-MM-YYYY')
     };
     this.appPrinter.triggerPrint();
     this.idbService
@@ -208,7 +208,7 @@ export class ExpensesComponent implements OnInit {
     this.appPrinter.expense = {
       ...salaryCopy,
       added_by: this.user.displayName,
-      expense_date: this.expense.ist_YYYYMMDD
+      expense_date: this.salaryDate.format('DD-MM-YYYY')
     };
     this.appPrinter.triggerPrint();
     this.idbService

@@ -41,6 +41,9 @@
 </div>
 
 <div *ngIf="!isLoading$" class="charts-container pl-5 pr-5 pb-5" [ngSwitch]="activeTab">
+  <span class="float-right mt-4">
+    <app-printer [text]="'Print'" [reports]="response" [size]="'A4'" [type]="'report'" [reportPeriod]="rangeText"></app-printer>
+  </span>
   <div *ngSwitchCase="'day'">
     <div class="card-header mb-2 d-flex-center">
       <span class="icon-button" (click)="yesterday()">
@@ -52,7 +55,9 @@
       <span class="icon-button" (click)="tomorrow()">
         <mdb-icon *ngIf="!todaysDate.isSame(customStartDate, 'day')" mdbtn fas icon="chevron-right" class="ml-3 float-right delete cursor-pointer gray-text" alt="Right"></mdb-icon>
       </span>
+
     </div>
+    
     <div class="row mb-3">
       <div class="col-md-12 col-lg-6 mb-2">
         <mdb-card>
