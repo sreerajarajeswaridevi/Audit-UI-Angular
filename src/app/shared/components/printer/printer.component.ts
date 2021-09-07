@@ -58,10 +58,11 @@ export class PrinterComponent implements OnInit {
     printerWindow.document.write(content);
     printerWindow.document.write('</body></html>');
     printerWindow.document.close();
-    setTimeout(function () { 
-      printerWindow.print();
-      printerWindow.focus();
-     }, 500);
+    printerWindow.focus();
+    printerWindow.print();
+    // setTimeout(function () { 
+    //   // printerWindow.navigator.share();
+    //  }, 500);
      printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 
