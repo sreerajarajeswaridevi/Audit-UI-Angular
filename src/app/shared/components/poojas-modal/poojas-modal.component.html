@@ -91,8 +91,7 @@
       <div class="d-flex">
         <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="modalRef.hide()"
           mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="success" [disabled]="response.bhakthar.length === 0 || response.phone_number === ''" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
-          changes</button>
+        <button type="button" mdbBtn color="success" [disabled]="response.bhakthar.length === 0 || response.phone_number === ''" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save & Print</button>
           <app-printer #appPrinter [hidden]="true"></app-printer>
       </div>
 

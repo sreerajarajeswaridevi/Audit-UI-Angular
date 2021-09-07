@@ -78,7 +78,8 @@
             <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="resetForm()"
               mdbWavesEffect>Clear</button>
             <button type="button" mdbBtn color="success" [disabled]="donationForm.invalid" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
-              changes</button>
+              & Print</button>
+            <app-printer #appPrinter [type]="'donation'" [hidden]="true"></app-printer>
           </div>
       </mdb-card-footer>
     </mdb-card>
@@ -119,6 +120,9 @@
             <td scope="row">{{ item?.name }}</td>
             <td>{{ item?.nakshatram }}</td>
             <td class="table-price">&#x20B9;{{ item?.amount }}
+            </td>
+            <td>
+              <app-printer [type]="'donation'" [size]="'bill'" [donation]="item"></app-printer> 
               <mdb-icon *ngIf="isManager$ | async" fas icon="trash" class="ml-1 float-right delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
             </td>
           </tr>

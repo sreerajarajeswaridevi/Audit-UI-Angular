@@ -5,12 +5,14 @@ import { Observable } from 'rxjs';
 import { AppState } from 'src/app/reducers';
 import { getExpenses, getIsLoading } from '../store/expenses.selectors';
 import * as fromExpenses from '../store/expenses.actions';
-import { isManager } from '../../auth/store/auth.selectors';
+import { getUser, isManager } from '../../auth/store/auth.selectors';
 import { Expenses } from '../models/expenses.model';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { take } from 'rxjs/operators';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
+import { User } from 'src/app/auth/models/user.model';
 
 var moment = require('../../../assets/datepicker/moment.js');
 
@@ -22,6 +24,7 @@ var moment = require('../../../assets/datepicker/moment.js');
 export class ExpensesComponent implements OnInit {
   isLoading$: Observable<boolean>;
   isManager$: Observable<boolean>;
+  user: User;
   
   expenseDate = moment();
   salaryDate = moment();
@@ -48,6 +51,7 @@ export class ExpensesComponent implements OnInit {
 
   @ViewChild('expenseForm', { static: true }) expenseForm: NgForm;
   @ViewChild('salaryForm', { static: true }) salaryForm: NgForm;
+  @ViewChild('appPrinter', { static: true }) appPrinter: PrinterComponent;
   
   private modalRef: MDBModalRef;
 
@@ -95,6 +99,9 @@ export class ExpensesComponent implements OnInit {
       this.fetchFrequentExpenses();
       this.fetchFrequentSalaries();
     });
+    this.store.select(getUser).subscribe((user: any) => {
+      this.user = user;
+    })
     this.isLoading$ = this.store.select(getIsLoading);
     this.isManager$ = this.store.select(isManager);
     this.store.dispatch(new fromExpenses.ExpensesQuery(this.selectedDate.format('YYYY-MM-DD')));
@@ -138,6 +145,12 @@ export class ExpensesComponent implements OnInit {
   onSave() {
     this.store.dispatch(new fromExpenses.ExpensesAddQuery(this.expense));
     const expenseCopy = JSON.parse(JSON.stringify(this.expense));
+    this.appPrinter.expense = {
+      ...expenseCopy,
+      added_by: this.user.displayName,
+      expense_date: this.expense.ist_YYYYMMDD
+    };
+    this.appPrinter.triggerPrint();
     this.idbService
       .getByKey('expenses', expenseCopy.item)
       .subscribe((data) => {
@@ -160,6 +173,7 @@ export class ExpensesComponent implements OnInit {
       this.expenseForm.reset();
       this.selectedDate = moment();
       this.expenseDate = moment();
+
   }
 
   resetAll() {
@@ -191,6 +205,12 @@ export class ExpensesComponent implements OnInit {
   onSalarySave(form: NgForm) {
     this.store.dispatch(new fromExpenses.ExpensesAddQuery(this.salary));
     const salaryCopy = JSON.parse(JSON.stringify(this.salary));
+    this.appPrinter.expense = {
+      ...salaryCopy,
+      added_by: this.user.displayName,
+      expense_date: this.expense.ist_YYYYMMDD
+    };
+    this.appPrinter.triggerPrint();
     this.idbService
       .getByKey('salary', salaryCopy.description)
       .subscribe((data) => {

@@ -50,7 +50,7 @@
       <mdb-card-footer class="d-flex">
         <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="expenseForm.reset()">Clear
           </button>
-        <button type="button" mdbBtn color="success" [disabled]="expenseForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSave()">Save
+        <button type="button" mdbBtn color="success" [disabled]="expenseForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSave()">Save & Print
           </button>
 
       </mdb-card-footer>
@@ -100,9 +100,8 @@
       <mdb-card-footer class="d-flex">
         <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="salaryForm.reset()">Clear
           </button>
-        <button type="button" mdbBtn color="success" [disabled]="salaryForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSalarySave(salaryForm)">Save
+        <button type="button" mdbBtn color="success" [disabled]="salaryForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSalarySave(salaryForm)">Save & Print
           </button>
-
       </mdb-card-footer>
     </mdb-card>
   </div>
@@ -140,7 +139,9 @@
           <tr *ngFor="let item of todaysExpenseList" [class.salary]="item?.item === 'Salary'">
             <td scope="row">{{ item?.item }}</td>
             <td>{{ item?.description }}</td>
-            <td class="table-price">&#x20B9;{{ item?.cost }}
+            <td class="table-price">&#x20B9;{{ item?.cost }}</td>
+            <td>
+              <app-printer [type]="'expense'" [size]="'bill'" [expense]="item"></app-printer> 
               <mdb-icon *ngIf="isManager$ | async" fas icon="trash" class="ml-1 float-right delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
             </td>
           </tr>
@@ -164,3 +165,4 @@
   </div>
 </app-split-body>
 
+<app-printer #appPrinter [type]="'expense'" [hidden]="true"></app-printer>

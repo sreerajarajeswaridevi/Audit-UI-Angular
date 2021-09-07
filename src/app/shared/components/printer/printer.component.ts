@@ -23,7 +23,7 @@ export class PrinterComponent implements OnInit {
   @Input() hidden = false;
 
   @ViewChild('buttonRef', { static: true }) buttonRef: ElementRef; 
-  @ViewChild('poojaBill', { static: true }) poojaBill: ElementRef; 
+  @ViewChild('bill', { static: true }) bill: ElementRef; 
 
   temple: User;
 
@@ -47,7 +47,7 @@ export class PrinterComponent implements OnInit {
   public triggerPrint = () => {
     this.cdr.detectChanges();
     setTimeout(() => {
-      this.newWindowPrint(this.poojaBill.nativeElement.innerHTML);
+      this.newWindowPrint(this.bill.nativeElement.innerHTML);
     }, 0);
   }
 
@@ -58,8 +58,11 @@ export class PrinterComponent implements OnInit {
     printerWindow.document.write(content);
     printerWindow.document.write('</body></html>');
     printerWindow.document.close();
-    printerWindow.print();
-
+    setTimeout(function () { 
+      printerWindow.print();
+      printerWindow.focus();
+     }, 500);
+     printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 
 }

@@ -5,12 +5,14 @@ import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { starSigns } from 'src/app/poojas/models/poojas.model';
-import { isManager } from '../../auth/store/auth.selectors';
+import { getUser, isManager } from '../../auth/store/auth.selectors';
 import { AppState } from 'src/app/reducers';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { Donations } from '../models/donations.model';
 import { getDonations, getIsLoading } from '../store/donations.selectors';
 import * as fromDonations from '../store/donations.actions';
+import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
+import { User } from 'src/app/auth/models/user.model';
 
 
 var moment = require('../../../assets/datepicker/moment.js');
@@ -22,10 +24,11 @@ var moment = require('../../../assets/datepicker/moment.js');
 })
 export class DonationsComponent implements OnInit {
   @ViewChild('donationForm', { static: true }) donationForm: NgForm;
-
+  @ViewChild('appPrinter', { static: true }) appPrinter: PrinterComponent;
 
   isManager$: Observable<boolean>;
   isLoading$: Observable<boolean>;
+  user: User;
 
   donationDate = moment();
   defaultDate = moment();
@@ -63,6 +66,9 @@ export class DonationsComponent implements OnInit {
     this.store.select(getDonations).subscribe((exp: Donations[]) => {
       this.todaysDonationList = exp;
     });
+    this.store.select(getUser).subscribe((user: any) => {
+      this.user = user;
+    })
     this.isLoading$ = this.store.select(getIsLoading);
     this.isManager$ = this.store.select(isManager);
     this.store.dispatch(new fromDonations.DonationsQuery(this.selectedDate.format('YYYY-MM-DD')));
@@ -92,6 +98,13 @@ export class DonationsComponent implements OnInit {
 
   onSave() {
     this.store.dispatch(new fromDonations.DonationsAddQuery(this.donation));
+    const printData = {
+      ...this.donation,
+      donation_date: this.formattedDate,
+      added_by: this.user.displayName
+    }
+    this.appPrinter.donation = printData;
+    this.appPrinter.triggerPrint();
     this.resetForm();
   }
   

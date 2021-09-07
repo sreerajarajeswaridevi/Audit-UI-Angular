@@ -1,18 +1,17 @@
 <button  #buttonRef [style.display]="hidden ? 'none': ''" (click)="triggerPrint()">
-    <!-- [printSectionId]="type+'-'+size" ngxPrint -->
     <mdb-icon fas icon="print" class="float-left fa-lg" alt="no data"></mdb-icon>
 </button>
 
 <div class="content">
 
     <div class="bills">
-        <div id="pooja-bill" #poojaBill>
+        <div #bill>
         <header style="display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
             <span style="word-wrap: break-word; font-size: 16px; border-bottom: 1px solid black; max-width: 2in;font-weight: bold; text-align: center;justify-content: center;">{{temple.temple_name}}</span>
             <span>{{temple.address}}</span>
             <span>Ph: {{temple.phone_number}}</span>
         </header>
-        <body style="max-width: 2in;" *ngIf="poojas?.length">
+        <body style="max-width: 2in;" *ngIf="type === 'pooja' && size === 'bill' && poojas">
             <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;" *ngIf="poojas[0]?.pooja_name">
                 <th><b>{{poojas[0]?.pooja_name}}</b></th>
             </div>
@@ -69,6 +68,115 @@
                 </tfoot>
             </table>
         </body>
+
+
+        <body style="max-width: 2in;" *ngIf="type === 'expense' && size === 'bill' && expense">
+            <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
+                <th><b>{{expense?.item === 'Salary' ? 'Salary Slip' : 'Expense Receipt'}}</b></th>
+            </div>
+            <br>
+            <table style="border-collapse: collapse;">
+                <tbody style="border-bottom: 1px dotted black">
+                    <tr *ngIf="expense?.item">
+                        <td>Item</td>
+                        <td>{{expense?.item}}</td>
+                    </tr>
+                    <tr *ngIf="expense?.description">
+                        <td colspan="2" *ngIf="expense.item !== 'Salary'; else salary">{{expense?.description}}</td>
+                        <ng-template #salary>
+                            <td>Paid To:</td>
+                            <td>{{expense.description}}</td>
+                        </ng-template>
+                    </tr>
+                    <tr *ngIf="expense?.cost">
+                        <td>Cost</td>
+                        <td>&#x20B9; {{expense?.cost}}</td>
+                    </tr>
+            </tbody>
+            <tfoot>
+                <tr><td><br></td></tr>
+                    <tr style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
+                        <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
+                        <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{expense?.cost}}</b></td>
+                    </tr>
+                    <tr><td><br></td></tr>
+                    <tr>
+                        <td>
+                            Added by:
+                        </td>
+                        <td>
+                            {{expense?.added_by}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Date
+                        </td>
+                        <td>
+                            {{expense?.expense_date}}
+                        </td>
+                    </tr>
+            </tfoot>
+            </table>
+        </body>
+
+
+        <body style="max-width: 2in;" *ngIf="type === 'donation' && size === 'bill' && donation">
+            <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
+                <th><b>Donation Received</b></th>
+            </div>
+            <br>
+            <table style="border-collapse: collapse;">
+                <tbody style="border-bottom: 1px dotted black">
+                    <tr *ngIf="donation?.name">
+                        <td>Name</td>
+                        <td>{{donation?.name}}</td>
+                    </tr>
+                    <tr *ngIf="donation?.nakshatram">
+                        <td>Nakshathram</td>
+                        <td>{{donation?.nakshatram}}</td>
+                    </tr>
+                    <tr *ngIf="donation?.address">
+                        <td><Address></Address></td>
+                        <td>{{donation?.address}}</td>
+                    </tr>
+                    <tr *ngIf="donation?.phone_number">
+                        <td>Phone</td>
+                        <td>{{donation?.phone_number}}</td>
+                    </tr>
+                    <tr *ngIf="donation?.amount">
+                        <td>Amount</td>
+                        <td>&#x20B9; {{donation?.amount}}</td>
+                    </tr>
+            </tbody>
+            <tfoot>
+                <tr><td><br></td></tr>
+                    <tr style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
+                        <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
+                        <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{donation?.amount}}</b></td>
+                    </tr>
+                    <tr><td><br></td></tr>
+                    <tr>
+                        <td>
+                            Added by:
+                        </td>
+                        <td>
+                            {{donation?.added_by}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Date
+                        </td>
+                        <td>
+                            {{donation?.donation_date}}
+                        </td>
+                    </tr>
+            </tfoot>
+            </table>
+        </body>
+
+
         </div>
     </div>
 
