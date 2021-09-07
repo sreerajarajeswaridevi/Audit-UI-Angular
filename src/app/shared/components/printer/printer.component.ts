@@ -54,7 +54,7 @@ export class PrinterComponent implements OnInit {
 
   newWindowPrint(content: any) {
     const printerWindow = window.open('', '', 'width=2in') as any;
-    printerWindow.document.write('<html> <style> header{max-width: 100%!important;} .heading{font-weight: bold; border-bottom: 1px dotted black; margin: 5px 10px;} .report table td {border: 1px solid black} .report table {border-collapse: collapse; width: 90%; margin-left: 2%;} .report tr td:first-child {min-width: 80px;} </style>');
+    printerWindow.document.write('<html> <style> header{max-width: 100%!important;} .heading{font-weight: bold; border-bottom: 1px dotted black; margin: 5px 10px;} .report table td {border: 1px solid black;} td{word-break:break-word;} .report table {border-collapse: collapse; width: 90%; margin-left: 2%;} .report tr td:first-child {min-width: 80px;} </style>');
     printerWindow.document.write('<body>');
     printerWindow.document.write(content);
     printerWindow.document.write('</body></html>');
@@ -64,7 +64,7 @@ export class PrinterComponent implements OnInit {
     // setTimeout(function () { 
     //   // printerWindow.navigator.share();
     //  }, 500);
-     printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
+    //  printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 
 }
