@@ -8,20 +8,20 @@
     <div class="bills">
         <div #bill>
             <header
-                style="display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
+                style="display: flex; flex-direction: column; justify-content: center; align-items: center; ">
                 <span
-                    style="word-wrap: break-word; font-size: 16px; border-bottom: 1px solid black; max-width: 2in;font-weight: bold; text-align: center;justify-content: center;">{{temple.temple_name}}</span>
+                    style="word-wrap: break-word; font-size: 16px; border-bottom: 1px solid black; font-weight: bold; text-align: center;justify-content: center;">{{temple.temple_name}}</span>
                 <span>{{temple.address}}</span>
                 <span>Ph: {{temple.phone_number}}</span>
             </header>
 
-            <body style="max-width: 2in;" *ngIf="type === 'pooja' && size === 'bill' && poojas">
-                <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;"
+            <body *ngIf="type === 'pooja' && size === 'bill' && poojas">
+                <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; "
                     *ngIf="poojas[0]?.pooja_name">
                     <th><b>{{poojas[0]?.pooja_name}}</b></th>
                 </div>
                 <br>
-                <table style="border-collapse: collapse;">
+                <table style="border-collapse: collapse; width: 100%;">
                     <tbody *ngFor="let pooja of poojas" style="border-bottom: 1px dotted black">
                         <tr *ngIf="pooja?.name">
                             <td>Name</td>
@@ -52,7 +52,7 @@
                             <td><br></td>
                         </tr>
                         <tr
-                            style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
+                            style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
                             <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
                             <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
                                     'pooja_price')}}</b></td>
@@ -81,9 +81,9 @@
             </body>
 
 
-            <body style="max-width: 2in;" *ngIf="type === 'expense' && size === 'bill' && expense">
+            <body *ngIf="type === 'expense' && size === 'bill' && expense">
                 <div
-                    style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
+                    style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; ">
                     <th><b>{{expense?.item === 'Salary' ? 'Salary Slip' : 'Expense Receipt'}}</b></th>
                 </div>
                 <br>
@@ -110,7 +110,7 @@
                             <td><br></td>
                         </tr>
                         <tr
-                            style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
+                            style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
                             <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
                             <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{expense?.cost}}</b></td>
                         </tr>
@@ -138,9 +138,9 @@
             </body>
 
 
-            <body style="max-width: 2in;" *ngIf="type === 'donation' && size === 'bill' && donation">
+            <body *ngIf="type === 'donation' && size === 'bill' && donation">
                 <div
-                    style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 2in;">
+                    style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; ">
                     <th><b>Donation Received</b></th>
                 </div>
                 <br>
@@ -174,7 +174,7 @@
                             <td><br></td>
                         </tr>
                         <tr
-                            style="border-bottom: 1px dashed black; margin-top: 10px; max-width: 2in;background-color: whitesmoke;">
+                            style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
                             <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
                             <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{donation?.amount}}</b></td>
                         </tr>

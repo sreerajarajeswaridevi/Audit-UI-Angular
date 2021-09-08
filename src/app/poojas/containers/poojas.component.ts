@@ -70,7 +70,9 @@ export class PoojasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datePicked(moment());
+    // this.datePicked(moment());
+    this.allPoojasList = [];
+    this.poojaList = [];
     this.store.select(getPoojaTypes).subscribe((poojas: PoojaTypes[]) => {
       this.poojaTypes = poojas;
     })
@@ -80,7 +82,9 @@ export class PoojasComponent implements OnInit {
       .subscribe((poojas: { poojaList: PoojaList[] }) => {
         this.tomorrowsPoojaList = poojas.poojaList;
       });
-      this.datePicked(moment());
+      if (list !== null) {
+        this.datePicked(moment());
+      }
     });
     this.isManager$ = this.store.select(isManager);
     this.isLoading$ = this.store.select(getIsLoading);

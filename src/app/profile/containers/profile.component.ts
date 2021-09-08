@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   users$: Observable<any>;
   usersListLoading$: Observable<boolean>;
   private modalRef: MDBModalRef;
+  pageSize = 'A4';
 
   modalConfig = {
     class: 'modal-dialog-centered'
@@ -48,6 +49,9 @@ export class ProfileComponent implements OnInit {
         return users;
       })
     );
+    if (localStorage.getItem('printerPageSize')) {
+      this.pageSize = localStorage.getItem('printerPageSize') + '';
+    }
   }
 
   updateProfile(userData: any) {
@@ -104,6 +108,11 @@ export class ProfileComponent implements OnInit {
 
   onDeleteUser(user: User) {
     this.openUserDeleteConfirmModal(user);
+  }
+
+  setPageSize(size: string) {
+    this.pageSize = size;
+    localStorage.setItem('printerPageSize', size);
   }
 
 }
