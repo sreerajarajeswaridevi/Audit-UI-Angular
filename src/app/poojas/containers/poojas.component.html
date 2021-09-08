@@ -27,6 +27,8 @@
               <span class="sr-only">Loading...</span>
             </div>
           </div>
+          <div class="cd-body">
+
           <table mdbTable small="true" striped="true" *ngIf="!(isListLoading$ | async) && poojaList.length > 0">
             <thead>
               <tr>
@@ -45,6 +47,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
           <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!(isListLoading$ | async) && poojaList?.length === 0">
             <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
               <p class="grey-text">No Poojas</p>
@@ -58,24 +61,26 @@
               <span class="sr-only">Loading...</span>
             </div>
           </div>
-          <table mdbTable small="true" striped="true" *ngIf="!(isListLoading$ | async) && tomorrowsPoojaList.length > 0">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Nakshathram</th>
-                <th>Pooja</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of tomorrowsPoojaList">
-                <td scope="row">{{ item.name }}</td>
-                <td>{{ item.nakshatram }}</td>
-                <td>{{ getPoojaNameFromCode(item.pooja_code)  }}</td>
-                <td> <app-printer [type]="'pooja'" [size]="'bill'" [poojas]="[item]"></app-printer>  </td>
-
-              </tr>
-            </tbody>
-          </table>
+          <div class="cd-body">
+            <table mdbTable small="true" striped="true" *ngIf="!(isListLoading$ | async) && tomorrowsPoojaList.length > 0">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Nakshathram</th>
+                  <th>Pooja</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of tomorrowsPoojaList">
+                  <td scope="row">{{ item.name }}</td>
+                  <td>{{ item.nakshatram }}</td>
+                  <td>{{ getPoojaNameFromCode(item.pooja_code)  }}</td>
+                  <td> <app-printer [type]="'pooja'" [size]="'bill'" [poojas]="[item]"></app-printer>  </td>
+  
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!(isListLoading$ | async) && tomorrowsPoojaList?.length === 0">
             <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
               <p class="grey-text">No Poojas tomorrow</p>
@@ -106,6 +111,8 @@
               <span class="sr-only">Loading...</span>
             </div>
           </div>
+          <div class="cd-body">
+
           <table mdbTable small="true" striped="true" *ngIf="!allPoojasLoading && allPoojasList?.length !== 0">
             <thead>
               <tr>
@@ -123,6 +130,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
           <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!allPoojasLoading && allPoojasList?.length === 0">
             <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
               <p class="grey-text">No Poojas on {{selectedDate.format('MMM Do')}} </p>

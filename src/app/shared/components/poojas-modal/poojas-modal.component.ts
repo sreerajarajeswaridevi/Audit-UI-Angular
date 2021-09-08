@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { MDBModalRef } from 'angular-bootstrap-md';
 import { Subject } from 'rxjs';
 import { NewPoojaRequest, PoojaTypes, starSigns } from 'src/app/poojas/models/poojas.model';
+import { PoojasService } from 'src/app/poojas/services/poojas.service';
 import { PrinterComponent } from '../printer/printer.component';
 // import { MDBModalRef } from 'angular-bootstrap-md';
 // import { Poojas } from '../../../poojas/models/poojas.model';
@@ -37,7 +38,8 @@ export class PoojasModalComponent implements OnInit {
     ist_YYYYMMDD: this.selectedDate.format('YYYY-MM-DD') 
   }
 
-  constructor(public modalRef: MDBModalRef) { }
+  constructor(public modalRef: MDBModalRef,
+    private poojaService: PoojasService) { }
 
   ngOnInit() {
     this.response.pooja_code = this.code;
@@ -88,5 +90,17 @@ export class PoojasModalComponent implements OnInit {
     this.response.bhakthar.push(this.poojasForm.value);
     this.response.pooja_price = `${+(this.price) + +(this.response.pooja_price)}`;
     this.poojasForm.reset();
+  }
+
+  fetchPepleData(phoneNumber: string) {
+    if (phoneNumber.length > 7) {
+      this.poojaService.getPersonsByPhoneNumber(phoneNumber).subscribe((data: any) => {
+        if (data && data.persons) {
+          this.response.bhakthar = data.persons;
+          this.response.pooja_price = `${+(this.price) + +(this.response.pooja_price)}`;
+          this.poojasForm.reset();
+        }
+      });
+    }
   }
 }

@@ -25,7 +25,7 @@ import { UserComponent } from './components/user/user.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab.component';
 import { PrinterComponent } from './components/printer/printer.component';
-import { NgxPrintModule } from 'ngx-print';
+import { IndexedDBModule } from '../expenses/indexedDB/indexedDB.module';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,7 @@ import { NgxPrintModule } from 'ngx-print';
     DropdownModule,
     BadgeModule,
     CoreModule,
-    NgxPrintModule
+    IndexedDBModule
   ],
   exports: [
     CustomersListComponent,

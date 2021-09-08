@@ -64,4 +64,15 @@ export class PoojasService {
       }
     );
   }
+
+  getPersonsByPhoneNumber(phoneNumber: string) {
+    return this.http.get(
+      `${environment.apiUrl}?api=getPersonsByPhoneNumber`,
+      { 
+        params: {
+          phone_number: phoneNumber
+        }
+      }
+    );
+  }
 }

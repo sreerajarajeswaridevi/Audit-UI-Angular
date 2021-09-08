@@ -72,6 +72,8 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "index": "src/index.html",
+          "baseHref": "/",
           "options": {
             "browserTarget": "audit-UI-Angular:build"
           },

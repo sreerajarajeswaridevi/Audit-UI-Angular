@@ -19,7 +19,27 @@
     
    
   </div>
+  <mdb-card class="text-center">
+    <mdb-card-header>
+      <div class="pl-2 pr-2 row container">
+        <div class="phone col-md-6 col-xs-12">
+          <label for="phone" class="float-left">Phone Number *</label>
+          <input type="text" id="phone" name="phone" class="form-control" [(ngModel)]="response.phone_number" mdbInput mdbValidate
+            [validateSuccess]="false" required #phone="ngModel" (blur)="fetchPepleData(phone.value)" >
+        <mdb-error class="float-left" *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">phone number is required</mdb-error>
+        </div>
+        <div class="col-md-6 col-xs-12">
+          <label class="float-left"  for="address">Address (Optional)</label>
+          <textarea type="text" id="address" name="address" class="md-textarea form-control"
+            [(ngModel)]="response.address" mdbInput mdbValidate [validateSuccess]="false"></textarea>
+        </div>
+      </div>
+      
+    </mdb-card-header>
+  </mdb-card>
+
   <div class="modal-body">
+    
     <div class="left-section">
       <form #poojasForm="ngForm">
         <div class="md-form">
@@ -43,24 +63,12 @@
           </div>
         </div>
       </form>
-        <div class="md-form">
-          <textarea type="text" id="address" name="address" class="md-textarea form-control"
-            [(ngModel)]="response.address" mdbInput mdbValidate [validateSuccess]="false"></textarea>
-          <label for="address">Address (Optional)</label>
-        </div>
+       
   
       
     </div>
     <div class="right-section">
       <mdb-card class="text-center">
-        <mdb-card-header>
-          <div class="md-form phone">
-            <input type="text" id="phone" name="phone" class="form-control" [(ngModel)]="response.phone_number" mdbInput mdbValidate
-              [validateSuccess]="false" required #phone="ngModel">
-            <label for="phone">Phone Number *</label>
-          <mdb-error *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">phone number is required</mdb-error>
-          </div>
-        </mdb-card-header>
         <mdb-card-body>
           <table mdbTable small="true" striped="true" class="bhakthar-table">
             <tbody>
