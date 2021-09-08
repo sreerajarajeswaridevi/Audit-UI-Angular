@@ -8,6 +8,7 @@
     "start.proxy": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "build:prod": "ng build --prod",
+    "bundle": "ng build && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

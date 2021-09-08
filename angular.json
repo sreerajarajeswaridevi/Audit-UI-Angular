@@ -17,8 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/audit-UI-Angular",
+            "outputPath": "dist/android_app",
             "index": "src/index.html",
+            "baseHref": "/android_app/",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -48,13 +49,14 @@
           },
           "configurations": {
             "production": {
+              "index": "src/index.html",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref": "",
+              "baseHref": "/prod_app/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -63,7 +65,8 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "outputPath": "dist/prod_app"
             }
           }
         },

@@ -12,7 +12,7 @@ var moment = require('../../../../assets/datepicker/moment.js');
 })
 export class PrinterComponent implements OnInit {
 
-  @Input() type: 'pooja' | 'exponse' | 'donation' | 'report' = 'pooja';
+  @Input() type = 'pooja';
   @Input() size: 'bill' | 'A4' = 'bill';
   @Input() text = '';
   @Input() reportPeriod = '';
