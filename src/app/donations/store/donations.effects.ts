@@ -38,7 +38,8 @@ export class DonationsEffects {
     map((action: fromDonations.DonationsAddQuery) => action.payload),
     switchMap((payload: any) => this.donationsService.addDonations(payload)
     .pipe(
-      (map(() => {
+      (map((response: any) => {
+        this.donationsService.emitNewDonation(response.receipt_number);
         return (new fromDonations.DonationsQuery(moment().format('YYYY-MM-DD')));
       })),
       catchError(error => {

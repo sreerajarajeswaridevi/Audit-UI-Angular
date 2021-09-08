@@ -14,7 +14,7 @@
       </mdb-card-header>
   
       <mdb-card-body class="py-2">
-        <form #expenseForm="ngForm">
+        <form #expenseForm="ngForm" autocomplete="on">
           <div class="d-flex">
           <div class="md-form">
             <input type="text" id="item" name="item" class="form-control" [(ngModel)]="expense.item" mdbInput mdbValidate [validateSuccess]="false" #item="ngModel" required>
@@ -22,7 +22,7 @@
             <mdb-error *ngIf="item && item.invalid && (item.dirty || item.touched)">item is required</mdb-error>
           </div>
           <div class="suggestion-container" *ngIf="frequentExpenses?.length">
-            <mdb-badge class="cursor-pointer mr-1" *ngFor="let expenseName of frequentExpenses" pill="true" [info]="expense.item !== expenseName" [success]="expense.item === expenseName" (click)="expense.item = expenseName">{{ expenseName }}</mdb-badge>
+            <mdb-badge class="cursor-pointer mr-1 p-2" *ngFor="let expenseName of frequentExpenses" pill="true" [info]="expense.item !== expenseName" [success]="expense.item === expenseName" (click)="expense.item = expenseName">{{ expenseName }}</mdb-badge>
           </div>
           </div>
 

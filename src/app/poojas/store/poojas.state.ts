@@ -2,6 +2,7 @@ import { PoojaList, PoojaTypes } from '../models/poojas.model';
 
 export interface PoojasState {
     poojaList: PoojaList[] | null;
+    newPoojasRegistered: PoojaList[] | null;
     poojaTypes: PoojaTypes[] | null;
     isLoading: boolean;
     isListLoading: boolean;
@@ -13,5 +14,6 @@ export const PoojasInitialState: PoojasState = {
     poojaList: null,
     isLoading: true,
     isListLoading: true,
-    error: null
+    error: null,
+    newPoojasRegistered: null
 };

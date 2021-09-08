@@ -4,7 +4,6 @@ import { MDBModalRef } from 'angular-bootstrap-md';
 import { Subject } from 'rxjs';
 import { NewPoojaRequest, PoojaTypes, starSigns } from 'src/app/poojas/models/poojas.model';
 import { PoojasService } from 'src/app/poojas/services/poojas.service';
-import { PrinterComponent } from '../printer/printer.component';
 // import { MDBModalRef } from 'angular-bootstrap-md';
 // import { Poojas } from '../../../poojas/models/poojas.model';
 // import { Subject } from 'rxjs';
@@ -17,7 +16,6 @@ var moment = require('../../../../assets/datepicker/moment.js');
 })
 export class PoojasModalComponent implements OnInit {
   @ViewChild('poojasForm', { static: true }) poojasForm: NgForm;
-  @ViewChild('appPrinter', { static: true }) appPrinter: PrinterComponent;
 
   defaultDate = moment();
   startDate = moment();
@@ -37,6 +35,7 @@ export class PoojasModalComponent implements OnInit {
     pooja_price: '0',
     ist_YYYYMMDD: this.selectedDate.format('YYYY-MM-DD') 
   }
+  peopleFetching = false;
 
   constructor(public modalRef: MDBModalRef,
     private poojaService: PoojasService) { }
@@ -61,15 +60,6 @@ export class PoojasModalComponent implements OnInit {
 
   onSave() {
     if (this.response.bhakthar.length > 0) {
-      const poojaDetails = this.response;
-      this.appPrinter.poojas = this.response.bhakthar.map((person: any) => {
-        return {
-          ...person,
-          ...poojaDetails,
-          pooja_name: this.heading
-        }
-      });
-      this.appPrinter.triggerPrint();
       this.poojasData.next(this.response);
       this.modalRef.hide();
     } else {
@@ -92,14 +82,18 @@ export class PoojasModalComponent implements OnInit {
     this.poojasForm.reset();
   }
 
-  fetchPepleData(phoneNumber: string) {
-    if (phoneNumber.length > 7) {
+  fetchPeopleData(phoneNumber: string) {
+    this.peopleFetching = true;
+    if (phoneNumber.length > 3) {
       this.poojaService.getPersonsByPhoneNumber(phoneNumber).subscribe((data: any) => {
+        this.peopleFetching = false;
         if (data && data.persons) {
           this.response.bhakthar = data.persons;
-          this.response.pooja_price = `${+(this.price) + +(this.response.pooja_price)}`;
+          this.response.pooja_price = `${+(this.price) * data.persons.length}`;
           this.poojasForm.reset();
         }
+      }, () => {
+        this.peopleFetching = false;
       });
     }
   }

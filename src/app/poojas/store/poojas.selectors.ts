@@ -8,6 +8,12 @@ export const getPoojaTypes = createSelector(
   poojas => poojas.poojaTypes
 );
 
+export const getNewlyRegisteredPooja = createSelector(
+  getPoojasState,
+  poojas => poojas.newPoojasRegistered
+);
+
+
 export const getPoojaList = createSelector(
   getPoojasState,
   poojas => poojas.poojaList

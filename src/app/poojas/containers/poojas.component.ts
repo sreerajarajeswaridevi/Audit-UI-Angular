@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/reducers';
-import { getIsLoading, getIsListLoading, getPoojaTypes, getPoojaList } from '../store/poojas.selectors';
+import { getIsLoading, getIsListLoading, getPoojaTypes, getPoojaList, getNewlyRegisteredPooja } from '../store/poojas.selectors';
 import * as fromPoojas from '../store/poojas.actions';
 import { NewPoojaRequest, PoojaList, PoojaTypes } from '../models/poojas.model';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
@@ -10,6 +10,7 @@ import { PoojasModalComponent } from 'src/app/shared/components/poojas-modal/poo
 import { take } from 'rxjs/operators';
 import { PoojasService } from '../services/poojas.service';
 import { isManager } from 'src/app/auth/store/auth.selectors';
+import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
 // import { PoojasModalComponent } from 'src/app/shared/components/poojas-modal/poojas-modal.component';
 var moment = require('../../../assets/datepicker/moment.js');
 
@@ -19,7 +20,7 @@ var moment = require('../../../assets/datepicker/moment.js');
   styleUrls: ['./poojas.component.scss']
 })
 export class PoojasComponent implements OnInit {
-
+  @ViewChild('appPrinter', { static: true }) appPrinter: PrinterComponent;
 
   isListLoading$: Observable<boolean>;
   isLoading$: Observable<boolean>;
@@ -32,6 +33,7 @@ export class PoojasComponent implements OnInit {
   allPoojasLoading = false;
 
   modalRef: MDBModalRef;
+  newPoojaCacheHolder:any = null;
 
   defaultDate = moment();
   startDate = moment().subtract(60, 'days');
@@ -86,6 +88,22 @@ export class PoojasComponent implements OnInit {
         this.datePicked(moment());
       }
     });
+    this.store.select(getNewlyRegisteredPooja).subscribe((response: any) => {
+      //response.receipt_number
+      if (response != null && this.newPoojaCacheHolder) {
+        const poojaDetails = this.newPoojaCacheHolder;
+        this.appPrinter.poojas = this.newPoojaCacheHolder.bhakthar.map((person: any) => {
+          return {
+            ...person,
+            ...poojaDetails,
+            receipt_number: response.receipt_number,
+            pooja_name: this.getPoojaNameFromCode(this.newPoojaCacheHolder.pooja_code)
+          }
+        });
+        this.appPrinter.triggerPrint();
+        this.newPoojaCacheHolder = null;
+      }
+    })
     this.isManager$ = this.store.select(isManager);
     this.isLoading$ = this.store.select(getIsLoading);
     this.isListLoading$ = this.store.select(getIsListLoading);
@@ -104,6 +122,7 @@ export class PoojasComponent implements OnInit {
     });
 
     this.modalRef.content.poojasData.pipe(take(1)).subscribe( (pooja: NewPoojaRequest) => {
+      this.newPoojaCacheHolder = pooja;
       this.store.dispatch(new fromPoojas.RegisterPooja({ pooja: pooja }));
       this.datePicked(moment());
     });

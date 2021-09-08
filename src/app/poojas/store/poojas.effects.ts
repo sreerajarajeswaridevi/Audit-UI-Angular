@@ -83,9 +83,12 @@ export class PoojasEffects {
     map((action: any) => action.payload),
     switchMap((payload: any) => this.poojasService.addPooja(payload.pooja)
     .pipe(
-      map((list: any) => {
-        console.log(list.data);
-        return (new fromPoojas.PoojaListQuery(moment().format('YYYY-MM-DD')));
+      switchMap((list: any) => {
+        // console.log(list?.persons);
+        return [(new fromPoojas.PoojaRegistered({response: list})),
+        new fromPoojas.PoojaListQuery(moment().format('YYYY-MM-DD'))
+      ];
+        // return (new fromPoojas.PoojaListQuery(moment().format('YYYY-MM-DD')));
       }),
       catchError(error => {
         this.toastr.error('Something went wrong. Please try after sometime');

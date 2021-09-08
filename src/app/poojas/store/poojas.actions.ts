@@ -11,6 +11,7 @@ export enum PoojasActionTypes {
 
   POOJA_LIST_QUERY = '[Pooja Type] Query Pooja List',
   POOJA_LIST_LOADED = '[Pooja Type] Query Pooja Loaded',
+  POOJA_REGISTERED = '[Pooja Type] New Pooja Registered',
   POOJA_ADD_QUERY = '[Pooja] Add new Pooja',
   POOJA_ADDED = '[Pooja] Added New Pooja',
   POOJA_DELETED = '[Pooja] Delete Pooja',
@@ -70,6 +71,12 @@ export class PoojaListLoaded implements Action {
   constructor(public payload: { poojaList: PoojaList[] }) {}
 }
 
+export class PoojaRegistered implements Action {
+  readonly type = PoojasActionTypes.POOJA_REGISTERED;
+
+  constructor(public payload: { response: any }) {}
+}
+
 
 export type PoojasActions =
   | PoojasTypeQuery
@@ -78,6 +85,7 @@ export type PoojasActions =
   | PoojaTypeEdited
   | PoojaTypeDeleted
   | RegisterPooja
+  | PoojaRegistered
   | PoojaListQuery
   | PoojaListLoaded
   | PoojasError;

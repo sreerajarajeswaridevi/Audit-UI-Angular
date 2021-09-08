@@ -122,7 +122,7 @@ export class AuthEffects {
         const user = {
           temple_name: res.temple_name,
           temple_code: res.temple_code,
-          address: res.address || 'Temporary Address',
+          address: res.temple_address || 'Temporary Address',
           phone_number: res.phone_number || '99999999',
           displayName: payload.username,
           photoUrl: mockUser.user.photoUrl,

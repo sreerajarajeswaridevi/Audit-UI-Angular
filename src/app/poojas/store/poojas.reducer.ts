@@ -49,6 +49,13 @@ export function PoojasReducer(state = PoojasInitialState, action: PoojasActions)
       });
     }
 
+    case PoojasActionTypes.POOJA_REGISTERED: {
+      return Object.assign({}, state, {
+        isListLoading: false,
+        newPoojasRegistered: action.payload.response,
+      });
+    }
+
 
     default:
       return state;

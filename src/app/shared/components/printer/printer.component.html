@@ -7,15 +7,18 @@
 
     <div class="bills">
         <div #bill>
-            <header
-                style="display: flex; flex-direction: column; justify-content: center; align-items: center; ">
+            <header style="display: flex; flex-direction: column; justify-content: center; align-items: center; ">
                 <span
                     style="word-wrap: break-word; font-size: 16px; border-bottom: 1px solid black; font-weight: bold; text-align: center;justify-content: center;">{{temple.temple_name}}</span>
                 <span>{{temple.address}}</span>
-                <span>Ph: {{temple.phone_number}}</span>
+                <!-- <span>Ph: {{temple.phone_number}}</span> -->
             </header>
 
             <body *ngIf="type === 'pooja' && size === 'bill' && poojas">
+                <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; "
+                    *ngIf="poojas[0]?.receipt_number">
+                    <th>Receipt No: {{poojas[0]?.receipt_number}}</th>
+                </div>
                 <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; "
                     *ngIf="poojas[0]?.pooja_name">
                     <th><b>{{poojas[0]?.pooja_name}}</b></th>
@@ -51,8 +54,7 @@
                         <tr>
                             <td><br></td>
                         </tr>
-                        <tr
-                            style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
+                        <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
                             <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
                             <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
                                     'pooja_price')}}</b></td>
@@ -82,6 +84,10 @@
 
 
             <body *ngIf="type === 'expense' && size === 'bill' && expense">
+                <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; "
+                    *ngIf="expense?.receipt_number">
+                    <th>Receipt No: {{expense?.receipt_number}}</th>
+                </div>
                 <div
                     style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; ">
                     <th><b>{{expense?.item === 'Salary' ? 'Salary Slip' : 'Expense Receipt'}}</b></th>
@@ -109,8 +115,7 @@
                         <tr>
                             <td><br></td>
                         </tr>
-                        <tr
-                            style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
+                        <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
                             <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
                             <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{expense?.cost}}</b></td>
                         </tr>
@@ -139,6 +144,10 @@
 
 
             <body *ngIf="type === 'donation' && size === 'bill' && donation">
+                <div style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; "
+                    *ngIf="donation?.receipt_number">
+                    <th>Receipt No: {{donation?.receipt_number}}</th>
+                </div>
                 <div
                     style="border-bottom: 1px dotted black; border-top: 1px dotted black;display: flex; flex-direction: column; justify-content: center; align-items: center; ">
                     <th><b>Donation Received</b></th>
@@ -173,8 +182,7 @@
                         <tr>
                             <td><br></td>
                         </tr>
-                        <tr
-                            style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
+                        <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
                             <td style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
                             <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{donation?.amount}}</b></td>
                         </tr>
@@ -211,21 +219,20 @@
                 <br>
                 <section *ngFor="let report of reports">
                     <p style="font-weight: bold;padding-bottom: 10px; border-bottom: 1px solid dimgray;">Date:
-                        <b>{{report.date}}</b></p>
+                        <b>{{report.date}}</b>
+                    </p>
                     <table *ngIf="report?.poojas.length">
                         <p class="heading">Poojas</p>
                         <tr><br><br></tr>
                         <tbody style="border: 1px dotted black">
-                            <th>
-                                <tr>
-                                    <td style="font-weight: bold;">Date</td>
-                                    <td style="font-weight: bold;">Pooja Name</td>
-                                    <td style="font-weight: bold;">Person</td>
-                                    <td style="font-weight: bold;">Nakshathram</td>
-                                    <td style="font-weight: bold;">Phone</td>
-                                    <td style="font-weight: bold;">Amount</td>
-                                </tr>
-                            </th>
+                            <tr>
+                                <td style="font-weight: bold;">Date</td>
+                                <td style="font-weight: bold;">Pooja Name</td>
+                                <td style="font-weight: bold;">Person Name</td>
+                                <td style="font-weight: bold;">Nakshathram</td>
+                                <td style="font-weight: bold;">Phone</td>
+                                <td style="font-weight: bold;">Amount</td>
+                            </tr>
                             <tr *ngFor="let pooja of report.poojas">
                                 <td>{{pooja.pooja_date}}</td>
                                 <td>{{pooja.pooja_name}}</td>
@@ -245,15 +252,13 @@
                         <p class="heading">Expenses</p>
                         <tr><br></tr>
                         <tbody style="border: 1px dotted black">
-                            <th>
-                                <tr>
-                                    <td style="font-weight: bold;">Date</td>
-                                    <td style="font-weight: bold;">Item</td>
-                                    <td style="font-weight: bold;">Description</td>
-                                    <td style="font-weight: bold;">Added By</td>
-                                    <td style="font-weight: bold;">Amount</td>
-                                </tr>
-                            </th>
+                            <tr>
+                                <td style="font-weight: bold;">Date</td>
+                                <td style="font-weight: bold;">Item</td>
+                                <td style="font-weight: bold;">Description</td>
+                                <td style="font-weight: bold;">Added By</td>
+                                <td style="font-weight: bold;">Amount</td>
+                            </tr>
                             <tr *ngFor="let expense of report.expenses">
                                 <td>{{expense.expense_date}}</td>
                                 <td>{{expense.item}}</td>
@@ -273,17 +278,15 @@
                         <p class="heading">Donations</p>
                         <br>
                         <tbody style="border: 1px dotted black">
-                            <th>
-                                <tr>
-                                    <td style="font-weight: bold;">Date</td>
-                                    <td style="font-weight: bold;">Name</td>
-                                    <td style="font-weight: bold;">Nakshatram</td>
-                                    <td style="font-weight: bold;">Phone Number</td>
-                                    <td style="font-weight: bold;">Address</td>
-                                    <td style="font-weight: bold;">Added By</td>
-                                    <td style="font-weight: bold;">Amount</td>
-                                </tr>
-                            </th>
+                            <tr>
+                                <td style="font-weight: bold;">Date</td>
+                                <td style="font-weight: bold;">Name</td>
+                                <td style="font-weight: bold;">Nakshatram</td>
+                                <td style="font-weight: bold;">Phone Number</td>
+                                <td style="font-weight: bold;">Address</td>
+                                <td style="font-weight: bold;">Added By</td>
+                                <td style="font-weight: bold;">Amount</td>
+                            </tr>
                             <tr *ngFor="let expense of report.donations">
                                 <td>{{expense.donation_date}}</td>
                                 <td>{{expense.name}}</td>

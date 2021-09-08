@@ -13,6 +13,7 @@ import { take } from 'rxjs/operators';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
 import { User } from 'src/app/auth/models/user.model';
+import { ExpensesService } from '../services/expenses.service';
 
 var moment = require('../../../assets/datepicker/moment.js');
 
@@ -37,6 +38,7 @@ export class ExpensesComponent implements OnInit {
   expense: any = {
     ist_YYYYMMDD: moment().format('YYYY-MM-DD')
   };
+  expenseCopy: any;
   salary: any = {
     item: 'Salary',
     description: '',
@@ -59,7 +61,8 @@ export class ExpensesComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private modalService: MDBModalService,
-    private idbService: NgxIndexedDBService
+    private idbService: NgxIndexedDBService,
+    private expenseService: ExpensesService
   ) {}
 
   get formattedDate() {
@@ -101,6 +104,19 @@ export class ExpensesComponent implements OnInit {
     });
     this.store.select(getUser).subscribe((user: any) => {
       this.user = user;
+    });
+    this.expenseService.newExpenseAdded.subscribe((receipt_number: string) => {
+      if (receipt_number) {
+        const expenseCopy = JSON.parse(JSON.stringify(this.expenseCopy));
+        this.appPrinter.expense = {
+          ...expenseCopy,
+          added_by: this.user.displayName,
+          expense_date: this.expenseDate.format('DD-MM-YYYY'),
+          receipt_number
+        };
+        this.appPrinter.triggerPrint();
+        this.expenseCopy = null;
+      }
     })
     this.isLoading$ = this.store.select(getIsLoading);
     this.isManager$ = this.store.select(isManager);
@@ -143,26 +159,21 @@ export class ExpensesComponent implements OnInit {
   }
 
   onSave() {
+    this.expenseCopy = JSON.parse(JSON.stringify(this.expense));
     this.store.dispatch(new fromExpenses.ExpensesAddQuery(this.expense));
-    const expenseCopy = JSON.parse(JSON.stringify(this.expense));
-    this.appPrinter.expense = {
-      ...expenseCopy,
-      added_by: this.user.displayName,
-      expense_date: this.expenseDate.format('DD-MM-YYYY')
-    };
-    this.appPrinter.triggerPrint();
+    
     this.idbService
-      .getByKey('expenses', expenseCopy.item)
+      .getByKey('expenses', this.expenseCopy.item)
       .subscribe((data) => {
         if (!data) {
           this.idbService.add('expenses', {
-            item: expenseCopy.item,
+            item: this.expenseCopy.item,
             frequency: 1
           })
         } else {
           this.idbService.update('expenses',
           {
-            item: expenseCopy.item,
+            item: this.expenseCopy.item,
             frequency: (data as any).frequency + 1
           }, (data as any).key)
         }
@@ -203,28 +214,22 @@ export class ExpensesComponent implements OnInit {
   }
 
   onSalarySave(form: NgForm) {
+    this.expenseCopy = JSON.parse(JSON.stringify(this.salary));
     this.store.dispatch(new fromExpenses.ExpensesAddQuery(this.salary));
-    const salaryCopy = JSON.parse(JSON.stringify(this.salary));
-    this.appPrinter.expense = {
-      ...salaryCopy,
-      added_by: this.user.displayName,
-      expense_date: this.salaryDate.format('DD-MM-YYYY')
-    };
-    this.appPrinter.triggerPrint();
     this.idbService
-      .getByKey('salary', salaryCopy.description)
+      .getByKey('salary', this.expenseCopy.description)
       .subscribe((data) => {
         if (!data) {
           this.idbService.add('salary', {
-            person: salaryCopy.description,
-            amount: salaryCopy.cost,
+            person: this.expenseCopy.description,
+            amount: this.expenseCopy.cost,
             frequency: 1
           })
         } else {
           this.idbService.update('salary',
           {
-            person: salaryCopy.description,
-            amount: salaryCopy.cost,
+            person: this.expenseCopy.description,
+            amount: this.expenseCopy.cost,
             frequency: (data as any).frequency + 1
           }, (data as any).key)
         }

@@ -15,7 +15,8 @@ var moment = require('../../../assets/datepicker/moment.js');
 @Injectable()
 export class ExpensesEffects {
 
-  constructor(private actions$: Actions, private expensesService: ExpensesService, private store: Store<AppState>) {}
+  constructor(private expenseService: ExpensesService,
+    private actions$: Actions, private expensesService: ExpensesService, private store: Store<AppState>) {}
 
   @Effect()
   query$ = this.actions$.pipe(
@@ -38,7 +39,8 @@ export class ExpensesEffects {
     map((action: fromExpenses.ExpensesAddQuery) => action.payload),
     switchMap((payload: any) => this.expensesService.addExpenses(payload)
     .pipe(
-      (map(() => {
+      (map((response: any) => {
+        this.expenseService.emitNewExpense(response.receipt_number);
         return (new fromExpenses.ExpensesQuery(moment().format('YYYY-MM-DD')));
       })),
       catchError(error => {

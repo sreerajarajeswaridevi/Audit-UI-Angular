@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Expenses } from '../models/expenses.model';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -8,11 +8,17 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ExpensesService {
-
+  private $newExpenseAdded = new Subject<string>();
+  public newExpenseAdded = this.$newExpenseAdded.asObservable();
+ 
   constructor(private http: HttpClient) { }
 
   get userId() {
     return 'uid';
+  }
+
+  emitNewExpense(receipt_number: string) {
+    this.$newExpenseAdded.next(receipt_number);
   }
 
   addExpenses(expenses: Expenses) {

@@ -24,6 +24,7 @@ export interface PoojaList {
     nakshatram: string;
     address: string;
     pooja_price: string;
+    pooja_name?: string;
     added_by: string;
     pooja_code: string;
     phone_number: string;

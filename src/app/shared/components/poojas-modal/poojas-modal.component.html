@@ -25,7 +25,7 @@
         <div class="phone col-md-6 col-xs-12">
           <label for="phone" class="float-left">Phone Number *</label>
           <input type="text" id="phone" name="phone" class="form-control" [(ngModel)]="response.phone_number" mdbInput mdbValidate
-            [validateSuccess]="false" required #phone="ngModel" (blur)="fetchPepleData(phone.value)" >
+            [validateSuccess]="false" required #phone="ngModel" (blur)="fetchPeopleData(phone.value)" >
         <mdb-error class="float-left" *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">phone number is required</mdb-error>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -70,7 +70,7 @@
     <div class="right-section">
       <mdb-card class="text-center">
         <mdb-card-body>
-          <table mdbTable small="true" striped="true" class="bhakthar-table">
+          <table mdbTable small="true" striped="true" class="bhakthar-table" *ngIf="!peopleFetching">
             <tbody>
               <tr *ngFor="let item of response.bhakthar">
                 <th scope="row">{{ item.name }}</th>
@@ -81,9 +81,14 @@
               </tr>
             </tbody>
           </table>
-          <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="response.bhakthar.length === 0">
+          <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!peopleFetching && response.bhakthar.length === 0">
             <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
-              <p class="grey-text">No data added</p>
+            <p class="grey-text">No data added</p>
+          </div>
+          <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="peopleFetching">
+            <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
         </mdb-card-body>
         <mdb-card-footer *ngIf="response.bhakthar.length">
@@ -99,8 +104,7 @@
       <div class="d-flex">
         <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="modalRef.hide()"
           mdbWavesEffect>Close</button>
-        <button type="button" mdbBtn color="success" [disabled]="response.bhakthar.length === 0 || response.phone_number === ''" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save & Print</button>
-          <app-printer #appPrinter [hidden]="true"></app-printer>
+        <button type="button" mdbBtn color="success" [disabled]="peopleFetching || response.bhakthar.length === 0 || response.phone_number === ''" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save & Print</button>
       </div>
 
   </div>

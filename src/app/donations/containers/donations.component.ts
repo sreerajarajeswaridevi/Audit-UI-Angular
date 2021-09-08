@@ -13,6 +13,7 @@ import { getDonations, getIsLoading } from '../store/donations.selectors';
 import * as fromDonations from '../store/donations.actions';
 import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
 import { User } from 'src/app/auth/models/user.model';
+import { DonationsService } from '../services/donations.service';
 
 
 var moment = require('../../../assets/datepicker/moment.js');
@@ -36,6 +37,7 @@ export class DonationsComponent implements OnInit {
   endDate = moment().add('30', 'days');
   selectedDate = moment();
 
+  donationCopy: any;
   donation: any = {
     ist_YYYYMMDD: moment().format('YYYY-MM-DD')
   };
@@ -58,8 +60,8 @@ export class DonationsComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private modalService: MDBModalService
-
+    private modalService: MDBModalService,
+    private donationsService: DonationsService
   ) { }
 
   ngOnInit(): void {
@@ -69,6 +71,19 @@ export class DonationsComponent implements OnInit {
     this.store.select(getUser).subscribe((user: any) => {
       this.user = user;
     })
+    this.donationsService.newDonationAdded.subscribe((receipt_number: string) => {
+      const printData = {
+        ...this.donationCopy,
+        donation_date: this.donationDate.format("DD-MM-YYYY"),
+        added_by: this.user.displayName,
+        receipt_number: receipt_number
+      }
+      this.appPrinter.donation = printData;
+      this.appPrinter.triggerPrint();
+    });
+
+
+
     this.isLoading$ = this.store.select(getIsLoading);
     this.isManager$ = this.store.select(isManager);
     this.store.dispatch(new fromDonations.DonationsQuery(this.selectedDate.format('YYYY-MM-DD')));
@@ -97,14 +112,8 @@ export class DonationsComponent implements OnInit {
   }
 
   onSave() {
-    this.store.dispatch(new fromDonations.DonationsAddQuery(this.donation));
-    const printData = {
-      ...this.donation,
-      donation_date: this.donationDate.format("DD-MM-YYYY"),
-      added_by: this.user.displayName
-    }
-    this.appPrinter.donation = printData;
-    this.appPrinter.triggerPrint();
+    this.donationCopy = JSON.parse(JSON.stringify(this.donation));
+    this.store.dispatch(new fromDonations.DonationsAddQuery(this.donationCopy));
     this.resetForm();
   }
   

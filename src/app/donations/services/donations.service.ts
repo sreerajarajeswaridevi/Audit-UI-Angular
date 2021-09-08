@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Donations } from '../models/donations.model';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -8,11 +8,16 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DonationsService {
-
+  private $newDonationAdded = new Subject<string>();
+  public newDonationAdded = this.$newDonationAdded.asObservable();
+ 
   constructor(private http: HttpClient) { }
-
+  
   get userId() {
     return 'uid';
+  }
+  emitNewDonation(receipt_number: string) {
+    this.$newDonationAdded.next(receipt_number);
   }
 
   addDonations(donations: Donations) {
