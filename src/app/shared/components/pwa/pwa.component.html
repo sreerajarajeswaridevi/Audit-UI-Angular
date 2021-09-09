@@ -1,5 +1,5 @@
-<div class="sw" *ngIf="Pwa.promptEvent">
-    <button class="install-button" mdbBtn type="button" gradient="purple" rounded="true" mdbWavesEffect
+<div class="sw">
+    <button *ngIf="Pwa.promptEvent" class="install-button" mdbBtn type="button" gradient="purple" rounded="true" mdbWavesEffect
         (click)="installPwa()">Install App</button>
     
     <button *ngIf="showUpdateButton" class="update-button" mdbBtn type="button" gradient="purple" rounded="true" mdbWavesEffect
