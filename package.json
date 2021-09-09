@@ -11,7 +11,8 @@
     "bundle": "ng build && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "pwa": "ng add @angular/pwa --project audit-UI-Angular"
   },
   "private": true,
   "dependencies": {
@@ -22,7 +23,9 @@
     "@angular/forms": "^8.2.14",
     "@angular/platform-browser": "^8.2.14",
     "@angular/platform-browser-dynamic": "^8.2.14",
+    "@angular/pwa": "^12.2.5",
     "@angular/router": "^8.2.14",
+    "@angular/service-worker": "^8.2.14",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@ngrx/effects": "^8.6.1",
     "@ngrx/store": "^8.6.1",

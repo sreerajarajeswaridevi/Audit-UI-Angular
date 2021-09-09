@@ -26,6 +26,8 @@ import { TabsComponent } from './components/tabs/tabs.component';
 import { TabComponent } from './components/tabs/tab.component';
 import { PrinterComponent } from './components/printer/printer.component';
 import { IndexedDBModule } from '../expenses/indexedDB/indexedDB.module';
+import { PwaComponent } from './components/pwa/pwa.component';
+import { PwaService } from './services/pwa-service.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { IndexedDBModule } from '../expenses/indexedDB/indexedDB.module';
     UserComponent,
     TabsComponent,
     TabComponent,
-    PrinterComponent
+    PrinterComponent,
+    PwaComponent
   ],
   imports: [
     CommonModule,
@@ -66,9 +69,10 @@ import { IndexedDBModule } from '../expenses/indexedDB/indexedDB.module';
     UserComponent,
     TabsComponent,
     TabComponent,
-    PrinterComponent
+    PrinterComponent,
+    PwaComponent
   ],
-  providers: [],
+  providers: [PwaService],
   entryComponents: [
     ConfirmModalComponent,
     CustomersModalComponent,
