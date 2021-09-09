@@ -27,7 +27,7 @@
               "src/favicon.ico",
               "src/assets/datepicker",
               "src/assets/images",
-              "src/assets ",
+              "src/assets/icons",
               "src/manifest.webmanifest"
             ],
             "styles": [
@@ -76,7 +76,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "index": "src/index.html",
-          "baseHref": "/",
+          "baseHref": "/android_app/",
           "options": {
             "browserTarget": "audit-UI-Angular:build"
           },

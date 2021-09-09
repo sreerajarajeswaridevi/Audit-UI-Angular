@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 
 @Injectable()
 export class PwaService {
-  public promptEvent = new Event('beforeinstallprompt') as any;
+  public promptEvent: any;
 
   private $askUserToUpdate = new Subject<boolean>();
   public askUserToUpdate = this.$askUserToUpdate.asObservable();
