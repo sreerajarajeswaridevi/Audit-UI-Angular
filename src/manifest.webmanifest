@@ -1,11 +1,11 @@
 {
-  "name": "audit-UI-Angular",
-  "short_name": "audit-UI-Angular",
+  "name": "RR Portal",
+  "short_name": "RR Temple",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
-  "scope": "./android_app/",
-  "start_url": "./android_app/",
+  "scope": "./",
+  "start_url": "./",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
