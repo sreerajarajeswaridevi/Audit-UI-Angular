@@ -120,17 +120,12 @@ export class AuthEffects {
           return of(new auth.AuthError({ error: 'Username and password do not match' }));
         }
         const user = {
-          temple_name: res.temple_name,
-          temple_code: res.temple_code,
-          address: res.temple_address || 'Temporary Address',
-          phone_number: res.phone_number || '99999999',
+          ...res,
           displayName: payload.username,
           photoUrl: mockUser.user.photoUrl,
           isAdmin: res.role === 'admin',
-          role: res.role,
-          email: res.email,
           username: payload.username,
-          password: payload.password
+          password: payload.password,
         };
         return new auth.LoginSuccess({ user });
       }),

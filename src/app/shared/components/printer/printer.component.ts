@@ -27,6 +27,7 @@ export class PrinterComponent implements OnInit {
   @ViewChild('bill', { static: true }) bill: ElementRef; 
 
   temple: User;
+  user: any;
 
   constructor(private store: Store<any>, private cdr: ChangeDetectorRef) { 
     this.store.select(getUser).subscribe((user: any) => {
@@ -56,19 +57,174 @@ export class PrinterComponent implements OnInit {
     const printerWindow = window.open('', '', 'width=2in') as any;
     printerWindow.document.write(`
     <html> 
-      <style> 
-        header {max-width: 100%!important; word-break: break-word; } 
-        .heading{font-weight: bold; border-bottom: 1px dotted black; margin: 5px 10px;} 
-        .report table td {border: 1px solid black;} td{word-break:break-word;} 
-        .report table {border-collapse: collapse; width: 90%; margin-left: 2%;} 
-        .report tr td:first-child {min-width: 80px;} 
-      </style>
+    <style>
+    .main-copy,
+		.duplicate-copy {
+			font-family: sans-serif;
+			background-image: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .9)), url(${this.temple.logo});
+      background-repeat: no-repeat;
+      background-position: center;
+		}
+
+		header {
+			max-width: 100% !important;
+			word-break: break-word;
+		}
+    .manthram {
+      font-family: cursive;
+      font-weight: bold;
+      color: darkred;
+    }
+		.heading {
+			font-weight: bold;
+			border-bottom: 1px dotted black;
+			margin: 5px 10px;
+		}
+
+		.report table td {
+			border: 1px solid black;
+		}
+
+		td {
+			word-break: break-word;
+		}
+
+		.report table {
+			border-collapse: collapse;
+			width: 90%;
+			margin-left: 2%;
+		}
+
+		.report tr td:first-child {
+			min-width: 80px;
+		}
+
+		table {
+			width: 100%;
+		}
+
+		.address,
+		.phone {
+			padding: 5px;
+			background-color: white;
+      color: dimgray;
+		}
+
+		header {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-left: 10%;
+		}
+
+    header .text {
+			display: flex; 
+      flex-direction: column;
+      justify-content: center; 
+      align-items: center; 
+    }
+
+		.temple-name {
+			word-wrap: break-word;
+			text-align: center;
+			justify-content: center;
+			padding: 0;
+			margin: 0 0 5px;
+			font-size: 22px;
+      font-family: cursive;
+      font-weight: bolder;
+      color: #460146;
+		}
+
+		header .icon {
+			max-height: 100px;
+		}
+		.title {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.title span {
+			color: white;
+			padding: 5px 10px;
+			border-radius: 5px;
+			margin: 10px 0;
+			font-weight: bold;
+      background: linear-gradient(90deg, rgba(30,3,144,1) 0%, rgba(121,9,93,1) 100%, rgba(0,212,255,1) 100%);
+
+		}
+		.date-receipt {
+			display: flex; 
+			justify-content: space-around; 
+			align-items: center; 
+			background-color: whitesmoke;
+      border: 1px solid gray;
+		}
+		.details {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			width: 100%;
+		}
+		.details .content{
+			display: flex;
+			flex-direction: column;
+			width: 80%;
+		}
+		.details .row {
+			display: flex;
+			margin-bottom: 10px;
+		}
+		.details .row .value {
+			margin-left: 10px;
+			border-bottom: 1px dotted black;
+			width: 100%;
+			display: table;
+			padding-left: 20px;
+		}
+		.details .row .label {
+			white-space: pre;
+			margin-right: 10px;
+		}
+
+		.total-amount {
+			border-collapse: collapse;
+			background: gainsboro;
+			padding: 5px;
+		}
+
+		.notes {
+			margin-top: 10px;
+		}
+		.footer {
+			background-color: whitesmoke;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 10px;
+			text-align: center;
+			font-size: small;
+		}
+    .pooja-table {
+      border-collapse: collapse; width: 100%; 
+    }
+    .pooja-table td {
+      border: 1px solid darkgoldenrod;
+      padding: 5px;
+    }
+		@media print and (max-width: 2in){
+			.date-receipt { display: block; }
+		}
+    </style>
     `);
-    printerWindow.document.write('<body>');
-    printerWindow.document.write(content);
+    printerWindow.document.write('<body><div class="main-copy">');
+    printerWindow.document.write(content + '</div>');
     if (this.type !== 'report') {
       printerWindow.document.write(`
-      <br><br><hr>
+      <br><br><hr><div class="duplicate-copy">
       <span style="color: gray;
       border: 1px dotted black;
       padding: 5px;">Duplicate copy</span>
@@ -79,16 +235,47 @@ export class PrinterComponent implements OnInit {
         html{
           width: 2in;
         }
+        header, .date-receipt, .details, .row {
+          flex-direction: column;
+        }
+
+        .details .content {
+          width: 100%;
+        }
+
+        .date-receipt {
+          align-items: start;
+        }
+
+        .db {
+          display: inline-block;
+        }
+
+        .bt-gray {
+          border-top: 1px solid gray;
+        }
+
+        .details .row .value {
+          margin: 0;
+          padding: 0;
+          font-weight: bold;
+        }
+
+        .row-container {
+          border: 1px solid gray;
+          padding: 5px;
+        }
+        
       </style>` : `` 
       }
       `);
       printerWindow.document.write(content);
     }
-    printerWindow.document.write('</body></html>');
+    printerWindow.document.write('</div></body></html>');
     printerWindow.document.close();
     printerWindow.focus();
     printerWindow.print();
-    printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
+    // printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 
 }

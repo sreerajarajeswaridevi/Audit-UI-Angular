@@ -20,6 +20,11 @@ export class TempleListComponent implements OnInit {
   loadingAddTemple = false;
   isLoading$: Observable<boolean>;
   isAdmin = false;
+  selectedLogo = '';
+  selectedIcon = '';
+  base64Logo = '';
+  base64Icon = '';
+
 
   constructor(
     private store: Store<AppState>,
@@ -30,6 +35,10 @@ export class TempleListComponent implements OnInit {
   initFormGroup() {
     if (this.templeForm) {
       this.templeForm.reset();
+      this.selectedIcon = '';
+      this.selectedLogo = '';
+      this.base64Icon = '';
+      this.base64Logo = '';
     }
   }
 
@@ -52,7 +61,31 @@ export class TempleListComponent implements OnInit {
 
 
   onAddTemple() {
-    this.store.dispatch(new fromAdmin.AddTemple({ temple: this.templeForm.value}));
+    const temple = {
+      ...this.templeForm.value,
+      logo: this.base64Logo,
+      icon: this.base64Icon
+    };
+    this.store.dispatch(new fromAdmin.AddTemple({ temple: temple}));
+    this.initFormGroup();
+  }
+
+  logoChanged(event: any) {
+    this.selectedLogo = event.target.files[0].name;
+    const FR= new FileReader();
+    FR.addEventListener("load", (e: any) => {
+      this.base64Logo = e.target.result;
+    }); 
+    FR.readAsDataURL( event.target.files[0] );
+  }
+
+  iconChanged(event: any) {
+    this.selectedIcon = event.target.files[0].name;
+    const FR= new FileReader();
+    FR.addEventListener("load", (e: any) => {
+      this.base64Icon = e.target.result;
+    }); 
+    FR.readAsDataURL( event.target.files[0] );
   }
 
 }

@@ -1,7 +1,7 @@
 export interface User {
   temple_name?: string;
   temple_code?: string;
-  address?: string;
+  temple_address?: string;
   phone_number?: string;
   displayName?: string;
   username: string;
@@ -10,6 +10,9 @@ export interface User {
   isAdmin?: boolean;
   role?: string;
   email?: string;
+  logo?: string;
+  icon?: string;
+  misc?: string;
 }
 
 export const mockUser = {
@@ -20,6 +23,7 @@ export const mockUser = {
     password: '',
     photoUrl: 'https://img.icons8.com/bubbles/2x/user-male.png',
     role: 'admin',
-    email: 'test@gmail.com'
+    email: 'test@gmail.com',
+    misc: ''
   },
 };

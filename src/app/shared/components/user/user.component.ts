@@ -13,8 +13,7 @@ import { AppState } from 'src/app/reducers';
 export class UserComponent implements OnInit {
   @Input() user: any;
   @Output() userSelected = new EventEmitter<any>();
-  @Output() addAdmin = new EventEmitter<any>();
-  @Output() removeAdmin = new EventEmitter<any>();
+
   @Output() removeUser = new EventEmitter<any>();
 
   loggedInUser: User;
@@ -29,14 +28,6 @@ export class UserComponent implements OnInit {
 
   selectUser() {
     this.userSelected.emit(this.user);
-  }
-
-  addAdminPrivileges() {
-    this.addAdmin.emit(this.user);
-  }
-
-  removeAdminPrivileges() {
-    this.removeAdmin.emit(this.user);
   }
 
   deleteUser() {

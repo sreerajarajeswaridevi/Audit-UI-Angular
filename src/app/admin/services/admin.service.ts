@@ -64,12 +64,12 @@ export class AdminService {
   }
 
   addTemple(temple: any) {
-    return this.http.get(
+    return this.http.post(
       `${environment.apiUrl}?api=addTemple`,
       {
-        params: {
-          ...temple
-        }
+        ...temple
+        // params: {
+        // }
       }
     );
   }
