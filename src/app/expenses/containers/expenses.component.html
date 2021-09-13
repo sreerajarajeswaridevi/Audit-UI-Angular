@@ -140,9 +140,11 @@
             <td scope="row">{{ item?.item }}</td>
             <td>{{ item?.description }}</td>
             <td class="table-price">&#x20B9;{{ item?.cost }}</td>
+            <td *ngIf="isManager$ | async" >
+              <mdb-icon fas icon="trash" class="ml-1 float-right delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
+            </td>
             <td>
               <app-printer [type]="'expense'" [expense]="item"></app-printer> 
-              <mdb-icon *ngIf="isManager$ | async" fas icon="trash" class="ml-1 float-right delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
             </td>
           </tr>
 

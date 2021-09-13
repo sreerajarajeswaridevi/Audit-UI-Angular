@@ -64,7 +64,8 @@ export class TempleListComponent implements OnInit {
     const temple = {
       ...this.templeForm.value,
       logo: this.base64Logo,
-      icon: this.base64Icon
+      icon: this.base64Icon,
+      misc: {manthram: this.templeForm.value.misc}
     };
     this.store.dispatch(new fromAdmin.AddTemple({ temple: temple}));
     this.initFormGroup();

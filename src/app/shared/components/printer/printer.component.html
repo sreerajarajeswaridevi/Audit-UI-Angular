@@ -10,7 +10,7 @@
 			<img class="icon" [src]="temple.icon" alt="">
             <div class="text">
                 <h3 class="temple-name">{{temple.temple_name}}</h3>
-                <span class="manthram" *ngIf="temple?.misc">{{temple?.misc}}</span>
+                <span class="manthram" *ngIf="temple?.misc?.manthram">{{temple?.misc?.manthram}}</span>
                 <span class="address">{{temple.temple_address}}</span>
                 <span class="phone">Phone : {{temple.phone_number}}</span>
             </div>
@@ -35,7 +35,6 @@
                         <span class="label">Phone Number :</span>
                         <span class="value">{{poojas[0]?.phone_number}}</span>
                     </div>
-                    <br>
                    
                     <table class="pooja-table" *ngIf="size !== 'bill'">
                         <thead style="background-color: whitesmoke; padding: 10px;">
@@ -55,8 +54,8 @@
                         </tbody>
                         <tfoot>
                             <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
-                                <td colspan="2" style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
-                                <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
+                                <td colspan="2" style="font-weight: bold;"><b>Total Amount</b></td>
+                                <td style="font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
                                         'pooja_price')}}</b></td>
                             </tr>
                         </tfoot>
@@ -79,8 +78,8 @@
                         <table class="pooja-table">
                             <tfoot>
                                 <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
-                                    <td colspan="2" style="font-size: 16px; font-weight: bold;"><b>Total Amount</b></td>
-                                    <td style="font-size: 16px; font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
+                                    <td colspan="2" style=" font-weight: bold;"><b>Total Amount</b></td>
+                                    <td style=" font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
                                             'pooja_price')}}</b></td>
                                 </tr>
                             </tfoot>
@@ -116,9 +115,9 @@
                         <table class="total-amount">
                             <tr
                                 style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
-                                <td style="font-size: 16px; font-weight: bold;"><b>Total
+                                <td style=" font-weight: bold;"><b>Total
                                         Amount</b></td>
-                                <td style="font-size: 16px; font-weight: bold;"><b>₹
+                                <td style=" font-weight: bold;"><b>₹
                                         {{expense.cost}}</b></td>
                             </tr>
                         </table>
@@ -164,9 +163,9 @@
                         <table class="total-amount">
                             <tr
                                 style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
-                                <td style="font-size: 16px; font-weight: bold;"><b>Total
+                                <td style=" font-weight: bold;"><b>Total
                                         Amount</b></td>
-                                <td style="font-size: 16px; font-weight: bold;"><b>₹
+                                <td style=" font-weight: bold;"><b>₹
                                         {{donation.amount}}</b></td>
                             </tr>
                         </table>

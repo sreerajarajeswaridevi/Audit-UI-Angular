@@ -66,6 +66,7 @@ export class PrinterComponent implements OnInit {
 			background-image: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .9)), url(${this.temple.logo});
       background-repeat: no-repeat;
       background-position: center;
+      font-size: 12px;
 		}
 
 		header {
@@ -111,11 +112,11 @@ export class PrinterComponent implements OnInit {
 
 		table {
 			width: 100%;
+      font-size: 12px;
 		}
 
 		.address,
 		.phone {
-			padding: 5px;
 			background-color: white;
       color: dimgray;
 		}
@@ -132,6 +133,7 @@ export class PrinterComponent implements OnInit {
       flex-direction: column;
       justify-content: center; 
       align-items: center; 
+      text-align: center;
     }
 
 		.temple-name {
@@ -140,7 +142,7 @@ export class PrinterComponent implements OnInit {
 			justify-content: center;
 			padding: 0;
 			margin: 0 0 5px;
-			font-size: 22px;
+			font-size: 20px;
       font-family: cursive;
       font-weight: bolder;
       color: #460146;
@@ -216,10 +218,11 @@ export class PrinterComponent implements OnInit {
 			align-items: center;
 			padding: 10px;
 			text-align: center;
-			font-size: small;
+			font-size: 10px;
 		}
     .pooja-table {
       border-collapse: collapse; width: 100%; 
+      font-size: 12px;
     }
     .pooja-table td {
       border: 1px solid darkgoldenrod;
@@ -242,11 +245,11 @@ export class PrinterComponent implements OnInit {
     printerWindow.document.write(content + '</div>');
     if (this.type !== 'report') {
       printerWindow.document.write(`
-      <br><br><hr class="bill-break"><div class="duplicate-copy">
+      <hr class="bill-break"><div class="duplicate-copy">
       <span style="color: gray;
       border: 1px dotted black;
       padding: 5px;">Duplicate copy</span>
-      <br><br>
+      
       ${
         localStorage.getItem('printerPageSize') === 'bill' ? `
         <style>

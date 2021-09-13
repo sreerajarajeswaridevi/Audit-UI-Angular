@@ -12,7 +12,7 @@ export interface User {
   email?: string;
   logo?: string;
   icon?: string;
-  misc?: string;
+  misc?: any;
 }
 
 export const mockUser = {

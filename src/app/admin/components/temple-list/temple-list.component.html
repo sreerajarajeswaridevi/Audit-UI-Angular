@@ -18,7 +18,7 @@
               <th>Address</th>
               <th>Logo</th>
               <th>Icon</th>
-              <th>Misc</th>
+              <th>Manthram</th>
               <th *ngIf="isAdmin">Added By</th>
             </tr>
           </thead>
@@ -31,7 +31,7 @@
               <td>{{ item.temple_address }}</td>
               <td>{{ item.logo }}</td>
               <td>{{ item.icon }}</td>
-              <td>{{ item.misc }}</td>
+              <td>{{ item.misc?.manthram }}</td>
 
               <td *ngIf="isAdmin">{{ item.added_by }}</td>
             </tr>

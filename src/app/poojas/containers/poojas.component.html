@@ -39,7 +39,7 @@
             </thead>
             <tbody>
               <ng-container *ngFor="let poojasByReceiptNumber of groupedPoojaList; let in = index;">
-                <tr [style.backgroundColor]="'#ffeb3ac9'" *ngIf="poojasByReceiptNumber.poojas.length">
+                <tr *ngIf="poojasByReceiptNumber.poojas.length" class="separator">
                   <td colspan="3">
                     <b>Receipt# {{poojasByReceiptNumber.receipt_number}}</b> 
                     <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
@@ -80,7 +80,7 @@
               </thead>
               <tbody>
                 <ng-container *ngFor="let poojasByReceiptNumber of groupedTomorrowsPoojaList; let in = index;">
-                  <tr [style.backgroundColor]="'#ffeb3ac9'">
+                  <tr class="separator">
                     <td colspan="3">
                       <b>Receipt# {{poojasByReceiptNumber.receipt_number}}</b> 
                       <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
@@ -139,7 +139,7 @@
             </thead>
             <tbody>
               <ng-container *ngFor="let poojasByReceiptNumber of groupedAllPoojasList; let in = index;">
-                <tr [style.backgroundColor]="'#ffeb3ac9'">
+                <tr class="separator">
                   <td colspan="3">
                     <b>Receipt# {{poojasByReceiptNumber.receipt_number}}</b> 
                     <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
