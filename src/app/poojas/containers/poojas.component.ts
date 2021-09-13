@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { AppState } from 'src/app/reducers';
 import { getIsLoading, getIsListLoading, getPoojaTypes, getPoojaList, getNewlyRegisteredPooja } from '../store/poojas.selectors';
 import * as fromPoojas from '../store/poojas.actions';
-import { NewPoojaRequest, PoojaList, PoojaTypes } from '../models/poojas.model';
+import { GroupedPoojaList, NewPoojaRequest, PoojaList, PoojaTypes } from '../models/poojas.model';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { PoojasModalComponent } from 'src/app/shared/components/poojas-modal/poojas-modal.component';
 import { take } from 'rxjs/operators';
 import { PoojasService } from '../services/poojas.service';
 import { isManager } from 'src/app/auth/store/auth.selectors';
 import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
+import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 // import { PoojasModalComponent } from 'src/app/shared/components/poojas-modal/poojas-modal.component';
 var moment = require('../../../assets/datepicker/moment.js');
 
@@ -27,9 +28,15 @@ export class PoojasComponent implements OnInit {
   isManager$: Observable<boolean>;
 
   poojaTypes: PoojaTypes[];
+  
   poojaList: PoojaList[];
   tomorrowsPoojaList: PoojaList[];
   allPoojasList: PoojaList[];
+  
+  groupedPoojaList: Array<GroupedPoojaList> = [];
+  groupedTomorrowsPoojaList: Array<GroupedPoojaList> = [];
+  groupedAllPoojasList: Array<GroupedPoojaList> = [];
+  
   allPoojasLoading = false;
 
   modalRef: MDBModalRef;
@@ -75,14 +82,18 @@ export class PoojasComponent implements OnInit {
     // this.datePicked(moment());
     this.allPoojasList = [];
     this.poojaList = [];
+    this.groupedPoojaList = [];
+    this.groupedAllPoojasList = [];
     this.store.select(getPoojaTypes).subscribe((poojas: PoojaTypes[]) => {
       this.poojaTypes = poojas;
     })
     this.store.select(getPoojaList).subscribe((list: PoojaList[]) => {
       this.poojaList = list;
+      this.groupedPoojaList = this.groupBy(list, 'receipt_number');
       this.poojasService.getPoojas(moment().add(1, 'days').format('YYYY-MM-DD'))
       .subscribe((poojas: { poojaList: PoojaList[] }) => {
         this.tomorrowsPoojaList = poojas.poojaList;
+        this.groupedTomorrowsPoojaList = this.groupBy(poojas.poojaList, 'receipt_number');
       });
       if (list !== null) {
         this.datePicked(moment());
@@ -128,6 +139,10 @@ export class PoojasComponent implements OnInit {
     });
   }
 
+  onDeletePooja(pooja: PoojaList) {
+    this.openUserDeleteConfirmModal(pooja);
+  }
+
   getPoojaNameFromCode(pooja_code: string) {
     const res = this.poojaTypes && this.poojaTypes.find(pooja => pooja.pooja_code === pooja_code);
     if (res) {
@@ -143,6 +158,7 @@ export class PoojasComponent implements OnInit {
     this.poojasService.getPoojas(date.format('YYYY-MM-DD'))
     .subscribe((poojas: { poojaList: PoojaList[] }) => {
       this.allPoojasList = poojas.poojaList;
+      this.groupedAllPoojasList = this.groupBy(poojas.poojaList, 'receipt_number');
       this.allPoojasLoading = false;
     }).add(() => {
       this.allPoojasLoading = false;
@@ -155,5 +171,49 @@ export class PoojasComponent implements OnInit {
 
   nextDate() {
     this.datePicked(this.selectedDate.add('1', 'days'));
+  }
+
+  groupBy = (items: Array<any>, key: string): any => 
+  { 
+    if (!items) {
+      return [];
+    }
+    const grouped = items.reduce(
+      (result, item) => ({
+        ...result,
+        [item[key]]: [
+          ...(result[item[key]] || []),
+          item,
+        ],
+      }), 
+      {},
+    );
+    const res =  [];
+    for (let i in grouped) {
+      res.push({
+        receipt_number: i,
+        poojas: grouped[i]
+      });
+    }
+    return res;
+  }
+
+  openUserDeleteConfirmModal(pooja: PoojaList) {
+    this.modalRef = this.modalService.show(
+      ConfirmModalComponent,
+      this.modalConfig
+    );
+
+    this.modalRef.content.confirmation
+      .pipe(take(1))
+      .subscribe((confirmation: boolean) => {
+        if (confirmation) {this.poojasService.deletePooja(pooja).subscribe(() => {
+          this.store.dispatch(new fromPoojas.PoojaListQuery(moment().format('YYYY-MM-DD'))); // todays poojas
+          },
+          () => {
+            this.store.dispatch(new fromPoojas.PoojaListQuery(moment().format('YYYY-MM-DD'))); // todays poojas
+          });
+        }
+      });
   }
 }

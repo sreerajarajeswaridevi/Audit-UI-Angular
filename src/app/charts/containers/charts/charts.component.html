@@ -42,7 +42,7 @@
 
 <div *ngIf="!isLoading$" class="charts-container pl-5 pr-5 pb-5" [ngSwitch]="activeTab">
   <span class="float-right mt-4">
-    <app-printer [text]="'Print'" [reports]="response" [size]="'A4'" [type]="'report'" [reportPeriod]="rangeText"></app-printer>
+    <app-printer [text]="'Print'" [reports]="response" [type]="'report'" [reportPeriod]="rangeText"></app-printer>
   </span>
   <div *ngSwitchCase="'day'">
     <div class="card-header mb-2 d-flex-center">

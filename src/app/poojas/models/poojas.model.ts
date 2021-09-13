@@ -32,6 +32,11 @@ export interface PoojaList {
     pooja_date: string;
 }
 
+export interface GroupedPoojaList {
+    receipt_number: string;
+    poojas: Array<PoojaList>;
+}
+ 
 export const starSigns = [
 'അശ്വതി',
 'ഭരണി',

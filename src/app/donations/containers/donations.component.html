@@ -122,7 +122,7 @@
             <td class="table-price">&#x20B9;{{ item?.amount }}
             </td>
             <td>
-              <app-printer [type]="'donation'" [size]="'bill'" [donation]="item"></app-printer> 
+              <app-printer [type]="'donation'" [donation]="item"></app-printer> 
               <mdb-icon *ngIf="isManager$ | async" fas icon="trash" class="ml-1 float-right delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
             </td>
           </tr>

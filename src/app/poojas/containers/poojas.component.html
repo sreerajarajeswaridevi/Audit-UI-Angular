@@ -29,22 +29,30 @@
           </div>
           <div class="cd-body">
 
-          <table mdbTable small="true" striped="true" *ngIf="!(isListLoading$ | async) && poojaList.length > 0">
+          <table mdbTable small="true" *ngIf="!(isListLoading$ | async) && poojaList.length > 0">
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Nakshathram</th>
-                <th>Pooja</th>
                 <th>Print</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of poojaList; let in = index;">
-                <td scope="row">{{ item.name }}</td>
-                <td>{{ item.nakshatram }}</td>
-                <td>{{ getPoojaNameFromCode(item.pooja_code)  }}</td>
-                <td> <app-printer [type]="'pooja'" [size]="'bill'" [poojas]="[item]"></app-printer>  </td>
-              </tr>
+              <ng-container *ngFor="let poojasByReceiptNumber of groupedPoojaList; let in = index;">
+                <tr [style.backgroundColor]="'#ffeb3ac9'" *ngIf="poojasByReceiptNumber.poojas.length">
+                  <td colspan="3">
+                    <b>Receipt# {{poojasByReceiptNumber.receipt_number}}</b> 
+                    <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
+                  </td>
+                </tr>
+                <tr *ngFor="let item of poojasByReceiptNumber.poojas; let i = index;">
+                  <td scope="row">{{ item.name }}</td>
+                  <td>{{ item.nakshatram }} 
+                    <mdb-icon fas icon="trash" class="float-right delete grey-text ml-2" (click)="onDeletePooja(item)" alt="Delete Pooja"></mdb-icon>
+                  </td>
+                  <td class="va-middle" *ngIf="i === 0" [attr.rowSpan]="poojasByReceiptNumber.poojas.length"><app-printer [type]="'pooja'" [poojas]="poojasByReceiptNumber.poojas"></app-printer> </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
           </div>
@@ -67,17 +75,25 @@
                 <tr>
                   <th>Name</th>
                   <th>Nakshathram</th>
-                  <th>Pooja</th>
+                  <th>Print</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of tomorrowsPoojaList">
-                  <td scope="row">{{ item.name }}</td>
-                  <td>{{ item.nakshatram }}</td>
-                  <td>{{ getPoojaNameFromCode(item.pooja_code)  }}</td>
-                  <td> <app-printer [type]="'pooja'" [size]="'bill'" [poojas]="[item]"></app-printer>  </td>
-  
-                </tr>
+                <ng-container *ngFor="let poojasByReceiptNumber of groupedTomorrowsPoojaList; let in = index;">
+                  <tr [style.backgroundColor]="'#ffeb3ac9'">
+                    <td colspan="3">
+                      <b>Receipt# {{poojasByReceiptNumber.receipt_number}}</b> 
+                      <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
+                    </td>
+                  </tr>
+                  <tr *ngFor="let item of poojasByReceiptNumber.poojas; let i = index;">
+                    <td scope="row">{{ item.name }}</td>
+                    <td>{{ item.nakshatram }}
+                      <mdb-icon fas icon="trash" class="float-right delete grey-text ml-2" (click)="onDeletePooja(item)" alt="Delete Pooja"></mdb-icon>
+                    </td>
+                    <td class="va-middle" *ngIf="i === 0" [attr.rowSpan]="poojasByReceiptNumber.poojas.length"><app-printer [type]="'pooja'" [poojas]="poojasByReceiptNumber.poojas"></app-printer> </td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
           </div>
@@ -113,21 +129,30 @@
           </div>
           <div class="cd-body">
 
-          <table mdbTable small="true" striped="true" *ngIf="!allPoojasLoading && allPoojasList?.length !== 0">
+          <table mdbTable small="true" *ngIf="!allPoojasLoading && allPoojasList?.length !== 0">
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Nakshathram</th>
-                <th>Pooja</th>
+                <th>Print</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of allPoojasList; let i = index;">
-                <td scope="row">{{ item.name }}</td>
-                <td>{{ item.nakshatram }}</td>
-                <td>{{ getPoojaNameFromCode(item.pooja_code)  }}</td>
-                <td> <app-printer [type]="'pooja'" [size]="'bill'" [poojas]="[item]"></app-printer>  </td>
-              </tr>
+              <ng-container *ngFor="let poojasByReceiptNumber of groupedAllPoojasList; let in = index;">
+                <tr [style.backgroundColor]="'#ffeb3ac9'">
+                  <td colspan="3">
+                    <b>Receipt# {{poojasByReceiptNumber.receipt_number}}</b> 
+                    <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
+                  </td>
+                </tr>
+                <tr *ngFor="let item of poojasByReceiptNumber.poojas; let i = index;">
+                  <td scope="row">{{ item.name }}</td>
+                  <td>{{ item.nakshatram }}
+                    <mdb-icon fas icon="trash" class="float-right delete grey-text ml-2" (click)="onDeletePooja(item)" alt="Delete Pooja"></mdb-icon>
+                  </td>
+                  <td class="va-middle" *ngIf="i === 0" [attr.rowSpan]="poojasByReceiptNumber.poojas.length"><app-printer [type]="'pooja'" [poojas]="poojasByReceiptNumber.poojas"></app-printer> </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
           </div>

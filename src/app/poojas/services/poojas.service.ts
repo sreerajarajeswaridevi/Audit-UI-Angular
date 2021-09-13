@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NewPoojaRequest, PoojaTypes } from '../models/poojas.model';
+import { NewPoojaRequest, PoojaList, PoojaTypes } from '../models/poojas.model';
 import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -30,6 +30,18 @@ export class PoojasService {
     return this.http.post(
       `${environment.apiUrl}?api=addPooja`, { 
         ...newPooja }
+    );
+  }
+
+  deletePooja(pooja: PoojaList) {
+    return this.http.get(
+      `${environment.apiUrl}?api=deletePooja`,
+      { 
+        params: {
+          "uuid": pooja.uuid,
+          "phone_number": pooja.phone_number
+        }
+      }
     );
   }
 

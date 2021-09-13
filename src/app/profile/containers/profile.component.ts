@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
   usersListLoading$: Observable<boolean>;
   private modalRef: MDBModalRef;
   pageSize = 'A4';
+  duplicatePage = 'same';
 
   modalConfig = {
     class: 'modal-dialog-centered'
@@ -51,6 +52,9 @@ export class ProfileComponent implements OnInit {
     );
     if (localStorage.getItem('printerPageSize')) {
       this.pageSize = localStorage.getItem('printerPageSize') + '';
+    }
+    if (localStorage.getItem('duplicateCopyPage')) {
+      this.duplicatePage = localStorage.getItem('duplicateCopyPage') + '';
     }
   }
 
@@ -113,6 +117,11 @@ export class ProfileComponent implements OnInit {
   setPageSize(size: string) {
     this.pageSize = size;
     localStorage.setItem('printerPageSize', size);
+  }
+
+  setDuplicateCopyPage(page: string) {
+    this.duplicatePage = page;
+    localStorage.setItem('duplicateCopyPage', page);
   }
 
 }

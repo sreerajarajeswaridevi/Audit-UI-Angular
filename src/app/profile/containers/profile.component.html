@@ -1,25 +1,42 @@
 <div class="white px-4 py-2">
   <blockquote class="text-left  blockquote bq-success col-md-6 col-sm-12">
-    <h3 class="header">Settings</h3>
-    <p class="py-0" *ngIf="user.role === 'manager'">Change your pooja and profile settings here</p>
+    <h4 class="header">Printer Settings</h4>
+    <p class="py-0" *ngIf="user.role === 'manager'">Change your printing preferences here</p>
   </blockquote>
 
-  <div class="col-md-6 col-sm-12">
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-      <blockquote class="text-left blockquote bq-success col-md-6 col-sm-12">
-      </blockquote>
-      <div class="btn-group mr-2 mt-4 row w-100 d-flex-center" role="group" aria-label="First group">
-        <span>Printer Page Size: </span> 
-        <button mdbBtn type="button" (click)="setPageSize('A4')" [color]="pageSize === 'A4' ? 'primary' : 'white'"
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <blockquote class="text-left blockquote bq-success col-md-6 col-sm-12">
+        </blockquote>
+        <div class="btn-group m-2 mt-4 row w-100 d-flex" role="group" aria-label="First group">
+          <span>Printer Page Size: </span> 
+          <button mdbBtn type="button" (click)="setPageSize('A4')" [color]="pageSize === 'A4' ? 'primary' : 'white'"
+            class="waves-light col-4 col-md-4 col-lg-3 col-xl-2 ml-2" size="sm" mdbWavesEffect>
+            A4
+          </button>
+          <button mdbBtn type="button" (click)="setPageSize('bill')" [color]="pageSize === 'bill' ? 'primary' : 'white'"
+            class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
+            Bill (2in)
+          </button>
+        </div>
+      </div>
+      
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div class="btn-group m-2 mt-4 row w-100 d-flex" role="group" aria-label="First group">
+        <span>Print duplicate copy in: </span> 
+        <button mdbBtn type="button" (click)="setDuplicateCopyPage('same')" [color]="duplicatePage === 'same' ? 'primary' : 'white'"
           class="waves-light col-4 col-md-4 col-lg-3 col-xl-2 ml-2" size="sm" mdbWavesEffect>
-          A4
+          Same Page
         </button>
-        <button mdbBtn type="button" (click)="setPageSize('bill')" [color]="pageSize === 'bill' ? 'primary' : 'white'"
+        <button mdbBtn type="button" (click)="setDuplicateCopyPage('next')" [color]="duplicatePage === 'next' ? 'primary' : 'white'"
           class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
-          Bill (2in)
+          Next Page
         </button>
       </div>
     </div>
+
   </div>
 </div>
 

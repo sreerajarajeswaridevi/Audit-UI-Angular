@@ -17,7 +17,7 @@
 		</header>
         
         <!-- pooja...----------------- -->
-        <body *ngIf="type === 'pooja' && size === 'bill' && poojas">
+        <body *ngIf="type === 'pooja' && poojas">
             
             <div class="title"><span>{{poojas[0]?.pooja_name}}</span></div>
             <div class="date-receipt">
@@ -141,8 +141,8 @@
                 <div class="details">
                     <div class="content">
                         <div class="row">
-                            <span class="label">Item :</span>
-                            <span class="value">{{donation.item}}</span>
+                            <span class="label">Name :</span>
+                            <span class="value">{{donation.name}}</span>
                         </div>
                         <div class="row">
                             <span class="label">Nakshathram :</span>

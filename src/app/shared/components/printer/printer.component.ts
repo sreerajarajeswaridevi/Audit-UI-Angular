@@ -13,15 +13,16 @@ var moment = require('../../../../assets/datepicker/moment.js');
 export class PrinterComponent implements OnInit {
 
   @Input() type = 'pooja';
-  @Input() size: 'bill' | 'A4' = 'bill';
   @Input() text = '';
   @Input() reportPeriod = '';
-
+  
   @Input() poojas: any;
   @Input() expense: any;
   @Input() donation: any;
   @Input() reports: any;
   @Input() hidden = false;
+  
+  size = 'bill';
 
   @ViewChild('buttonRef', { static: true }) buttonRef: ElementRef; 
   @ViewChild('bill', { static: true }) bill: ElementRef; 
@@ -33,6 +34,7 @@ export class PrinterComponent implements OnInit {
     this.store.select(getUser).subscribe((user: any) => {
       this.temple = user;
     })
+    this.size = localStorage.getItem('printerPageSize') || 'bill';
   }
 
   ngOnInit(): void {
@@ -84,6 +86,14 @@ export class PrinterComponent implements OnInit {
 		.report table td {
 			border: 1px solid black;
 		}
+
+    .report section {
+      padding: 20px;
+    }
+
+    .main-copy section:nth-child(even) {
+      background-color: #e7f9ff;
+    }
 
 		td {
 			word-break: break-word;
@@ -158,7 +168,7 @@ export class PrinterComponent implements OnInit {
 			display: flex; 
 			justify-content: space-around; 
 			align-items: center; 
-			background-color: whitesmoke;
+			background-color: #e7f9ff;
       border: 1px solid gray;
 		}
 		.details {
@@ -199,7 +209,7 @@ export class PrinterComponent implements OnInit {
 			margin-top: 10px;
 		}
 		.footer {
-			background-color: whitesmoke;
+			background-color: #e7f9ff;
 			width: 100%;
 			display: flex;
 			justify-content: center;
@@ -218,13 +228,21 @@ export class PrinterComponent implements OnInit {
 		@media print and (max-width: 2in){
 			.date-receipt { display: block; }
 		}
+    ${
+      localStorage.getItem('duplicateCopyPage') === 'next' ? `
+      .bill-break {
+        page-break-after: always;
+      }
+      `: ``
+    }
+    
     </style>
     `);
     printerWindow.document.write('<body><div class="main-copy">');
     printerWindow.document.write(content + '</div>');
     if (this.type !== 'report') {
       printerWindow.document.write(`
-      <br><br><hr><div class="duplicate-copy">
+      <br><br><hr class="bill-break"><div class="duplicate-copy">
       <span style="color: gray;
       border: 1px dotted black;
       padding: 5px;">Duplicate copy</span>
