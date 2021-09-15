@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,6 +14,7 @@ import { getTemplesList, getTemplesListLoading,  } from '../../store/admin.selec
 })
 export class TempleListComponent implements OnInit {
   @ViewChild('templeForm', { static: true }) templeForm: NgForm;
+  @ViewChild('editForm', { static: true }) editForm: NgForm;
 
   temples: any = [];
   newTemple: any = {};
@@ -24,10 +25,22 @@ export class TempleListComponent implements OnInit {
   selectedIcon = '';
   base64Logo = '';
   base64Icon = '';
+  
+  editMode = false;
+  editingIndex = -1;
+  editCache: any = {};
+  editedLogo = '';
+  editedIcon = '';
+  editedBase64Logo = '';
+  editedBase64Icon = '';
+
+  maxLogoSize = 250000;
+  maxIconSize = 100000;
 
 
   constructor(
     private store: Store<AppState>,
+    private cdr: ChangeDetectorRef
     ) { 
   //  this.initFormGroup();
   }
@@ -40,6 +53,14 @@ export class TempleListComponent implements OnInit {
       this.base64Icon = '';
       this.base64Logo = '';
     }
+    if (this.editForm) {
+      this.editForm.reset();
+      this.editedIcon = '';
+      this.editedLogo = '';
+      this.editedBase64Logo = '';
+      this.editedBase64Icon = '';
+    }
+    this.editMode = false;
   }
 
   ngOnInit() {
@@ -72,21 +93,90 @@ export class TempleListComponent implements OnInit {
   }
 
   logoChanged(event: any) {
+    if (event.target.files[0].size > this.maxLogoSize) {
+      alert('file size too big. Limit is 250Kb');
+      return;
+    }
     this.selectedLogo = event.target.files[0].name;
     const FR= new FileReader();
     FR.addEventListener("load", (e: any) => {
       this.base64Logo = e.target.result;
+      this.cdr.detectChanges();
     }); 
     FR.readAsDataURL( event.target.files[0] );
   }
-
+  
   iconChanged(event: any) {
+    if (event.target.files[0].size > this.maxIconSize) {
+      alert('file size too big. Limit is 100Kb');
+      return;
+    }
     this.selectedIcon = event.target.files[0].name;
     const FR= new FileReader();
     FR.addEventListener("load", (e: any) => {
       this.base64Icon = e.target.result;
+      this.cdr.detectChanges();
+    }); 
+    FR.readAsDataURL( event.target.files[0] );
+  }
+  
+  logoEdited(event: any) {
+    if (event.target.files[0].size > this.maxLogoSize) {
+      alert('file size too big. Limit is 250Kb');
+      return;
+    }
+    this.editedLogo = event.target.files[0].name;
+    const FR= new FileReader();
+    FR.addEventListener("load", (e: any) => {
+      this.editedBase64Logo = e.target.result;
+      this.cdr.detectChanges();
+    }); 
+    FR.readAsDataURL( event.target.files[0] );
+  }
+  
+  iconEdited(event: any) {
+    if (event.target.files[0].size > this.maxIconSize) {
+      alert('file size too big. Limit is 100Kb');
+      return;
+    }
+    this.editedIcon = event.target.files[0].name;
+    const FR= new FileReader();
+    FR.addEventListener("load", (e: any) => {
+      this.editedBase64Icon = e.target.result;
+      this.cdr.detectChanges();
     }); 
     FR.readAsDataURL( event.target.files[0] );
   }
 
+  onSaveEdit() {
+    const editingTemple = {
+      ...this.editCache,
+      logo: this.editedBase64Logo || this.editCache.logo,
+      icon: this.editedBase64Icon || this.editCache.logo,
+    };
+    this.store.dispatch(new fromAdmin.AddTemple({ temple: editingTemple}));
+    this.initFormGroup();
+    this.editingIndex = -1;
+  }
+
+  onCancelEdit() {
+    this.editCache = {};
+    this.editingIndex = -1;
+    this.initFormGroup();
+  }
+
+  edit(i: number) {
+    this.editCache = JSON.parse(JSON.stringify(this.temples[i]));
+    this.editedBase64Icon = this.editCache.icon;
+    this.editedBase64Logo = this.editCache.logo;
+    this.editMode = true;
+    this.editingIndex = i;
+    setTimeout(() => {
+      this.editForm.control.markAsTouched();
+      this.editForm.control.markAsTouched();
+      this.editForm.control.markAsDirty();
+      this.editForm.control.markAsDirty();
+      this.cdr.detectChanges();
+    }, 0);
+  }
 }

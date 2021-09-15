@@ -30,3 +30,15 @@
 input[type=file]{
   display: none;
 }
+
+.thumbnail {
+  height: 45px;
+}
+
+.ellipsis {
+  max-width: 100px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;;
+}

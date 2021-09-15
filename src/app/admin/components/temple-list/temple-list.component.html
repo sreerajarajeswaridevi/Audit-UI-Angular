@@ -7,7 +7,7 @@
       </blockquote>
     </mdb-card-header>
     <mdb-card-body class="py-2">
-      <form #templeForm="ngForm">
+      <form #editForm="ngForm">
       <table mdbTable striped="true">
           <thead>
             <tr>
@@ -20,22 +20,159 @@
               <th>Icon</th>
               <th>Manthram</th>
               <th *ngIf="isAdmin">Added By</th>
+              <th>Edit</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of temples">
-              <td scope="row">{{ item.temple_name }}</td>
-              <td>{{ item.temple_code }}</td>
-              <td>{{ item.temple_email }}</td>
-              <td>{{ item.phone_number }}</td>
-              <td>{{ item.temple_address }}</td>
-              <td>{{ item.logo }}</td>
-              <td>{{ item.icon }}</td>
-              <td>{{ item.misc?.manthram }}</td>
-
-              <td *ngIf="isAdmin">{{ item.added_by }}</td>
+            <tr *ngFor="let item of temples; let i = index;">
+              <ng-container *ngIf="editingIndex != i">
+                <td scope="row">{{ item.temple_name }}</td>
+                <td>{{ item.temple_code }}</td>
+                <td>{{ item.temple_email }}</td>
+                <td>{{ item.phone_number }}</td>
+                <td>{{ item.temple_address }}</td>
+                <td><img class="thumbnail" [src]="item.logo" alt=""> </td>
+                <td><img class="thumbnail" [src]="item.icon" alt=""> </td>
+                <td><span class="ellipsis" [title]="item.misc?.manthram">{{ item.misc?.manthram }}</span></td>  
+                <td *ngIf="isAdmin">{{ item.added_by }}</td>
+                <td>
+                  <mdb-icon fas icon="edit" (click)="edit(i)"></mdb-icon> 
+                </td>
+              </ng-container>
+              <!-- <form #editForm="ngForm"> -->
+              <ng-container *ngIf="editMode && editingIndex == i">
+                <!-- ********************************EDITMODE************************* -->
+                <td>
+                  <div class="md-form">
+                    <input type="text" id="add_temple_temple_name" name="temple_name" class="form-control" #temple_name="ngModel"
+                      [(ngModel)]="editCache.temple_name" mdbInput mdbValidate [validateSuccess]="false" required>
+                    <label for="temple_name">Temple Name</label>
+                    <mdb-error *ngIf="temple_name && temple_name.invalid && (temple_name.dirty || temple_name.touched)">Temple
+                      name is required</mdb-error>
+                  </div>
+                </td>
+                <td>
+                  <div class="md-form">
+                    <input disabled type="text" id="add_temple_temple_code" name="temple_code" class="form-control" #temple_code="ngModel"
+                      [(ngModel)]="editCache.temple_code" mdbInput mdbValidate [validateSuccess]="false" required>
+                    <label for="temple_code">Temple Code</label>
+                    <mdb-error *ngIf="temple_code && temple_code.invalid && (temple_code.dirty || temple_code.touched)">Temple
+                      Code is required</mdb-error>
+                  </div>
+                </td>
+                <td>
+                  <div class="md-form">
+                    <input type="text" id="add_temple_email" name="temple_email" class="form-control" #temple_email="ngModel"
+                      [(ngModel)]="editCache.temple_email" mdbInput mdbValidate [validateSuccess]="false" required>
+                    <label for="temple_email">Email</label>
+                    <mdb-error *ngIf="temple_email && temple_email.invalid && (temple_email.dirty || temple_email.touched)">Email is required
+                    </mdb-error>
+                  </div>
+                </td>
+  
+  
+                <td>
+                  <div class="md-form">
+                    <input type="text" id="add_phone_number" name="phone_number" class="form-control" #phone_number="ngModel"
+                      [(ngModel)]="editCache.phone_number" mdbInput mdbValidate [validateSuccess]="false" required>
+                    <label for="phone_number">Phone Number</label>
+                    <mdb-error *ngIf="phone_number && phone_number.invalid && (phone_number.dirty || phone_number.touched)">Phone is required
+                    </mdb-error>
+                  </div>
+                </td>
+  
+                <td>
+                  <div class="md-form" style="margin-top: 15px;">
+                    <textarea type="text" id="add_temple_address" name="temple_address" class="my-0 py-0 md-textarea form-control"
+                      #temple_address="ngModel" [(ngModel)]="editCache.temple_address" mdbInput mdbValidate required
+                      [validateSuccess]="false"></textarea>
+                    <label for="temple_address">Address</label>
+                    <!-- <mdb-error *ngIf="address && address.invalid && (address.dirty || address.touched)">Address is required</mdb-error> -->
+                  </div>
+                  <!-- <a class="btn btn-primary btn-floating" (click)="onAddTemple()" style="background-color: #3b5998; height: 45px" href="javascript:void(0)" role="button"
+                      >
+                      Add
+                    </a> -->
+                </td>
+  
+  
+                <td>
+                  <div class="">
+                    <div class="d-flex-center">
+                      <button mdbBtn class="mt-4 btn btn-floating add"
+                        (click)="logoButton.click()" size="sm" color="primary" outline="true" mdbWavesEffect>
+                        <mdb-icon fas icon="plus" class=""></mdb-icon> <span class="pl-2">Logo</span>
+                      </button>
+                      <span><img class="thumbnail" [src]="editedBase64Logo" alt=""></span>
+                    </div>
+                    <input #logoButton type="file" id="add_logo" name="logo" class="form-control" #logo="ngModel"
+                      [(ngModel)]="editedLogo" mdbInput mdbValidate [validateSuccess]="false" (change)="logoEdited($event)">
+                    <mdb-error *ngIf="logo && logo.invalid && (logo.dirty || logo.touched)">Logo is required
+                    </mdb-error>
+                  </div>
+                </td>
+  
+  
+                <td>
+                  <div class="">
+                    <div class="d-flex-center">
+                      <button mdbBtn class="mt-4 btn btn-floating add"
+                        (click)="iconButton.click()" size="sm" color="primary" outline="true" mdbWavesEffect>
+                        <mdb-icon fas icon="plus" class=""></mdb-icon> <span class="pl-2">Icon</span>
+                      </button>
+                      <span><img class="thumbnail" [src]="editedBase64Icon" alt=""></span>
+                    </div>
+                    <input #iconButton type="file" id="add_icon" name="icon" class="form-control" #icon="ngModel"
+                      [(ngModel)]="editedIcon" mdbInput mdbValidate [validateSuccess]="false" (change)="iconEdited($event)">
+                   
+                    <mdb-error *ngIf="icon && icon.invalid && (icon.dirty || icon.touched)">Icon is required
+                    </mdb-error>
+                  </div>
+                </td>
+  
+  
+                <td>
+                  <div class="md-form">
+                    <input type="text" id="add_misc" name="misc" class="form-control" #misc="ngModel"
+                      [(ngModel)]="editCache.misc.manthram" mdbInput mdbValidate [validateSuccess]="false">
+                    <label for="misc">Misc</label>
+                    <!-- <mdb-error *ngIf="misc && misc.invalid && (misc.dirty || misc.touched)">Misc -->
+                    <!-- </mdb-error> -->
+                  </div>
+                </td>
+  
+                <!-- 2more items are available -
+                # color_scheme
+                # misc -- already added above -->
+  
+                <td colspan="2">
+                  <div class="d-flex">
+                    <button mdbBtn class="btn btn-floating add" [disabled]="editForm?.invalid || loadingAddTemple" 
+                    (click)="onSaveEdit()" size="sm" color="success" mdbWavesEffect>
+                    <mdb-icon fas icon="save" class="white-text"></mdb-icon> <span class="pl-2 white-text">Save</span>
+                  </button>
+                  <button mdbBtn class="btn btn-floating add"
+                    (click)="onCancelEdit()" size="sm" color="danger" mdbWavesEffect>
+                    <mdb-icon fas icon="times" class="white-text"></mdb-icon> <span class="pl-2 white-text">Cancel</span>
+                  </button>
+                  </div>
+                </td>
+                
+                <!-- ********************************EDIT MODE END************************* -->
+              </ng-container>
+            <!-- </form> -->
+             
+              
             </tr>
-            <tr class="bg-white" *ngIf="!(isLoading$ | async)">
+     
+          </tbody>
+        </table>
+      </form>
+
+        <form #templeForm="ngForm">
+        <table>
+
+            <tr class="bg-white" *ngIf="!(isLoading$ | async) && !editMode">
               <td>
                 <div class="md-form">
                   <input type="text" id="add_temple_temple_name" name="temple_name" class="form-control" #temple_name="ngModel"
@@ -97,7 +234,7 @@
                       (click)="logoButton.click()" size="sm" color="primary" outline="true" mdbWavesEffect>
                       <mdb-icon fas icon="plus" class=""></mdb-icon> <span class="pl-2">Logo</span>
                     </button>
-                    <span>{{selectedLogo}}</span>
+                    <span><img class="thumbnail" [src]="base64Logo" alt=""></span>
                   </div>
                   <input #logoButton type="file" id="add_logo" name="logo" class="form-control" #logo="ngModel"
                     [(ngModel)]="newTemple.logo" mdbInput mdbValidate [validateSuccess]="false" required (change)="logoChanged($event)">
@@ -114,7 +251,7 @@
                       (click)="iconButton.click()" size="sm" color="primary" outline="true" mdbWavesEffect>
                       <mdb-icon fas icon="plus" class=""></mdb-icon> <span class="pl-2">Icon</span>
                     </button>
-                    <span>{{selectedIcon}}</span>
+                    <span><img class="thumbnail" [src]="base64Icon" alt=""></span>
                   </div>
                   <input #iconButton type="file" id="add_icon" name="icon" class="form-control" #icon="ngModel"
                     [(ngModel)]="newTemple.icon" mdbInput mdbValidate [validateSuccess]="false" required (change)="iconChanged($event)">
@@ -146,14 +283,13 @@
                 </button>
               </td>
             </tr>
-          </tbody>
-        </table>
+          </table>
+        </form>
         
         <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center my-4">
         <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-    </form>
       </mdb-card-body>
   </mdb-card>
