@@ -1,16 +1,82 @@
-<div class="users-list d-flex flex-wrap">
-  <div class="user" *ngFor="let user of users; trackBy: trackByFn">
-    <app-user [user]="user" (userSelected)="onUserSelected($event)" (removeUser)="onDeleteUser($event)"></app-user>
+<div class="d-flex-column">
+
+<div class="float-right" role="toolbar" aria-label="Toolbar with button groups">
+  <blockquote class="text-left blockquote bq-success col-md-6 col-sm-12">
+  </blockquote>
+  <div class="btn-group mt-4 d-flex float-right" role="group" aria-label="First group">
+    <span>View: </span> 
+    <button mdbBtn type="button" (click)="cardView = false" [color]="!cardView ? 'primary' : 'white'"
+      class="waves-light col-4 col-md-4 col-lg-3 col-xl-2 ml-2" size="sm" mdbWavesEffect>
+      <mdb-icon fas icon="th-list" [class.black-text]="cardView" [class.white-text]="!cardView"></mdb-icon>
+    </button>
+    <button mdbBtn type="button" (click)="cardView = true" [color]="cardView ? 'primary' : 'white'"
+      class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
+      <mdb-icon fas icon="th-large" [class.black-text]="!cardView" [class.white-text]="cardView"></mdb-icon>
+    </button>
   </div>
-  <div class="user">
-    <mdb-card class="flex-wrap py-2 add-card h-100" (click)="onAddUser($event)">
-      <mdb-card-body class="text-center my-4 py-4 d-flex flex-column align-items-center justify-content-center">
-        <div class="my-4">
-          <mdb-icon fas icon="plus" class="float-right mt-1 add fa-lg grey-text" alt="Add user"></mdb-icon>
-        </div>
-        <p class="grey-text">Add User</p>
-      </mdb-card-body>
-    </mdb-card>
-  </div>
+</div>
+<div class="users-list flex-wrap w-100">
   
+  <ng-container *ngIf="cardView">
+    <div class="user" *ngFor="let user of users; trackBy: trackByFn">
+      <app-user [user]="user" (userSelected)="onUserSelected($event)" (removeUser)="onDeleteUser($event)"></app-user>
+    </div>
+    <div class="user">
+      <mdb-card class="flex-wrap py-2 add-card h-100" (click)="onAddUser($event)">
+        <mdb-card-body class="text-center my-4 py-4 d-flex flex-column align-items-center justify-content-center">
+          <div class="my-4">
+            <mdb-icon fas icon="plus" class="float-right mt-1 add fa-lg grey-text" alt="Add user"></mdb-icon>
+          </div>
+          <p class="grey-text">Add User</p>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </ng-container>
+
+  <mdb-card class="my-4" *ngIf="!cardView">
+    <mdb-card-header class="text-center bg-primary white-text">
+      Users List
+      <button color="white" mdbBtn type="button" (click)="onAddUser($event)" 
+      class="waves-light float-right" size="sm" mdbWavesEffect>
+        <mdb-icon fas icon="plus"></mdb-icon>
+        Add User
+      </button>
+    </mdb-card-header>
+  <mdb-card-body class="overflow-auto text-center align-items-center justify-content-center p-0">
+  <table mdbTable striped="true">
+    <thead>
+      <tr>
+        <th>User Name</th>
+        <th>Role</th>
+        <th>Temple Code</th>
+        <th>Email</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; let i = index;">
+        
+          <td scope="row">
+            <div class="d-flex-start">
+              <img *ngIf="user.avatar" src="{{ user.avatar }}" height="30" width="30" class="rounded-circle z-depth-0" alt="avatar image">
+              {{user.username}}
+            </div>
+          </td>
+          <td>
+            <mdb-badge *ngIf="user.role" [color]="getColor(user.role)">{{ user.role }}</mdb-badge>
+          </td>
+          <td>{{ user.temple }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <mdb-icon *ngIf="loggedInUser.username !== user.username && user.role !== 'admin'" fas icon="trash" class="delete grey-text" (click)="onDeleteUser(user)" alt="Delete user"></mdb-icon>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+  </mdb-card-body>
+  </mdb-card>
+
+ 
+  
+</div>
 </div>

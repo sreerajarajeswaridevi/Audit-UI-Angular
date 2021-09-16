@@ -1,6 +1,8 @@
 .users-list {
   box-sizing: border-box;
   justify-content: center;
+  align-items: center;
+  display: inline-flex;
 }
 
 .user {
@@ -15,6 +17,23 @@
   }
 }
 
+.d-flex-start {
+  display: flex;
+  align-items: center;
+}
+
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.group {
+  width: 250px;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
 @media (min-width: 768px) {
   .user {
       width: calc(50% - 2rem);
@@ -36,3 +55,9 @@
       width: auto;
   }
 }
+
+@media (min-width: 1000px) {
+  .paper {
+      padding: 0 20%;
+  }
+}  

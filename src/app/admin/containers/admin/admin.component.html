@@ -11,21 +11,8 @@
   </div>
 </div>
 
-<div *ngIf="!(usersListLoading$ | async)" class="container-fluid mt-3 pb-5">
+<div *ngIf="!(usersListLoading$ | async)" class="paper container-fluid mt-3 pb-5">
   <app-users-list *ngIf="!selectedUser" [users]="users$ | async" (addUser)="openAddUserModal($event)"
     (deleteUser)="onDeleteUser($event)"></app-users-list>
-    <app-temple-list></app-temple-list>
-    <!-- <app-user-detail
-    *ngIf="selectedUser"
-    [user]="selectedUser$ | async"
-    [customers]="userCustomers$ | async"
-    [userProjectsLoading]="userProjectsLoading$ | async"
-    [userCustomersLoading]="userCustomersLoading$ | async"
-    (detailsClosed)="onDetailsClose()"
-    (projectsLoad)="onProjectsLoad()"
-    (customersLoad)="onCustomersLoad()"
-    (projectDeleted)="onProjectDelete($event)"
-    (customerDeleted)="onCustomerDelete($event)"
-    (addAdmin)="addAdminPrivileges($event)"
-    (removeAdmin)="removeAdminPrivileges($event)"></app-user-detail> -->
+  <app-temple-list></app-temple-list>
 </div>

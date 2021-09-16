@@ -1,4 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { User } from 'src/app/auth/models/user.model';
+import { getUser } from 'src/app/auth/store/auth.selectors';
+import { AppState } from 'src/app/reducers';
 
 @Component({
   selector: 'app-users-list',
@@ -11,10 +15,15 @@ export class UsersListComponent implements OnInit {
   @Output() userSelected = new EventEmitter<any>();
   @Output() addUser = new EventEmitter<any>();
   @Output() deleteUser = new EventEmitter<any>();
+  loggedInUser: User;
+  cardView = false;
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
+    this.store.select(getUser).subscribe((user: User) => {
+      this.loggedInUser = user;
+    })
   }
 
   onUserSelected(user: any) {
@@ -31,6 +40,17 @@ export class UsersListComponent implements OnInit {
 
   trackByFn(index: any) {
     return index;
+  }
+
+  getColor(role: string) {
+    switch(role) {
+      case 'admin':
+        return 'red';
+        case 'manager':
+          return 'orange';
+        default:
+          return 'blue'
+    }
   }
 
 }
