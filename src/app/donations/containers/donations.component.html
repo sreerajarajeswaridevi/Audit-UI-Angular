@@ -4,8 +4,8 @@
       <mdb-card-header class="w-100 d-flex justify-space-between bg-primary white-text">
         <div>
           <blockquote class="text-left  blockquote bq-success">
-            <h3 class="header">Add Donations</h3>
-            <p class="py-0" *ngIf="donationForm.valid">Adding a donation of <span class="price">&#x20B9;{{donationForm?.value.amount}}</span> from {{donationForm?.value.name}}</p>
+            <h3 class="header">{{"DONATIONS.Add_Donations" | translate}}</h3>
+            <p class="py-0" *ngIf="donationForm.valid">{{"DONATIONS.Add_Donations_Desc" | translate}} <span class="price">&#x20B9;{{donationForm?.value.amount}}</span> from {{donationForm?.value.name}}</p>
           </blockquote>
         </div>
         <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="donationDate" [endDate]="endDate" [startDate]="startDate"
@@ -21,15 +21,15 @@
                 <div class="md-form">
                   <input type="text" id="name" name="name" class="form-control" [(ngModel)]="donation.name" mdbInput mdbValidate
                     [validateSuccess]="false" #name="ngModel" required>
-                  <label for="name">Name</label>
-                  <mdb-error *ngIf="name && name.invalid && (name.dirty || name.touched)">Name is required</mdb-error>
+                  <label for="name">{{"DONATIONS.Name" | translate}}</label>
+                  <mdb-error *ngIf="name && name.invalid && (name.dirty || name.touched)">{{"DONATIONS.Name" | translate}} {{"is_required" | translate}}</mdb-error>
                 </div>
         
                 <div class="btn-toolbar star-container" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="md-form hidden">
                     <input type="text" id="star" name="star" class="form-control" [(ngModel)]="donation.nakshatram" mdbInput mdbValidate
                       [validateSuccess]="false" #star="ngModel" required>
-                    <label for="star">Star</label>
+                    <label for="star">{{"DONATIONS.Star" | translate}}</label>
                   </div>
                   <div class="btn-group mr-2" role="group" aria-label="First group">
                       <button (click)="selectStar(star)"
@@ -40,7 +40,7 @@
                 <div class="md-form">
                   <textarea required type="text" id="address" name="address" class="md-textarea form-control" #address="ngModel"
                     [(ngModel)]="donation.address" mdbInput mdbValidate [validateSuccess]="false"></textarea>
-                  <label for="address">Address</label>
+                  <label for="address">{{"DONATIONS.Address" | translate}}</label>
                 </div>
           
               
@@ -51,17 +51,17 @@
                   <div class="md-form phone">
                     <input type="number" id="phone" name="phone" class="form-control" #phone="ngModel" [(ngModel)]="donation.phone_number" mdbInput mdbValidate
                       [validateSuccess]="false" required>
-                    <label for="phone">Phone Number</label>
-                    <mdb-error *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">phone number is required</mdb-error>
+                    <label for="phone">{{"DONATIONS.Phone_Number" | translate}}</label>
+                    <mdb-error *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">{{"DONATIONS.Phone_Number" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
                   <div class="text-lg mt-4 amount">
-                    <label for="amount" class="grey-text">Amount</label>
+                    <label for="amount" class="grey-text">{{"DONATIONS.Amount" | translate}}</label>
                     <div class="md-form mt-0">
                       <span class="d-flex">
                         <span class="price">&#x20B9;</span>
                         <input type="number" class="form-control price" id="amount" name="amount" [(ngModel)]="donation.amount" #amount="ngModel" mdbValidate [validateSuccess]="false" required>
                       </span>
-                      <mdb-error class="ml-3" *ngIf="amount && amount.invalid && (amount.dirty || amount.touched)">Amount is required</mdb-error>
+                      <mdb-error class="ml-3" *ngIf="amount && amount.invalid && (amount.dirty || amount.touched)">{{"DONATIONS.Amount" | translate}} {{"is_required" | translate}}</mdb-error>
                     </div>
                   </div>
                 </mdb-card-body>
@@ -76,9 +76,9 @@
       <mdb-card-footer class="modal-footer">
           <div class="d-flex">
             <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="resetForm()"
-              mdbWavesEffect>Clear</button>
-            <button type="button" mdbBtn color="success" [disabled]="donationForm.invalid" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save
-              & Print</button>
+              mdbWavesEffect>{{"DONATIONS.Clear" | translate}}</button>
+            <button type="button" mdbBtn color="success" [disabled]="donationForm.invalid" class="relative waves-light" 
+            mdbWavesEffect (click)="onSave()">{{"DONATIONS.Save_Print" | translate}}</button>
             <app-printer #appPrinter [type]="'donation'" [hidden]="true"></app-printer>
           </div>
       </mdb-card-footer>
@@ -92,7 +92,7 @@
           <mdb-icon *ngIf="isManager$ | async" fas icon="chevron-left" class="ml-1 float-left delete cursor-pointer white-text" alt="Left"></mdb-icon>
         </span>
         <span>
-          Donations on 
+          {{"DONATIONS.Donations_on" | translate}} 
           <button [disabled]="!(isManager$ | async)" mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="defaultDate"
           (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
             <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ formattedDate }}
@@ -110,9 +110,9 @@
       <table mdbTable small="true" striped="true" *ngIf="!(isLoading$ | async) && todaysDonationList.length > 0">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>nakshatram</th>
-            <th>Amount</th>
+            <th>{{"DONATIONS.Name" | translate}}Name</th>
+            <th>{{"DONATIONS.nakshatram" | translate}}nakshatram</th>
+            <th>{{"DONATIONS.Amount" | translate}}Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -135,7 +135,7 @@
       </table>
       <div role="footer" *ngIf="!(isLoading$ | async)">
         <div class="card-footer text-muted">
-          Total: <b class="price total-amount">&#x20B9;{{getTotalAmount()}}</b>
+          {{"Total" | translate}}: <b class="price total-amount">&#x20B9;{{getTotalAmount()}}</b>
         </div>
       </div>
     </app-right-card>

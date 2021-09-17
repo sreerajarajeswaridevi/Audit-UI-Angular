@@ -24,7 +24,7 @@
           <div class="card-header bg-primary white-text">Todays Poojas ({{dates?.today}}) <mdb-badge class="count" color="yellow" *ngIf="poojaList?.length > 0"> {{poojaList.length}}</mdb-badge></div>
           <div *ngIf="isListLoading$ | async" class="d-flex justify-content-center align-items-center my-4">
             <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">{{ "Loading" | translate }}...</span>
             </div>
           </div>
           <div class="cd-body">
@@ -32,9 +32,9 @@
           <table mdbTable small="true" *ngIf="!(isListLoading$ | async) && poojaList.length > 0">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Nakshathram</th>
-                <th>Print</th>
+                <th>{{ "POOJAS.Name" | translate }}</th>
+                <th>{{ "POOJAS.Nakshathram" | translate }}</th>
+                <th>{{ "POOJAS.Print" | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -57,8 +57,8 @@
           </table>
           </div>
           <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!(isListLoading$ | async) && poojaList?.length === 0">
-            <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
-              <p class="grey-text">No Poojas</p>
+            <mdb-icon fas icon="exclamation-circle" class="float-right grey-text" alt="no data"></mdb-icon>
+              <p class="grey-text">{{"No_Poojas" | translate}}</p>
           </div>
         </app-right-card>
 
@@ -66,16 +66,16 @@
           <div class="card-header bg-secondary white-text">Tomorrows poojas ({{this.dates?.tomorrow}}) <mdb-badge class="count" color="yellow" *ngIf="tomorrowsPoojaList?.length > 0"> {{tomorrowsPoojaList?.length}}</mdb-badge></div>
           <div *ngIf="isListLoading$ | async" class="d-flex justify-content-center align-items-center my-4">
             <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">{{ "Loading" | translate }}...</span>
             </div>
           </div>
           <div class="cd-body">
             <table mdbTable small="true" striped="true" *ngIf="!(isListLoading$ | async) && tomorrowsPoojaList.length > 0">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Nakshathram</th>
-                  <th>Print</th>
+                  <th>{{ "POOJAS.Name" | translate }}</th>
+                  <th>{{ "POOJAS.Nakshathram" | translate }}</th>
+                  <th>{{ "POOJAS.Print" | translate }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -98,12 +98,12 @@
             </table>
           </div>
           <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!(isListLoading$ | async) && tomorrowsPoojaList?.length === 0">
-            <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
-              <p class="grey-text">No Poojas tomorrow</p>
+            <mdb-icon fas icon="exclamation-circle" class="float-right grey-text" alt="no data"></mdb-icon>
+              <p class="grey-text">{{"POOJAS.No_Poojas_tomorrow" | translate}}</p>
           </div>
         </app-right-card>
         <br>
-        <header><b>Poojas by date</b></header>
+        <header><b>{{"POOJAS.Poojas_by_date" | translate}}</b></header>
         <hr>
         <app-right-card *ngIf="(isManager$ | async)">
           <div class="card-header bg-primary white-text ">
@@ -111,7 +111,7 @@
               <mdb-icon *ngIf="isManager$ | async" fas icon="chevron-left" class="ml-1 float-left delete cursor-pointer white-text" alt="Left"></mdb-icon>
             </span>
             <span>
-              Poojas on 
+              {{"POOJAS.Poojas_on" | translate}} 
               <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="selectedDate" [endDate]="endDate" [startDate]="startDate"
                header="Select Date" (dateSelected)="datePicked($event)">
                 <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> <span appDateTransform [date]="selectedDate.format('YYYY-MM-DD')"></span>
@@ -124,7 +124,7 @@
           </div>
           <div *ngIf="allPoojasLoading" class="d-flex justify-content-center align-items-center">
             <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">{{ "Loading" | translate }}...</span>
             </div>
           </div>
           <div class="cd-body">
@@ -132,16 +132,16 @@
           <table mdbTable small="true" *ngIf="!allPoojasLoading && allPoojasList?.length !== 0">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Nakshathram</th>
-                <th>Print</th>
+                <th>{{ "POOJAS.Name" | translate }}</th>
+                <th>{{ "POOJAS.Nakshathram" | translate }}</th>
+                <th>{{ "POOJAS.Print" | translate }}</th>
               </tr>
             </thead>
             <tbody>
               <ng-container *ngFor="let poojasByReceiptNumber of groupedAllPoojasList; let in = index;">
                 <tr class="separator">
                   <td colspan="3">
-                    <b>Receipt# {{poojasByReceiptNumber.receipt_number}}</b> 
+                    <b>{{"POOJAS.Receipt" | translate}} {{poojasByReceiptNumber.receipt_number}}</b> 
                     <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
                   </td>
                 </tr>
@@ -157,14 +157,14 @@
           </table>
           </div>
           <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!allPoojasLoading && allPoojasList?.length === 0">
-            <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
-              <p class="grey-text">No Poojas on {{selectedDate.format('MMM Do')}} </p>
+            <mdb-icon fas icon="exclamation-circle" class="float-right grey-text" alt="no data"></mdb-icon>
+              <p class="grey-text">{{"POOJAS.No_Poojas_on" | translate}} {{selectedDate.format('MMM Do')}} </p>
           </div>
         </app-right-card>
        
         <!-- <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center" style="margin-top: 200px">
           <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{ "Loading" | translate }}...</span>
           </div>
         </div> -->
       </div>

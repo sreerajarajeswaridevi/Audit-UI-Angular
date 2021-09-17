@@ -4,7 +4,7 @@
       <mdb-card-header class="w-100 d-flex justify-space-between bg-primary white-text">
         <div>
           <blockquote class="text-left  blockquote bq-success">
-            <h3 class="header">Add Expense</h3>
+            <h3 class="header">{{ "EXPENSES.Add_Expense" | translate }}</h3>
           </blockquote>
         </div>
         <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="expenseDate" [endDate]="endDate" [startDate]="startDate"
@@ -18,8 +18,8 @@
           <div class="d-flex">
           <div class="md-form">
             <input type="text" id="item" name="item" class="form-control" [(ngModel)]="expense.item" mdbInput mdbValidate [validateSuccess]="false" #item="ngModel" required>
-            <label for="item">Item</label>
-            <mdb-error *ngIf="item && item.invalid && (item.dirty || item.touched)">item is required</mdb-error>
+            <label for="item">{{ "EXPENSES.Item" | translate }}</label>
+            <mdb-error *ngIf="item && item.invalid && (item.dirty || item.touched)">{{ "EXPENSES.Item" | translate }} {{"is_required" | translate}}</mdb-error>
           </div>
           <div class="suggestion-container" *ngIf="frequentExpenses?.length">
             <mdb-badge class="cursor-pointer mr-1 p-2" *ngFor="let expenseName of frequentExpenses" pill="true" [info]="expense.item !== expenseName" [success]="expense.item === expenseName" (click)="expense.item = expenseName">{{ expenseName }}</mdb-badge>
@@ -30,25 +30,25 @@
             <textarea type="text" id="description" name="description" class="my-0 py-0 md-textarea form-control" 
             #description="ngModel" [(ngModel)]="expense.description" mdbInput mdbValidate
               [validateSuccess]="false" required></textarea>
-            <label for="description">Description</label>
-            <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">Description is required</mdb-error>
+            <label for="description">{{ "EXPENSES.Description" | translate }}</label>
+            <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">{{ "EXPENSES.Description" | translate }} {{"is_required" | translate}}</mdb-error>
           </div>
 
           <div class="text-lg">
-            <label for="cost" class="grey-text">Cost</label>
+            <label for="cost" class="grey-text">{{ "EXPENSES.Cost" | translate }}</label>
             <div class="md-form mt-0">
               <span class="d-flex">
                 <span class="price">&#x20B9;</span>
                 <input type="number" class="form-control price" id="cost" name="cost" [(ngModel)]="expense.cost" #cost="ngModel" mdbValidate [validateSuccess]="false" required>
               </span>
-              <mdb-error class="ml-3" *ngIf="cost && cost.invalid && (cost.dirty || cost.touched)">Cost is required</mdb-error>
+              <mdb-error class="ml-3" *ngIf="cost && cost.invalid && (cost.dirty || cost.touched)">{{ "EXPENSES.Cost" | translate }} {{"is_required" | translate}}</mdb-error>
             </div>
           </div>
 
         </form>
       </mdb-card-body>
       <mdb-card-footer class="d-flex">
-        <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="expenseForm.reset()">Clear
+        <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="expenseForm.reset()">{{ "EXPENSES.Clear" | translate }}
           </button>
         <button type="button" mdbBtn color="success" [disabled]="expenseForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSave()">Save & Print
           </button>
@@ -62,7 +62,7 @@
       <mdb-card-header class="w-100 d-flex justify-space-between bg-primary white-text">
         <div>
           <blockquote class="text-left  blockquote bq-success">
-            <h3 class="header">Record Salary</h3>
+            <h3 class="header">{{ "EXPENSES.Record_Salary" | translate }}</h3>
           </blockquote>
         </div>
         <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="salaryDate" [endDate]="endDate" [startDate]="startDate"
@@ -76,8 +76,8 @@
           <div class="d-flex">
           <div class="md-form">
             <input type="text" id="description" name="description" class="form-control" [(ngModel)]="salary.description" mdbInput mdbValidate [validateSuccess]="false" #description="ngModel" required>
-            <label for="description">Paid To:</label>
-            <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">Person Name is required</mdb-error>
+            <label for="description">{{ "EXPENSES.Paid_To" | translate }}:</label>
+            <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">{{ "EXPENSES.Person_Name" | translate }} {{"is_required" | translate}}</mdb-error>
           </div>
           <div class="suggestion-container" *ngIf="frequentSalaries?.length">
             <mdb-badge class="cursor-pointer mr-1" *ngFor="let item of frequentSalaries" pill="true" [info]="item.person !== salary.description" [success]="item.person === salary.description" (click)="salary.description = item.person; salary.cost = item.amount">{{ item.person }}</mdb-badge>
@@ -85,20 +85,20 @@
           </div>
 
           <div class="text-lg">
-            <label for="cost" class="grey-text">Amount</label>
+            <label for="cost" class="grey-text">{{ "EXPENSES.Amount" | translate }}</label>
             <div class="md-form mt-0">
               <span class="d-flex">
                 <span class="price">&#x20B9;</span>
                 <input type="number" class="form-control price" id="cost" name="cost" [(ngModel)]="salary.cost" #cost="ngModel" mdbValidate [validateSuccess]="false" required>
               </span>
-              <mdb-error class="ml-3" *ngIf="cost && cost.invalid && (cost.dirty || cost.touched)">Amount is required</mdb-error>
+              <mdb-error class="ml-3" *ngIf="cost && cost.invalid && (cost.dirty || cost.touched)">{{ "EXPENSES.Amount" | translate }} {{"is_required" | translate}}</mdb-error>
             </div>
           </div>
 
         </form>
       </mdb-card-body>
       <mdb-card-footer class="d-flex">
-        <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="salaryForm.reset()">Clear
+        <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="salaryForm.reset()">{{ "EXPENSES.Clear" | translate }}
           </button>
         <button type="button" mdbBtn color="success" [disabled]="salaryForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSalarySave(salaryForm)">Save & Print
           </button>
@@ -112,7 +112,7 @@
           <mdb-icon *ngIf="isManager$ | async" fas icon="chevron-left" class="ml-1 float-left delete cursor-pointer white-text" alt="Left"></mdb-icon>
         </span>
         <span>
-          Expense on 
+        {{ "EXPENSES.Expense_on" | translate }}
           <button [disabled]="!(isManager$ | async)" mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="defaultDate" [endDate]="defaultDate" [startDate]="startDate"
           (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
             <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> {{ formattedDate }}
@@ -130,9 +130,9 @@
       <table mdbTable small="true" striped="true" *ngIf="!(isLoading$ | async) && todaysExpenseList.length > 0">
         <thead>
           <tr>
-            <th>Item</th>
-            <th>Description</th>
-            <th>Cost</th>
+            <th>{{ "EXPENSES.Item" | translate }}</th>
+            <th>{{ "EXPENSES.Description" | translate }}</th>
+            <th>{{ "EXPENSES.Cost" | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -154,7 +154,7 @@
       </table>
       <div role="footer" *ngIf="!(isLoading$ | async)">
         <div class="card-footer text-muted">
-          Total: <b class="price total-amount">&#x20B9;{{getTotalExpense()}}</b>
+          {{ "Total" | translate }}: <b class="price total-amount">&#x20B9;{{getTotalExpense()}}</b>
         </div>
       </div>
     </app-right-card>

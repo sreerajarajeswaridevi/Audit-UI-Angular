@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './reducers';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'app';
 
   user$: Observable<User | null>;
@@ -41,8 +41,13 @@ export class AppComponent implements OnInit {
     })
     this.user$ = this.store.select(getUser);
     this.isLoggedIn$ = this.store.select(getIsLoggedIn);
-    this.isLoading$ = this.store.select(getIsLoading);
     this.isAdmin$ = this.store.select(getIsAdmin);
+  }
+  
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.isLoading$ = this.store.select(getIsLoading);   
+    }, 0);
   }
 
   onLogout(user: User) {

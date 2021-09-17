@@ -19,6 +19,7 @@ import { AuthModule } from '../auth/auth.module';
 import { SplitBodyComponent } from './split-body/split-body.component';
 import { DatePickerDirective } from '../directives/date-picker.directive';
 import { DateTransformDirective } from '../directives/date-transform.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { DateTransformDirective } from '../directives/date-transform.directive';
     DropdownModule.forRoot(),
     CardsModule,
     AuthModule,
-    ButtonsModule
+    ButtonsModule,
+    TranslateModule
   ],
   declarations: [
     HeaderComponent,

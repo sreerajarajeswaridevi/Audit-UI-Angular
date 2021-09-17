@@ -1,9 +1,127 @@
 { 
-    "HELLO": "ഹലോ",
+    "Loading": "ലോഡിംഗ്",
+    "is_required": "നിർബന്ധമാണ്",
+    "Install_App": "ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക",
+    "Close": "ക്ലോസ്",
+    "Save": "സേവ്",
+    "Total": "ആകെ",
+    "Update_App": "ആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക",
+    
+    "Date": "തീയതി",
+    "Name": "പേര്",
+    "Nakshathram": "നക്ഷത്രം",
+    "Phone_Number": "ഫോൺ നമ്പർ",
+    "Address": "വിലാസം (Optional)",
+    "Amount": "തുക",
+    "Total_Amount": "ആകെ തുക",
+    "Expense_Receipt": "ചെലവ് രസീത്",
+    "Period": "കാലഘട്ടം",
+    "Pooja": "പൂജ",
+    "Generated_Date": "ബിൽ ചെയ്ത തീയതി",
+    "Billed_By": "ബിൽ ചെയ്തത്",
+    "Authorized_Signature": "അംഗീകൃത ഒപ്പ്",
+    "ThankYou": "നന്ദി. എന്തെങ്കിലും അന്വേഷണങ്ങൾ/ബുക്കിംഗിനായി ദയവായി {{phone_number}} ബന്ധപ്പെടുക അല്ലെങ്കിൽ {{email}} എന്ന ഇമെയിൽ വഴി ഞങ്ങൾക്ക് ഇമെയിൽ ചെയ്യുക",
+
+
     "LOGIN": {
-        "LOGIN": "ലോഗിൻ ചെയ്യുക",
-        "USERNAME": "യൂസർനെയിം",
-        "PASSWORD": "പാസ്സ്‌വേർഡ്",
-        "LANGUAGE": "ഭാഷ"
+        "LOGIN": "ലോഗിൻ",
+        "USERNAME": "അക്കൗണ്ട് നാമം",
+        "PASSWORD": "പാസ്വേഡ്",
+        "LANGUAGE": "ഭാഷ",
+        "Email": "ഇമെയിൽ",
+        "Temple": "ക്ഷേത്രം",
+        "Role": "സ്ഥാനം"
+    },
+    "MAIN": {
+        "POOJAS": "പൂജകൾ",
+        "EXPENSES": "ചെലവുകൾ",
+        "DONATIONS": "സംഭാവനകൾ",
+        "REPORTS": "റിപ്പോർട്ടുകൾ",
+        "ADMIN_PANEL": "അഡ്മിൻ പാനൽ",
+        "SETTINGS": "ക്രമീകരണങ്ങൾ"
+    },
+    "POOJAS": {
+        "Name": "പേര്",
+        "Expenses": "ചെലവുകൾ",
+        "Nakshathram": "നക്ഷത്രം",
+        "Print": "പ്രിന്റ്",
+        "Receipt": "രസീത് #",
+        "No_Poojas": "പൂജകളില്ല",
+        "No_Poojas_tomorow": "നാളെ പൂജകളില്ല",
+        "Poojas_on": "പൂജകൾ ",
+        "Poojas_by_date": "തീയതി പ്രകാരം പൂജകൾ",
+        "No_Poojas_on": "പൂജകളില്ല"
+    },
+    "POOJAS_LIST": {
+        "Poojas_List": "പൂജകളുടെ പട്ടിക",
+        "change": "നിങ്ങളുടെ ക്ഷേത്രത്തിലെ പൂജ ക്രമീകരണങ്ങൾ മാറ്റുക",
+        "Name": "പേര്",
+        "Code": "കോഡ്",
+        "Description": "വിവരണം",
+        "Price": "വില",
+        "Added_By": "ചേർത്തത്",
+        "Add": "ചേർക്കുക"
+    },
+    "POOJAS_MODAL": {
+        "Phone_Number": "ഫോൺ നമ്പർ",
+        "Address": "വിലാസം (Optional)",
+        "Name": "പേര്",
+        "Nakshathram": "നക്ഷത്രം",
+        "Total_Price": "മൊത്തവില:",
+        "Add_Person": "പേര് ചേർക്കുക",
+        "Save_Print": "സേവ് & പ്രിന്റ് ",
+        "Close": "ക്ലോസ്",
+        "No_data_added": "ഡാറ്റ ചേർത്തിട്ടില്ല"
+    },
+    "CONFIRM_MODAL": {
+        "Delete": "ഡിലീറ്റ്",
+        "sure": "നിങ്ങൾക്ക് ഈ ഇനം ഇല്ലാതാക്കണമെന്ന് തീർച്ചയാണോ?",
+        "cancel": "ക്യാൻസൽ"
+    },
+    "EXPENSES": {
+        "Add_Expense": "ചെലവ് ചേർക്കുക",
+        "Item": "ഇനം",
+        "Description": "വിവരണം",
+        "Cost": "ചെലവ്",
+        "Record_Salary": "ശമ്പളം ചെർക്കുക",
+        "Clear": "ക്ലിയർ ",
+        "Paid_To": "ആർക്കാണ് പണം നൽകിയത്",
+        "Person_Name": "വ്യക്തിയുടെ പേര്",
+        "Amount": "തുക",
+        "Expense_on": "ചെലവ്",
+        "Total_Expense": "മൊത്തം ചെലവ്"
+    },
+    "DONATIONS": {
+        "Donations": "സംഭാവനകൾ",
+        "Add_Donations": "പുതിയ സംഭാവന",
+        "Add_Donations_Desc": "ഒരു സംഭാവന ചേർക്കുന്നു",
+        "Name": "പേര്",
+        "Nakshathtam": "നക്ഷത്രം",
+        "Address": "വിലാസം",
+        "Phone_Number": "ഫോൺ നമ്പർ",
+        "Clear": "ക്ലിയർ",
+        "Save_Print": "സേവ് & പ്രിന്റ്",
+        "Amount": "തുക",
+        "Total_Donations": "മൊത്തം സംഭാവനകൾ",
+        "Donations_on": "സംഭാവനകൾ"
+    },
+    "REPORTS": {
+        "Financial_Reports": "സാമ്പത്തിക റിപ്പോർട്ടുകൾ",
+        "desc": "അക്കൗണ്ടുകളും ലാഭനഷ്ടങ്ങളും",
+        "day": "ദിവസം",
+        "week": "ആഴ്ച",
+        "month": "മാസം",
+        "custom": "കസ്റ്റം",
+        "Poojas": "പൂജകൾ",
+        "No_Data_Today": "ഇന്ന് ഡാറ്റ ഇല്ല",
+        "ProfitLoss": "ലാഭം/നഷ്ടം",
+        "Expense_Type": "ചെലവ് തരം",
+        "Amount": "തുക",
+        "Pooja_Name": "പൂജയുടെ പേര്",
+        "Total_Amount_Received": "ലഭിച്ച മൊത്തം തുക",
+        "This_Weeks_ProfitLoss": "ഈ ആഴ്ചയിലെ ലാഭം/നഷ്ടം",
+        "This_Months_ProfitLoss": "ഈ മാസത്തെ ലാഭം/നഷ്ടം",
+        "This_Years_ProfitLoss": "ഈ വർഷത്തെ ലാഭം/നഷ്ടം",
+        "GetData": "ഡാറ്റ ചോദിക്കുക"
     }
 }

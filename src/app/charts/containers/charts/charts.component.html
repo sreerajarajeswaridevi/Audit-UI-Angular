@@ -1,28 +1,28 @@
 <div class="white px-4 py-2">
   <div class="row">
     <div class="col-md-6 col-sm-12">
-      <h3 class="pt-2">Financial Reports</h3>
-      <p class="grey-text pt-1">Visualisation of consolidated accounts data</p>
+      <h3 class="pt-2">{{ "REPORTS.Financial_Reports" | translate }}</h3>
+      <p class="grey-text pt-1">{{ "REPORTS.desc" | translate }}</p>
     </div>
     <div class="col-md-6 col-sm-12">
       <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group mr-2 mt-4 row w-100" role="group" aria-label="First group">
           <button mdbBtn type="button" (click)="initTab('day')" [color]="activeTab === 'day' ? 'primary' : 'white'"
             class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
-            day
+            {{ "REPORTS.day" | translate }}
           </button>
           <button mdbBtn type="button" (click)="initTab('week')" [color]="activeTab === 'week' ? 'primary' : 'white'"
             class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
-            week
+            {{ "REPORTS.week" | translate }}
           </button>
           <button mdbBtn type="button" (click)="initTab('month')"
             [color]="activeTab === 'month' ? 'primary' : 'white'" class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
-            month
+            {{ "REPORTS.month" | translate }}
           </button>
           <button mdbBtn type="button" (click)="initTab('year')" [color]="activeTab === 'year' ? 'primary' : 'white'"
             class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm"
             mdbWavesEffect>
-            year
+            {{ "REPORTS.year" | translate }}
           </button>
           <button mdbBtn type="button" (click)="initTab('custom')"
             [color]="activeTab === 'custom' ? 'primary' : 'white'" class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
@@ -36,7 +36,7 @@
 
 <div *ngIf="isLoading$" class="d-flex justify-content-center align-items-center" style="margin-top: 300px">
   <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem">
-    <span class="sr-only">Loading...</span>
+    <span class="sr-only">{{ "Loading" | translate }}...</span>
   </div>
 </div>
 
@@ -68,7 +68,7 @@
           <mdb-card-body *ngIf="pageData.todaysData">
             <div class="pl-4">
               <button mdbBtn color="primary" size="sm" (click)="swapPoojasData(pageData.todaysData)">
-                Poojas
+                {{ "REPORTS.Poojas" | translate }}
               </button>
             </div>
             <app-bar-chart *ngIf="pageData.todaysData.currentOverView ===
@@ -88,7 +88,7 @@
               align-items-center
             " *ngIf="!pageData.todaysData">
             <mdb-icon fas icon="times-circle" class="float-right grey-text" alt="no data"></mdb-icon>
-            <p class="grey-text">No Data Today</p>
+            <p class="grey-text">{{ "REPORTS.No_Data_Today" | translate }}</p>
           </div>
         </mdb-card>
       </div>
@@ -98,7 +98,7 @@
           <thead class="primary-color text-white">
             <tr>
               <td colspan="2">
-                {{ todaysDate.format('DD-MMMM-YYYY')  }} Profit/Loss
+                {{ todaysDate.format('DD-MMMM-YYYY')  }} {{ "REPORTS.ProfitLoss" | translate }}
                 <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.todaysData) }}</span>
               </td>
             </tr>
@@ -107,13 +107,13 @@
                   pageData.todaysData.overView;
                 else poojasView
               ">
-              <th>Expense Type</th>
-              <th>Amount</th>
+              <th>{{ "REPORTS.Expense_Type" | translate }}</th>
+              <th>{{ "REPORTS.Amount" | translate }}</th>
             </tr>
             <ng-template #poojasView>
               <tr>
-                <th>Poooja Name</th>
-                <th>Total Amount Received</th>
+                <th>{{ "REPORTS.Pooja_Name" | translate }}</th>
+                <th>{{ "REPORTS.Total_Amount_Received" | translate }}</th>
               </tr>
             </ng-template>
           </thead>
@@ -149,13 +149,13 @@
       <div class="col-md-12 col-lg-6 mb-2">
         <mdb-card>
           <mdb-card-header>
-            This Weeks Profit/Loss
+            {{ "REPORTS.This_Weeks_ProfitLoss" | translate }}
             <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisWeeksData) }}</span>
           </mdb-card-header>
           <mdb-card-body>
             <div class="pl-4">
               <button mdbBtn color="primary" size="sm" (click)="swapPoojasData(pageData.thisWeeksData)">
-                Poojas
+                {{ "REPORTS.Poojas" | translate }}
               </button>
             </div>
             <app-bar-chart  *ngIf="pageData.thisWeeksData.currentOverView ===
@@ -177,7 +177,7 @@
           <thead class="primary-color text-white">
             <tr>
               <td colspan="2">
-                This Weeks Profit/Loss
+                {{ "REPORTS.This_Weeks_ProfitLoss" | translate }}
                 <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisWeeksData) }}</span>
               </td>
             </tr>
@@ -186,13 +186,13 @@
                   pageData.thisWeeksData.overView;
                 else poojasView
               ">
-              <th>Expense Type</th>
-              <th>Amount</th>
+              <th>{{ "REPORTS.Expense_Type" | translate }}</th>
+              <th>{{ "REPORTS.Amount" | translate }}</th>
             </tr>
             <ng-template #poojasView>
               <tr>
-                <th>Poooja Name</th>
-                <th>Total Amount Received</th>
+                <th>{{ "REPORTS.Pooja_Name" | translate }}</th>
+                <th>{{ "REPORTS.Total_Amount_Received" | translate }}</th>
               </tr>
             </ng-template>
           </thead>
@@ -231,7 +231,7 @@
       <div class="col-md-12 col-lg-6 mb-4">
         <mdb-card>
           <mdb-card-header>
-            {{ monthDate.format('MMMM YYYY')  }} Profit/Loss
+            {{ monthDate.format('MMMM YYYY')  }} {{ "REPORTS.ProfitLoss" | translate }}
             <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisMonthsData) }}</span>
           </mdb-card-header>
           <mdb-card-body>
@@ -257,7 +257,7 @@
           <thead class="primary-color text-white">
             <tr>
               <td colspan="2">
-                {{ monthDate.format('MMMM YYYY')  }} Profit/Loss
+                {{ monthDate.format('MMMM YYYY')  }} {{ "REPORTS.ProfitLoss" | translate }}
                 <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisMonthsData) }}</span>
               </td>
             </tr>
@@ -266,14 +266,16 @@
                   pageData.thisMonthsData.overView;
                 else poojasView
               ">
-              <th>Expense Type</th>
-              <th>Amount</th>
+
+              <th>{{ "REPORTS.Expense_Type" | translate }}</th>
+              <th>{{ "REPORTS.Amount" | translate }}</th>
             </tr>
             <ng-template #poojasView>
               <tr>
-                <th>Poooja Name</th>
-                <th>Total Amount Received</th>
+                <th>{{ "REPORTS.Pooja_Name" | translate }}</th>
+                <th>{{ "REPORTS.Total_Amount_Received" | translate }}</th>
               </tr>
+              
             </ng-template>
           </thead>
           <tbody>
@@ -321,13 +323,13 @@
       <div class="col-md-12 col-lg-6 mb-4">
         <mdb-card>
           <mdb-card-header>
-            {{ yearDate.format('YYYY') }} Profit/Loss
+            {{ yearDate.format('YYYY') }} {{ "REPORTS.ProfitLoss" | translate }}
             <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
           </mdb-card-header>
           <mdb-card-body>
             <div class="pl-4">
               <button mdbBtn color="primary" size="sm" (click)="swapPoojasData(pageData.thisYearsData)">
-                Poojas
+                {{ "REPORTS.Poojas}" | translate }}
               </button>
             </div>
             <app-bar-chart *ngIf="pageData.thisYearsData.currentOverView ===
@@ -347,7 +349,7 @@
           <thead class="primary-color text-white">
             <tr>
               <td colspan="2">
-                {{ yearDate.format('YYYY') }} Profit/Loss
+                {{ yearDate.format('YYYY') }} {{ "REPORTS.ProfitLoss" | translate }}
                 <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
               </td>
             </tr>
@@ -356,13 +358,13 @@
                   pageData.thisYearsData.overView;
                 else poojasView
               ">
-              <th>Expense Type</th>
-              <th>Amount</th>
+              <th>{{ "REPORTS.Expense_Type" | translate }}</th>
+              <th>{{ "REPORTS.Amount" | translate }}</th>
             </tr>
             <ng-template #poojasView>
               <tr>
-                <th>Poooja Name</th>
-                <th>Total Amount Received</th>
+                <th>{{ "REPORTS.Pooja_Name" | translate }}</th>
+                <th>{{ "REPORTS.Total_Amount_Received" | translate }}</th>
               </tr>
             </ng-template>
           </thead>
@@ -411,20 +413,20 @@
         </button>
 
         <button type="button" mdbBtn color="success"  class="relative waves-light" mdbWavesEffect (click)="getCustomData()">
-          GET DATA  
+          {{ "REPORTS.GetData" | translate }} 
         </button>
     </div>
     <div class="row my-3">
       <div class="col-md-12 col-lg-6 mb-4">
         <mdb-card>
           <mdb-card-header>
-            This Years Profit/Loss
+            {{ "REPORTS.This_Years_ProfitLoss" | translate }}
             <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
           </mdb-card-header>
           <mdb-card-body>
             <div class="pl-4">
               <button mdbBtn color="primary" size="sm" (click)="swapPoojasData(pageData.thisYearsData)">
-                Poojas
+                {{ "REPORTS.Poojas" | translate }}
               </button>
             </div>
             <app-bar-chart [dataset]="pageData.thisYearsData.currentOverView.dataSet"
@@ -438,7 +440,7 @@
           <thead class="primary-color text-white">
             <tr>
               <td colspan="2">
-                This Years Profit/Loss
+                {{ "REPORTS.This_Years_ProfitLoss" | translate }}
                 <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
               </td>
             </tr>
@@ -447,13 +449,13 @@
                   pageData.thisYearsData.overView;
                 else poojasView
               ">
-              <th>Expense Type</th>
-              <th>Amount</th>
+              <th>{{ "REPORTS.Expense_Type" | translate }}</th>
+              <th>{{ "REPORTS.Amount" | translate }}</th>
             </tr>
             <ng-template #poojasView>
               <tr>
-                <th>Poooja Name</th>
-                <th>Total Amount Received</th>
+                <th>{{ "REPORTS.Pooja_Name" | translate }}</th>
+                <th>{{ "REPORTS.Total_Amount_Received" | translate }}</th>
               </tr>
             </ng-template>
           </thead>

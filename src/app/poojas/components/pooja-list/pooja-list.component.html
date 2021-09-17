@@ -2,8 +2,8 @@
       <mdb-card>
         <mdb-card-header class="text-left bg-primary white-text w-100">
           <blockquote class="blockquote bq-success">
-            <h3 class="header">Poojas List</h3>
-            <p class="py-0">Change pooja settings of your temple</p>
+            <h3 class="header">{{"Poojas_List" | translate}}</h3>
+            <p class="py-0">{{"change" | translate}}</p>
           </blockquote>
         </mdb-card-header>
         <mdb-card-body class="py-2">
@@ -11,11 +11,11 @@
           <table mdbTable striped="true">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Code</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Added By</th>
+                <th>{{"POOJAS_LIST.Name" | translate}}</th>
+                <th>{{"POOJAS_LIST.Code" | translate}}</th>
+                <th>{{"POOJAS_LIST.Description" | translate}}</th>
+                <th>{{"POOJAS_LIST.Price" | translate}}</th>
+                <th>{{"POOJAS_LIST.Added_By" | translate}}</th>
               </tr>
             </thead>
             <tbody>
@@ -37,8 +37,8 @@
                     <input type="text" id="add_pooja_name" name="pooja_name" class="form-control" 
                     #pooja_name="ngModel" [(ngModel)]="newPooja.pooja_name" mdbInput mdbValidate
                       [validateSuccess]="false" required (change)="newPooja.pooja_code = generateCode(newPooja.pooja_name)">
-                    <label for="pooja_name">Name</label>
-                    <mdb-error *ngIf="pooja_name && pooja_name.invalid && (pooja_name.dirty || pooja_name.touched)">Name is required</mdb-error>
+                    <label for="pooja_name">{{"POOJAS_LIST.Name" | translate}}</label>
+                    <mdb-error *ngIf="pooja_name && pooja_name.invalid && (pooja_name.dirty || pooja_name.touched)">{{"POOJA_LIST.Name" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
                 </td>
                 <td>
@@ -46,8 +46,8 @@
                     <input type="text" id="add_pooja_code" name="pooja_code" class="form-control" 
                     #pooja_code="ngModel" [(ngModel)]="newPooja.pooja_code" mdbInput mdbValidate disabled
                       [validateSuccess]="false" required>
-                    <label for="pooja_code">Code</label>
-                    <mdb-error *ngIf="pooja_code && pooja_code.invalid && (pooja_code.dirty || pooja_code.touched)">Code is required</mdb-error>
+                    <label for="pooja_code">{{"POOJAS_LIST.Code" | translate}}</label>
+                    <mdb-error *ngIf="pooja_code && pooja_code.invalid && (pooja_code.dirty || pooja_code.touched)">{{"POOJA_LIST.Code" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
                 </td>
                 <td >
@@ -55,8 +55,8 @@
                     <textarea type="text" id="add_pooja_description" name="pooja_description" class="my-0 py-0 md-textarea form-control" 
                     #pooja_description="ngModel" [(ngModel)]="newPooja.pooja_description" mdbInput mdbValidate
                       [validateSuccess]="false" required></textarea>
-                    <label for="pooja_description">Description</label>
-                    <mdb-error *ngIf="pooja_description && pooja_description.invalid && (pooja_description.dirty || pooja_description.touched)">Description is required</mdb-error>
+                    <label for="pooja_description">{{"POOJAS_LIST.Description" | translate}}</label>
+                    <mdb-error *ngIf="pooja_description && pooja_description.invalid && (pooja_description.dirty || pooja_description.touched)">{{"POOJA_LIST.Description" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
                  
                   <!-- <a class="btn btn-primary btn-floating" (click)="onAddPooja()" style="background-color: #3b5998; height: 45px" href="javascript:void(0)" role="button"
@@ -69,14 +69,14 @@
                     <input type="number" id="pooja_add_price" name="pooja_price" class="form-control" 
                     #pooja_price="ngModel" [(ngModel)]="newPooja.pooja_price" mdbInput mdbValidate
                       [validateSuccess]="false" required>
-                    <label for="pooja_price">Price</label>
-                    <mdb-error *ngIf="pooja_price && pooja_price.invalid && (pooja_price.dirty || pooja_price.touched)">Price is required</mdb-error>
+                    <label for="pooja_price">{{"POOJAS_LIST.Price" | translate}}</label>
+                    <mdb-error *ngIf="pooja_price && pooja_price.invalid && (pooja_price.dirty || pooja_price.touched)">{{"POOJA_LIST.Price" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
                   
                 </td>
                 <td>
                   <button mdbBtn [disabled]="poojasForm?.invalid || (isLoading$ | async)" class="mt-4 btn btn-floating add" (click)="onAddPoojaType()" size="sm" gradient="purple" mdbWavesEffect>
-                    <mdb-icon fas icon="plus" class="white-text"></mdb-icon> <span class="pl-2 white-text">Add</span>
+                    <mdb-icon fas icon="plus" class="white-text"></mdb-icon> <span class="pl-2 white-text">{{"POOJAS_LIST.Add" | translate}}</span>
                   </button>
                 </td>
               </tr>
@@ -87,7 +87,7 @@
 
         <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center my-4">
           <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{"Loading" | translate}}...</span>
           </div>
         </div>
 

@@ -34,7 +34,7 @@ export class PrinterComponent implements OnInit {
     this.store.select(getUser).subscribe((user: any) => {
       this.temple = user;
     })
-    this.size = localStorage.getItem('printerPageSize') || 'bill';
+    this.size = localStorage.getItem('printerPageSize') || 'A4';
   }
 
   ngOnInit(): void {

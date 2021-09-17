@@ -11,40 +11,40 @@
       <div class="d-flex align-items-center">
       <div class="md-form w-100">
           <input type="text" id="add_user_username" name="username" class="form-control" [(ngModel)]="user.username" mdbInput mdbValidate [validateSuccess]="false" #username="ngModel" required>
-          <label for="username">Username</label>
-          <mdb-error *ngIf="username && username.invalid && (username.dirty || username.touched)">username is required</mdb-error>
+          <label for="username">{{"LOGIN.USERNAME" | translate}}</label>
+          <mdb-error *ngIf="username && username.invalid && (username.dirty || username.touched)">{{"LOGIN.USERNAME" | translate}} {{"is_required" | translate}}</mdb-error>
         </div>
         <span *ngIf="user.temple_code">@{{ user.temple_code }}</span>
       </div>
 
       <div class="md-form">
         <input type="password" id="add_user_password" name="password" class="form-control" [(ngModel)]="user.password" mdbInput mdbValidate [validateSuccess]="false" #password="ngModel" required>
-        <label for="password">password</label>
-        <mdb-error *ngIf="password && password.invalid && (password.dirty || password.touched)">password is required</mdb-error>
+        <label for="password">{{"LOGIN.PASSWORD" | translate}}</label>
+        <mdb-error *ngIf="password && password.invalid && (password.dirty || password.touched)">{{"LOGIN.PASSWORD" | translate}} {{"is_required" | translate}}</mdb-error>
       </div>
 
       <div class="md-form">
         <input type="email" id="add_user_email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" class="form-control" [(ngModel)]="user.email" mdbInput mdbValidate [validateSuccess]="false" #email="ngModel" required>
-        <label for="email">Email</label>
-        <mdb-error *ngIf="email && email.invalid && (email.dirty || email.touched)">Email is required</mdb-error>
+        <label for="email">{{"LOGIN.Email" | translate}}</label>
+        <mdb-error *ngIf="email && email.invalid && (email.dirty || email.touched)">{{"LOGIN.Email" | translate}} {{"is_required" | translate}}</mdb-error>
       </div>
 
       <!-- <div class="md-form">
         <input type="text" id="add_user_temple" name="temple" class="form-control" [(ngModel)]="user.temple" mdbInput mdbValidate [validateSuccess]="false" #temple="ngModel" required>
         <label for="temple">Temple</label>
-        <mdb-error *ngIf="temple && temple.invalid && (temple.dirty || temple.touched)">Temple is required</mdb-error>
+        <mdb-error *ngIf="temple && temple.invalid && (temple.dirty || temple.touched)">Temple {{"is_required" | translate}}</mdb-error>
       </div> -->
 
-      <label for="role" *ngIf="templeList.length > 1">Temple</label>
+      <label for="role" *ngIf="templeList.length > 1">{{"LOGIN.Temple" | translate}}</label>
       <div class="md-form mt-0" *ngIf="templeList.length > 1">
         <select class="browser-default custom-select form-control pl-1" type="select" id="add_user_temple" name="temple" [(ngModel)]="user.temple_code" mdbSelect mdbValidate [validateSuccess]="false" #temple="ngModel" required>
           <option value="" disabled selected hidden>Select user temple</option>
           <option [value]="temple.temple_code" *ngFor="let temple of templeList">{{ temple.temple_name }}</option>
         </select>
-        <mdb-error *ngIf="temple && temple.invalid && (temple.dirty || temple.touched)">temple is required</mdb-error>
+        <mdb-error *ngIf="temple && temple.invalid && (temple.dirty || temple.touched)">temple {{"is_required" | translate}}</mdb-error>
     </div>
 
-      <label for="role">Role</label>
+      <label for="role">{{"LOGIN.Role" | translate}}</label>
       <div class="md-form mt-0">
         <select class="browser-default custom-select form-control pl-1" type="select" id="add_user_role" name="role" [(ngModel)]="user.role" mdbSelect mdbValidate [validateSuccess]="false" #role="ngModel" required>
           <option value="" disabled selected hidden>Select user role</option>
@@ -52,7 +52,7 @@
           <option value="manager">manager</option>
           <option value="user">user</option>
         </select>
-        <mdb-error *ngIf="role && role.invalid && (role.dirty || role.touched)">role is required</mdb-error>
+        <mdb-error *ngIf="role && role.invalid && (role.dirty || role.touched)">role {{"is_required" | translate}}</mdb-error>
     </div>
 
 
@@ -61,7 +61,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" mdbBtn color="white" class="black-text waves-light" aria-label="Close" (click)="modalRef.hide()"
-      mdbWavesEffect>Close</button>
-    <button type="button" mdbBtn color="success" [disabled]="userForm.invalid" class="relative waves-light" mdbWavesEffect (click)="onSave()">Save</button>
+      mdbWavesEffect>{{"Close" | translate}}</button>
+    <button type="button" mdbBtn color="success" [disabled]="userForm.invalid" class="relative waves-light" mdbWavesEffect (click)="onSave()">{{"Save" | translate}}</button>
   </div>
 </div>

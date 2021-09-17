@@ -21,18 +21,18 @@
             
             <div class="title"><span>{{poojas[0]?.pooja_name}}</span></div>
             <div class="date-receipt">
-                <span>Date : <span class="db" appDateTransform [date]="poojas[0].pooja_date" [format]="'DD-MM-YYYY'"></span></span>
-                <span *ngIf="poojas[0]?.receipt_number" class="db bt-gray">Receipt No: <span >{{poojas[0]?.receipt_number}}</span></span>
+                <span>{{"Date" | translate}} : <span class="db" appDateTransform [date]="poojas[0].pooja_date" [format]="'DD-MM-YYYY'"></span></span>
+                <span *ngIf="poojas[0]?.receipt_number" class="db bt-gray">{{"POOJAS.Receipt" | translate}}: <span >{{poojas[0]?.receipt_number}}</span></span>
             </div>
             <br>
             <div class="details">
                 <div class="content">
                     <div class="row" *ngIf="poojas[0]?.address">
-                        <span class="label">Address :</span> 
+                        <span class="label">{{"Address" | translate}} :</span> 
                         <span class="value">{{poojas[0]?.address}}</span>
                     </div>
                     <div class="row"  *ngIf="poojas[0]?.phone_number">
-                        <span class="label">Phone Number :</span>
+                        <span class="label">{{"Phone_Number" | translate}} :</span>
                         <span class="value">{{poojas[0]?.phone_number}}</span>
                     </div>
                    
@@ -40,9 +40,9 @@
                         <thead style="background-color: whitesmoke; padding: 10px;">
                     
                             <tr style="font-weight: bold;">
-                                <td>Name</td>
-                                <td>Nakshatram</td>
-                                <td>Amount</td>
+                                <td>{{"Name" | translate}}</td>
+                                <td>{{"Nakshatram" | translate}}</td>
+                                <td>{{"Amount" | translate}}</td>
                             </tr>
                         </thead>
                         <tbody *ngFor="let pooja of poojas" style="border-bottom: 1px dotted black">
@@ -54,7 +54,7 @@
                         </tbody>
                         <tfoot>
                             <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
-                                <td colspan="2" style="font-weight: bold;"><b>Total Amount</b></td>
+                                <td colspan="2" style="font-weight: bold;"><b>{{"Total_Amount" | translate}}</b></td>
                                 <td style="font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
                                         'pooja_price')}}</b></td>
                             </tr>
@@ -63,22 +63,22 @@
                     <div *ngIf="size === 'bill'">
                         <div *ngFor="let pooja of poojas" class="row-container">
                             <div class="row">
-                                <span class="label">Name :</span>
+                                <span class="label">{{"Name" | translate}} :</span>
                                 <span class="value">{{pooja?.name}}</span>
                             </div>
                             <div class="row">
-                                <span class="label">Nakshatram :</span>
+                                <span class="label">{{"Nakshatram" | translate}} :</span>
                                 <span class="value">{{pooja?.nakshatram}}</span>
                             </div>
                             <div class="row">
-                                <span class="label">Amount :</span> 
+                                <span class="label">{{"Amount" | translate}} :</span> 
                                 <span class="value">{{pooja?.pooja_price}}</span>
                             </div>
                         </div>
                         <table class="pooja-table">
                             <tfoot>
                                 <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
-                                    <td colspan="2" style=" font-weight: bold;"><b>Total Amount</b></td>
+                                    <td colspan="2" style=" font-weight: bold;"><b>{{"Total_Amount" | translate}}</b></td>
                                     <td style=" font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
                                             'pooja_price')}}</b></td>
                                 </tr>
@@ -92,31 +92,30 @@
         <!-- expense_---------------------- -->
         <body *ngIf="type === 'expense' && expense">
               
-                <div class="title"><span>Expense Receipt</span></div>
+                <div class="title"><span>{{"Expense_Receipt" | translate}}</span></div>
                 <div class="date-receipt">
-                    <span>Date : {{expense.expense_date}}</span>
+                    <span>{{"Date" | translate}} : {{expense.expense_date}}</span>
                     <span class="bt-gray">Receipt No : {{expense?.receipt_number}}</span>
                 </div>
                 <br>
                 <div class="details">
                     <div class="content">
                         <div class="row">
-                            <span class="label">Item :</span>
+                            <span class="label">{{"Item" | translate}} :</span>
                             <span class="value">{{expense.item}}</span>
                         </div>
                         <div class="row">
-                            <span class="label">Cost :</span>
+                            <span class="label">{{"Cost" | translate}} :</span>
                             <span class="value">₹{{expense.cost}}</span>
                         </div>
                         <div class="row" *ngIf="expense.description">
-                            <span class="label">Notes :</span>
+                            <span class="label">{{"Notes" | translate}} :</span>
                             <span class="value">{{expense.description}}</span>
                         </div>
                         <table class="total-amount">
                             <tr
                                 style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
-                                <td style=" font-weight: bold;"><b>Total
-                                        Amount</b></td>
+                                <td style=" font-weight: bold;"><b>{{"Total_Amount" | translate}}</b></td>
                                 <td style=" font-weight: bold;"><b>₹
                                         {{expense.cost}}</b></td>
                             </tr>
@@ -131,40 +130,39 @@
         <!-- DONATION---------------------- -->
         <body *ngIf="type === 'donation' && donation">
               
-                <div class="title"><span>Donation Receipt</span></div>
+                <div class="title"><span>{{"Date" | translate}}Donation Receipt</span></div>
                 <div class="date-receipt">
-                    <span>Date : {{donation.donation_date}}</span>
-                    <span class="bt-gray">Receipt No : {{donation?.receipt_number}}</span>
+                    <span>{{"Date" | translate}} : {{donation.donation_date}}</span>
+                    <span class="bt-gray">{{"Date" | translate}}Receipt No : {{donation?.receipt_number}}</span>
                 </div>
                 <br>
                 <div class="details">
                     <div class="content">
                         <div class="row">
-                            <span class="label">Name :</span>
+                            <span class="label">{{"Name" | translate}} :</span>
                             <span class="value">{{donation.name}}</span>
                         </div>
                         <div class="row">
-                            <span class="label">Nakshathram :</span>
+                            <span class="label">{{"Date" | translate}}Nakshathram :</span>
                             <span class="value">{{donation.nakshatram}}</span>
                         </div>
                         <div class="row">
-                            <span class="label">Address :</span>
+                            <span class="label">{{"Address" | translate}} :</span>
                             <span class="value">{{donation.address}}</span>
                         </div>
                         
                         <div class="row">
-                            <span class="label">Phone Number :</span>
+                            <span class="label">{{"Phone_Number" | translate}} :</span>
                             <span class="value">{{donation.phone_number}}</span>
                         </div>
                         <div class="row">
-                            <span class="label">Amount Received :</span>
+                            <span class="label">{{"Amount" | translate}} Received :</span>
                             <span class="value">₹{{donation.amount}}</span>
                         </div>
                         <table class="total-amount">
                             <tr
                                 style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
-                                <td style=" font-weight: bold;"><b>Total
-                                        Amount</b></td>
+                                <td style=" font-weight: bold;"><b>{{"Total_Amount" | translate}}</b></td>
                                 <td style=" font-weight: bold;"><b>₹
                                         {{donation.amount}}</b></td>
                             </tr>
@@ -178,24 +176,24 @@
         <!-- REPORT--------------------- -->
 
         <body *ngIf="type === 'report' && reports" class="report">
-            <div class="title"><span>Expense Receipt</span></div>
-            <p>period : {{reportPeriod}}</p>
+            <div class="title"><span>{{"Expense_Receipt" | translate}}</span></div>
+            <p>{{"Period" | translate}} : {{reportPeriod}}</p>
           <br>
             <section *ngFor="let report of reports">
-                <p style="font-weight: bold;padding-bottom: 10px; border-bottom: 1px solid dimgray;">Date:
+                <p style="font-weight: bold;padding-bottom: 10px; border-bottom: 1px solid dimgray;">{{"Date" | translate}}:
                     <b>{{report.date}}</b>
                 </p>
                 <table *ngIf="report?.poojas.length">
-                    <p class="heading">Poojas</p>
+                    <p class="heading">{{"MAIN.POOJAS" | translate}}</p>
                     <tr><br><br></tr>
                     <tbody style="border: 1px dotted black">
                         <tr>
-                            <td style="font-weight: bold;">Date</td>
-                            <td style="font-weight: bold;">Pooja Name</td>
-                            <td style="font-weight: bold;">Person Name</td>
-                            <td style="font-weight: bold;">Nakshathram</td>
-                            <td style="font-weight: bold;">Phone</td>
-                            <td style="font-weight: bold;">Amount</td>
+                            <td style="font-weight: bold;">{{"Date" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Pooja" | translate}}</td>
+                            <td style="font-weight: bold;">{{"POOJAS.Name" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Nakshathram" | translate}}Nakshathram</td>
+                            <td style="font-weight: bold;">{{"Phone_Number" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
                         <tr *ngFor="let pooja of report.poojas">
                             <td>{{pooja.pooja_date}}</td>
@@ -206,22 +204,22 @@
                             <td><b>&#x20B9; {{pooja.pooja_price}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="5" style="font-weight: bold;">Total Amount</td>
+                            <td colspan="5" style="font-weight: bold;">{{"Total_Amount" | translate}}</td>
                             <td><b>&#x20B9; {{getTotalPrice(report.poojas, 'pooja_price')}}</b></td>
                         </tr>
                     </tbody>
                 </table>
                 <br><br>
                 <table *ngIf="report?.expenses.length">
-                    <p class="heading">Expenses</p>
+                    <p class="heading">{{"Date" | translate}}Expenses</p>
                     <tr><br></tr>
                     <tbody style="border: 1px dotted black">
                         <tr>
-                            <td style="font-weight: bold;">Date</td>
-                            <td style="font-weight: bold;">Item</td>
-                            <td style="font-weight: bold;">Description</td>
-                            <td style="font-weight: bold;">Added By</td>
-                            <td style="font-weight: bold;">Amount</td>
+                            <td style="font-weight: bold;">{{"Date" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Item" | translate}}</td>
+                            <td style="font-weight: bold;">{{"POOJAS_LIST.Description" | translate}}</td>
+                            <td style="font-weight: bold;">{{"POOJAS_LIST.Added_By" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
                         <tr *ngFor="let expense of report.expenses">
                             <td>{{expense.expense_date}}</td>
@@ -231,7 +229,7 @@
                             <td><b>&#x20B9; {{expense.cost}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4" style="font-weight: bold;">Total Expense</td>
+                            <td colspan="4" style="font-weight: bold;">{{"Total_Expense" | translate}}</td>
                             <td><b>&#x20B9; {{getTotalPrice(report.expenses, 'cost')}}</b></td>
                         </tr>
                     </tbody>
@@ -239,17 +237,17 @@
                 <br><br>
 
                 <table *ngIf="report?.donations.length">
-                    <p class="heading">Donations</p>
+                    <p class="heading">{{"DONATIONS.Donations" | translate}}</p>
                     <br>
                     <tbody style="border: 1px dotted black">
                         <tr>
-                            <td style="font-weight: bold;">Date</td>
-                            <td style="font-weight: bold;">Name</td>
-                            <td style="font-weight: bold;">Nakshatram</td>
-                            <td style="font-weight: bold;">Phone Number</td>
-                            <td style="font-weight: bold;">Address</td>
-                            <td style="font-weight: bold;">Added By</td>
-                            <td style="font-weight: bold;">Amount</td>
+                            <td style="font-weight: bold;">{{"Date" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Name" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Nakshatram" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Phone_Number" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Address" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Date" | translate}}Added By</td>
+                            <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
                         <tr *ngFor="let expense of report.donations">
                             <td>{{expense.donation_date}}</td>
@@ -261,7 +259,7 @@
                             <td><b>&#x20B9; {{expense.amount}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="6" style="font-weight: bold;">Total Donations</td>
+                            <td colspan="6" style="font-weight: bold;">{{"Total_Donations" | translate}}</td>
                             <td><b>&#x20B9; {{getTotalPrice(report.donations, 'amount')}}</b></td>
                         </tr>
                     </tbody>
@@ -271,7 +269,7 @@
             <div>
                 <br><br>
                 <footer>
-                    Generated Date:
+                    {{"Generated_Date" | translate}}:
                     {{getCurrentDate()}}
                 </footer>
             </div>
@@ -281,17 +279,17 @@
         <footer>
             <table class="notes">
                 <tr>
-                    <td>Billed By : {{temple.displayName}}</td>
+                    <td>{{"Billed_By" | translate}} : {{temple.displayName}}</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td style="float: right; border-top: 1px dashed black;">Authorized Signature</td>
+                    <td style="float: right; border-top: 1px dashed black;">{{"Authorized_Signature" | translate}}</td>
                 </tr>
             </table>
             <br>
             <div class="footer">
                 <div class="content">
-                    <span>Thank you. Please contact {{temple.phone_number}} or email us at {{temple.email}} for any queries/bookings</span>
+                    <span>{{"ThankYou" | translate:{phone_number: temple.phone_number, email: temple.email} }}</span>
                 </div>
             </div>
         </footer>

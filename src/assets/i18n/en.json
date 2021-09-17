@@ -1,9 +1,127 @@
 { 
-    "HELLO": "HELLO how are you",
+    "Loading": "Loading",
+    "is_required": "is required",
+    "Install_App": "Install App",
+    "Close": "Close",
+    "Save": "Save",
+    "Total": "Total",
+    "Update_App": "Update App",
+    
+    "Date": "Date",
+    "Name": "Name",
+    "Nakshathram": "Nakshathram",
+    "Phone_Number": "Phone Number",
+    "Address": "Address (Optional)",
+    "Amount": "Amount",
+    "Total_Amount": "Total Amount",
+    "Expense_Receipt": "Expense Receipt",
+    "Period": "Period",
+    "Pooja": "Pooja",
+    "Generated_Date": "Generated Date",
+    "Billed_By": "Billed By",
+    "Authorized_Signature": "Authorized Signature",
+    "ThankYou": "Thank you. Please contact {{phone_number}} or email us at {{email}} for any queries/bookings",
+
+
     "LOGIN": {
         "LOGIN": "Log in",
         "USERNAME": "Username",
         "PASSWORD": "Password",
-        "LANGUAGE": "Language"
+        "LANGUAGE": "Language",
+        "Email": "Email",
+        "Temple": "Temple",
+        "Role": "Role"
+    },
+    "MAIN": {
+        "POOJAS": "Poojas",
+        "EXPENSES": "Expenses",
+        "DONATIONS": "Donations",
+        "REPORTS": "Reports",
+        "ADMIN_PANEL": "Admin Panel",
+        "SETTINGS": "Settings"
+    },
+    "POOJAS": {
+        "Name": "Name",
+        "Expenses": "Expenses",
+        "Nakshathram": "Nakshathram",
+        "Print": "Print",
+        "Receipt": "Receipt #",
+        "No_Poojas": "No Poojas",
+        "No_Poojas_tomorow": "No Poojas tomorrow",
+        "Poojas_on": "Poojas on ",
+        "Poojas_by_date": "Poojas by date ",
+        "No_Poojas_on": "No Poojas on "
+    },
+    "POOJAS_LIST": {
+        "Poojas_List": "Poojas List",
+        "change": "Change pooja settings of your temple",
+        "Name": "Name",
+        "Code": "Code",
+        "Description": "Description",
+        "Price": "Price",
+        "Added_By": "Added By",
+        "Add": "Add"
+    },
+    "POOJAS_MODAL": {
+        "Phone_Number": "Phone Number",
+        "Address": "Address (Optional)",
+        "Name": "Name",
+        "Nakshathram": "Nakshathram",
+        "Total_Price": "Total Price:",
+        "Add_Person": "Add Person",
+        "Save_Print": "Save & Print",
+        "Close": "Close",
+        "No_data_added": "No data added"
+    },
+    "CONFIRM_MODAL": {
+        "Delete": "Delete",
+        "sure": "Are you sure you want to delete this item?",
+        "cancel": "Cancel"
+    },
+    "EXPENSES": {
+        "Add_Expense": "Add Expense",
+        "Item": "Item",
+        "Description": "Description",
+        "Cost": "Cost",
+        "Record_Salary": "Record Salary",
+        "Clear": "Clear",
+        "Paid_To": "Paid To",
+        "Person_Name": "Person Name",
+        "Amount": "Amount",
+        "Expense_on": "Expense on",
+        "Total_Expense": "Total Expense"
+    },
+    "DONATIONS": {
+        "Donations": "Donations",
+        "Add_Donations": "Add Donations",
+        "Add_Donations_Desc": "Adding a donation of",
+        "Name": "Name",
+        "Nakshathtam": "Nakshathtam",
+        "Address": "Address",
+        "Phone_Number": "Phone Number",
+        "Clear": "Clear",
+        "Save_Print": "Save & Print",
+        "Amount": "Amount",
+        "Total_Donations": "Total Donations",
+        "Donations_on": "Donations on"
+    },
+    "REPORTS": {
+        "Financial_Reports": "Financial Reports",
+        "desc": "Visualisation of consolidated accounts data",
+        "day": "day",
+        "week": "week",
+        "month": "month",
+        "custom": "custom",
+        "Poojas": "Poojas",
+        "No_Data_Today": "No Data Today",
+        "ProfitLoss": "Profit/Loss",
+        "Expense_Type": "Expense Type",
+        "Amount": "Amount",
+        "Pooja_Name": "Poooja Name",
+        "Total_Amount_Received": "Total Amount Received",
+        "This_Weeks_ProfitLoss": "This Week's Profit/Loss",
+        "This_Months_ProfitLoss": "This Month's Profit/Loss",
+        "This_Years_ProfitLoss": "This Year's Profit/Loss",
+        "GetData": "GET DATA"
     }
 }

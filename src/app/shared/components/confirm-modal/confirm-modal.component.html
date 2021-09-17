@@ -3,14 +3,14 @@
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">×</span>
     </button>
-    <h4 class="modal-title w-100" id="myModalLabel">Delete</h4>
+    <h4 class="modal-title w-100" id="myModalLabel">{{"CONFIRM_MODAL.Delete" | translate}}</h4>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to delete this item?</p>
+    <p>{{"CONFIRM_MODAL.sure" | translate}}</p>
   </div>
   <div class="modal-footer">
     <button type="button" mdbBtn color="white" class="black-text waves-light" aria-label="Close" (click)="modalRef.hide()"
-      mdbWavesEffect>Cancel</button>
-    <button type="button" mdbBtn color="red" class="waves-light" mdbWavesEffect (click)="onDelete()">Delete</button>
+      mdbWavesEffect>{{"CONFIRM_MODAL.cancel" | translate}}</button>
+    <button type="button" mdbBtn color="red" class="waves-light" mdbWavesEffect (click)="onDelete()">{{"CONFIRM_MODAL.Delete" | translate}}</button>
   </div>
 </div>
