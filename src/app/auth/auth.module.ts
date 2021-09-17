@@ -10,6 +10,7 @@ import { AuthService } from './services/auth.service';
 import { InputsModule, ButtonsModule, CardsModule, IconsModule, WavesModule, InputUtilitiesModule } from 'angular-bootstrap-md';
 import { LoginComponent } from './components/login/login.component';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     IconsModule,
     StoreModule.forFeature('auth', fromAuth.authReducer),
-    EffectsModule.forFeature([AuthEffects])
+    EffectsModule.forFeature([AuthEffects]),
+    TranslateModule
   ],
   declarations: [RegisterComponent, LoginComponent],
   exports: [RegisterComponent, LoginComponent],

@@ -49,7 +49,7 @@ import { DateTransformDirective } from '../directives/date-transform.directive';
     HomeComponent,
     SplitBodyComponent,
     DatePickerDirective,
-    DateTransformDirective
+    DateTransformDirective,
   ]
 })
 export class CoreModule {}

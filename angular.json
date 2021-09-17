@@ -30,6 +30,7 @@
               "src/assets/datepicker",
               "src/assets/images",
               "src/assets/icons",
+              "src/assets/",
               "src/manifest.webmanifest",
               "src/manifest.prod.webmanifest"
             ],

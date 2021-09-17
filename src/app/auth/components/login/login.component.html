@@ -12,7 +12,7 @@
         <div class="white text-center py-4">
           <img src="assets/images/RR-logo.png" class="pb-2" height="100" alt="">
           <h5>
-            <strong>Log in</strong>
+            <strong>{{ "LOGIN.LOGIN" | translate}}</strong>
           </h5>
         </div>
 
@@ -28,20 +28,20 @@
             <!-- Username -->
             <div class="md-form">
               <input mdbValidate [validateSuccess]="false" type="email" id="username" class="form-control" formControlName="username" mdbInput>
-              <label for="username">Username</label>
+              <label for="username">{{ "LOGIN.USERNAME" | translate}}</label>
               <mdb-error *ngIf="username && username.invalid && (username.dirty || username.touched)">Username is required</mdb-error>
             </div>
 
             <!-- Password -->
             <div class="md-form">
               <input mdbValidate [validateSuccess]="false" type="password" id="password" class="form-control" formControlName="password" mdbInput>
-              <label for="password">Password</label>
+              <label for="password">{{ "LOGIN.PASSWORD" | translate}}</label>
               <mdb-error *ngIf="password && password.invalid && (password.dirty || password.touched)">Password is required</mdb-error>
             </div>
 
             <!-- Sign in button -->
             <button mdbBtn color="primary" block="true" class="my-4 waves-effect z-depth-0"
-              mdbWavesEffect type="submit" (click)="onLogin()">Log in</button>
+              mdbWavesEffect type="submit" (click)="onLogin()">{{ "LOGIN.LOGIN" | translate}}</button>
 
             <!-- Register -->
             <!-- <p>Not a member?
@@ -61,7 +61,25 @@
             </a> -->
           </form>
           <!-- Form -->
-
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="btn-toolbar row" role="toolbar" aria-label="Toolbar with button groups">
+                <blockquote class="text-left blockquote bq-success col-md-6 col-sm-12">
+                </blockquote>
+                <div class="btn-group m-2 mt-4 w-100 d-flex-center" role="group" aria-label="First group">
+                  <span>{{ "LOGIN.LANGUAGE" | translate}}</span> 
+                  <button mdbBtn type="button" (click)="setLanguage('en')" [color]="selectedLanguage === 'en' ? 'primary' : 'white'"
+                    class="waves-light col-4 col-md-4 ml-2" size="sm" mdbWavesEffect>
+                    English
+                  </button>
+                  <button mdbBtn type="button" (click)="setLanguage('ml')" [color]="selectedLanguage === 'ml' ? 'primary' : 'white'"
+                    class="waves-light col-4 col-md-4" size="sm" mdbWavesEffect>
+                    മലയാളം
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </mdb-card-body>
 
       </mdb-card>

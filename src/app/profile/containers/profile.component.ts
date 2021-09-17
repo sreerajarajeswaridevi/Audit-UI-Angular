@@ -11,6 +11,7 @@ import * as fromAdmin from '../../admin/store/admin.actions';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { UserModalComponent } from 'src/app/shared/components/user-modal/user-modal.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
@@ -25,13 +26,15 @@ export class ProfileComponent implements OnInit {
   private modalRef: MDBModalRef;
   pageSize = 'A4';
   duplicatePage = 'same';
+  selectedLanguage = 'en';
 
   modalConfig = {
     class: 'modal-dialog-centered'
   };
 
   constructor(private store: Store<AppState>,
-    private modalService: MDBModalService
+    private modalService: MDBModalService,
+    private translate: TranslateService
     ) { 
     this.store.select(getUser).subscribe((user: User) => {
       this.user = user;
@@ -55,6 +58,9 @@ export class ProfileComponent implements OnInit {
     }
     if (localStorage.getItem('duplicateCopyPage')) {
       this.duplicatePage = localStorage.getItem('duplicateCopyPage') + '';
+    }
+    if (localStorage.getItem('language')) {
+      this.selectedLanguage = localStorage.getItem('language') + '';
     }
   }
 
@@ -122,6 +128,12 @@ export class ProfileComponent implements OnInit {
   setDuplicateCopyPage(page: string) {
     this.duplicatePage = page;
     localStorage.setItem('duplicateCopyPage', page);
+  }
+
+  setLanguage(language: string) {
+    this.selectedLanguage = language;
+    localStorage.setItem('language', language);
+    this.translate.use(language);
   }
 
 }

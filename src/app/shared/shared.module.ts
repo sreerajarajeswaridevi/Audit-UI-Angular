@@ -28,6 +28,7 @@ import { PrinterComponent } from './components/printer/printer.component';
 import { IndexedDBModule } from '../expenses/indexedDB/indexedDB.module';
 import { PwaComponent } from './components/pwa/pwa.component';
 import { PwaService } from './services/pwa-service.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { PwaService } from './services/pwa-service.service';
     DropdownModule,
     BadgeModule,
     CoreModule,
-    IndexedDBModule
+    IndexedDBModule,
+    TranslateModule
   ],
   exports: [
     CustomersListComponent,
@@ -70,7 +72,8 @@ import { PwaService } from './services/pwa-service.service';
     TabsComponent,
     TabComponent,
     PrinterComponent,
-    PwaComponent
+    PwaComponent,
+    TranslateModule
   ],
   providers: [PwaService],
   entryComponents: [

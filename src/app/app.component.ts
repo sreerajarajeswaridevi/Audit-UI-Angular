@@ -6,6 +6,7 @@ import { User } from './auth/models/user.model';
 import { getUser, getIsLoggedIn, getIsLoading, getIsAdmin } from './auth/store/auth.selectors';
 
 import * as fromAuth from './auth/store/auth.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,19 @@ export class AppComponent implements OnInit {
   isLoading$: Observable<boolean>;
   isAdmin$: Observable<boolean>;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, translate: TranslateService) {
+    translate.addLangs(['en', 'ml']);
+    translate.setDefaultLang('en');
+
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    translate.onLangChange.subscribe(() => {
+      if (localStorage.getItem('language')) {
+        translate.use(localStorage.getItem('language') + '');
+      } else {
+        translate.use('en');
+      }
+    });
+  }
 
   ngOnInit() {
     this.store.select(getUser).subscribe((user) => {

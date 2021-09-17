@@ -23,7 +23,7 @@ export class APIInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
-        if (this.user && !req.url.includes('login')) {
+        if (this.user && !req.url.includes('login') && !req.url.includes('i18n')) {
             const authReq = req.clone({
                 url: `${req.url}&username=${this.user.username}&password=${this.user.password}`
               });

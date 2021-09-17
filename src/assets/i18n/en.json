@@ -1,0 +1,9 @@
+{ 
+    "HELLO": "HELLO how are you",
+    "LOGIN": {
+        "LOGIN": "Log in",
+        "USERNAME": "Username",
+        "PASSWORD": "Password",
+        "LANGUAGE": "Language"
+    }
+}

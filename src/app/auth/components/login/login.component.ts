@@ -8,6 +8,7 @@ import { getError } from '../../store/auth.selectors';
 import { map } from 'rxjs/operators';
 import * as CryptoJS from 'crypto-js';
 import { getIsLoading } from 'src/app/auth/store/auth.selectors';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -19,12 +20,17 @@ export class LoginComponent implements OnInit {
 
   error$: Observable<string | null>;
   isLoading$: Observable<boolean>;
+  selectedLanguage = 'en';
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private translate: TranslateService) { }
 
   ngOnInit() {
     const cachedUsername = localStorage.getItem('username');
     const cachedPassword = localStorage.getItem('password');
+    if (localStorage.getItem('language')) {
+      this.selectedLanguage = localStorage.getItem('language') + '';
+      this.setLanguage(this.selectedLanguage);
+    }
     if (cachedUsername && cachedPassword) {
       this.store.dispatch(new actions.LoginRequested({
         username: cachedUsername,
@@ -73,5 +79,12 @@ export class LoginComponent implements OnInit {
   onTwitterLogin(authProvider: string) {
     this.store.dispatch(new actions.SocialLogin({ authProvider }));
   }
+
+  setLanguage(language: string) {
+    this.selectedLanguage = language;
+    localStorage.setItem('language', language);
+    this.translate.use(language);
+  }
+
 
 }
