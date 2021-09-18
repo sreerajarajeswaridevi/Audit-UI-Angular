@@ -23,9 +23,9 @@
     <mdb-card-header>
       <div class="pl-2 pr-2 row container">
         <div class="phone col-md-6 col-xs-12">
-          <label for="phone" class="float-left">{{"POOJAS_MODAL.Phone_Number" | translate}} *</label>
+          <label for="phone" class="float-left">{{"POOJAS_MODAL.Phone_Number" | translate}}</label>
           <input type="text" id="phone" name="phone" class="form-control" [(ngModel)]="response.phone_number" mdbInput mdbValidate
-            [validateSuccess]="false" required #phone="ngModel" (blur)="fetchPeopleData(phone.value)" >
+            [validateSuccess]="false" #phone="ngModel" (blur)="fetchPeopleData(phone.value)" >
         <mdb-error class="float-left" *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">{{"POOJAS_MODAL.Phone_Number" | translate}} {{"is_required" | translate}}</mdb-error>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -104,7 +104,7 @@
       <div class="d-flex">
         <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="modalRef.hide()"
           mdbWavesEffect>{{"POOJAS_MODAL.Close" | translate}}</button>
-        <button type="button" mdbBtn color="success" [disabled]="peopleFetching || response.bhakthar.length === 0 || response.phone_number === ''" class="relative waves-light" mdbWavesEffect (click)="onSave()">{{"POOJAS_MODAL.Save_Print" | translate}}</button>
+        <button type="button" mdbBtn color="success" [disabled]="peopleFetching || response.bhakthar.length === 0" class="relative waves-light" mdbWavesEffect (click)="onSave()">{{"POOJAS_MODAL.Save_Print" | translate}}</button>
       </div>
 
   </div>

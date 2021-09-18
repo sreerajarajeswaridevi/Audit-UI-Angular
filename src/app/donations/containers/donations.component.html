@@ -78,7 +78,7 @@
             <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="resetForm()"
               mdbWavesEffect>{{"DONATIONS.Clear" | translate}}</button>
             <button type="button" mdbBtn color="success" [disabled]="donationForm.invalid" class="relative waves-light" 
-            mdbWavesEffect (click)="onSave()">{{"DONATIONS.Save_Print" | translate}}</button>
+            mdbWavesEffect (click)="onSave()">{{"Save" | translate}}</button>
             <app-printer #appPrinter [type]="'donation'" [hidden]="true"></app-printer>
           </div>
       </mdb-card-footer>

@@ -79,7 +79,7 @@ export class DonationsComponent implements OnInit {
         receipt_number: receipt_number
       }
       this.appPrinter.donation = printData;
-      this.appPrinter.triggerPrint();
+      // this.appPrinter.triggerPrint();
     });
 
 

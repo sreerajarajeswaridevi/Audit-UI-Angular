@@ -60,6 +60,7 @@ export class PoojasModalComponent implements OnInit {
 
   onSave() {
     if (this.response.bhakthar.length > 0) {
+      this.response.phone_number = this.response.phone_number || '';
       this.poojasData.next(this.response);
       this.modalRef.hide();
     } else {

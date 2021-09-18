@@ -114,7 +114,7 @@ export class ExpensesComponent implements OnInit {
           expense_date: this.expenseDate.format('DD-MM-YYYY'),
           receipt_number
         };
-        this.appPrinter.triggerPrint();
+        // this.appPrinter.triggerPrint();
         this.expenseCopy = null;
       }
     })

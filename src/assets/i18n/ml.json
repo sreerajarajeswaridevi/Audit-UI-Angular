@@ -33,12 +33,14 @@
         "Role": "സ്ഥാനം"
     },
     "MAIN": {
+        "HOME": "ഹോം",
         "POOJAS": "പൂജകൾ",
         "EXPENSES": "ചെലവുകൾ",
         "DONATIONS": "സംഭാവനകൾ",
         "REPORTS": "റിപ്പോർട്ടുകൾ",
         "ADMIN_PANEL": "അഡ്മിൻ പാനൽ",
-        "SETTINGS": "ക്രമീകരണങ്ങൾ"
+        "SETTINGS": "ക്രമീകരണങ്ങൾ",
+        "LOGOUT": "ലോഗൗട്ട്"
     },
     "POOJAS": {
         "Name": "പേര്",
@@ -50,7 +52,9 @@
         "No_Poojas_tomorow": "നാളെ പൂജകളില്ല",
         "Poojas_on": "പൂജകൾ ",
         "Poojas_by_date": "തീയതി പ്രകാരം പൂജകൾ",
-        "No_Poojas_on": "പൂജകളില്ല"
+        "No_Poojas_on": "പൂജകളില്ല",
+        "Todays_Poojas": "ഇന്നത്തെ പൂജകൾ",
+        "Tomorrows_Poojas": "നാളത്തെ പൂജകൾ"
     },
     "POOJAS_LIST": {
         "Poojas_List": "പൂജകളുടെ പട്ടിക",
@@ -109,6 +113,7 @@
         "Financial_Reports": "സാമ്പത്തിക റിപ്പോർട്ടുകൾ",
         "desc": "അക്കൗണ്ടുകളും ലാഭനഷ്ടങ്ങളും",
         "day": "ദിവസം",
+        "year": "വർഷം",
         "week": "ആഴ്ച",
         "month": "മാസം",
         "custom": "കസ്റ്റം",
@@ -123,5 +128,13 @@
         "This_Months_ProfitLoss": "ഈ മാസത്തെ ലാഭം/നഷ്ടം",
         "This_Years_ProfitLoss": "ഈ വർഷത്തെ ലാഭം/നഷ്ടം",
         "GetData": "ഡാറ്റ ചോദിക്കുക"
+    },
+    "SETTINGS": {
+        "heading": "പ്രിന്റർ ക്രമീകരണങ്ങൾ",
+        "description": "നിങ്ങളുടെ പ്രിന്റിംഗ് മുൻഗണനകൾ ഇവിടെ മാറ്റുക",
+        "pageSize": "പ്രിന്റർ പേജ് വലുപ്പം",
+        "printDuplicate": "ഡ്യൂപ്ലിക്കേറ്റ് കോപ്പി എവിടെയാണ് അച്ചടിക്കുക",
+        "samePage": "ഒരേ പേജ്",
+        "nextPage": "അടുത്ത പേജ്"
     }
 }

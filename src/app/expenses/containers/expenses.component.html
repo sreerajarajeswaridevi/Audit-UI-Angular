@@ -50,7 +50,7 @@
       <mdb-card-footer class="d-flex">
         <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="expenseForm.reset()">{{ "EXPENSES.Clear" | translate }}
           </button>
-        <button type="button" mdbBtn color="success" [disabled]="expenseForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSave()">Save & Print
+        <button type="button" mdbBtn color="success" [disabled]="expenseForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSave()">{{ "Save" | translate }}
           </button>
 
       </mdb-card-footer>
@@ -100,7 +100,7 @@
       <mdb-card-footer class="d-flex">
         <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="salaryForm.reset()">{{ "EXPENSES.Clear" | translate }}
           </button>
-        <button type="button" mdbBtn color="success" [disabled]="salaryForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSalarySave(salaryForm)">Save & Print
+        <button type="button" mdbBtn color="success" [disabled]="salaryForm.invalid || (isLoading$ | async)" class="relative waves-light pull-right" mdbWavesEffect (click)="onSalarySave(salaryForm)">{{ "Save" | translate }}
           </button>
       </mdb-card-footer>
     </mdb-card>

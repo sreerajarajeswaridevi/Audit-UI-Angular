@@ -1,7 +1,7 @@
 <div class="white px-4 py-2">
   <blockquote class="text-left  blockquote bq-success col-md-6 col-sm-12">
-    <h4 class="header">Printer Settings</h4>
-    <p class="py-0" *ngIf="user.role === 'manager'">Change your printing preferences here</p>
+    <h4 class="header">{{"SETTINGS.heading" | translate}}</h4>
+    <p class="py-0" *ngIf="user.role === 'manager'">{{"SETTINGS.description" | translate}}</p>
   </blockquote>
 
   <div class="row">
@@ -10,7 +10,7 @@
         <blockquote class="text-left blockquote bq-success col-md-6 col-sm-12">
         </blockquote>
         <div class="btn-group m-2 mt-4 w-100 d-flex" role="group" aria-label="First group">
-          <span>Language</span> 
+          <span>{{"LOGIN.LANGUAGE" | translate}}</span> 
           <button mdbBtn type="button" (click)="setLanguage('en')" [color]="selectedLanguage === 'en' ? 'primary' : 'white'"
             class="waves-light col-4 col-md-4 col-lg-3 col-xl-2 ml-2" size="sm" mdbWavesEffect>
             English
@@ -28,7 +28,7 @@
         <blockquote class="text-left blockquote bq-success col-md-6 col-sm-12">
         </blockquote>
         <div class="btn-group m-2 mt-4 w-100 d-flex" role="group" aria-label="First group">
-          <span>Printer Page Size: </span> 
+          <span>{{"SETTINGS.pageSize" | translate}}: </span> 
           <button mdbBtn type="button" (click)="setPageSize('A4')" [color]="pageSize === 'A4' ? 'primary' : 'white'"
             class="waves-light col-4 col-md-4 col-lg-3 col-xl-2 ml-2" size="sm" mdbWavesEffect>
             A4
@@ -43,14 +43,14 @@
 
     <div class="col-md-6 col-sm-12">
       <div class="btn-group m-2 mt-4 w-100 d-flex" role="group" aria-label="First group">
-        <span>Print duplicate copy in: </span> 
+        <span>{{"SETTINGS.printDuplicate" | translate}}: </span> 
         <button mdbBtn type="button" (click)="setDuplicateCopyPage('same')" [color]="duplicatePage === 'same' ? 'primary' : 'white'"
           class="waves-light col-4 col-md-4 col-lg-3 col-xl-2 ml-2" size="sm" mdbWavesEffect>
-          Same Page
+          {{"SETTINGS.samePage" | translate}}
         </button>
         <button mdbBtn type="button" (click)="setDuplicateCopyPage('next')" [color]="duplicatePage === 'next' ? 'primary' : 'white'"
           class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
-          Next Page
+          {{"SETTINGS.nextPage" | translate}}
         </button>
       </div>
     </div>

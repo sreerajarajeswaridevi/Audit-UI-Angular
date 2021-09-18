@@ -33,12 +33,14 @@
         "Role": "Role"
     },
     "MAIN": {
+        "HOME": "HOME",
         "POOJAS": "Poojas",
         "EXPENSES": "Expenses",
         "DONATIONS": "Donations",
         "REPORTS": "Reports",
         "ADMIN_PANEL": "Admin Panel",
-        "SETTINGS": "Settings"
+        "SETTINGS": "Settings",
+        "LOGOUT": "Logout"
     },
     "POOJAS": {
         "Name": "Name",
@@ -50,7 +52,9 @@
         "No_Poojas_tomorow": "No Poojas tomorrow",
         "Poojas_on": "Poojas on ",
         "Poojas_by_date": "Poojas by date ",
-        "No_Poojas_on": "No Poojas on "
+        "Tomorrows_Poojas": "Tomorrows Poojas",
+        "Todays_Poojas": "Todays Poojas",
+        "No_Poojas_on": "No Poojas on"
     },
     "POOJAS_LIST": {
         "Poojas_List": "Poojas List",
@@ -111,17 +115,26 @@
         "day": "day",
         "week": "week",
         "month": "month",
+        "year": "year",
         "custom": "custom",
         "Poojas": "Poojas",
         "No_Data_Today": "No Data Today",
         "ProfitLoss": "Profit/Loss",
         "Expense_Type": "Expense Type",
         "Amount": "Amount",
-        "Pooja_Name": "Poooja Name",
+        "Pooja_Name": "Pooja Name",
         "Total_Amount_Received": "Total Amount Received",
         "This_Weeks_ProfitLoss": "This Week's Profit/Loss",
         "This_Months_ProfitLoss": "This Month's Profit/Loss",
         "This_Years_ProfitLoss": "This Year's Profit/Loss",
         "GetData": "GET DATA"
+    },
+    "SETTINGS": {
+        "heading": "Printer Settings",
+        "description": "Change your printing preferences here",
+        "pageSize": "Printer Page Size",
+        "printDuplicate": "Print duplicate copy in",
+        "samePage": "Same Page",
+        "nextPage": "Next Page"
     }
 }
