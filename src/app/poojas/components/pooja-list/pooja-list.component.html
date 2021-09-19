@@ -55,7 +55,7 @@
                   <div class="md-form">
                     <input type="text" id="add_pooja_name" name="pooja_name" class="form-control" 
                     #pooja_name="ngModel" [(ngModel)]="editCache.pooja_name" mdbInput mdbValidate
-                      [validateSuccess]="false" required [disabled]="true">
+                      [validateSuccess]="false" required>
                     <label for="pooja_name">{{"POOJAS_LIST.Name" | translate}}</label>
                     <mdb-error *ngIf="pooja_name && pooja_name.invalid && (pooja_name.dirty || pooja_name.touched)">{{"POOJA_LIST.Name" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
