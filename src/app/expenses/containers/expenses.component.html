@@ -16,7 +16,7 @@
       <mdb-card-body class="py-2">
         <form #expenseForm="ngForm" autocomplete="on">
           <div class="d-flex">
-          <div class="md-form">
+          <div class="md-form w-50">
             <input type="text" id="item" name="item" class="form-control" [(ngModel)]="expense.item" mdbInput mdbValidate [validateSuccess]="false" #item="ngModel" required>
             <label for="item">{{ "EXPENSES.Item" | translate }}</label>
             <mdb-error *ngIf="item && item.invalid && (item.dirty || item.touched)">{{ "EXPENSES.Item" | translate }} {{"is_required" | translate}}</mdb-error>
@@ -74,7 +74,7 @@
       <mdb-card-body class="py-2">
         <form #salaryForm="ngForm">
           <div class="d-flex">
-          <div class="md-form">
+          <div class="md-form w-50">
             <input type="text" id="description" name="description" class="form-control" [(ngModel)]="salary.description" mdbInput mdbValidate [validateSuccess]="false" #description="ngModel" required>
             <label for="description">{{ "EXPENSES.Paid_To" | translate }}:</label>
             <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">{{ "EXPENSES.Person_Name" | translate }} {{"is_required" | translate}}</mdb-error>
@@ -130,6 +130,7 @@
       <table mdbTable small="true" striped="true" *ngIf="!(isLoading$ | async) && todaysExpenseList.length > 0">
         <thead>
           <tr>
+            <td *ngIf="(isManager$ | async)"></td>
             <th>{{ "EXPENSES.Item" | translate }}</th>
             <th>{{ "EXPENSES.Description" | translate }}</th>
             <th>{{ "EXPENSES.Cost" | translate }}</th>
@@ -137,6 +138,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of todaysExpenseList" [class.salary]="item?.item === 'Salary'">
+            <td *ngIf="(isManager$ | async)">
+              <mdb-icon class="edit" fas icon="pen" (click)="editExpense(item)"></mdb-icon>
+            </td>
             <td scope="row">{{ item?.item }}</td>
             <td>{{ item?.description }}</td>
             <td class="table-price">&#x20B9;{{ item?.cost }}</td>

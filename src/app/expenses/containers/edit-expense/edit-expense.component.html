@@ -1,0 +1,72 @@
+
+<div class="modal-content">
+    <!-- <div class="modal-header bg-primary white-text">
+      <div class="d-flex flex-column w-100">
+        <div class="d-flex ">
+          <h3 class="modal-title w-100" id="myModalLabel">{{ heading }}</h3>
+        </div>
+      </div>
+     
+      
+     
+    </div> -->
+
+
+<mdb-card>
+    <mdb-card-header class="w-100 d-flex justify-space-between bg-primary white-text">
+      <div>
+        <blockquote class="text-left  blockquote bq-success">
+          <h3 class="header">{{ "EXPENSES.Edit_Expense" | translate }} ({{editedValue.expense_date}})</h3>
+        </blockquote>
+      </div>
+      <!-- <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="expenseDate" [endDate]="endDate" [startDate]="startDate"
+      header="Select Date" (dateSelected)="expDatePicked($event)">
+      <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> <span appDateTransform [date]="expenseDate.format('YYYYMMDD')"></span>
+    </button> -->
+    
+    <button type="button" class="ml-2 close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </mdb-card-header>
+
+    <mdb-card-body class="py-2">
+      <form #expenseForm="ngForm" autocomplete="on">
+        <div class="d-flex">
+        <div class="md-form">
+          <input type="text" id="item" name="item" class="form-control" [(ngModel)]="editedValue.item" mdbInput mdbValidate [validateSuccess]="false" #item="ngModel" required>
+          <label for="item">{{ "EXPENSES.Item" | translate }}</label>
+          <mdb-error *ngIf="item && item.invalid && (item.dirty || item.touched)">{{ "EXPENSES.Item" | translate }} {{"is_required" | translate}}</mdb-error>
+        </div>
+        </div>
+
+        <div class="md-form" style="margin-top: 15px;">
+          <textarea type="text" id="description" name="description" class="my-0 py-0 md-textarea form-control" 
+          #description="ngModel" [(ngModel)]="editedValue.description" mdbInput mdbValidate
+            [validateSuccess]="false" required></textarea>
+          <label for="description">{{ "EXPENSES.Description" | translate }}</label>
+          <mdb-error *ngIf="description && description.invalid && (description.dirty || description.touched)">{{ "EXPENSES.Description" | translate }} {{"is_required" | translate}}</mdb-error>
+        </div>
+
+        <div class="text-lg">
+          <label for="cost" class="grey-text">{{ "EXPENSES.Cost" | translate }}</label>
+          <div class="md-form mt-0">
+            <span class="d-flex">
+              <span class="price">&#x20B9;</span>
+              <input type="number" class="form-control price" id="cost" name="cost" [(ngModel)]="editedValue.cost" #cost="ngModel" mdbValidate [validateSuccess]="false" required>
+            </span>
+            <mdb-error class="ml-3" *ngIf="cost && cost.invalid && (cost.dirty || cost.touched)">{{ "EXPENSES.Cost" | translate }} {{"is_required" | translate}}</mdb-error>
+          </div>
+        </div>
+
+      </form>
+    </mdb-card-body>
+    <mdb-card-footer class="d-flex">
+      <button type="button" mdbBtn color="white" class="relative waves-light pull-right" mdbWavesEffect (click)="expenseForm.reset()">{{ "EXPENSES.Clear" | translate }}
+        </button>
+      <button type="button" mdbBtn color="success" [disabled]="expenseForm.invalid" class="relative waves-light pull-right" mdbWavesEffect (click)="onSave()">{{ "Save" | translate }}
+        </button>
+
+    </mdb-card-footer>
+  </mdb-card>
+
+</div>

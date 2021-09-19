@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User } from 'src/app/auth/models/user.model';
 import { getUser } from 'src/app/auth/store/auth.selectors';
@@ -10,7 +10,7 @@ var moment = require('../../../../assets/datepicker/moment.js');
   styleUrls: ['./printer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PrinterComponent implements OnInit {
+export class PrinterComponent implements AfterViewInit {
 
   @Input() type = 'pooja';
   @Input() text = '';
@@ -29,6 +29,7 @@ export class PrinterComponent implements OnInit {
 
   temple: User;
   user: any;
+  splitPoojas: any = [];
 
   constructor(private store: Store<any>, private cdr: ChangeDetectorRef) { 
     this.store.select(getUser).subscribe((user: any) => {
@@ -37,7 +38,19 @@ export class PrinterComponent implements OnInit {
     this.size = localStorage.getItem('printerPageSize') || 'A4';
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    const chunkSize = 5;
+    if (this.poojas) {
+      this.splitPoojas = this.size === 'A4/2' ? this.poojas.reduce((all: any,one: any,i: number) => {
+        if (i < chunkSize) {
+            all[0].push(one);
+        return all;
+        }        
+        const ch = Math.floor((i-chunkSize)/8); 
+                all[ch+1] = [].concat((all[ch+1]||[]),one); 
+                return all
+             }, [[]]) : [this.poojas];
+    } 
   }
 
   getTotalPrice(poojas: any, key:string) {
@@ -118,7 +131,7 @@ export class PrinterComponent implements OnInit {
 		.address,
 		.phone {
 			background-color: white;
-      color: dimgray;
+      color: black;
 		}
 
 		header {
@@ -158,12 +171,14 @@ export class PrinterComponent implements OnInit {
 			align-items: center;
 		}
 		.title span {
-			color: white;
+			color: black;
 			padding: 5px 10px;
 			border-radius: 5px;
 			margin: 10px 0;
-			font-weight: bold;
-      background: linear-gradient(90deg, rgba(30,3,144,1) 0%, rgba(121,9,93,1) 100%, rgba(0,212,255,1) 100%);
+			font-weight: bolder;
+      font-size: 16px;
+      border: 2px solid gray;
+      // background: linear-gradient(90deg, rgba(30,3,144,1) 0%, rgba(121,9,93,1) 100%, rgba(0,212,255,1) 100%);
 
 		}
 		.date-receipt {
@@ -173,6 +188,9 @@ export class PrinterComponent implements OnInit {
 			background-color: #e7f9ff;
       border: 1px solid gray;
 		}
+    .page-break {
+      page-break-after: always;
+    }
 		.details {
 			display: flex;
 			justify-content: center;
@@ -180,11 +198,7 @@ export class PrinterComponent implements OnInit {
 			flex-direction: column;
 			width: 100%;
 		}
-		.details .content{
-			display: flex;
-			flex-direction: column;
-			width: 80%;
-		}
+	
 		.details .row {
 			display: flex;
 			margin-bottom: 10px;
@@ -227,10 +241,40 @@ export class PrinterComponent implements OnInit {
     .pooja-table td {
       border: 1px solid darkgoldenrod;
       padding: 5px;
+      font-weight: bolder;
+      font-size: 14px;
     }
 		@media print and (max-width: 2in){
 			.date-receipt { display: block; }
 		}
+    @media print {
+      table {
+        page-break-inside: auto;
+      }
+      tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+      }
+      thead {
+        display: table-header-group;
+      }
+      tfoot {
+        display: table-footer-group;
+      }
+    }
+    table {
+      page-break-inside: auto;
+    }
+    tr {
+      page-break-inside: avoid;
+      page-break-after: auto;
+    }
+    thead {
+      display: table-header-group;
+    }
+    tfoot {
+      display: table-footer-group;
+    }
     ${
       localStorage.getItem('duplicateCopyPage') === 'next' ? `
       .bill-break {
@@ -296,7 +340,7 @@ export class PrinterComponent implements OnInit {
     printerWindow.document.close();
     printerWindow.focus();
     printerWindow.print();
-    // printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
+    printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 
 }

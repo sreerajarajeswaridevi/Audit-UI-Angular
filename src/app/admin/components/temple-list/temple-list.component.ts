@@ -80,7 +80,6 @@ export class TempleListComponent implements OnInit {
     this.store.dispatch(new fromAdmin.GetTemples());
   }
 
-
   onAddTemple() {
     const temple = {
       ...this.templeForm.value,
@@ -173,8 +172,6 @@ export class TempleListComponent implements OnInit {
     this.editingIndex = i;
     setTimeout(() => {
       this.editForm.control.markAsTouched();
-      this.editForm.control.markAsTouched();
-      this.editForm.control.markAsDirty();
       this.editForm.control.markAsDirty();
       this.cdr.detectChanges();
     }, 0);

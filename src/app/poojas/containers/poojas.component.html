@@ -41,7 +41,7 @@
               <ng-container *ngFor="let poojasByReceiptNumber of groupedPoojaList; let in = index;">
                 <tr *ngIf="poojasByReceiptNumber.poojas.length" class="separator">
                   <td colspan="3">
-                    <b>Receipt# {{poojasByReceiptNumber.receipt_number}}</b> 
+                    <b>Receipt# {{poojasByReceiptNumber.receipt_number}} - &#x20B9;{{ getTotalReceiptAmount(poojasByReceiptNumber.poojas) }}</b> 
                     <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
                   </td>
                 </tr>
@@ -59,6 +59,11 @@
           <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!(isListLoading$ | async) && poojaList?.length === 0">
             <mdb-icon fas icon="exclamation-circle" class="float-right grey-text" alt="no data"></mdb-icon>
               <p class="grey-text">{{"POOJAS.No_Poojas" | translate}}</p>
+          </div>
+          <div role="footer" *ngIf="!(isLoading$ | async)">
+            <div class="card-footer text-muted">
+              {{"Total" | translate}}: <b class="price total-amount">&#x20B9;{{getTotalAmount(groupedPoojaList)}}</b>
+            </div>
           </div>
         </app-right-card>
 
@@ -100,6 +105,11 @@
           <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!(isListLoading$ | async) && tomorrowsPoojaList?.length === 0">
             <mdb-icon fas icon="exclamation-circle" class="float-right grey-text" alt="no data"></mdb-icon>
               <p class="grey-text">{{"POOJAS.No_Poojas_tomorrow" | translate}}</p>
+          </div>
+          <div role="footer" *ngIf="!(isLoading$ | async)">
+            <div class="card-footer text-muted">
+              {{"Total" | translate}}: <b class="price total-amount">&#x20B9;{{getTotalAmount(groupedTomorrowsPoojaList)}}</b>
+            </div>
           </div>
         </app-right-card>
         <br>
@@ -159,6 +169,11 @@
           <div class="p-4 d-flex flex-column justify-content-center align-items-center" *ngIf="!allPoojasLoading && allPoojasList?.length === 0">
             <mdb-icon fas icon="exclamation-circle" class="float-right grey-text" alt="no data"></mdb-icon>
               <p class="grey-text">{{"POOJAS.No_Poojas_on" | translate}} {{selectedDate.format('MMM Do')}} </p>
+          </div>
+          <div role="footer" *ngIf="!(isLoading$ | async)">
+            <div class="card-footer text-muted">
+              {{"Total" | translate}}: <b class="price total-amount">&#x20B9;{{getTotalAmount(groupedAllPoojasList)}}</b>
+            </div>
           </div>
         </app-right-card>
        

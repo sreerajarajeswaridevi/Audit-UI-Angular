@@ -15,18 +15,17 @@
                 <span class="phone">Phone : {{temple.phone_number}}</span>
             </div>
 		</header>
-        
         <!-- pooja...----------------- -->
         <body *ngIf="type === 'pooja' && poojas">
-            
+            <title>{{poojas[0]?.pooja_name}} - {{"Receipt" | translate}}: {{poojas[0]?.receipt_number}}</title>
             <div class="title"><span>{{poojas[0]?.pooja_name}}</span></div>
             <div class="date-receipt">
                 <span>{{"Date" | translate}} : <span class="db" appDateTransform [date]="poojas[0].pooja_date" [format]="'DD-MM-YYYY'"></span></span>
-                <span *ngIf="poojas[0]?.receipt_number" class="db bt-gray">{{"POOJAS.Receipt" | translate}}: <span >{{poojas[0]?.receipt_number}}</span></span>
+                <span *ngIf="poojas[0]?.receipt_number" class="db bt-gray">{{"Receipt" | translate}}: <span >{{poojas[0]?.receipt_number}}</span></span>
             </div>
             <br>
-            <div class="details">
-                <div class="content">
+            <!-- <div class="details"> -->
+                <!-- <div class="content"> -->
                     <div class="row" *ngIf="poojas[0]?.address">
                         <span class="label">{{"Address" | translate}} :</span> 
                         <span class="value">{{poojas[0]?.address}}</span>
@@ -35,24 +34,29 @@
                         <span class="label">{{"Phone_Number" | translate}} :</span>
                         <span class="value">{{poojas[0]?.phone_number}}</span>
                     </div>
-                   
-                    <table class="pooja-table" *ngIf="size !== 'bill'">
+                   <ng-container *ngIf="size !== 'bill'">
+                    <ng-container *ngFor="let splitPooja of splitPoojas; let j = index;">
+                        <hr class="page-break" *ngIf="j > 0">
+                        <table class="pooja-table">
                         <thead style="background-color: whitesmoke; padding: 10px;">
-                    
+                
                             <tr style="font-weight: bold;">
                                 <td>{{"Name" | translate}}</td>
                                 <td>{{"Nakshatram" | translate}}</td>
                                 <td>{{"Amount" | translate}}</td>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let pooja of poojas" style="border-bottom: 1px dotted black">
-                            <tr>
-                                <td>{{pooja?.name}}</td>
-                                <td>{{pooja?.nakshatram}}</td>
-                                <td>&#x20B9; {{pooja?.pooja_price}}</td>
-                            </tr>
+                        <tbody style="border-bottom: 1px dotted black">
+                            <ng-container *ngFor="let pooja of splitPooja; let i = index;">
+                                <tr>
+                                    <td>{{pooja?.name}}</td>
+                                    <td>{{pooja?.nakshatram}}</td>
+                                    <td>&#x20B9; {{pooja?.pooja_price}}</td>
+                                </tr>
+
+                            </ng-container>
                         </tbody>
-                        <tfoot>
+                        <tfoot *ngIf="j + 1 == splitPoojas.length">
                             <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
                                 <td colspan="2" style="font-weight: bold;"><b>{{"Total_Amount" | translate}}</b></td>
                                 <td style="font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
@@ -60,6 +64,9 @@
                             </tr>
                         </tfoot>
                     </table>
+                </ng-container>
+
+                </ng-container>
                     <div *ngIf="size === 'bill'">
                         <div *ngFor="let pooja of poojas" class="row-container">
                             <div class="row">
@@ -85,17 +92,18 @@
                             </tfoot>
                         </table>
                     </div>
-                </div>
-            </div>
+                <!-- </div> -->
+            <!-- </div> -->
         </body>
 
         <!-- expense_---------------------- -->
         <body *ngIf="type === 'expense' && expense">
+            <title>{{"Expense_Receipt" | translate}} - {{"Receipt" | translate}}: {{expense?.receipt_number}}</title>
               
                 <div class="title"><span>{{"Expense_Receipt" | translate}}</span></div>
                 <div class="date-receipt">
                     <span>{{"Date" | translate}} : {{expense.expense_date}}</span>
-                    <span class="bt-gray">Receipt No : {{expense?.receipt_number}}</span>
+                    <span class="bt-gray">{{"Receipt" | translate}} : {{expense?.receipt_number}}</span>
                 </div>
                 <br>
                 <div class="details">
@@ -129,6 +137,7 @@
 
         <!-- DONATION---------------------- -->
         <body *ngIf="type === 'donation' && donation">
+            <title>{{"Donations_Receipt" | translate}} - {{"Receipt" | translate}}: {{donation?.receipt_number}}</title>
               
                 <div class="title"><span>{{"Date" | translate}}Donation Receipt</span></div>
                 <div class="date-receipt">

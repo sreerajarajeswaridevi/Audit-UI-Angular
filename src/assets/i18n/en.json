@@ -15,12 +15,14 @@
     "Amount": "Amount",
     "Total_Amount": "Total Amount",
     "Expense_Receipt": "Expense Receipt",
+    "Donations_Receipt": "Donations Receipt",
     "Period": "Period",
     "Pooja": "Pooja",
     "Generated_Date": "Generated Date",
     "Billed_By": "Billed By",
     "Authorized_Signature": "Authorized Signature",
     "ThankYou": "Thank you. Please contact {{phone_number}} or email us at {{email}} for any queries/bookings",
+    "Receipt": "Receipt #",
 
 
     "LOGIN": {
@@ -84,6 +86,7 @@
     },
     "EXPENSES": {
         "Add_Expense": "Add Expense",
+        "Edit_Expense": "Edit Expense",
         "Item": "Item",
         "Description": "Description",
         "Cost": "Cost",

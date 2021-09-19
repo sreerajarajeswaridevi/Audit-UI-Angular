@@ -29,6 +29,7 @@ import { IndexedDBModule } from '../expenses/indexedDB/indexedDB.module';
 import { PwaComponent } from './components/pwa/pwa.component';
 import { PwaService } from './services/pwa-service.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { EditExpenseComponent } from '../expenses/containers/edit-expense/edit-expense.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CustomersModalComponent,
     CustomersListComponent,
     PoojasModalComponent,
+    EditExpenseComponent,
     RightCardComponent,
     UserModalComponent,
     UsersListComponent,
@@ -65,6 +67,7 @@ import { TranslateModule } from '@ngx-translate/core';
   exports: [
     CustomersListComponent,
     PoojasModalComponent,
+    EditExpenseComponent,
     RightCardComponent,
     UserModalComponent,
     UsersListComponent,
@@ -80,6 +83,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ConfirmModalComponent,
     CustomersModalComponent,
     PoojasModalComponent,
+    EditExpenseComponent,
     UserModalComponent,
     PrinterComponent
   ]

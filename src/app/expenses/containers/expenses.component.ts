@@ -14,6 +14,7 @@ import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
 import { User } from 'src/app/auth/models/user.model';
 import { ExpensesService } from '../services/expenses.service';
+import { EditExpenseComponent } from './edit-expense/edit-expense.component';
 
 var moment = require('../../../assets/datepicker/moment.js');
 
@@ -34,6 +35,12 @@ export class ExpensesComponent implements OnInit {
   startDate = moment().subtract(60, 'days');
   endDate = moment().add('30', 'days');
   selectedDate = moment();
+  
+  modalConfig = {
+    containerClass: 'center',
+    class: 'modal-dialog-centered center modal-lg',
+    animated: true,
+  };
   
   expense: any = {
     ist_YYYYMMDD: moment().format('YYYY-MM-DD')
@@ -95,6 +102,8 @@ export class ExpensesComponent implements OnInit {
   nextDate() {
     this.datePicked(this.selectedDate.add('1', 'days'));
   }
+
+
 
   ngOnInit(): void {
     this.store.select(getExpenses).subscribe((exp: Expenses[]) => {
@@ -189,7 +198,6 @@ export class ExpensesComponent implements OnInit {
 
   resetAll() {
     
-    
   }
 
   getTotalExpense() {
@@ -244,5 +252,19 @@ export class ExpensesComponent implements OnInit {
     form.reset();
     this.salaryDate = moment();
     this.salary = {};
+  }
+
+  editExpense(expense: Expenses) {
+    this.modalRef = this.modalService.show(EditExpenseComponent, {
+      ...this.modalConfig,
+      data: {
+        heading: 'Edit Expense',
+        expense: expense
+      }
+    });
+
+    this.modalRef.content.editedExpense.pipe(take(1)).subscribe( (expense: any) => {
+      this.store.dispatch(new fromExpenses.ExpensesAddQuery(expense));
+    });
   }
 }

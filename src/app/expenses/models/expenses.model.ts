@@ -5,4 +5,5 @@ export interface Expenses {
     description?: string;
     added_by?: string;
     expense_date?: string;
+    ist_YYYYMMDD?: string;
 }

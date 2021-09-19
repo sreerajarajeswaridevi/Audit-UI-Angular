@@ -15,13 +15,14 @@
     "Amount": "തുക",
     "Total_Amount": "ആകെ തുക",
     "Expense_Receipt": "ചെലവ് രസീത്",
+    "Donations_Receipt": "സംഭാവന രസീത്",
     "Period": "കാലഘട്ടം",
     "Pooja": "പൂജ",
     "Generated_Date": "ബിൽ ചെയ്ത തീയതി",
     "Billed_By": "ബിൽ ചെയ്തത്",
     "Authorized_Signature": "അംഗീകൃത ഒപ്പ്",
     "ThankYou": "നന്ദി. എന്തെങ്കിലും അന്വേഷണങ്ങൾ/ബുക്കിംഗിനായി ദയവായി {{phone_number}} ബന്ധപ്പെടുക അല്ലെങ്കിൽ {{email}} എന്ന ഇമെയിൽ വഴി ഞങ്ങൾക്ക് ഇമെയിൽ ചെയ്യുക",
-
+    "Receipt": "രസീത് #",
 
     "LOGIN": {
         "LOGIN": "ലോഗിൻ",
@@ -84,6 +85,7 @@
     },
     "EXPENSES": {
         "Add_Expense": "ചെലവ് ചേർക്കുക",
+        "Edit_Expense": "ചെലവ് തിരുത്തുക",
         "Item": "ഇനം",
         "Description": "വിവരണം",
         "Cost": "ചെലവ്",

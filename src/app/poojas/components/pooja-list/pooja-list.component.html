@@ -7,10 +7,12 @@
           </blockquote>
         </mdb-card-header>
         <mdb-card-body class="py-2">
-          <form #poojasForm="ngForm" *ngIf="!(isLoading$ | async)">
+        <form #editForm="ngForm">
+
           <table mdbTable striped="true">
             <thead>
               <tr>
+                <th></th>
                 <th>{{"POOJAS_LIST.Name" | translate}}</th>
                 <th>{{"POOJAS_LIST.Code" | translate}}</th>
                 <th>{{"POOJAS_LIST.Description" | translate}}</th>
@@ -19,7 +21,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of poojas">
+              
+            <tr *ngFor="let item of poojas; let i = index;">
+              <ng-container *ngIf="editingIndex != i">
+                <td *ngIf="(isManager$ | async)">
+                  <mdb-icon class="edit" fas icon="pen" (click)="edit(i)"></mdb-icon>
+                </td>
                 <td scope="row">{{ item.pooja_name }}</td>
                 <td>{{ item.pooja_code }}</td>
                 <td>{{ item.pooja_description }}</td>
@@ -29,14 +36,26 @@
                   <mdb-icon fas icon="trash" class="float-right delete grey-text" (click)="onDeletePooja(item.pooja_code)" alt="Delete Pooja"></mdb-icon>
                 </td>
                 
-
-              </tr>
-              <tr class="bg-white">
+              </ng-container>
+              <!-- <form #editForm="ngForm"> -->
+              <ng-container *ngIf="editMode && editingIndex == i">
+                <td *ngIf="(isManager$ | async)">
+                  <div class="d-flex">
+                    <button mdbBtn class="btn btn-floating add" [disabled]="editForm?.invalid || loadingAddTemple" 
+                    (click)="onSaveEdit()" size="sm" color="success" mdbWavesEffect>
+                    <mdb-icon fas icon="save" class="white-text"></mdb-icon> <span class="pl-2 white-text">Save</span>
+                  </button>
+                  <button mdbBtn class="btn btn-floating add"
+                    (click)="onCancelEdit()" size="sm" color="danger" mdbWavesEffect>
+                    <mdb-icon fas icon="times" class="white-text"></mdb-icon> <span class="pl-2 white-text">Cancel</span>
+                  </button>
+                  </div>
+                </td>
                 <td>
                   <div class="md-form">
                     <input type="text" id="add_pooja_name" name="pooja_name" class="form-control" 
-                    #pooja_name="ngModel" [(ngModel)]="newPooja.pooja_name" mdbInput mdbValidate
-                      [validateSuccess]="false" required (change)="newPooja.pooja_code = generateCode(newPooja.pooja_name)">
+                    #pooja_name="ngModel" [(ngModel)]="editCache.pooja_name" mdbInput mdbValidate
+                      [validateSuccess]="false" required [disabled]="true">
                     <label for="pooja_name">{{"POOJAS_LIST.Name" | translate}}</label>
                     <mdb-error *ngIf="pooja_name && pooja_name.invalid && (pooja_name.dirty || pooja_name.touched)">{{"POOJA_LIST.Name" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
@@ -44,7 +63,7 @@
                 <td>
                   <div class="md-form">
                     <input type="text" id="add_pooja_code" name="pooja_code" class="form-control" 
-                    #pooja_code="ngModel" [(ngModel)]="newPooja.pooja_code" mdbInput mdbValidate disabled
+                    #pooja_code="ngModel" [(ngModel)]="editCache.pooja_code" mdbInput mdbValidate disabled
                       [validateSuccess]="false" required>
                     <label for="pooja_code">{{"POOJAS_LIST.Code" | translate}}</label>
                     <mdb-error *ngIf="pooja_code && pooja_code.invalid && (pooja_code.dirty || pooja_code.touched)">{{"POOJA_LIST.Code" | translate}} {{"is_required" | translate}}</mdb-error>
@@ -53,7 +72,7 @@
                 <td >
                   <div class="md-form  mt-3 ">
                     <textarea type="text" id="add_pooja_description" name="pooja_description" class="my-0 py-0 md-textarea form-control" 
-                    #pooja_description="ngModel" [(ngModel)]="newPooja.pooja_description" mdbInput mdbValidate
+                    #pooja_description="ngModel" [(ngModel)]="editCache.pooja_description" mdbInput mdbValidate
                       [validateSuccess]="false" required></textarea>
                     <label for="pooja_description">{{"POOJAS_LIST.Description" | translate}}</label>
                     <mdb-error *ngIf="pooja_description && pooja_description.invalid && (pooja_description.dirty || pooja_description.touched)">{{"POOJA_LIST.Description" | translate}} {{"is_required" | translate}}</mdb-error>
@@ -67,23 +86,75 @@
                 <td>
                   <div class="md-form">
                     <input type="number" id="pooja_add_price" name="pooja_price" class="form-control" 
-                    #pooja_price="ngModel" [(ngModel)]="newPooja.pooja_price" mdbInput mdbValidate
+                    #pooja_price="ngModel" [(ngModel)]="editCache.pooja_price" mdbInput mdbValidate
                       [validateSuccess]="false" required>
                     <label for="pooja_price">{{"POOJAS_LIST.Price" | translate}}</label>
                     <mdb-error *ngIf="pooja_price && pooja_price.invalid && (pooja_price.dirty || pooja_price.touched)">{{"POOJA_LIST.Price" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
                   
                 </td>
-                <td>
-                  <button mdbBtn [disabled]="poojasForm?.invalid || (isLoading$ | async)" class="mt-4 btn btn-floating add" (click)="onAddPoojaType()" size="sm" gradient="purple" mdbWavesEffect>
-                    <mdb-icon fas icon="plus" class="white-text"></mdb-icon> <span class="pl-2 white-text">{{"POOJAS_LIST.Add" | translate}}</span>
-                  </button>
-                </td>
-              </tr>
+                
+              </ng-container>
+            </tr>
+              
             </tbody>
           </table>
+</form>
+        <form #poojasForm="ngForm" *ngIf="!(isLoading$ | async)">
+<table *ngIf="!(isLoading$ | async) && !editMode">
 
-        </form>
+        <tr class="bg-white">
+          <td>
+            <div class="md-form">
+              <input type="text" id="add_pooja_name" name="pooja_name" class="form-control" 
+              #pooja_name="ngModel" [(ngModel)]="newPooja.pooja_name" mdbInput mdbValidate
+                [validateSuccess]="false" required (change)="newPooja.pooja_code = generateCode(newPooja.pooja_name)">
+              <label for="pooja_name">{{"POOJAS_LIST.Name" | translate}}</label>
+              <mdb-error *ngIf="pooja_name && pooja_name.invalid && (pooja_name.dirty || pooja_name.touched)">{{"POOJA_LIST.Name" | translate}} {{"is_required" | translate}}</mdb-error>
+            </div>
+          </td>
+          <td>
+            <div class="md-form">
+              <input type="text" id="add_pooja_code" name="pooja_code" class="form-control" 
+              #pooja_code="ngModel" [(ngModel)]="newPooja.pooja_code" mdbInput mdbValidate disabled
+                [validateSuccess]="false" required>
+              <label for="pooja_code">{{"POOJAS_LIST.Code" | translate}}</label>
+              <mdb-error *ngIf="pooja_code && pooja_code.invalid && (pooja_code.dirty || pooja_code.touched)">{{"POOJA_LIST.Code" | translate}} {{"is_required" | translate}}</mdb-error>
+            </div>
+          </td>
+          <td >
+            <div class="md-form  mt-3 ">
+              <textarea type="text" id="add_pooja_description" name="pooja_description" class="my-0 py-0 md-textarea form-control" 
+              #pooja_description="ngModel" [(ngModel)]="newPooja.pooja_description" mdbInput mdbValidate
+                [validateSuccess]="false" required></textarea>
+              <label for="pooja_description">{{"POOJAS_LIST.Description" | translate}}</label>
+              <mdb-error *ngIf="pooja_description && pooja_description.invalid && (pooja_description.dirty || pooja_description.touched)">{{"POOJA_LIST.Description" | translate}} {{"is_required" | translate}}</mdb-error>
+            </div>
+           
+            <!-- <a class="btn btn-primary btn-floating" (click)="onAddPooja()" style="background-color: #3b5998; height: 45px" href="javascript:void(0)" role="button"
+              >
+              Add
+            </a> -->
+          </td>
+          <td>
+            <div class="md-form">
+              <input type="number" id="pooja_add_price" name="pooja_price" class="form-control" 
+              #pooja_price="ngModel" [(ngModel)]="newPooja.pooja_price" mdbInput mdbValidate
+                [validateSuccess]="false" required>
+              <label for="pooja_price">{{"POOJAS_LIST.Price" | translate}}</label>
+              <mdb-error *ngIf="pooja_price && pooja_price.invalid && (pooja_price.dirty || pooja_price.touched)">{{"POOJA_LIST.Price" | translate}} {{"is_required" | translate}}</mdb-error>
+            </div>
+            
+          </td>
+          <td>
+            <button mdbBtn [disabled]="poojasForm?.invalid || (isLoading$ | async)" class="mt-4 btn btn-floating add" (click)="onAddPoojaType()" size="sm" gradient="purple" mdbWavesEffect>
+              <mdb-icon fas icon="plus" class="white-text"></mdb-icon> <span class="pl-2 white-text">{{"POOJAS_LIST.Add" | translate}}</span>
+            </button>
+          </td>
+        </tr>
+</table>
+
+      </form>
 
         <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center my-4">
           <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem;">

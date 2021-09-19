@@ -216,4 +216,23 @@ export class PoojasComponent implements OnInit {
         }
       });
   }
+
+  getTotalAmount(poojasList: Array<PoojaList>) {
+    const sum = poojasList.reduce((acc: number, pooja: any) => {
+      acc += pooja.poojas.reduce((sum: number, obj: any) => {
+        sum += Number(obj.pooja_price);
+        return sum;
+      }, 0);
+      return acc;
+    }, 0);
+    return sum;
+  }
+
+  getTotalReceiptAmount(pooja: any) {
+    if (pooja && pooja.length > 0) {
+      return pooja.reduce(((prev: any, current: any) => +(current.pooja_price) + prev), 0);
+    }
+    return '0';
+  }
+  
 }
