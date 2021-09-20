@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DonationsRoutingModule } from './donations-routing.module';
 import { DonationsComponent } from './containers/donations.component';
 import { FormsModule } from '@angular/forms';
-import { ButtonsModule, InputsModule, TableModule, IconsModule, ModalModule, CardsModule, InputUtilitiesModule } from 'angular-bootstrap-md';
+import { ButtonsModule, InputsModule, TableModule, IconsModule, ModalModule, CardsModule, InputUtilitiesModule, BadgeModule } from 'angular-bootstrap-md';
 
 import * as fromDonations from './store/donations.reducer';
 import { StoreModule } from '@ngrx/store';
@@ -23,6 +23,7 @@ import { SharedModule } from '../shared/shared.module';
     InputUtilitiesModule,
     InputsModule,
     IconsModule,
+    BadgeModule,
     TableModule,
     CoreModule,
     SharedModule,

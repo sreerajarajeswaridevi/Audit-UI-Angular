@@ -54,6 +54,17 @@
                     <label for="phone">{{"DONATIONS.Phone_Number" | translate}}</label>
                     <mdb-error *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">{{"DONATIONS.Phone_Number" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
+                  <div class="d-flex">
+                  <div class="md-form w-50">
+                    <input type="text" id="item" name="item" class="form-control" #phone="ngModel" [(ngModel)]="donation.item" mdbInput mdbValidate
+                      [validateSuccess]="false" required>
+                    <label for="phone">{{"DONATIONS.Item" | translate}}</label>
+                    <mdb-error *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">{{"DONATIONS.item" | translate}} {{"is_required" | translate}}</mdb-error>
+                  </div>
+                  <div class="suggestion-container" *ngIf="frequentItems?.length">
+                    <mdb-badge class="cursor-pointer mr-1 p-2" *ngFor="let expenseName of frequentItems" pill="true" [info]="expense.item !== expenseName" [success]="expense.item === expenseName" (click)="expense.item = expenseName">{{ expenseName }}</mdb-badge>
+                  </div>
+                  </div>
                   <div class="text-lg mt-4 amount">
                     <label for="amount" class="grey-text">{{"DONATIONS.Amount" | translate}}</label>
                     <div class="md-form mt-0">
@@ -112,6 +123,7 @@
           <tr>
             <th>{{"DONATIONS.Name" | translate}}</th>
             <th>{{"DONATIONS.Nakshathram" | translate}}</th>
+            <th>{{"DONATIONS.Item" | translate}}</th>
             <th colspan="2">{{"DONATIONS.Amount" | translate}}</th>
           </tr>
         </thead>
@@ -119,6 +131,7 @@
           <tr *ngFor="let item of todaysDonationList">
             <td scope="row">{{ item?.name }}</td>
             <td>{{ item?.nakshatram }}</td>
+            <td>{{ item?.item }}</td>
             <td class="table-price">&#x20B9;{{ item?.amount }}
             </td>
             <td *ngIf="isManager$ | async" >

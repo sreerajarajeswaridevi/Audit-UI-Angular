@@ -5,16 +5,31 @@ export function migrationFactory() {
   // The animal table was added with version 2 but none of the existing tables or data needed
   // to be modified so a migrator for that version is not included.
   return {
-    1: (db: any, transaction: any) => {
+    // 1: (db: any, transaction: any) => {
+    //   console.log(db);
+    //   const store1 = transaction.objectStore('expenses');
+    //   store1.createIndex('item', 'item', { unique: true });
+    //   store1.createIndex('frequency', 'frequency', { unique: false });
+      
+    //   const store2 = transaction.objectStore('salary');
+    //   store2.createIndex('person', 'person', { unique: true });
+    //   store2.createIndex('amount', 'amount', { unique: false });
+    //   store2.createIndex('frequency', 'frequency', { unique: false });
+    // },
+    2: (db: any, transaction: any) => {
       console.log(db);
       const store1 = transaction.objectStore('expenses');
       store1.createIndex('item', 'item', { unique: true });
       store1.createIndex('frequency', 'frequency', { unique: false });
       
-      const store2 = transaction.objectStore('salary');
-      store2.createIndex('person', 'person', { unique: true });
-      store2.createIndex('amount', 'amount', { unique: false });
+      const store2 = transaction.objectStore('donations');
+      store2.createIndex('donationItem', 'donationItem', { unique: true });
       store2.createIndex('frequency', 'frequency', { unique: false });
+      
+      const store3 = transaction.objectStore('salary');
+      store3.createIndex('person', 'person', { unique: true });
+      store3.createIndex('amount', 'amount', { unique: false });
+      store3.createIndex('frequency', 'frequency', { unique: false });
     }
   };
 }
@@ -29,7 +44,16 @@ const dbConfig: DBConfig  = {
       { name: 'item', keypath: 'item', options: { unique: true } },
       { name: 'frequency', keypath: 'frequency', options: { unique: false } }
     ]
-  },{
+  },
+  {
+    store: 'donations',
+    storeConfig: { keyPath: 'donationItem', autoIncrement: false },
+    storeSchema: [
+      { name: 'donationItem', keypath: 'donationItem', options: { unique: true } },
+      { name: 'frequency', keypath: 'frequency', options: { unique: false } }
+    ]
+  },
+  {
     store: 'salary',
     storeConfig: { keyPath: 'person', autoIncrement: false },
     storeSchema: [

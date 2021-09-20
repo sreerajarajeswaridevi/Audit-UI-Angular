@@ -178,7 +178,12 @@ export class ExpensesComponent implements OnInit {
           this.idbService.add('expenses', {
             item: this.expenseCopy.item,
             frequency: 1
-          })
+          }, (error: any) => {
+            console.log(error);
+
+          }).subscribe((key) => {
+            console.log('key: ', key);
+          });
         } else {
           this.idbService.update('expenses',
           {

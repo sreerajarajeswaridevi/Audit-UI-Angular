@@ -14,6 +14,7 @@ import * as fromDonations from '../store/donations.actions';
 import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
 import { User } from 'src/app/auth/models/user.model';
 import { DonationsService } from '../services/donations.service';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 
 var moment = require('../../../assets/datepicker/moment.js');
@@ -39,7 +40,8 @@ export class DonationsComponent implements OnInit {
 
   donationCopy: any;
   donation: any = {
-    ist_YYYYMMDD: moment().format('YYYY-MM-DD')
+    ist_YYYYMMDD: moment().format('YYYY-MM-DD'),
+    item: 'cash'
   };
   expenseData: Subject<any> = new Subject();
   heading: string;
@@ -49,6 +51,7 @@ export class DonationsComponent implements OnInit {
 
   todaysDonationList: Donations[] = [];
 
+  frequentItems: Array<string>
 
   modalConfig = {
     class: 'modal-dialog-centered'
@@ -61,7 +64,8 @@ export class DonationsComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private modalService: MDBModalService,
-    private donationsService: DonationsService
+    private donationsService: DonationsService,
+    private idbService: NgxIndexedDBService
   ) { }
 
   ngOnInit(): void {
@@ -83,10 +87,28 @@ export class DonationsComponent implements OnInit {
     });
 
 
-
+    this.fetchFrequentItems();
     this.isLoading$ = this.store.select(getIsLoading);
     this.isManager$ = this.store.select(isManager);
     this.store.dispatch(new fromDonations.DonationsQuery(this.selectedDate.format('YYYY-MM-DD')));
+  }
+
+  fetchFrequentItems() {
+    this.idbService
+      .getAll('donations')
+      .subscribe((items: any) => {
+        if (items && items.length > 0) {
+          items = items.sort((a: any, b: any) => {
+            if (a.frequency > b.frequency) {
+              return -1;
+            } else if (a.frequency > b.frequency){
+              return 1;
+            }
+            return 0;
+          }).splice(0, 5);
+          this.frequentItems = items.map((data: any) => data.item);
+        }
+      });
   }
 
   dateClicked(date: any) {
@@ -114,6 +136,22 @@ export class DonationsComponent implements OnInit {
   onSave() {
     this.donationCopy = JSON.parse(JSON.stringify(this.donation));
     this.store.dispatch(new fromDonations.DonationsAddQuery(this.donationCopy));
+    this.idbService
+      .getByKey('donations', this.donationCopy.item)
+      .subscribe((data) => {
+        if (!data) {
+          this.idbService.add('donations', {
+            item: this.donationCopy.item,
+            frequency: 1
+          })
+        } else {
+          this.idbService.update('donations',
+          {
+            item: this.donationCopy.item,
+            frequency: (data as any).frequency + 1
+          }, (data as any).key)
+        }
+      });
     this.resetForm();
   }
   
@@ -131,7 +169,8 @@ export class DonationsComponent implements OnInit {
   resetForm() {
     this.donationForm.reset(); 
     this.donation = {
-      ist_YYYYMMDD: moment().format('YYYY-MM-DD')
+      ist_YYYYMMDD: moment().format('YYYY-MM-DD'),
+      item: 'cash'
     }
     this.selectedDate = moment();
     this.donationDate = moment();
