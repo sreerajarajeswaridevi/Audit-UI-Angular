@@ -151,3 +151,10 @@ mdb-badge.count span {
 .blue-nav {
   background-color: #3e83cd;
 }
+
+@media only screen and (max-width: 700px) {
+  .d-flex-col-md {
+    display: flex;
+    flex-direction: column;
+  }
+}

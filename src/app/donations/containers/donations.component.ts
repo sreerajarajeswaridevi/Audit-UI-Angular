@@ -86,7 +86,6 @@ export class DonationsComponent implements OnInit {
       // this.appPrinter.triggerPrint();
     });
 
-
     this.fetchFrequentItems();
     this.isLoading$ = this.store.select(getIsLoading);
     this.isManager$ = this.store.select(isManager);
@@ -106,7 +105,7 @@ export class DonationsComponent implements OnInit {
             }
             return 0;
           }).splice(0, 5);
-          this.frequentItems = items.map((data: any) => data.item);
+          this.frequentItems = items.map((data: any) => data.donationItem);
         }
       });
   }
@@ -134,6 +133,7 @@ export class DonationsComponent implements OnInit {
   }
 
   onSave() {
+    const self = this;
     this.donationCopy = JSON.parse(JSON.stringify(this.donation));
     this.store.dispatch(new fromDonations.DonationsAddQuery(this.donationCopy));
     this.idbService
@@ -141,15 +141,23 @@ export class DonationsComponent implements OnInit {
       .subscribe((data) => {
         if (!data) {
           this.idbService.add('donations', {
-            item: this.donationCopy.item,
+            donationItem: self.donationCopy.item,
             frequency: 1
-          })
+          }).subscribe((added: any) => {
+            console.log(added, 'added to idb');
+          }, ((error: any) => {
+            console.log(error);
+          }))
         } else {
           this.idbService.update('donations',
           {
-            item: this.donationCopy.item,
+            donationItem: self.donationCopy.item,
             frequency: (data as any).frequency + 1
-          }, (data as any).key)
+          }, (data as any).key).subscribe((added: any) => {
+            console.log(added, 'added to idb');
+          }, ((error: any) => {
+            console.log(error);
+          }))
         }
       });
     this.resetForm();
@@ -168,6 +176,7 @@ export class DonationsComponent implements OnInit {
 
   resetForm() {
     this.donationForm.reset(); 
+    this.donationForm.controls.item.setValue('cash');
     this.donation = {
       ist_YYYYMMDD: moment().format('YYYY-MM-DD'),
       item: 'cash'

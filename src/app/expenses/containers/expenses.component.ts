@@ -178,18 +178,21 @@ export class ExpensesComponent implements OnInit {
           this.idbService.add('expenses', {
             item: this.expenseCopy.item,
             frequency: 1
-          }, (error: any) => {
+          }).subscribe((added: any) => {
+            console.log(added, 'added to idb');
+          }, ((error: any) => {
             console.log(error);
-
-          }).subscribe((key) => {
-            console.log('key: ', key);
-          });
+          }));
         } else {
           this.idbService.update('expenses',
           {
             item: this.expenseCopy.item,
             frequency: (data as any).frequency + 1
-          }, (data as any).key)
+          }, (data as any).key).subscribe((added: any) => {
+            console.log(added, 'added to idb');
+          }, ((error: any) => {
+            console.log(error);
+          }))
         }
       });
       this.expense = {
@@ -227,6 +230,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   onSalarySave(form: NgForm) {
+    const self = this;
     this.expenseCopy = JSON.parse(JSON.stringify(this.salary));
     this.store.dispatch(new fromExpenses.ExpensesAddQuery(this.salary));
     this.idbService
@@ -234,17 +238,25 @@ export class ExpensesComponent implements OnInit {
       .subscribe((data) => {
         if (!data) {
           this.idbService.add('salary', {
-            person: this.expenseCopy.description,
-            amount: this.expenseCopy.cost,
+            person: self.expenseCopy.description,
+            amount: self.expenseCopy.cost,
             frequency: 1
-          })
+          }).subscribe((added: any) => {
+            console.log(added, 'added to idb');
+          }, ((error: any) => {
+            console.log(error);
+          }))
         } else {
           this.idbService.update('salary',
           {
-            person: this.expenseCopy.description,
-            amount: this.expenseCopy.cost,
+            person: self.expenseCopy.description,
+            amount: self.expenseCopy.cost,
             frequency: (data as any).frequency + 1
-          }, (data as any).key)
+          }, (data as any).key).subscribe((added: any) => {
+            console.log(added, 'added to idb');
+          }, ((error: any) => {
+            console.log(error);
+          }))
         }
       });
 

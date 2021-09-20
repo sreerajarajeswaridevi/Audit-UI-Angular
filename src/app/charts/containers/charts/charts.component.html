@@ -41,6 +41,12 @@
 </div>
 
 <div *ngIf="!isLoading$" class="charts-container pl-5 pr-5 pb-5" [ngSwitch]="activeTab">
+  <span class="float-left mt-4">
+    <button mdbBtn type="button" color="primary" (click)="recalc()"
+    class="waves-light" size="lg" mdbWavesEffect>
+    {{ "Recalculate" | translate }}
+  </button>
+  </span>
   <span class="float-right mt-4">
     <app-printer [text]="'Print'" [reports]="response" [type]="'report'" [reportPeriod]="rangeText"></app-printer>
   </span>

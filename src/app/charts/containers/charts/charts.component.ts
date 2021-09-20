@@ -190,6 +190,13 @@ export class ChartsComponent implements OnInit, OnDestroy {
     //   this.isLoading$ = false;
     // })
   }
+
+  recalc() {
+    this.cs.recalc().subscribe(() => {
+      this.initDates();
+      this.getData(this.todaysDate, this.todaysDate, this.getTodaysData);
+    });
+  }
   
 
   getData(startDate: any, endDate: any, method: any) {

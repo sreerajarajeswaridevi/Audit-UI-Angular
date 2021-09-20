@@ -5,38 +5,36 @@ export function migrationFactory() {
   // The animal table was added with version 2 but none of the existing tables or data needed
   // to be modified so a migrator for that version is not included.
   return {
-    // 1: (db: any, transaction: any) => {
-    //   console.log(db);
-    //   const store1 = transaction.objectStore('expenses');
-    //   store1.createIndex('item', 'item', { unique: true });
-    //   store1.createIndex('frequency', 'frequency', { unique: false });
-      
-    //   const store2 = transaction.objectStore('salary');
-    //   store2.createIndex('person', 'person', { unique: true });
-    //   store2.createIndex('amount', 'amount', { unique: false });
-    //   store2.createIndex('frequency', 'frequency', { unique: false });
-    // },
+    1: (db: any, transaction: any) => {
+      console.log(db);
+      console.log(transaction);
+    },  
     2: (db: any, transaction: any) => {
       console.log(db);
       const store1 = transaction.objectStore('expenses');
-      store1.createIndex('item', 'item', { unique: true });
-      store1.createIndex('frequency', 'frequency', { unique: false });
+      if (!store1.indexNames.contains('item')) {
+        store1.createIndex('item', 'item', { unique: true });
+      }
+      // store1.createIndex('frequency', 'frequency', { unique: false });
       
-      const store2 = transaction.objectStore('donations');
-      store2.createIndex('donationItem', 'donationItem', { unique: true });
-      store2.createIndex('frequency', 'frequency', { unique: false });
-      
-      const store3 = transaction.objectStore('salary');
-      store3.createIndex('person', 'person', { unique: true });
-      store3.createIndex('amount', 'amount', { unique: false });
-      store3.createIndex('frequency', 'frequency', { unique: false });
-    }
+      const store2 = transaction.objectStore('salary');
+      if (!store2.indexNames.contains('person')) {
+        store2.createIndex('person', 'person', { unique: true });
+      }
+
+      const store3 = transaction.objectStore('donations');
+      if (!store3.indexNames.contains('donationItem')) {
+        store3.createIndex('donationItem', 'donationItem', { unique: true });
+      }
+      // store2.createIndex('amount', 'amount', { unique: false });
+      // store2.createIndex('frequency', 'frequency', { unique: false });
+    }, 
   };
 }
 
 const dbConfig: DBConfig  = {
   name: 'RRDB',
-  version: 1,
+  version: 2,
   objectStoresMeta: [{
     store: 'expenses',
     storeConfig: { keyPath: 'item', autoIncrement: false },

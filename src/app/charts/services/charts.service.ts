@@ -76,4 +76,15 @@ export class ChartsService {
       }
     );
   }
+  
+  recalc() {
+    return this.http.get(
+      `${environment.apiUrl}?api=reconcileBooks`, 
+      {
+        params: {
+          mode: 'quick'
+        }
+      }
+    );
+  }
 }
