@@ -41,7 +41,7 @@
               <ng-container *ngIf="editMode && editingIndex == i">
                 <td *ngIf="(isManager$ | async)">
                   <div class="d-flex">
-                    <button mdbBtn class="btn btn-floating add" [disabled]="editForm?.invalid || loadingAddTemple" 
+                    <button mdbBtn class="btn btn-floating add" [disabled]="editForm?.invalid || !(isLoading$ | async)" 
                     (click)="onSaveEdit()" size="sm" color="success" mdbWavesEffect>
                     <mdb-icon fas icon="save" class="white-text"></mdb-icon> <span class="pl-2 white-text">Save</span>
                   </button>

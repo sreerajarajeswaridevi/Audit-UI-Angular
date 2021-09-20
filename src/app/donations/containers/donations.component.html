@@ -32,8 +32,8 @@
                     <label for="star">{{"DONATIONS.Star" | translate}}</label>
                   </div>
                   <div class="btn-group mr-2" role="group" aria-label="First group">
-                      <button (click)="selectStar(star)"
-                      *ngFor="let star of starSigns" mdbBtn type="button" color="grey" [outline]="star !== donation.nakshatram" [class.selected]="star === donation.nakshatram"
+                      <button (click)="selectStar(star)" 
+                      *ngFor="let star of starSigns" mdbBtn type="button" color="warning" [class.selected]="star === donation.nakshatram"
                        mdbWavesEffect>{{star}}</button>
                   </div>
                 </div>
@@ -110,9 +110,9 @@
       <table mdbTable small="true" striped="true" *ngIf="!(isLoading$ | async) && todaysDonationList.length > 0">
         <thead>
           <tr>
-            <th>{{"DONATIONS.Name" | translate}}Name</th>
-            <th>{{"DONATIONS.nakshatram" | translate}}nakshatram</th>
-            <th>{{"DONATIONS.Amount" | translate}}Amount</th>
+            <th>{{"DONATIONS.Name" | translate}}</th>
+            <th>{{"DONATIONS.Nakshathram" | translate}}</th>
+            <th colspan="2">{{"DONATIONS.Amount" | translate}}</th>
           </tr>
         </thead>
         <tbody>

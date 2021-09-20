@@ -111,7 +111,9 @@ export class PoojasComponent implements OnInit {
             pooja_name: this.getPoojaNameFromCode(this.newPoojaCacheHolder.pooja_code)
           }
         });
-        this.appPrinter.triggerPrint();
+        if (this.poojasService.$printClicked.value) {
+          this.appPrinter.triggerPrint();
+        }
         this.newPoojaCacheHolder = null;
       }
     })

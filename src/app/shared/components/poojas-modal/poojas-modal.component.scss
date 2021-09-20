@@ -9,15 +9,18 @@
     .btn-group {
         display: inline-block;
         button {
-            padding: 5px;
+            padding: 10px;
+            font-weight: bold;
+            color: black;
         }
 
         button.selected {
-            background-color: darkgreen;
-            border: 1px solid darkgreen;
+            background-color: forestgreen!important;
+            border: 1px solid forestgreen!important;
             color: white;
-            font-weight: bold;
-            padding: 20px;
+            font-weight: 900;
+            font-size: 19px;
+            padding: 10px;
         }
     }
 }
@@ -58,6 +61,11 @@
 @media only screen and (max-height: 500px) {
     .modal-body {
         max-height: 45vh !important;
+    }
+}
+@media only screen and (max-width: 700px) {
+    .hide-sm {
+        display: none;
     }
 }
 

@@ -58,7 +58,7 @@
           </div>
           <div class="btn-group mr-2" role="group" aria-label="First group">
               <button (click)="selectStar(star)"
-              *ngFor="let star of starSigns" mdbBtn type="button" color="grey" [outline]="star !== pooja.nakshatram" [class.selected]="star === pooja.nakshatram"
+              *ngFor="let star of starSigns" mdbBtn type="button" color="warning"  [class.selected]="star === pooja.nakshatram"
                mdbWavesEffect>{{star}}</button>
           </div>
         </div>
@@ -98,13 +98,14 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" mdbBtn class="waves-light" color="secondary" aria-label="Close" (click)="addPerson()"
+    <button type="button" mdbBtn class="waves-light black-text" color="warning" aria-label="Close" (click)="addPerson()"
       mdbWavesEffect [disabled]="poojasForm?.invalid">{{"POOJAS_MODAL.Add_Person" | translate}}</button>
 
       <div class="d-flex">
-        <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="modalRef.hide()"
+        <button type="button" mdbBtn class="waves-light hide-sm" aria-label="Close" (click)="modalRef.hide()"
           mdbWavesEffect>{{"POOJAS_MODAL.Close" | translate}}</button>
-        <button type="button" mdbBtn color="success" [disabled]="peopleFetching || response.bhakthar.length === 0" class="relative waves-light" mdbWavesEffect (click)="onSave()">{{"POOJAS_MODAL.Save_Print" | translate}}</button>
+        <button type="button" mdbBtn color="success" [disabled]="peopleFetching || response.bhakthar.length === 0" class="relative waves-light" mdbWavesEffect (click)="onSave()">{{"Save" | translate}}</button>
+        <button type="button" mdbBtn color="success" [disabled]="peopleFetching || response.bhakthar.length === 0" class="relative waves-light" mdbWavesEffect (click)="onSave(true)">{{"POOJAS.Print" | translate}}</button>
       </div>
 
   </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NewPoojaRequest, PoojaList, PoojaTypes } from '../models/poojas.model';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PoojasService {
+  public $printClicked: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private http: HttpClient) { }
 

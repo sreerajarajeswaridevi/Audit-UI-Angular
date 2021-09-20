@@ -39,6 +39,10 @@ export class PrinterComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.setPoojaData();
+  }
+
+  setPoojaData() {
     const chunkSize = 5;
     if (this.poojas) {
       this.splitPoojas = this.size === 'A4/2' ? this.poojas.reduce((all: any,one: any,i: number) => {
@@ -62,6 +66,7 @@ export class PrinterComponent implements AfterViewInit {
   }
 
   public triggerPrint = () => {
+    this.setPoojaData();
     this.cdr.detectChanges();
     setTimeout(() => {
       this.newWindowPrint(this.bill.nativeElement.innerHTML);
@@ -161,6 +166,10 @@ export class PrinterComponent implements AfterViewInit {
       color: #460146;
 		}
 
+    .w-100 {
+      width: 100%;
+    }
+
 		header .icon {
 			max-height: 100px;
 		}
@@ -203,6 +212,10 @@ export class PrinterComponent implements AfterViewInit {
 			display: flex;
 			margin-bottom: 10px;
 		}
+    .bill .value {
+      font-weight: bold;
+      margin-left: 5px;
+    }
 		.details .row .value {
 			margin-left: 10px;
 			border-bottom: 1px dotted black;
@@ -340,7 +353,7 @@ export class PrinterComponent implements AfterViewInit {
     printerWindow.document.close();
     printerWindow.focus();
     printerWindow.print();
-    printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
+    // printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 
 }

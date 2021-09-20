@@ -24,16 +24,19 @@
                 <span *ngIf="poojas[0]?.receipt_number" class="db bt-gray">{{"Receipt" | translate}}: <span >{{poojas[0]?.receipt_number}}</span></span>
             </div>
             <br>
-            <!-- <div class="details"> -->
-                <!-- <div class="content"> -->
+            <div class="details">
+                <div class="content w-100">
                     <div class="row" *ngIf="poojas[0]?.address">
-                        <span class="label">{{"Address" | translate}} :</span> 
+                        <span class="label">{{"DONATIONS.Address" | translate}} :</span> 
                         <span class="value">{{poojas[0]?.address}}</span>
                     </div>
-                    <div class="row"  *ngIf="poojas[0]?.phone_number">
+                    <div class="row"  *ngIf="poojas[0]?.phone_number && poojas[0]?.phone_number !== '0'">
                         <span class="label">{{"Phone_Number" | translate}} :</span>
                         <span class="value">{{poojas[0]?.phone_number}}</span>
                     </div>
+                    </div>
+                    </div>
+                    <br>
                    <ng-container *ngIf="size !== 'bill'">
                     <ng-container *ngFor="let splitPooja of splitPoojas; let j = index;">
                         <hr class="page-break" *ngIf="j > 0">
@@ -67,7 +70,7 @@
                 </ng-container>
 
                 </ng-container>
-                    <div *ngIf="size === 'bill'">
+                    <div *ngIf="size === 'bill'" class="bill">
                         <div *ngFor="let pooja of poojas" class="row-container">
                             <div class="row">
                                 <span class="label">{{"Name" | translate}} :</span>
@@ -107,7 +110,7 @@
                 </div>
                 <br>
                 <div class="details">
-                    <div class="content">
+                    <div class="content w-100">
                         <div class="row">
                             <span class="label">{{"Item" | translate}} :</span>
                             <span class="value">{{expense.item}}</span>
@@ -146,7 +149,7 @@
                 </div>
                 <br>
                 <div class="details">
-                    <div class="content">
+                    <div class="content w-100">
                         <div class="row">
                             <span class="label">{{"Name" | translate}} :</span>
                             <span class="value">{{donation.name}}</span>
