@@ -353,7 +353,7 @@ export class PrinterComponent implements AfterViewInit {
     printerWindow.document.close();
     printerWindow.focus();
     printerWindow.print();
-    // printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
+    printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 
 }
