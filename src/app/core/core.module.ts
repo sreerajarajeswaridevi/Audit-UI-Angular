@@ -20,6 +20,7 @@ import { SplitBodyComponent } from './split-body/split-body.component';
 import { DatePickerDirective } from '../directives/date-picker.directive';
 import { DateTransformDirective } from '../directives/date-transform.directive';
 import { TranslateModule } from '@ngx-translate/core';
+import { ToFixedDirective } from '../directives/to-fixed.directive';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { TranslateModule } from '@ngx-translate/core';
     PageNotFoundComponent,
     SplitBodyComponent,
     DatePickerDirective,
-    DateTransformDirective
+    DateTransformDirective,
+    ToFixedDirective
   ],
   exports: [
     HeaderComponent,
@@ -52,6 +54,7 @@ import { TranslateModule } from '@ngx-translate/core';
     SplitBodyComponent,
     DatePickerDirective,
     DateTransformDirective,
+    ToFixedDirective
   ]
 })
 export class CoreModule {}

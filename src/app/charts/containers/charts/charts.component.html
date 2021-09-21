@@ -40,10 +40,11 @@
   </div>
 </div>
 
-<div *ngIf="!isLoading$" class="charts-container pl-5 pr-5 pb-5" [ngSwitch]="activeTab">
-  <span class="float-left mt-4">
-    <button mdbBtn type="button" color="primary" (click)="recalc()"
+<div *ngIf="!isLoading$" class="charts-container pl-5 pr-5 pb-5 d-flex-col-md align-items-center" [ngSwitch]="activeTab">
+  <span class="float-left">
+    <button mdbBtn type="button" color="primary" (click)="recalc()" [disabled]="recalculating"
     class="waves-light" size="lg" mdbWavesEffect>
+    <mdb-icon class="mr-2" fas icon="sync" alt="Left"></mdb-icon>
     {{ "Recalculate" | translate }}
   </button>
   </span>

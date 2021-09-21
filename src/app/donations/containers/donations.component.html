@@ -5,7 +5,7 @@
         <div>
           <blockquote class="text-left  blockquote bq-success">
             <h3 class="header">{{"DONATIONS.Add_Donations" | translate}}</h3>
-            <p class="py-0" *ngIf="donationForm.valid">{{"DONATIONS.Add_Donations_Desc" | translate}} <span class="price">&#x20B9;{{donationForm?.value.amount}}</span> from {{donationForm?.value.name}}</p>
+            <p class="py-0" *ngIf="donationForm.valid">{{"DONATIONS.Add_Donations_Desc" | translate}} <span class="price">&#x20B9;{{donationForm?.value.amount}}</span> from {{donationForm?.value.name}} <span *ngIf="donationForm?.value.item">as {{donationForm?.value.item}}</span></p>
           </blockquote>
         </div>
         <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="donationDate" [endDate]="endDate" [startDate]="startDate"
@@ -54,7 +54,7 @@
                     <label for="phone">{{"DONATIONS.Phone_Number" | translate}}</label>
                     <mdb-error *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">{{"DONATIONS.Phone_Number" | translate}} {{"is_required" | translate}}</mdb-error>
                   </div>
-                  <div class="d-flex d-flex-col-md">
+                  <div class="d-flex d-flex-col-md align-items-start">
                   <div class="md-form w-50">
                     <input type="text" id="item" name="item" class="form-control" #phone="ngModel" [(ngModel)]="donation.item" mdbInput mdbValidate
                       [validateSuccess]="false" required>

@@ -58,7 +58,7 @@ export class PrinterComponent implements AfterViewInit {
   }
 
   getTotalPrice(poojas: any, key:string) {
-    return poojas.reduce((a: any, b: any) => +(b[key]) + a, 0)
+    return (poojas.reduce((a: any, b: any) => +(b[key]) + a, 0)).toFixed(2);
   }
 
   getCurrentDate() {
@@ -145,7 +145,9 @@ export class PrinterComponent implements AfterViewInit {
       align-items: center;
       margin-left: 10%;
 		}
-
+    .bold {
+      font-weight: bold;
+    }
     header .text {
 			display: flex; 
       flex-direction: column;
@@ -353,7 +355,7 @@ export class PrinterComponent implements AfterViewInit {
     printerWindow.document.close();
     printerWindow.focus();
     printerWindow.print();
-    printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
+    // printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 
 }

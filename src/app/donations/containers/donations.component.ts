@@ -84,6 +84,7 @@ export class DonationsComponent implements OnInit {
       }
       this.appPrinter.donation = printData;
       // this.appPrinter.triggerPrint();
+      this.fetchFrequentItems();
     });
 
     this.fetchFrequentItems();

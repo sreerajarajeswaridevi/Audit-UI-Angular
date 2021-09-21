@@ -15,7 +15,7 @@ var moment = require('../../../../assets/datepicker/moment.js');
 export class ChartsComponent implements OnInit, OnDestroy {
   activeTab = 'day';
   isLoading$ = false;
-
+  recalculating = false;
   lineChartSub: Subscription;
   barChartSub: Subscription;
 
@@ -192,6 +192,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
   }
 
   recalc() {
+    this.recalculating = true;
     this.cs.recalc().subscribe(() => {
       this.initDates();
       this.getData(this.todaysDate, this.todaysDate, this.getTodaysData);
@@ -207,6 +208,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
     this.response = data.book;
      method(data);
       this.isLoading$ = false;
+      this.recalculating = false;
     })
   }
 

@@ -102,11 +102,13 @@ export class PoojasComponent implements OnInit {
     this.store.select(getNewlyRegisteredPooja).subscribe((response: any) => {
       //response.receipt_number
       if (response != null && this.newPoojaCacheHolder) {
-        const poojaDetails = this.newPoojaCacheHolder;
+        let poojaDetails = this.newPoojaCacheHolder;
+        const per_pooja_price = (+(poojaDetails.pooja_price)/poojaDetails.bhakthar.length).toFixed(2);
         this.appPrinter.poojas = this.newPoojaCacheHolder.bhakthar.map((person: any) => {
           return {
             ...person,
             ...poojaDetails,
+            pooja_price: per_pooja_price,
             receipt_number: response.receipt_number,
             pooja_name: this.getPoojaNameFromCode(this.newPoojaCacheHolder.pooja_code)
           }

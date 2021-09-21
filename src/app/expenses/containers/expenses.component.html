@@ -15,7 +15,7 @@
   
       <mdb-card-body class="py-2">
         <form #expenseForm="ngForm" autocomplete="on">
-          <div class="d-flex d-flex-col-md">
+          <div class="d-flex d-flex-col-md align-items-start">
           <div class="md-form w-50">
             <input type="text" id="item" name="item" class="form-control" [(ngModel)]="expense.item" mdbInput mdbValidate [validateSuccess]="false" #item="ngModel" required>
             <label for="item">{{ "EXPENSES.Item" | translate }}</label>
@@ -73,7 +73,7 @@
   
       <mdb-card-body class="py-2">
         <form #salaryForm="ngForm">
-          <div class="d-flex">
+          <div class="d-flex d-flex-col-md align-items-start">
           <div class="md-form w-50">
             <input type="text" id="description" name="description" class="form-control" [(ngModel)]="salary.description" mdbInput mdbValidate [validateSuccess]="false" #description="ngModel" required>
             <label for="description">{{ "EXPENSES.Paid_To" | translate }}:</label>

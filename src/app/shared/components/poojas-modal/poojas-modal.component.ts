@@ -75,6 +75,7 @@ export class PoojasModalComponent implements OnInit {
   }
 
   deleteEntry(item: any) {
+    this.response.pooja_price = `${Number(this.response.pooja_price) - Number(this.price)}`;
     this.response.bhakthar.splice(this.response.bhakthar.indexOf(item), 1);
   }
 
