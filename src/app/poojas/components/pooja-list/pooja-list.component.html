@@ -9,7 +9,7 @@
         <mdb-card-body class="py-2">
         <form #editForm="ngForm">
 
-          <table mdbTable striped="true">
+          <table mdbTable striped="true" *ngIf="!(isLoading$ | async)">
             <thead>
               <tr>
                 <th></th>
