@@ -40,13 +40,13 @@
             <tbody>
               <ng-container *ngFor="let poojasByReceiptNumber of groupedPoojaList; let in = index;">
                 <tr *ngIf="poojasByReceiptNumber.poojas.length" class="separator">
-                  <td colspan="3">
+                  <td colspan="4">
                     <b>Receipt# {{poojasByReceiptNumber.receipt_number}} - &#x20B9;{{ getTotalReceiptAmount(poojasByReceiptNumber.poojas) }}</b> 
                     <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
                   </td>
                 </tr>
                 <tr *ngFor="let item of poojasByReceiptNumber.poojas; let i = index;">
-                  <td scope="row">{{ item.name }}</td>
+                  <td scope="row">{{i+1}} - {{ item.name }}</td>
                   <td>{{ item.nakshatram }} 
                     <mdb-icon fas icon="trash" class="float-right delete grey-text ml-2" (click)="onDeletePooja(item)" alt="Delete Pooja"></mdb-icon>
                   </td>
@@ -92,7 +92,7 @@
                     </td>
                   </tr>
                   <tr *ngFor="let item of poojasByReceiptNumber.poojas; let i = index;">
-                    <td scope="row">{{ item.name }}</td>
+                    <td scope="row">{{i+1}} - {{ item.name }}</td>
                     <td>{{ item.nakshatram }}
                       <mdb-icon fas icon="trash" class="float-right delete grey-text ml-2" (click)="onDeletePooja(item)" alt="Delete Pooja"></mdb-icon>
                     </td>
@@ -156,7 +156,7 @@
                   </td>
                 </tr>
                 <tr *ngFor="let item of poojasByReceiptNumber.poojas; let i = index;">
-                  <td scope="row">{{ item.name }}</td>
+                  <td scope="row">{{i+1}} - {{ item.name }}</td>
                   <td>{{ item.nakshatram }}
                     <mdb-icon fas icon="trash" class="float-right delete grey-text ml-2" (click)="onDeletePooja(item)" alt="Delete Pooja"></mdb-icon>
                   </td>

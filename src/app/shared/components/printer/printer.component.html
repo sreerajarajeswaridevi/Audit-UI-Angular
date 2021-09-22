@@ -13,12 +13,17 @@
                 <span class="manthram" *ngIf="temple?.misc?.manthram">{{temple?.misc?.manthram}}</span>
                 <span class="address">{{temple.temple_address}}</span>
                 <span class="phone">Phone : {{temple.phone_number}}</span>
+                <ng-container [ngSwitch]="type">
+                    <div class="title" *ngSwitchCase="'pooja'"><span>{{poojas[0]?.pooja_name}}</span></div>
+                    <div class="title" *ngSwitchCase="'expense'"><span>{{"Expense_Receipt" | translate}}</span></div>
+                    <div class="title" *ngSwitchCase="'donation'"><span>{{"Donations_Receipt" | translate}}</span></div>
+                </ng-container>
             </div>
 		</header>
         <!-- pooja...----------------- -->
         <body *ngIf="type === 'pooja' && poojas">
             <title>{{poojas[0]?.pooja_name}} - {{"Receipt" | translate}}: {{poojas[0]?.receipt_number}}</title>
-            <div class="title"><span>{{poojas[0]?.pooja_name}}</span></div>
+            <!-- <div class="title"><span>{{poojas[0]?.pooja_name}}</span></div> -->
             <div class="date-receipt">
                 <span>{{"Date" | translate}} : <span class="db" appDateTransform [date]="poojas[0].pooja_date" [format]="'DD-MM-YYYY'"></span></span>
                 <span *ngIf="poojas[0]?.receipt_number" class="db bt-gray">{{"Receipt" | translate}}: <span >{{poojas[0]?.receipt_number}}</span></span>
@@ -44,6 +49,7 @@
                         <thead style="background-color: whitesmoke; padding: 10px;">
                 
                             <tr style="font-weight: bold;">
+                                <td>{{"No#" | translate}}</td>
                                 <td>{{"Name" | translate}}</td>
                                 <td>{{"Nakshatram" | translate}}</td>
                                 <td>{{"Amount" | translate}}</td>
@@ -52,6 +58,7 @@
                         <tbody style="border-bottom: 1px dotted black">
                             <ng-container *ngFor="let pooja of splitPooja; let i = index;">
                                 <tr>
+                                    <td>{{i+ (j > 0 ? splitPoojas[j-1].length : j) +1}}</td>
                                     <td>{{pooja?.name}}</td>
                                     <td>{{pooja?.nakshatram}}</td>
                                     <td appToFixed>&#x20B9; {{(pooja?.pooja_price)}}</td>
@@ -61,7 +68,7 @@
                         </tbody>
                         <tfoot *ngIf="j + 1 == splitPoojas.length">
                             <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
-                                <td colspan="2" style="font-weight: bold;"><b>{{"Total_Amount" | translate}}</b></td>
+                                <td colspan="3" style="font-weight: bold;"><b>{{"Total_Amount" | translate}}</b></td>
                                 <td style="font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
                                         'pooja_price')}}</b></td>
                             </tr>
@@ -103,7 +110,7 @@
         <body *ngIf="type === 'expense' && expense">
             <title>{{"Expense_Receipt" | translate}} - {{"Receipt" | translate}}: {{expense?.receipt_number}}</title>
               
-                <div class="title"><span>{{"Expense_Receipt" | translate}}</span></div>
+                <!-- <div class="title"><span>{{"Expense_Receipt" | translate}}</span></div> -->
                 <div class="date-receipt">
                     <span>{{"Date" | translate}} : {{expense.expense_date}}</span>
                     <span class="bt-gray">{{"Receipt" | translate}} : {{expense?.receipt_number}}</span>
@@ -142,7 +149,7 @@
         <body *ngIf="type === 'donation' && donation">
             <title>{{"Donations_Receipt" | translate}} - {{"Receipt" | translate}}: {{donation?.receipt_number}}</title>
               
-                <div class="title"><span>{{"Date" | translate}}Donation Receipt</span></div>
+                <!-- <div class="title"><span>{{"Date" | translate}}Donation Receipt</span></div> -->
                 <div class="date-receipt">
                     <span>{{"Date" | translate}} : {{donation.donation_date}}</span>
                     <span class="bt-gray">{{"Date" | translate}}Receipt No : {{donation?.receipt_number}}</span>
@@ -188,9 +195,10 @@
         <!-- REPORT--------------------- -->
 
         <body *ngIf="type === 'report' && reports" class="report">
-            <div class="title"><span>{{"Expense_Receipt" | translate}}</span></div>
+            <div class="title"><span>{{"REPORTS.Financial_Reports" | translate}}</span></div>
             <p>{{"Period" | translate}} : {{reportPeriod}}</p>
           <br>
+          <ng-container *ngIf="reports.length > 0; else NoReport">
             <section *ngFor="let report of reports">
                 <p style="font-weight: bold;padding-bottom: 10px; border-bottom: 1px solid dimgray;">{{"Date" | translate}}:
                     <b>{{report.date}}</b>
@@ -278,6 +286,10 @@
                     <br><br>
                 </table>
             </section>
+        </ng-container>
+        <ng-template #NoReport>
+            <span>No Reports available</span>
+        </ng-template>
             <div>
                 <br><br>
                 <footer>

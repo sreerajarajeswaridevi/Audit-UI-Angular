@@ -83,10 +83,11 @@ export class PrinterComponent implements AfterViewInit {
 			font-family: sans-serif;
 			background-image: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .9)), url(${this.temple.logo});
       background-repeat: no-repeat;
-      background-position: center;
+      background-position: top;
+      background-size: contain;
       font-size: 12px;
 		}
-
+    
 		header {
 			max-width: 100% !important;
 			word-break: break-word;
@@ -135,7 +136,7 @@ export class PrinterComponent implements AfterViewInit {
 
 		.address,
 		.phone {
-			background-color: white;
+			// background-color: white;
       color: black;
 		}
 
@@ -181,6 +182,7 @@ export class PrinterComponent implements AfterViewInit {
 			justify-content: center;
 			align-items: center;
 		}
+
 		.title span {
 			color: black;
 			padding: 5px 10px;
@@ -189,8 +191,6 @@ export class PrinterComponent implements AfterViewInit {
 			font-weight: bolder;
       font-size: 16px;
       border: 2px solid gray;
-      // background: linear-gradient(90deg, rgba(30,3,144,1) 0%, rgba(121,9,93,1) 100%, rgba(0,212,255,1) 100%);
-
 		}
 		.date-receipt {
 			display: flex; 
