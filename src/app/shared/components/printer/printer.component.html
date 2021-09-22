@@ -14,7 +14,7 @@
                 <span class="address">{{temple.temple_address}}</span>
                 <span class="phone">Phone : {{temple.phone_number}}</span>
                 <ng-container [ngSwitch]="type">
-                    <div class="title" *ngSwitchCase="'pooja'"><span>{{poojas[0]?.pooja_name}}</span></div>
+                    <div class="title" *ngSwitchCase="'pooja'"><span *ngIf="poojas && poojas.length">{{poojas[0]?.pooja_name}}</span></div>
                     <div class="title" *ngSwitchCase="'expense'"><span>{{"Expense_Receipt" | translate}}</span></div>
                     <div class="title" *ngSwitchCase="'donation'"><span>{{"Donations_Receipt" | translate}}</span></div>
                 </ng-container>
