@@ -117,7 +117,7 @@
     },
     "REPORTS": {
         "Financial_Reports": "സാമ്പത്തിക റിപ്പോർട്ടുകൾ",
-        "desc": "അക്കൗണ്ടുകളും ലാഭനഷ്ടങ്ങളും",
+        "desc": "അക്കൗണ്ടുകളും ലാഭനഷ്ടങ്ങളും. ലാഭം/നഷ്ടം കണക്കാക്കാനുള്ള മാർഗ്ഗം = പൂജകൾ + സംഭാവനകൾ - ചെലവുകൾ",
         "day": "ദിവസം",
         "year": "വർഷം",
         "week": "ആഴ്ച",
@@ -130,9 +130,12 @@
         "Amount": "തുക",
         "Pooja_Name": "പൂജയുടെ പേര്",
         "Total_Amount_Received": "ലഭിച്ച മൊത്തം തുക",
-        "This_Weeks_ProfitLoss": "ഈ ആഴ്ചയിലെ ലാഭം/നഷ്ടം",
-        "This_Months_ProfitLoss": "ഈ മാസത്തെ ലാഭം/നഷ്ടം",
-        "This_Years_ProfitLoss": "ഈ വർഷത്തെ ലാഭം/നഷ്ടം",
+        "This_Weeks_ProfitLoss": "ഈ ആഴ്ചയിലെ",
+        "This_Months_ProfitLoss": "ഈ മാസത്തെ",
+        "This_Years_ProfitLoss": "ഈ വർഷത്തെ",
+        "This_Periods_ProfitLoss": "ഈ ",
+        "Profit": "ലാഭം",
+        "Loss": "നഷ്ടം",
         "GetData": "ഡാറ്റ ചോദിക്കുക"
     },
     "SETTINGS": {

@@ -12,12 +12,25 @@ import { PoojasService } from '../services/poojas.service';
 import { isManager } from 'src/app/auth/store/auth.selectors';
 import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
+import { animate, style, transition, trigger } from '@angular/animations';
 // import { PoojasModalComponent } from 'src/app/shared/components/poojas-modal/poojas-modal.component';
 var moment = require('../../../assets/datepicker/moment.js');
 
 @Component({
   selector: 'app-poojas',
   templateUrl: './poojas.component.html',
+  animations: [
+    trigger('enterAnimation', [
+      transition(':enter', [
+        style({ transform: 'translateY(100%)', opacity: 0 }),
+        animate('100ms', style({ transform: 'translateY(0)', opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateY(0)', opacity: 1 }),
+        animate('100ms', style({ transform: 'translateY(100%)', opacity: 0 })),
+      ]),
+    ]),
+  ],
   styleUrls: ['./poojas.component.scss']
 })
 export class PoojasComponent implements OnInit {

@@ -2,7 +2,7 @@
 
   <div class="row">
     <div class="col-lg-6 col-sm-6" *ngIf="!isAdmin">
-      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
+      <mdb-card [@enterAnimation]="{value:':enter' ,params: {time: 100}}" class="animated mb-3" borderColor="border-warning">
         <a routerLink="/poojas" mdbBtn gradient="blue">
           <div class="d-flex-center flex-column">
             <mdb-icon fas icon="gopuram" size="4x" class="white-text mb-2"></mdb-icon>
@@ -13,7 +13,7 @@
     </div>
 
     <div class="col-lg-6 col-sm-6" *ngIf="!isAdmin">
-      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
+      <mdb-card [@enterAnimation]="{value:':enter' ,params: {time: 150}}" class="animated mb-3" borderColor="border-warning">
         <a routerLink="/expenses" mdbBtn gradient="blue">
           <div class="d-flex-center flex-column">
             <mdb-icon fas icon="file-invoice-dollar" size="4x" class="white-text mb-2"></mdb-icon>
@@ -25,7 +25,7 @@
   <!-- <div class="row"> -->
 
     <div class="col-lg-6 col-sm-6" *ngIf="!isAdmin">
-      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
+      <mdb-card [@enterAnimation]="{value:':enter' ,params: {time: 200}}" class="animated mb-3" borderColor="border-warning">
         <a routerLink="/donations" mdbBtn gradient="blue">
           <div class="d-flex-center flex-column">
             <mdb-icon fas icon="hand-holding-usd" size="4x" class="white-text mb-2"></mdb-icon>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="col-lg-6 col-sm-6" *ngIf="isAdmin">
-      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
+      <mdb-card [@enterAnimation]="{value:':enter' ,params: {time: 250}}" class="animated mb-3" borderColor="border-warning">
         <a routerLink="/admin-panel" mdbBtn gradient="blue">
           <div class="d-flex-center flex-column">
             <mdb-icon fas icon="mask" size="4x" class="white-text mb-2"></mdb-icon>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="col-lg-6 col-sm-6" *ngIf="role === 'manager'">
-      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
+      <mdb-card [@enterAnimation]="{value:':enter' ,params: {time: 300}}" class="animated mb-3" borderColor="border-warning">
         <a routerLink="/reports" mdbBtn gradient="blue">
           <div class="d-flex-center flex-column">
             <mdb-icon fas icon="file-contract" size="4x" class="white-text mb-2"></mdb-icon>
@@ -58,7 +58,7 @@
     </div>
 
     <div class="col-lg-6 col-sm-6">
-      <mdb-card class="animated fadeIn mb-3" borderColor="border-warning">
+      <mdb-card [@enterAnimation]="{value:':enter' ,params: {time: 350}}" class="animated mb-3" borderColor="border-warning">
         <a routerLink="/settings" mdbBtn gradient="blue">
           <div class="d-flex-center flex-column">
             <mdb-icon fas icon="tools" size="4x" class="white-text mb-2"></mdb-icon>

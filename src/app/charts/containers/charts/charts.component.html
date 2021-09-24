@@ -68,8 +68,9 @@
     <div class="row mb-3">
       <div class="col-md-12 col-lg-6 mb-2">
         <mdb-card>
-          <mdb-card-header>
-            {{ todaysDate.format('DD-MMMM-YYYY')  }} Profit/Loss
+          <mdb-card-header [ngClass]="getProfitLoss(pageData.todaysData) < 0 ? 'loss-row' : 'profit-row'">
+            {{ todaysDate.format('DD-MMMM-YYYY')  }} 
+            {{ (getProfitLoss(pageData.todaysData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
             <span *ngIf="pageData.todaysData" class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.todaysData) }}</span>
           </mdb-card-header>
           <mdb-card-body *ngIf="pageData.todaysData">
@@ -103,12 +104,7 @@
       <div class="col-md-6 col-lg-6" *ngIf="pageData.todaysData">
         <table class="white text-center z-depth-1" mdbTable>
           <thead class="primary-color text-white">
-            <tr>
-              <td colspan="2">
-                {{ todaysDate.format('DD-MMMM-YYYY')  }} {{ "REPORTS.ProfitLoss" | translate }}
-                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.todaysData) }}</span>
-              </td>
-            </tr>
+            
             <tr *ngIf="
                 pageData.todaysData.currentOverView ===
                   pageData.todaysData.overView;
@@ -129,9 +125,16 @@
                 let value of pageData.todaysData.currentOverView.dataSet[0]
                   .data;
                 let i = index
-              ">
+              " [class.green-row]="true" [class.red-row]="isRed(pageData.todaysData.currentOverView.chartLabels[i])">
               <td>{{ pageData.todaysData.currentOverView.chartLabels[i] }}</td>
               <th scope="row">&#x20B9;{{ value }}</th>
+            </tr>
+            <tr [ngClass]="getProfitLoss(pageData.todaysData) < 0 ? 'loss-row' : 'profit-row'">
+              <td colspan="2">
+                {{ todaysDate.format('DD-MMMM-YYYY')  }} {{ "REPORTS.ProfitLoss" | translate }} 
+                {{ (getProfitLoss(pageData.todaysData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
+                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.todaysData) }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -155,8 +158,9 @@
     <div class="row mb-3">
       <div class="col-md-12 col-lg-6 mb-2">
         <mdb-card>
-          <mdb-card-header>
+          <mdb-card-header [ngClass]="getProfitLoss(pageData.thisWeeksData) < 0 ? 'loss-row' : 'profit-row'">
             {{ "REPORTS.This_Weeks_ProfitLoss" | translate }}
+            {{ (getProfitLoss(pageData.thisWeeksData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
             <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisWeeksData) }}</span>
           </mdb-card-header>
           <mdb-card-body>
@@ -182,12 +186,7 @@
       <div class="col-md-6 col-lg-6" *ngIf="pageData.thisWeeksData">
         <table class="white text-center z-depth-1" mdbTable>
           <thead class="primary-color text-white">
-            <tr>
-              <td colspan="2">
-                {{ "REPORTS.This_Weeks_ProfitLoss" | translate }}
-                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisWeeksData) }}</span>
-              </td>
-            </tr>
+           
             <tr *ngIf="
                 pageData.thisWeeksData.currentOverView ===
                   pageData.thisWeeksData.overView;
@@ -208,11 +207,18 @@
                 let value of pageData.thisWeeksData.currentOverView.dataSet[0]
                   .data;
                 let i = index
-              ">
+              " [class.green-row]="true" [class.red-row]="isRed(pageData.todaysData.currentOverView.chartLabels[i])">
               <td>
                 {{ pageData.thisWeeksData.currentOverView.chartLabels[i] }}
               </td>
               <th scope="row">&#x20B9;{{ value }}</th>
+            </tr>
+            <tr [ngClass]="getProfitLoss(pageData.thisWeeksData) < 0 ? 'loss-row' : 'profit-row'">
+              <td colspan="2">
+                {{ "REPORTS.This_Weeks_ProfitLoss" | translate }}
+                {{ (getProfitLoss(pageData.thisWeeksData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
+                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisWeeksData) }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -237,8 +243,9 @@
     <div class="row mb-3">
       <div class="col-md-12 col-lg-6 mb-4">
         <mdb-card>
-          <mdb-card-header>
-            {{ monthDate.format('MMMM YYYY')  }} {{ "REPORTS.ProfitLoss" | translate }}
+          <mdb-card-header [ngClass]="getProfitLoss(pageData.thisMonthsData) < 0 ? 'loss-row' : 'profit-row'">
+            {{ monthDate.format('MMMM YYYY')  }} 
+            {{ (getProfitLoss(pageData.thisMonthsData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
             <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisMonthsData) }}</span>
           </mdb-card-header>
           <mdb-card-body>
@@ -262,12 +269,6 @@
       <div class="col-md-6 col-lg-6" *ngIf="pageData.thisMonthsData">
         <table class="white text-center z-depth-1" mdbTable>
           <thead class="primary-color text-white">
-            <tr>
-              <td colspan="2">
-                {{ monthDate.format('MMMM YYYY')  }} {{ "REPORTS.ProfitLoss" | translate }}
-                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisMonthsData) }}</span>
-              </td>
-            </tr>
             <tr *ngIf="
                 pageData.thisMonthsData.currentOverView ===
                   pageData.thisMonthsData.overView;
@@ -282,7 +283,6 @@
                 <th>{{ "REPORTS.Pooja_Name" | translate }}</th>
                 <th>{{ "REPORTS.Total_Amount_Received" | translate }}</th>
               </tr>
-              
             </ng-template>
           </thead>
           <tbody>
@@ -290,11 +290,18 @@
                 let value of pageData.thisMonthsData.currentOverView.dataSet[0]
                   .data;
                 let i = index
-              ">
+              " [class.green-row]="true" [class.red-row]="isRed(pageData.todaysData.currentOverView.chartLabels[i])">
               <td>
                 {{ pageData.thisMonthsData.currentOverView.chartLabels[i] }}
               </td>
               <th scope="row">&#x20B9;{{ value }}</th>
+            </tr>
+            <tr [ngClass]="getProfitLoss(pageData.thisMonthsData) < 0 ? 'loss-row' : 'profit-row'">
+              <td colspan="2">
+                {{ monthDate.format('MMMM YYYY')  }} {{ "REPORTS.ProfitLoss" | translate }}
+                {{ (getProfitLoss(pageData.thisMonthsData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
+                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisMonthsData) }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -329,8 +336,9 @@
     <div class="row mb-3">
       <div class="col-md-12 col-lg-6 mb-4">
         <mdb-card>
-          <mdb-card-header>
-            {{ yearDate.format('YYYY') }} {{ "REPORTS.ProfitLoss" | translate }}
+          <mdb-card-header [ngClass]="getProfitLoss(pageData.thisYearsData) < 0 ? 'loss-row' : 'profit-row'">
+            {{ yearDate.format('YYYY') }} 
+            {{ (getProfitLoss(pageData.thisYearsData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
             <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
           </mdb-card-header>
           <mdb-card-body>
@@ -354,12 +362,7 @@
       <div class="col-md-6 col-lg-6" *ngIf="pageData.thisYearsData">
         <table class="white text-center z-depth-1" mdbTable>
           <thead class="primary-color text-white">
-            <tr>
-              <td colspan="2">
-                {{ yearDate.format('YYYY') }} {{ "REPORTS.ProfitLoss" | translate }}
-                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
-              </td>
-            </tr>
+            
             <tr *ngIf="
                 pageData.thisYearsData.currentOverView ===
                   pageData.thisYearsData.overView;
@@ -374,17 +377,26 @@
                 <th>{{ "REPORTS.Total_Amount_Received" | translate }}</th>
               </tr>
             </ng-template>
+            
           </thead>
           <tbody>
             <tr mdbTableCol *ngFor="
                 let value of pageData.thisYearsData.currentOverView.dataSet[0]
                   .data;
                 let i = index
-              ">
+              " [class.green-row]="true" [class.red-row]="isRed(pageData.todaysData.currentOverView.chartLabels[i])">
               <td>
                 {{ pageData.thisYearsData.currentOverView.chartLabels[i] }}
               </td>
               <th scope="row">&#x20B9;{{ value }}</th>
+            </tr>
+            <tr [ngClass]="getProfitLoss(pageData.thisYearsData) < 0 ? 'loss-row' : 'profit-row'">
+              <td colspan="2">
+                {{ yearDate.format('YYYY') }} {{ "REPORTS.ProfitLoss" | translate }}
+                {{ (getProfitLoss(pageData.thisYearsData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
+                
+                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -426,8 +438,9 @@
     <div class="row my-3">
       <div class="col-md-12 col-lg-6 mb-4">
         <mdb-card>
-          <mdb-card-header>
-            {{ "REPORTS.This_Years_ProfitLoss" | translate }}
+          <mdb-card-header [ngClass]="getProfitLoss(pageData.thisYearsData) < 0 ? 'loss-row' : 'profit-row'">
+            {{ "REPORTS.This_Periods_ProfitLoss" | translate }}
+            {{ (getProfitLoss(pageData.thisYearsData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
             <span class="price ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
           </mdb-card-header>
           <mdb-card-body>
@@ -445,12 +458,7 @@
       <div class="col-md-6 col-lg-6" *ngIf="pageData.thisYearsData">
         <table class="white text-center z-depth-1" mdbTable>
           <thead class="primary-color text-white">
-            <tr>
-              <td colspan="2">
-                {{ "REPORTS.This_Years_ProfitLoss" | translate }}
-                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
-              </td>
-            </tr>
+            
             <tr *ngIf="
                 pageData.thisYearsData.currentOverView ===
                   pageData.thisYearsData.overView;
@@ -471,11 +479,19 @@
                 let value of pageData.thisYearsData.currentOverView.dataSet[0]
                   .data;
                 let i = index
-              ">
+              " [class.green-row]="true" [class.red-row]="isRed(pageData.todaysData.currentOverView.chartLabels[i])">
               <td>
                 {{ pageData.thisYearsData.currentOverView.chartLabels[i] }}
               </td>
               <th scope="row">&#x20B9;{{ value }}</th>
+            </tr>
+            <tr [ngClass]="getProfitLoss(pageData.thisYearsData) < 0 ? 'loss-row' : 'profit-row'">
+              <td colspan="2">
+                {{ "REPORTS.This_Periods_ProfitLoss" | translate }}
+                {{ (getProfitLoss(pageData.thisYearsData) < 0 ? "REPORTS.Loss" : "REPORTS.Profit") | translate }}
+
+                <span class="ml-2">&#x20B9;{{ getProfitLoss(pageData.thisYearsData) }}</span>
+              </td>
             </tr>
           </tbody>
         </table>

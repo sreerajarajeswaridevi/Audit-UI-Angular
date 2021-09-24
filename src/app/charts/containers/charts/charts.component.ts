@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 // import { Store } from '@ngrx/store';
 // import { AppState } from '../../../reducers/index';
 
@@ -60,7 +61,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
   thisYearStartDate = moment();
   thisYearEndDate = moment();
  
-  constructor(private cs: ChartsService) {
+  constructor(private cs: ChartsService, private translateService: TranslateService) {
     this.initDates();
    }
 
@@ -228,8 +229,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
           book = {...monthEl}
         } else {
           book.poojas = book.poojas.concat(monthEl.poojas);
-          book.expenses = book.expenses.concat(monthEl.expenses);
           book.donations = book.donations.concat(monthEl.donations);
+          book.expenses = book.expenses.concat(monthEl.expenses);
         }
         const indexOfMonth = moment.months().indexOf(moment(monthEl.date).format('MMMM'));
         const profitLoss = monthEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
@@ -257,8 +258,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
           book = {...monthEl}
         } else {
           book.poojas = book.poojas.concat(monthEl.poojas);
-          book.expenses = book.expenses.concat(monthEl.expenses);
           book.donations = book.donations.concat(monthEl.donations);
+          book.expenses = book.expenses.concat(monthEl.expenses);
         }
         const profitLoss = monthEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
           monthEl.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0) +
@@ -295,8 +296,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
           book = {...monthEl}
         } else {
           book.poojas = book.poojas.concat(monthEl.poojas);
-          book.expenses = book.expenses.concat(monthEl.expenses);
           book.donations = book.donations.concat(monthEl.donations);
+          book.expenses = book.expenses.concat(monthEl.expenses);
         }
         const profitLoss = monthEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
           monthEl.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0) +
@@ -323,7 +324,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
     }
     let book: any = new Book();
     let weeklyOverView: any = {
-      dataSet: [{data: [], label: 'Profit/Loss Weekly Data'}],
+      dataSet: [{data: [], label: `${this.translateService.instant('REPORTS.This_Weeks_ProfitLoss')} ${this.translateService.instant('REPORTS.ProfitLoss')}`}],
       chartLabels: []
     };
     weekBook.forEach((weekEl: any, index: number) => {
@@ -332,8 +333,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
           book = {...weekEl}
         } else {
           book.poojas = book.poojas.concat(weekEl.poojas);
-          book.expenses = book.expenses.concat(weekEl.expenses);
           book.donations = book.donations.concat(weekEl.donations);
+          book.expenses = book.expenses.concat(weekEl.expenses);
         }
         const profitLoss = weekEl.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0) -
           weekEl.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0) +
@@ -376,11 +377,12 @@ export class ChartsComponent implements OnInit, OnDestroy {
       overView: {
         dataSet: [ {
           data: [ book.poojas.reduce((total: number, item: any) => Number(total) + Number(item.pooja_price), 0),
-          book.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0),
-          book.donations.reduce((total: number, item: any) => Number(total) + Number(item.amount), 0) ],
+            book.donations.reduce((total: number, item: any) => Number(total) + Number(item.amount), 0),
+            book.expenses.reduce((total: number, item: any) => Number(total) + Number(item.cost), 0)
+           ],
           label: 'Total Amount'
         }],
-        chartLabels: [`poojas (${book.poojas.length})`, `expenses (${book.expenses.length})`, `donations (${book.donations.length})`]
+        chartLabels: [`${this.translateService.instant('MAIN.POOJAS')} (${book.poojas.length})`, `${this.translateService.instant('MAIN.DONATIONS')} (${book.donations.length})`, `${this.translateService.instant('MAIN.EXPENSES')} (${book.expenses.length})`]
       },
       poojasOverView: {
         dataSet: [ {
@@ -398,7 +400,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
     if (data.overView.dataSet[0]) {
       const allTransactions = data.overView.dataSet[0].data;
       if (allTransactions) {
-        return allTransactions[0] + allTransactions[2] - allTransactions[1]  // poojas + donations - expense
+        return allTransactions[0] + allTransactions[1] - allTransactions[2]  // poojas + donations - expense
       }
     }
     return '';
@@ -448,8 +450,11 @@ export class ChartsComponent implements OnInit, OnDestroy {
     }
   }
 
-}
+  isRed(str: string) {
+    return str ? str.includes(this.translateService.instant('MAIN.EXPENSES')) : false;
+  }
 
+}
 
 interface DataSet {
   data: Array<any>,
@@ -471,6 +476,6 @@ interface Chart {
 
 class Book {
   poojas = [];
-  expenses = [];
   donations = [];
+  expenses = [];
 }
