@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable,  } from 'rxjs';
 import { AppState } from 'src/app/reducers';
 import { getIsLoading, getIsListLoading, getPoojaTypes, getPoojaList, getNewlyRegisteredPooja } from '../store/poojas.selectors';
 import * as fromPoojas from '../store/poojas.actions';
@@ -13,7 +13,10 @@ import { isManager } from 'src/app/auth/store/auth.selectors';
 import { PrinterComponent } from 'src/app/shared/components/printer/printer.component';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { animate, style, transition, trigger } from '@angular/animations';
-// import { PoojasModalComponent } from 'src/app/shared/components/poojas-modal/poojas-modal.component';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { FormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+
 var moment = require('../../../assets/datepicker/moment.js');
 
 @Component({
@@ -35,12 +38,14 @@ var moment = require('../../../assets/datepicker/moment.js');
 })
 export class PoojasComponent implements OnInit {
   @ViewChild('appPrinter', { static: true }) appPrinter: PrinterComponent;
-
+  
+  searchControl: FormControl;
   isListLoading$: Observable<boolean>;
   isLoading$: Observable<boolean>;
   isManager$: Observable<boolean>;
 
   poojaTypes: PoojaTypes[];
+  poojaTypeCache: PoojaTypes[];
   
   poojaList: PoojaList[];
   tomorrowsPoojaList: PoojaList[];
@@ -59,6 +64,7 @@ export class PoojasComponent implements OnInit {
   startDate = moment().subtract(60, 'days');
   endDate = moment().add('30', 'days');
   selectedDate = moment();
+  searchPlaceHolder = "Search Poojas";
 
   dates = {
     today: moment().format('DD-MM-YYYY'),
@@ -86,7 +92,9 @@ export class PoojasComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private modalService: MDBModalService,
-    private poojasService: PoojasService
+    private poojasService: PoojasService,
+    private idbService: NgxIndexedDBService,
+    private translateService: TranslateService
   ) {
 
   }
@@ -98,7 +106,9 @@ export class PoojasComponent implements OnInit {
     this.groupedPoojaList = [];
     this.groupedAllPoojasList = [];
     this.store.select(getPoojaTypes).subscribe((poojas: PoojaTypes[]) => {
-      this.poojaTypes = poojas;
+      if (poojas && poojas.length > 0) {
+        this.updatePoojaTypeOrder(poojas);
+      }
     })
     this.store.select(getPoojaList).subscribe((list: PoojaList[]) => {
       this.poojaList = list;
@@ -137,6 +147,19 @@ export class PoojasComponent implements OnInit {
     this.isListLoading$ = this.store.select(getIsListLoading);
     this.store.dispatch(new fromPoojas.PoojasTypeQuery());
     this.store.dispatch(new fromPoojas.PoojaListQuery(moment().format('YYYY-MM-DD'))); // todays poojas
+    this.searchPlaceHolder = this.translateService.instant('POOJAS.Search');
+  }
+
+  searchPoojaType(event: any) {
+    const searchString = `${event.target.value}`.toLowerCase();
+    if (searchString.length > 1) {
+      this.poojaTypes = this.poojaTypeCache.filter((types: any) => 
+        types.pooja_name.toLowerCase().includes(searchString) || 
+        types.pooja_description.toLowerCase().includes(searchString) ||
+        types.pooja_price.includes(searchString));
+    } else {
+      this.poojaTypes = this.poojaTypeCache;
+    }
   }
 
   newPooja(pooja: PoojaTypes) {
@@ -150,6 +173,7 @@ export class PoojasComponent implements OnInit {
     });
 
     this.modalRef.content.poojasData.pipe(take(1)).subscribe( (pooja: NewPoojaRequest) => {
+      this.pushPoojaTypeToIDB(pooja);
       this.newPoojaCacheHolder = pooja;
       this.store.dispatch(new fromPoojas.RegisterPooja({ pooja: pooja }));
       this.datePicked(moment());
@@ -250,6 +274,77 @@ export class PoojasComponent implements OnInit {
       return pooja.reduce(((prev: any, current: any) => +(current.pooja_price) + prev), 0);
     }
     return '0';
+  }
+
+  pushPoojaTypeToIDB(pooja: any) {
+    this.idbService
+    .getByKey('poojaType', pooja.pooja_code)
+    .subscribe((data) => {
+      if (!data) {
+        this.idbService.add('poojaType', {
+          pooja_code: pooja.pooja_code,
+          frequency: 1
+        }).subscribe((added: any) => {
+          console.log(added, 'added to idb');
+          this.updatePoojaTypeOrder(this.poojaTypes);
+        }, ((error: any) => {
+          console.log(error);
+        }));
+      } else {
+        this.idbService.update('poojaType',
+        {
+          pooja_code: pooja.pooja_code,
+          frequency: (data as any).frequency + 1
+        }, (data as any).key).subscribe((added: any) => {
+          console.log(added, 'added to idb');
+          this.updatePoojaTypeOrder(this.poojaTypes);
+        }, ((error: any) => {
+          console.log(error);
+        }))
+      }
+    });
+  }
+
+  sortWithFrequentPoojaTypes(poojaTypes: PoojaTypes[]) {
+    return new Promise((resolve: any, reject: any) => {
+      this.idbService
+      .getAll('poojaType')
+      .subscribe((indexedType: any) => {
+        if (indexedType && indexedType.length > 0) {
+          const sortedIndexedType = indexedType.sort((a: any, b: any) => {
+            if (a.frequency > b.frequency) {
+              return -1;
+            } else if (a.frequency > b.frequency){
+              return 1;
+            }
+            return 0;
+          });
+          const indexObj = poojaTypes.reduce((acc: any, obj: any) => {
+            acc[obj.pooja_code] = obj;
+            return acc;
+          }, {})
+          const result = [];
+          sortedIndexedType.forEach((indexedItem: any) => {
+            result.push(indexObj[indexedItem.pooja_code]);
+            delete indexObj[indexedItem.pooja_code];
+          });
+          for (const key in indexObj) {
+            result.push(indexObj[key]);
+          }
+          resolve(result);
+        }
+        resolve(poojaTypes);
+      }, (error: any) => {
+        reject(error);
+      });
+    });
+  }
+
+  updatePoojaTypeOrder(poojaTypes: PoojaTypes[]) {
+    this.sortWithFrequentPoojaTypes(poojaTypes).then((sortedFreqPoojatypes: PoojaTypes[]) => {
+      this.poojaTypes = sortedFreqPoojatypes;
+      this.poojaTypeCache = sortedFreqPoojatypes;
+    });
   }
   
 }

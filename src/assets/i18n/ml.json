@@ -58,7 +58,8 @@
         "Poojas_by_date": "തീയതി പ്രകാരം പൂജകൾ",
         "No_Poojas_on": "പൂജകളില്ല",
         "Todays_Poojas": "ഇന്നത്തെ പൂജകൾ",
-        "Tomorrows_Poojas": "നാളത്തെ പൂജകൾ"
+        "Tomorrows_Poojas": "നാളത്തെ പൂജകൾ",
+        "Search": "പൂജ/വിവരണം/വില പ്രകാരം പൂജകൾ തിരയുക"
     },
     "POOJAS_LIST": {
         "Poojas_List": "പൂജകളുടെ പട്ടിക",

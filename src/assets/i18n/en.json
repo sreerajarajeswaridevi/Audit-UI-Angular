@@ -59,7 +59,8 @@
         "Poojas_by_date": "Poojas by date ",
         "Tomorrows_Poojas": "Tomorrows Poojas",
         "Todays_Poojas": "Todays Poojas",
-        "No_Poojas_on": "No Poojas on"
+        "No_Poojas_on": "No Poojas on",
+        "Search": "Search Poojas by name/description/cost"
     },
     "POOJAS_LIST": {
         "Poojas_List": "Poojas List",

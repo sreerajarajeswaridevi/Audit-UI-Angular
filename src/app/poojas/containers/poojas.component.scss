@@ -23,6 +23,10 @@
     }
   }
 
+  #search {
+    width: 80%;
+  }
+
   @media only screen and (max-width: 768px) {
     a.pooja-box {
       display: none;
@@ -31,14 +35,18 @@
       display: inline-block;
     }
 
+    #search {
+      width: 90%;
+    }
+
   }
 
-  >:nth-child(even) {
-    background-color: #2196f3 !important;
-  }
-  >:nth-child(odd) {
-    background-color: #2196f3 !important;
-  }
+  // >:nth-child(even) {
+  //   background-color: #2196f3 !important;
+  // }
+  // >:nth-child(odd) {
+  //   background-color: #2196f3 !important;
+  // }
 
   .price {
     color: #ffeb3b;
@@ -91,4 +99,9 @@
 .separator {
   background-color: #2096f3;
   color: white;
+}
+
+.bg-white {
+  background-color: transparent!important;
+  padding: 0px 20px;
 }
