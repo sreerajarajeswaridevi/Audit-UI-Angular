@@ -86,8 +86,8 @@ export class PoojasModalComponent implements OnInit {
   }
 
   fetchPeopleData(phoneNumber: string) {
-    this.peopleFetching = true;
     if (phoneNumber.length > 3) {
+      this.peopleFetching = true;
       this.poojaService.getPersonsByPhoneNumber(phoneNumber).subscribe((data: any) => {
         this.peopleFetching = false;
         if (data && data.persons) {
