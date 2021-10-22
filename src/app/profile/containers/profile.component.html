@@ -56,6 +56,10 @@
           class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
           {{"SETTINGS.nextPage" | translate}}
         </button>
+        <button mdbBtn type="button" (click)="setDuplicateCopyPage('never')" [color]="duplicatePage === 'never' ? 'primary' : 'white'"
+          class="waves-light col-4 col-md-4 col-lg-3 col-xl-2" size="sm" mdbWavesEffect>
+          {{"SETTINGS.neverPrint" | translate}}
+        </button>
       </div>
     </div>
 

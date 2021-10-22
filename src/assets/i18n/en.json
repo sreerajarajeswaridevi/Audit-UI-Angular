@@ -146,6 +146,7 @@
         "pageSize": "Printer Page Size",
         "printDuplicate": "Print duplicate copy in",
         "samePage": "Same Page",
-        "nextPage": "Next Page"
+        "nextPage": "Next Page",
+        "neverPrint": "Never"
     }
 }

@@ -132,6 +132,7 @@ export class PoojasComponent implements OnInit {
             ...person,
             ...poojaDetails,
             pooja_price: per_pooja_price,
+            pooja_date: this.newPoojaCacheHolder.ist_YYYYMMDD,
             receipt_number: response.receipt_number,
             pooja_name: this.getPoojaNameFromCode(this.newPoojaCacheHolder.pooja_code)
           }

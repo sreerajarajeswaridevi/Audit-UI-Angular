@@ -302,7 +302,7 @@ export class PrinterComponent implements AfterViewInit {
     `);
     printerWindow.document.write('<body><div class="main-copy">');
     printerWindow.document.write(content + '</div>');
-    if (this.type !== 'report') {
+    if (this.type !== 'report' && localStorage.getItem('duplicateCopyPage') !== 'never') {
       printerWindow.document.write(`
       <hr class="bill-break"><div class="duplicate-copy">
       <span style="color: gray;
