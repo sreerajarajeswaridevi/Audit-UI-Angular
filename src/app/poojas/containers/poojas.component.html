@@ -83,7 +83,7 @@
             </div>
           </div>
           <div class="cd-body">
-            <table mdbTable small="true" striped="true" *ngIf="!(isListLoading$ | async) && tomorrowsPoojaList.length > 0">
+            <table mdbTable small="true" *ngIf="!(isListLoading$ | async) && tomorrowsPoojaList.length > 0">
               <thead>
                 <tr>
                   <th>{{ "POOJAS.Name" | translate }}</th>
@@ -93,7 +93,7 @@
               </thead>
               <tbody>
                 <ng-container *ngFor="let poojasByReceiptNumber of groupedTomorrowsPoojaList; let in = index;">
-                  <tr class="separator">
+                  <tr class="separator-tomorrow">
                     <td colspan="3">
                       <b>{{ "POOJAS.Receipt" | translate }}# {{poojasByReceiptNumber.receipt_number}}</b> 
                       <span class="float-right">{{ getPoojaNameFromCode(poojasByReceiptNumber?.poojas[0].pooja_code)  }}</span>
