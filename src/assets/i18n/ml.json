@@ -19,6 +19,7 @@
     "Donations_Receipt": "സംഭാവന രസീത്",
     "Period": "കാലഘട്ടം",
     "Pooja": "പൂജ",
+    "consolidated_poojawise": "പൂജാ തിരിച്ചുള്ള പട്ടിക",
     "Generated_Date": "ബിൽ ചെയ്ത തീയതി",
     "Billed_By": "ബിൽ ചെയ്തത്",
     "Authorized_Signature": "അംഗീകൃത ഒപ്പ്",
@@ -26,6 +27,8 @@
     "Receipt": "രസീത് #",
     "No#": "നമ്പർ #",
     "Recalculate": "കണക്കുകൂട്ടുക",
+    "Total_Debit": "മൊത്തം ചെലവ്",
+    "Total_Credit": "മൊത്തം വരവ്",
 
     "LOGIN": {
         "LOGIN": "ലോഗിൻ",

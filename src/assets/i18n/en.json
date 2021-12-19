@@ -19,6 +19,7 @@
     "Donations_Receipt": "Donations Receipt",
     "Period": "Period",
     "Pooja": "Pooja",
+    "consolidated_poojawise": "Consildated pooja list",
     "Generated_Date": "Generated Date",
     "Billed_By": "Billed By",
     "Authorized_Signature": "Authorized Signature",
@@ -26,6 +27,8 @@
     "Receipt": "Receipt #",
     "No#": "No #",
     "Recalculate": "RE-CALCULATE",
+    "Total_Debit": "Total Debit",
+    "Total_Credit": "Total Credit",
 
 
     "LOGIN": {

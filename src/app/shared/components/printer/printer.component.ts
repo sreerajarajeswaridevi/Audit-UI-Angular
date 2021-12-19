@@ -15,6 +15,7 @@ export class PrinterComponent implements AfterViewInit {
   @Input() type = 'pooja';
   @Input() text = '';
   @Input() reportPeriod = '';
+  @Input() totalProfitLoss = 0;
   
   @Input() poojas: any;
   @Input() expense: any;
@@ -83,6 +84,15 @@ export class PrinterComponent implements AfterViewInit {
 
   getTotalPrice(poojas: any, key:string) {
     return (poojas.reduce((a: any, b: any) => +(b[key]) + a, 0)).toFixed(2);
+  }
+  getDailyProfitLoss(credit: any, debit: any) {
+    return (Number(credit) - Number(debit)).toFixed(2);
+  }
+
+  getTotalCredit(report: any) {
+    const poojasTotal = report.poojas.reduce((a: any, b: any) => +(b['pooja_price']) + a, 0) || 0;
+    const donationsTotal = report.donations.reduce((a: any, b: any) => +(b['cost']) + a, 0) || 0;
+    return (poojasTotal + donationsTotal).toFixed(2);
   }
 
   getCurrentDate() {

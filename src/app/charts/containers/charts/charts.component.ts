@@ -19,6 +19,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
   recalculating = false;
   lineChartSub: Subscription;
   barChartSub: Subscription;
+  profitLossSummationToPrint = 0;
 
   dataset: DataSet[] = [{ data: [], label: ''}];
   chartLabels: any[] = [];
@@ -400,7 +401,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
     if (data.overView.dataSet[0]) {
       const allTransactions = data.overView.dataSet[0].data;
       if (allTransactions) {
-        return allTransactions[0] + allTransactions[1] - allTransactions[2]  // poojas + donations - expense
+        this.profitLossSummationToPrint = allTransactions[0] + allTransactions[1] - allTransactions[2];  // poojas + donations - expense
+        return this.profitLossSummationToPrint;
       }
     }
     return '';

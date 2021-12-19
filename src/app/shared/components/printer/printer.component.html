@@ -197,6 +197,8 @@
         <body *ngIf="type === 'report' && reports" class="report">
             <div class="title"><span>{{"REPORTS.Financial_Reports" | translate}}</span></div>
             <p>{{"Period" | translate}} : {{reportPeriod}}</p>
+            <span>{{"REPORTS.ProfitLoss" | translate}} = {{"Total_Credit" | translate}} - {{"Total_Debit" | translate}} = <b appToFixed>&#x20B9; {{totalProfitLoss}}</b></span>
+            
           <br>
           <ng-container *ngIf="reports.length > 0; else NoReport">
             <section *ngFor="let report of reports">
@@ -206,6 +208,34 @@
                 <table *ngIf="report?.poojas.length">
                     <p class="heading">{{"MAIN.POOJAS" | translate}}</p>
                     <tr><br><br></tr>
+                    <tbody style="border: 1px dotted black">
+                        <tr>
+                            <td style="font-weight: bold;">{{"Receipt" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Pooja" | translate}}</td>
+                            <td style="font-weight: bold;">{{"POOJAS.Name" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Nakshathram" | translate}}Nakshathram</td>
+                            <td style="font-weight: bold;">{{"Phone_Number" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Amount" | translate}}</td>
+                        </tr>
+                        <tr *ngFor="let pooja of report.poojas">
+                            <td>{{pooja.receipt_number}}</td>
+                            <td>{{pooja.pooja_name}}</td>
+                            <td>{{pooja.name}}</td>
+                            <td>{{pooja.nakshatram}}</td>
+                            <td>{{pooja.phone_number}}</td>
+                            <td><b appToFixed>&#x20B9; {{(pooja.pooja_price)}}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="font-weight: bold;">{{"Total_Amount" | translate}}</td>
+                            <td><b>&#x20B9; {{getTotalPrice(report.poojas, 'pooja_price')}}</b></td>
+                        </tr>
+                    </tbody>
+                    <tr><br><br></tr>
+                </table>
+                <br><br>
+                <h4>{{"consolidated_poojawise" | translate}}</h4>
+                <br>
+                <table *ngIf="report?.poojas.length">
                     <tbody style="border: 1px dotted black">
                         <tr>
                             <td style="font-weight: bold;">{{"Pooja" | translate}}</td>
@@ -246,7 +276,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <br><br>
+                <br>
 
                 <table *ngIf="report?.donations.length">
                     <p class="heading">{{"DONATIONS.Donations" | translate}}</p>
@@ -275,8 +305,29 @@
                             <td><b>&#x20B9; {{getTotalPrice(report.donations, 'amount')}}</b></td>
                         </tr>
                     </tbody>
-                    <br><br>
                 </table>
+
+                <h4>{{"REPORTS.ProfitLoss" | translate}}</h4>
+                <br>
+                    <div class="d-flex">
+                        <table>
+                            <tr>
+                                <td>{{"Total_Credit" | translate}}</td>
+                                <td><b>&#x20B9; {{ getTotalCredit(report) }}</b></td>
+                            </tr>
+                            <tr>
+                                <td>{{"Total_Debit" | translate}}</td>
+                                <td><b>&#x20B9; {{getTotalPrice(report.expenses, 'cost')}}</b></td>
+                            </tr>
+                            <tr style="background-color: darkgray;">
+                                <td>{{"REPORTS.ProfitLoss" | translate}} = {{"Total_Credit" | translate}} - {{"Total_Debit" | translate}}</td>
+                                <td><b>&#x20B9; {{getDailyProfitLoss(
+                                    getTotalCredit(report),
+                                    getTotalPrice(report.expenses, 'cost')
+                                    )}}</b></td>
+                            </tr>
+                        </table>
+                    </div>
             </section>
         </ng-container>
         <ng-template #NoReport>
