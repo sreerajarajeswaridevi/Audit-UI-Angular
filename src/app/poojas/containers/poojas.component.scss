@@ -5,6 +5,7 @@
     width: auto;
     max-width: 300px;
     color: white;
+    min-width: 150px;
   }
   .left-section-mobile {
     display: none;
@@ -97,12 +98,10 @@
 }
 
 .separator {
-  background-color: #2096f3;
-  color: white;
+  background-color: #a9d3f3;
 }
 .separator-tomorrow {
   background-color: #f2d6ff;
-  color: black;
 }
 
 .bg-white {

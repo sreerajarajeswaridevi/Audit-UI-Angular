@@ -208,24 +208,16 @@
                     <tr><br><br></tr>
                     <tbody style="border: 1px dotted black">
                         <tr>
-                            <td style="font-weight: bold;">{{"Date" | translate}}</td>
                             <td style="font-weight: bold;">{{"Pooja" | translate}}</td>
-                            <td style="font-weight: bold;">{{"POOJAS.Name" | translate}}</td>
-                            <td style="font-weight: bold;">{{"Nakshathram" | translate}}Nakshathram</td>
-                            <td style="font-weight: bold;">{{"Phone_Number" | translate}}</td>
                             <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
-                        <tr *ngFor="let pooja of report.poojas">
-                            <td>{{pooja.pooja_date}}</td>
+                        <tr *ngFor="let pooja of getGroupedReportByPoojas(report.poojas).consolidatedList">
                             <td>{{pooja.pooja_name}}</td>
-                            <td>{{pooja.name}}</td>
-                            <td>{{pooja.nakshatram}}</td>
-                            <td>{{pooja.phone_number}}</td>
                             <td><b appToFixed>&#x20B9; {{(pooja.pooja_price)}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="5" style="font-weight: bold;">{{"Total_Amount" | translate}}</td>
-                            <td><b>&#x20B9; {{getTotalPrice(report.poojas, 'pooja_price')}}</b></td>
+                            <td style="font-weight: bold;">{{"Total_Amount" | translate}}</td>
+                            <td><b>&#x20B9; {{getGroupedReportByPoojas(report.poojas).totalSum}}</b></td>
                         </tr>
                     </tbody>
                 </table>

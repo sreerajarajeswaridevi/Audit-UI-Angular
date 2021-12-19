@@ -11,7 +11,7 @@
           </form>          
         </div>
         <a [@enterAnimation] href="javascript:void(0)" role="button" class="p-4 m-1 btn btn-primary pooja-box" mdbWavesEffect *ngFor="let item of poojaTypes" (click)="newPooja(item)">
-          <h5><b>{{item.pooja_name}}</b></h5>
+          <h5><b style="word-break: break-all;">{{item.pooja_name}}</b></h5>
           <p class="whitesmoke-text">{{item.pooja_description}}</p>
           <h3 class="price">&#x20B9;{{ item.pooja_price }}</h3>
         </a>

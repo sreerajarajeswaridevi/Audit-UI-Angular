@@ -30,6 +30,7 @@ export class PrinterComponent implements AfterViewInit {
   temple: User;
   user: any;
   splitPoojas: any = [];
+  splitPoojasGrouped: any = [];
 
   constructor(private store: Store<any>, private cdr: ChangeDetectorRef) { 
     this.store.select(getUser).subscribe((user: any) => {
@@ -55,6 +56,29 @@ export class PrinterComponent implements AfterViewInit {
                 return all
              }, [[]]) : [this.poojas];
     } 
+  }
+
+  getGroupedReportByPoojas(poojas: Array<any>) {
+    let totalSum = 0;
+    let consolidated = poojas.reduce((acc: any, pooja: any) => {
+      if (!acc[pooja.pooja_name]) {
+        acc[pooja.pooja_name] = {
+          pooja_name: pooja.pooja_name,
+          pooja_price: 0
+        };
+      }
+      acc[pooja.pooja_name].pooja_price += Number(pooja.pooja_price);
+      totalSum += Number(pooja.pooja_price);
+      return acc;
+    }, {});
+    let result = [];
+    for(let pooja_name in consolidated) {
+      result.push(consolidated[pooja_name]);
+    }
+    return {
+      consolidatedList: result,
+      totalSum: totalSum.toFixed(2)
+    };
   }
 
   getTotalPrice(poojas: any, key:string) {
