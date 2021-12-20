@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 // import { Store } from '@ngrx/store';
 // import { AppState } from '../../../reducers/index';
@@ -19,7 +19,6 @@ export class ChartsComponent implements OnInit, OnDestroy {
   recalculating = false;
   lineChartSub: Subscription;
   barChartSub: Subscription;
-  profitLossSummationToPrint = 0;
 
   dataset: DataSet[] = [{ data: [], label: ''}];
   chartLabels: any[] = [];
@@ -32,6 +31,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
   rangeText = '';
 
   currency: string;
+
+  @ViewChild('totalProfitLoss', { static: true }) totalProfitLoss: ElementRef;
 
   pageData: {
     todaysData?: ChartConfig,
@@ -401,8 +402,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
     if (data.overView.dataSet[0]) {
       const allTransactions = data.overView.dataSet[0].data;
       if (allTransactions) {
-        this.profitLossSummationToPrint = allTransactions[0] + allTransactions[1] - allTransactions[2];  // poojas + donations - expense
-        return this.profitLossSummationToPrint;
+        return allTransactions[0] + allTransactions[1] - allTransactions[2];  // poojas + donations - expense
       }
     }
     return '';

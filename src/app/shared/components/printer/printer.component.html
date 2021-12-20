@@ -67,7 +67,7 @@
                             </ng-container>
                         </tbody>
                         <tfoot *ngIf="j + 1 == splitPoojas.length">
-                            <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
+                            <tr style="border-bottom: 1px dashed black; margin-: 10px; background-color: whitesmoke;">
                                 <td colspan="3" style="font-weight: bold;"><b>{{"Total_Amount" | translate}}</b></td>
                                 <td style="font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
                                         'pooja_price')}}</b></td>
@@ -197,9 +197,11 @@
         <body *ngIf="type === 'report' && reports" class="report">
             <div class="title"><span>{{"REPORTS.Financial_Reports" | translate}}</span></div>
             <p>{{"Period" | translate}} : {{reportPeriod}}</p>
-            <span>{{"REPORTS.ProfitLoss" | translate}} = {{"Total_Credit" | translate}} - {{"Total_Debit" | translate}} = <b appToFixed>&#x20B9; {{totalProfitLoss}}</b></span>
+            <span style="width: 100%; font-weight: bold; display: flex;
+            padding: 5px 5px; background-color: black;color: white;"
+            >{{"REPORTS.ProfitLoss" | translate}} = {{"Total_Credit" | translate}} - {{"Total_Debit" | translate}} =  <b appToFixed> &#x20B9;{{getOverallProfitLoss()}}</b></span>
             
-          <br>
+   
           <ng-container *ngIf="reports.length > 0; else NoReport">
             <section *ngFor="let report of reports">
                 <p style="font-weight: bold;padding-bottom: 10px; border-bottom: 1px solid dimgray;">{{"Date" | translate}}:
@@ -207,7 +209,6 @@
                 </p>
                 <table *ngIf="report?.poojas.length">
                     <p class="heading">{{"MAIN.POOJAS" | translate}}</p>
-                    <tr><br><br></tr>
                     <tbody style="border: 1px dotted black">
                         <tr>
                             <td style="font-weight: bold;">{{"Receipt" | translate}}</td>
@@ -233,9 +234,10 @@
                     <tr><br><br></tr>
                 </table>
                 <br><br>
-                <h4>{{"consolidated_poojawise" | translate}}</h4>
                 <br>
                 <table *ngIf="report?.poojas.length">
+                    <span><b>{{"consolidated_poojawise" | translate}}</b></span>
+                    <br><br>
                     <tbody style="border: 1px dotted black">
                         <tr>
                             <td style="font-weight: bold;">{{"Pooja" | translate}}</td>
@@ -308,8 +310,7 @@
                 </table>
 
                 <h4>{{"REPORTS.ProfitLoss" | translate}}</h4>
-                <br>
-                    <div class="d-flex">
+                <div class="d-flex">
                         <table>
                             <tr>
                                 <td>{{"Total_Credit" | translate}}</td>
@@ -319,7 +320,7 @@
                                 <td>{{"Total_Debit" | translate}}</td>
                                 <td><b>&#x20B9; {{getTotalPrice(report.expenses, 'cost')}}</b></td>
                             </tr>
-                            <tr style="background-color: darkgray;">
+                            <tr style="background-color: black; color: white;">
                                 <td>{{"REPORTS.ProfitLoss" | translate}} = {{"Total_Credit" | translate}} - {{"Total_Debit" | translate}}</td>
                                 <td><b>&#x20B9; {{getDailyProfitLoss(
                                     getTotalCredit(report),

@@ -15,7 +15,7 @@ export class PrinterComponent implements AfterViewInit {
   @Input() type = 'pooja';
   @Input() text = '';
   @Input() reportPeriod = '';
-  @Input() totalProfitLoss = 0;
+  @Input() totalProfitLoss = '';
   
   @Input() poojas: any;
   @Input() expense: any;
@@ -97,6 +97,17 @@ export class PrinterComponent implements AfterViewInit {
 
   getCurrentDate() {
     return moment().format("DD-MM-YYYY HH:mm");
+  }
+
+  getOverallProfitLoss() {
+    let total = 0;
+    this.reports.forEach((report: any) => {
+      const poojasTotal = report.poojas.reduce((a: any, b: any) => +(b['pooja_price']) + a, 0) || 0;
+      const donationsTotal = report.donations.reduce((a: any, b: any) => +(b['amount']) + a, 0) || 0;
+      const expensesTotal = report.expenses.reduce((a: any, b: any) => +(b['cost']) + a, 0) || 0;
+      total += (poojasTotal + donationsTotal - expensesTotal);
+    });
+    return total.toFixed(2);
   }
 
   public triggerPrint = () => {
