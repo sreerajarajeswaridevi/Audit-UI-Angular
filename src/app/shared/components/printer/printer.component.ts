@@ -91,7 +91,7 @@ export class PrinterComponent implements AfterViewInit {
 
   getTotalCredit(report: any) {
     const poojasTotal = report.poojas.reduce((a: any, b: any) => +(b['pooja_price']) + a, 0) || 0;
-    const donationsTotal = report.donations.reduce((a: any, b: any) => +(b['cost']) + a, 0) || 0;
+    const donationsTotal = report.donations.reduce((a: any, b: any) => +(b['amount']) + a, 0) || 0;
     return (poojasTotal + donationsTotal).toFixed(2);
   }
 

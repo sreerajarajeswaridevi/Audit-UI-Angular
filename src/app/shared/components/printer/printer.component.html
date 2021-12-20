@@ -214,8 +214,8 @@
                             <td style="font-weight: bold;">{{"Receipt" | translate}}</td>
                             <td style="font-weight: bold;">{{"Pooja" | translate}}</td>
                             <td style="font-weight: bold;">{{"POOJAS.Name" | translate}}</td>
-                            <td style="font-weight: bold;">{{"Nakshathram" | translate}}Nakshathram</td>
-                            <td style="font-weight: bold;">{{"Phone_Number" | translate}}</td>
+                            <td style="font-weight: bold;">{{"Nakshathram" | translate}}</td>
+                            <!-- <td style="font-weight: bold;">{{"Phone_Number" | translate}}</td> -->
                             <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
                         <tr *ngFor="let pooja of report.poojas">
@@ -223,11 +223,11 @@
                             <td>{{pooja.pooja_name}}</td>
                             <td>{{pooja.name}}</td>
                             <td>{{pooja.nakshatram}}</td>
-                            <td>{{pooja.phone_number}}</td>
+                            <!-- <td>{{pooja.phone_number}}</td> -->
                             <td><b appToFixed>&#x20B9; {{(pooja.pooja_price)}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="5" style="font-weight: bold;">{{"Total_Amount" | translate}}</td>
+                            <td colspan="4" style="font-weight: bold;">{{"Total_Amount" | translate}}</td>
                             <td><b>&#x20B9; {{getTotalPrice(report.poojas, 'pooja_price')}}</b></td>
                         </tr>
                     </tbody>
@@ -290,7 +290,7 @@
                             <td style="font-weight: bold;">{{"Nakshatram" | translate}}</td>
                             <td style="font-weight: bold;">{{"Phone_Number" | translate}}</td>
                             <td style="font-weight: bold;">{{"Address" | translate}}</td>
-                            <td style="font-weight: bold;">{{"Date" | translate}}Added By</td>
+                            <td style="font-weight: bold;">{{"POOJAS_LIST.Added_By" | translate}}</td>
                             <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
                         <tr *ngFor="let expense of report.donations">

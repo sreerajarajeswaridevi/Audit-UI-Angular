@@ -7,6 +7,7 @@ export const environment = {
   firebase: {},
   // apiUrl: 'https://reqres.in/api'
   apiUrl: 'https://api.sreerajarajeswaridevi.org/dev/api_exec',
+  // apiUrl: 'https://api.sreerajarajeswaridevi.org/prod/api_exec',
   baseHref: 'android_app'
 };
 
