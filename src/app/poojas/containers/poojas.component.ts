@@ -118,7 +118,7 @@ export class PoojasComponent implements OnInit {
         this.tomorrowsPoojaList = poojas.poojaList;
         this.groupedTomorrowsPoojaList = this.groupBy(poojas.poojaList, 'receipt_number');
       });
-      if (list !== null) {
+      if (list === null) {
         this.datePicked(moment());
       }
     });
