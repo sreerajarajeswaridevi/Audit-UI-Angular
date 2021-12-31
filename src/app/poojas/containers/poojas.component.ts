@@ -326,11 +326,15 @@ export class PoojasComponent implements OnInit {
           }, {})
           const result = [];
           sortedIndexedType.forEach((indexedItem: any) => {
-            result.push(indexObj[indexedItem.pooja_code]);
-            delete indexObj[indexedItem.pooja_code];
+            if (indexObj[indexedItem.pooja_code]) {
+              result.push(indexObj[indexedItem.pooja_code]);
+              delete indexObj[indexedItem.pooja_code];
+            }
           });
           for (const key in indexObj) {
-            result.push(indexObj[key]);
+            if(indexObj[key]) {
+              result.push(indexObj[key]);
+            }
           }
           resolve(result);
         }
@@ -347,5 +351,5 @@ export class PoojasComponent implements OnInit {
       this.poojaTypeCache = sortedFreqPoojatypes;
     });
   }
-  
+
 }

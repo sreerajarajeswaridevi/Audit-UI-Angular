@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from './reducers';
 import { Observable } from 'rxjs';
 import { User } from './auth/models/user.model';
@@ -7,6 +7,7 @@ import { getUser, getIsLoggedIn, getIsLoading, getIsAdmin } from './auth/store/a
 
 import * as fromAuth from './auth/store/auth.actions';
 import { TranslateService } from '@ngx-translate/core';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -45,9 +46,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.isLoading$ = this.store.select(getIsLoading);   
-    }, 0);
+    this.isLoading$ = this.store.pipe(select(getIsLoading), debounceTime(0));   
   }
 
   onLogout(user: User) {
