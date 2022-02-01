@@ -165,6 +165,14 @@
                             <span class="label">{{"Nakshathram" | translate}} :</span>
                             <span class="value bold">{{donation.nakshatram}}</span>
                         </div>
+                        <div class="row" *ngIf="donation.item !== 'vanji'">
+                            <span class="label">{{"DONATIONS.Item" | translate}} :</span>
+                            <span class="value bold">{{donation.item}}</span>
+                        </div>
+                        <div class="row" *ngIf="donation.item === 'vanji'">
+                            <span class="label">{{"DONATIONS.Item" | translate}} :</span>
+                            <span class="value bold">{{"DONATIONS.Vanji" | translate}}</span>
+                        </div>
                         <div class="row">
                             <span class="label">{{"Address" | translate}} :</span>
                             <span class="value bold">{{donation.address}}</span>
