@@ -119,7 +119,7 @@ export class PrinterComponent implements AfterViewInit {
   }
 
   newWindowPrint(content: any) {
-    const printerWindow = window.open('', '', 'width=2in') as any;
+    const printerWindow = window.open('', '', 'width=1024, height=768') as any;
     printerWindow.document.write(`
     <html> 
     <style>
@@ -402,8 +402,10 @@ export class PrinterComponent implements AfterViewInit {
     setTimeout(() => {
       // added delay for loading image logo for bill
       printerWindow.print();
+      printerWindow.close();
     }, 20);
-    printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
+    printerWindow.onafterprint = () => {printerWindow.close();};
+    // printerWindow.onfocßus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 
 }
