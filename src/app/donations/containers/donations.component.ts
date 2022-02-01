@@ -26,6 +26,7 @@ var moment = require('../../../assets/datepicker/moment.js');
 })
 export class DonationsComponent implements OnInit {
   @ViewChild('donationForm', { static: true }) donationForm: NgForm;
+  @ViewChild('vanjiForm', { static: true }) vanjiForm: NgForm;
   @ViewChild('appPrinter', { static: true }) appPrinter: PrinterComponent;
 
   isManager$: Observable<boolean>;
@@ -37,6 +38,10 @@ export class DonationsComponent implements OnInit {
   startDate = moment().subtract(60, 'days');
   endDate = moment().add('30', 'days');
   selectedDate = moment();
+  
+  vanjiDate = moment();
+  vanjiCopy: any;
+  vanji: any;
 
   donationCopy: any;
   donation: any = {
@@ -66,7 +71,20 @@ export class DonationsComponent implements OnInit {
     private modalService: MDBModalService,
     private donationsService: DonationsService,
     private idbService: NgxIndexedDBService
-  ) { }
+  ) { 
+    this.initIncomeData();
+  }
+
+  initIncomeData() {
+    this.vanji = {
+      ist_YYYYMMDD: moment().format('YYYY-MM-DD'),
+      item: 'vanji',
+      name: '',
+      nakshatram: 'vanji',
+      phone_number: 0,
+      address: 'Vanji'
+    }
+  }
 
   ngOnInit(): void {
     this.store.select(getDonations).subscribe((exp: Donations[]) => {
@@ -120,6 +138,11 @@ export class DonationsComponent implements OnInit {
     this.donation.ist_YYYYMMDD = date.format('YYYY-MM-DD');
   }
 
+  incDatePicked(date: any) {
+    this.vanjiDate = date;
+    this.vanji.ist_YYYYMMDD = date.format('YYYY-MM-DD');
+  }
+
   datePicked(date: any) {
     this.selectedDate = date;
     this.store.dispatch(new fromDonations.DonationsQuery(date.format('YYYY-MM-DD')));
@@ -163,6 +186,12 @@ export class DonationsComponent implements OnInit {
       });
     this.resetForm();
   }
+
+  onIncomeSave() {
+    this.vanjiCopy = JSON.parse(JSON.stringify(this.vanji));
+    this.store.dispatch(new fromDonations.DonationsAddQuery(this.vanjiCopy));
+    this.resetIncomeForm();
+  }
   
   getTotalAmount() {
     if (this.todaysDonationList && this.todaysDonationList.length > 0) {
@@ -173,6 +202,14 @@ export class DonationsComponent implements OnInit {
   
   selectStar(star: string) {
     this.donation.nakshatram = star;
+  }
+
+  resetIncomeForm() {
+    this.vanjiForm.reset(); 
+    this.vanjiForm.controls.item.setValue('vanji');
+    this.initIncomeData();
+    this.selectedDate = moment();
+    this.vanjiDate = moment();
   }
 
   resetForm() {

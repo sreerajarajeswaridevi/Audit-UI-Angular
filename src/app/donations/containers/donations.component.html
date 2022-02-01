@@ -94,6 +94,58 @@
           </div>
       </mdb-card-footer>
     </mdb-card>
+
+    <!-- vanji items ******************-->
+    <mdb-card class="my-4">
+      <mdb-card-header class="w-100 d-flex justify-space-between bg-primary white-text">
+        <div>
+          <blockquote class="text-left  blockquote bq-success">
+            <h3 class="header">{{"DONATIONS.Vanji" | translate}}</h3>
+          </blockquote>
+        </div>
+        <button mdbWavesEffect mdbBtn type="button" rounded="true" color="white" class="pull-right text-lg btn-primary" rrDatePicker [date]="vanjiDate" [endDate]="endDate" [startDate]="startDate"
+        header="Select Date" (dateSelected)="incDatePicked($event)">
+        <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> <span appDateTransform [date]="vanjiDate.format('YYYY-MM-DD')"></span>
+      </button>
+      </mdb-card-header>
+      <mdb-card-body class="py-2">
+        <form #vanjiForm="ngForm">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="left-section">
+                <div class="md-form w-100">
+                  <input type="text" id="name" name="name" class="form-control" [(ngModel)]="vanji.name" mdbInput mdbValidate
+                    [validateSuccess]="false" #name="ngModel" required>
+                  <label for="name">{{"DONATIONS.Vanji_Name" | translate}}</label>
+                  <mdb-error *ngIf="name && name.invalid && (name.dirty || name.touched)">{{"DONATIONS.Vanji_Name" | translate}} {{"is_required" | translate}}</mdb-error>
+                </div>
+          
+                <div class="text-lg mt-4 amount w-100">
+                  <label for="amount" class="grey-text">{{"DONATIONS.Amount" | translate}}</label>
+                  <div class="md-form mt-0">
+                    <span class="d-flex">
+                      <span class="price">&#x20B9;</span>
+                      <input type="number" class="form-control price" id="amount" name="amount" [(ngModel)]="vanji.amount" #amount="ngModel" mdbValidate [validateSuccess]="false" required>
+                    </span>
+                    <mdb-error class="ml-3" *ngIf="amount && amount.invalid && (amount.dirty || amount.touched)">{{"DONATIONS.Amount" | translate}} {{"is_required" | translate}}</mdb-error>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      </form>
+      </mdb-card-body>
+      <mdb-card-footer class="modal-footer">
+          <div class="d-flex">
+            <button type="button" mdbBtn class="waves-light" aria-label="Close" (click)="resetIncomeForm()"
+              mdbWavesEffect>{{"DONATIONS.Clear" | translate}}</button>
+            <button type="button" mdbBtn color="success" [disabled]="vanjiForm.invalid" class="relative waves-light" 
+            mdbWavesEffect (click)="onIncomeSave()">{{"Save" | translate}}</button>
+          </div>
+      </mdb-card-footer>
+    </mdb-card>
+    <!-- vanji items END ******************-->
     
   </div>
   <div class="right-section">
@@ -124,20 +176,20 @@
             <th>{{"DONATIONS.Name" | translate}}</th>
             <th>{{"DONATIONS.Nakshathram" | translate}}</th>
             <th>{{"DONATIONS.Item" | translate}}</th>
-            <th colspan="2">{{"DONATIONS.Amount" | translate}}</th>
+            <th>{{"DONATIONS.Amount" | translate}}</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of todaysDonationList">
+          <tr *ngFor="let item of todaysDonationList" [class.vanji]="item.item === 'vanji'">
             <td scope="row">{{ item?.name }}</td>
-            <td>{{ item?.nakshatram }}</td>
-            <td>{{ item?.item }}</td>
+            <td><span *ngIf="item.item !== 'vanji'">{{ item?.nakshatram }}</span></td>
+            <td *ngIf="item.item !== 'vanji'">{{ item?.item }}</td>
+            <td *ngIf="item.item === 'vanji'">{{"DONATIONS.Vanji" | translate}}</td>
             <td class="table-price">&#x20B9;{{ item?.amount }}
             </td>
-            <td *ngIf="isManager$ | async" >
-              <mdb-icon fas icon="trash" class="ml-1 delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
-            </td>
-            <td>
+            <td *ngIf="isManager$ | async" class="d-flex">
+              <mdb-icon fas icon="trash" class="mx-1 delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
               <app-printer [type]="'donation'" [donation]="item"></app-printer> 
             </td>
           </tr>

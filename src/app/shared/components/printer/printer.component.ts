@@ -399,7 +399,10 @@ export class PrinterComponent implements AfterViewInit {
     printerWindow.document.write('</div></body></html>');
     printerWindow.document.close();
     printerWindow.focus();
-    printerWindow.print();
+    setTimeout(() => {
+      // added delay for loading image logo for bill
+      printerWindow.print();
+    }, 20);
     printerWindow.onfocus = function () { setTimeout(function () { printerWindow.close(); }, 500); }
   }
 

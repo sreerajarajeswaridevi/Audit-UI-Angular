@@ -7,4 +7,5 @@ export interface Donations {
     amount?: string;
     added_by?: string;
     expense_date?: string;
+    item?: string;
 }

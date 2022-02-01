@@ -161,8 +161,8 @@
                             <span class="label">{{"Name" | translate}} :</span>
                             <span class="value bold">{{donation.name}}</span>
                         </div>
-                        <div class="row">
-                            <span class="label">{{"Date" | translate}}Nakshathram :</span>
+                        <div class="row" *ngIf="donation.nakshatram !== 'vanji'">
+                            <span class="label">{{"Nakshathram" | translate}} :</span>
                             <span class="value bold">{{donation.nakshatram}}</span>
                         </div>
                         <div class="row">
@@ -219,10 +219,10 @@
                             <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
                         <tr *ngFor="let pooja of report.poojas">
-                            <td>{{pooja.receipt_number}}</td>
-                            <td>{{pooja.pooja_name}}</td>
-                            <td>{{pooja.name}}</td>
-                            <td>{{pooja.nakshatram}}</td>
+                            <td>{{pooja?.receipt_number}}</td>
+                            <td>{{pooja?.pooja_name}}</td>
+                            <td>{{pooja?.name}}</td>
+                            <td>{{pooja?.nakshatram}}</td>
                             <!-- <td>{{pooja.phone_number}}</td> -->
                             <td><b appToFixed>&#x20B9; {{(pooja.pooja_price)}}</b></td>
                         </tr>
@@ -244,7 +244,7 @@
                             <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
                         <tr *ngFor="let pooja of getGroupedReportByPoojas(report.poojas).consolidatedList">
-                            <td>{{pooja.pooja_name}}</td>
+                            <td>{{pooja?.pooja_name}}</td>
                             <td><b appToFixed>&#x20B9; {{(pooja.pooja_price)}}</b></td>
                         </tr>
                         <tr>

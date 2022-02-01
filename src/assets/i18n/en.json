@@ -118,7 +118,9 @@
         "Save_Print": "Save & Print",
         "Amount": "Amount",
         "Total_Donations": "Total Donations",
-        "Donations_on": "Donations on"
+        "Donations_on": "Donations on",
+        "Vanji": "Vanji donations",
+        "Vanji_Name": "Vanji Name"
     },
     "REPORTS": {
         "Financial_Reports": "Financial Reports",

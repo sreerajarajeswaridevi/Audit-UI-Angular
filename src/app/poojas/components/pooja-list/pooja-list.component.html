@@ -27,11 +27,11 @@
                 <td *ngIf="(isManager$ | async)">
                   <mdb-icon class="edit" fas icon="pen" (click)="edit(i)"></mdb-icon>
                 </td>
-                <td scope="row">{{ item.pooja_name }}</td>
-                <td>{{ item.pooja_code }}</td>
-                <td>{{ item.pooja_description }}</td>
-                <td class="text-warning"><b>&#x20B9;{{ item.pooja_price }}</b></td>
-                <td>{{ item.added_by }}</td>
+                <td scope="row">{{ item?.pooja_name }}</td>
+                <td>{{ item?.pooja_code }}</td>
+                <td>{{ item?.pooja_description }}</td>
+                <td class="text-warning"><b>&#x20B9;{{ item?.pooja_price }}</b></td>
+                <td>{{ item?.added_by }}</td>
                 <td>
                   <mdb-icon fas icon="trash" class="float-right delete grey-text" (click)="onDeletePooja(item.pooja_code)" alt="Delete Pooja"></mdb-icon>
                 </td>
@@ -108,7 +108,7 @@
             <div class="md-form">
               <input type="text" id="add_pooja_name" name="pooja_name" class="form-control" 
               #pooja_name="ngModel" [(ngModel)]="newPooja.pooja_name" mdbInput mdbValidate
-                [validateSuccess]="false" required (change)="newPooja.pooja_code = generateCode(newPooja.pooja_name)">
+                [validateSuccess]="false" required (change)="newPooja.pooja_code = generateCode(newPooja?.pooja_name)">
               <label for="pooja_name">{{"POOJAS_LIST.Name" | translate}}</label>
               <mdb-error *ngIf="pooja_name && pooja_name.invalid && (pooja_name.dirty || pooja_name.touched)">{{"POOJA_LIST.Name" | translate}} {{"is_required" | translate}}</mdb-error>
             </div>
