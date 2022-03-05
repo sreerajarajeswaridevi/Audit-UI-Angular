@@ -297,18 +297,18 @@
                             <td style="font-weight: bold;">{{"Name" | translate}}</td>
                             <td style="font-weight: bold;">{{"Nakshatram" | translate}}</td>
                             <td style="font-weight: bold;">{{"Phone_Number" | translate}}</td>
+                            <td style="font-weight: bold;">{{"DONATIONS.Item" | translate}}</td>
                             <td style="font-weight: bold;">{{"Address" | translate}}</td>
-                            <td style="font-weight: bold;">{{"POOJAS_LIST.Added_By" | translate}}</td>
                             <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
-                        <tr *ngFor="let expense of report.donations">
-                            <td>{{expense.donation_date}}</td>
-                            <td>{{expense.name}}</td>
-                            <td>{{expense.nakshatram}}</td>
-                            <td>{{expense.phone_number}}</td>
-                            <td>{{expense.address}}</td>
-                            <td>{{expense.added_by}}</td>
-                            <td><b appToFixed>&#x20B9; {{(expense.amount)}}</b></td>
+                        <tr *ngFor="let donationRef of report.donations">
+                            <td>{{donationRef.donation_date}}</td>
+                            <td>{{donationRef.name}}</td>
+                            <td>{{donationRef.nakshatram}}</td>
+                            <td>{{donationRef.phone_number}}</td>
+                            <td>{{donationRef.item}}</td>
+                            <td>{{donationRef.address}}</td>
+                            <td><b appToFixed>&#x20B9; {{(donationRef.amount)}}</b></td>
                         </tr>
                         <tr>
                             <td colspan="6" style="font-weight: bold;">{{"Total_Donations" | translate}}</td>
