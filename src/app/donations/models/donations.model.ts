@@ -3,7 +3,7 @@ export interface Donations {
     name?: any;
     nakshatram?: string;
     address?: string;
-    phoneNumber?: string;
+    phone_number?: string;
     amount?: string;
     added_by?: string;
     expense_date?: string;

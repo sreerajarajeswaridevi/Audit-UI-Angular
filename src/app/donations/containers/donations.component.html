@@ -274,7 +274,7 @@
             <td class="table-price">&#x20B9;{{ item?.amount }}
             </td>
             <td *ngIf="isManager$ | async" class="d-flex">
-              <mdb-icon fas icon="trash" class="mx-1 delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
+              <mdb-icon fas icon="trash" class="mx-1 delete grey-text" (click)="onDelete(item)" alt="Delete"></mdb-icon>
               <app-printer [type]="'donation'" [donation]="item"></app-printer> 
             </td>
           </tr>
@@ -293,7 +293,7 @@
           <td class="table-price">&#x20B9;{{ item?.amount }}
           </td>
           <td *ngIf="isManager$ | async" class="d-flex">
-            <mdb-icon fas icon="trash" class="mx-1 delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
+            <mdb-icon fas icon="trash" class="mx-1 delete grey-text" (click)="onDelete(item)" alt="Delete"></mdb-icon>
             <app-printer [type]="'donation'" [donation]="item"></app-printer> 
           </td>
         </tr>
@@ -314,7 +314,7 @@
             <td class="table-price">&#x20B9;{{ item?.amount }}
             </td>
             <td *ngIf="isManager$ | async" class="d-flex">
-              <mdb-icon fas icon="trash" class="mx-1 delete grey-text" (click)="onDelete(item?.uuid)" alt="Delete"></mdb-icon>
+              <mdb-icon fas icon="trash" class="mx-1 delete grey-text" (click)="onDelete(item)" alt="Delete"></mdb-icon>
               <app-printer [type]="'donation'" [donation]="item"></app-printer> 
             </td>
           </tr>

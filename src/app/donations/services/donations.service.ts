@@ -43,11 +43,16 @@ export class DonationsService {
 
   }
 
-  deleteDonation(uuId: string) {
+  deleteDonation(request: DeleteDonation) {
     return this.http.post(
       `${environment.apiUrl}?api=deleteDonation`, { 
-        'uuid': uuId   
+        ...request
       }
     );
   }
+}
+
+interface DeleteDonation {
+  uuid: string;
+  phone_number: any;
 }

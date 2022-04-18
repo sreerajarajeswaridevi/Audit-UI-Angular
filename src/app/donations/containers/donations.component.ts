@@ -274,7 +274,7 @@ export class DonationsComponent implements OnInit {
     this.donationDate = moment();
   }
 
-  onDelete(uuid: string) {
+  onDelete(item: Donations) {
     this.modalRef = this.modalService.show(
       ConfirmModalComponent,
       this.modalConfig
@@ -284,7 +284,7 @@ export class DonationsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((confirmation: boolean) => {
         if (confirmation) {
-          this.store.dispatch(new fromDonations.DonationsDeleted({ uuid: uuid }));
+          this.store.dispatch(new fromDonations.DonationsDeleted(item));
         }
       });
   }

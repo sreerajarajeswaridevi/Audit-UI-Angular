@@ -39,7 +39,7 @@ export class DonationsEdited implements Action {
 export class DonationsDeleted implements Action {
   readonly type = DonationsActionTypes.DONATIONS_DELETED;
 
-  constructor(public payload: { uuid: string }) {}
+  constructor(public payload: Donations) {}
 }
 
 export class DonationsError implements Action {
