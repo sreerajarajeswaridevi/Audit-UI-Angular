@@ -118,8 +118,9 @@
         "Amount": "തുക",
         "Total_Donations": "മൊത്തം സംഭാവനകൾ",
         "Donations_on": "സംഭാവനകൾ",
-        "Vanji": "വഞ്ചി സംഭാവനകൾ",
-        "Vanji_Name": "ഏത് വഞ്ചി"
+        "Vanji": "വഞ്ചി സംഭാവന",
+        "Vanji_Name": "ഏത് വഞ്ചി",
+        "Festival": "ഉത്സവ സംഭാവന"
     },
     "REPORTS": {
         "Financial_Reports": "സാമ്പത്തിക റിപ്പോർട്ടുകൾ",

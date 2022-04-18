@@ -66,7 +66,7 @@ export class DonationsEffects {
     ofType(DonationsActionTypes.DONATIONS_DELETED),
     map((action: fromDonations.DonationsDeleted) => action.payload),
     withLatestFrom(this.store.pipe(select(getUser))),
-    switchMap(([payload]: any) => this.donationsService.deleteExpense(payload.uuid)
+    switchMap(([payload]: any) => this.donationsService.deleteDonation(payload.uuid)
     .pipe(
       (map(() => {
         return (new fromDonations.DonationsQuery(moment().format('YYYY-MM-DD')));

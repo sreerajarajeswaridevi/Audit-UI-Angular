@@ -43,9 +43,9 @@ export class DonationsService {
 
   }
 
-  deleteExpense(uuId: string) {
+  deleteDonation(uuId: string) {
     return this.http.post(
-      `${environment.apiUrl}?api=deleteExpense`, { 
+      `${environment.apiUrl}?api=deleteDonation`, { 
         'uuid': uuId   
       }
     );

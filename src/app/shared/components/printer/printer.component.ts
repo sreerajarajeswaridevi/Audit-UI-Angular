@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, Chang
 import { Store } from '@ngrx/store';
 import { User } from 'src/app/auth/models/user.model';
 import { getUser } from 'src/app/auth/store/auth.selectors';
+import { Donations } from 'src/app/donations/models/donations.model';
 var moment = require('../../../../assets/datepicker/moment.js');
 
 @Component({
@@ -42,6 +43,30 @@ export class PrinterComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.setPoojaData();
+  }
+
+  sortReportData() {
+    if (this.reports) {
+      this.reports.forEach((report: any) => {
+        if (report.donations && report.donations.length > 0) {
+          report.donations.grouped = report.donations.reduce((acc: any, donation: Donations, index: number) => {
+            if (donation.item === 'vanji') {
+              acc.vanji.push(index);
+            } else if (donation.item === 'festival') {
+              acc.festival.push(index);
+            } else {
+              acc.allDonations.push(index);
+            }
+            return acc;
+          }, {  
+            allDonations: [],
+            vanji: [],
+            festival: []
+          })
+        }
+      });
+    }
+   
   }
 
   setPoojaData() {
@@ -112,6 +137,7 @@ export class PrinterComponent implements AfterViewInit {
 
   public triggerPrint = () => {
     this.setPoojaData();
+    this.sortReportData();
     this.cdr.detectChanges();
     setTimeout(() => {
       this.newWindowPrint(this.bill.nativeElement.innerHTML);

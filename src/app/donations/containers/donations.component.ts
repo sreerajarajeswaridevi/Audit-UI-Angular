@@ -27,6 +27,7 @@ var moment = require('../../../assets/datepicker/moment.js');
 export class DonationsComponent implements OnInit {
   @ViewChild('donationForm', { static: true }) donationForm: NgForm;
   @ViewChild('vanjiForm', { static: true }) vanjiForm: NgForm;
+  @ViewChild('festivalForm', { static: true }) festivalForm: NgForm;
   @ViewChild('appPrinter', { static: true }) appPrinter: PrinterComponent;
 
   isManager$: Observable<boolean>;
@@ -42,11 +43,18 @@ export class DonationsComponent implements OnInit {
   vanjiDate = moment();
   vanjiCopy: any;
   vanji: any;
+  
+  festivalDate = moment();
+  festivalCopy: any;
+  festival: any;
 
   donationCopy: any;
   donation: any = {
     ist_YYYYMMDD: moment().format('YYYY-MM-DD'),
-    item: 'cash'
+    item: 'cash',
+    address: '',
+    phone_number: null,
+    nakshatram: ''
   };
   expenseData: Subject<any> = new Subject();
   heading: string;
@@ -73,6 +81,7 @@ export class DonationsComponent implements OnInit {
     private idbService: NgxIndexedDBService
   ) { 
     this.initIncomeData();
+    this.initFestivalData();
   }
 
   initIncomeData() {
@@ -83,6 +92,18 @@ export class DonationsComponent implements OnInit {
       nakshatram: 'vanji',
       phone_number: 0,
       address: 'Vanji'
+    }
+  }
+
+  initFestivalData() {
+    this.festival = {
+      ist_YYYYMMDD: moment().format('YYYY-MM-DD'),
+      item: 'festival',
+      name: '',
+      description: '',
+      nakshatram: '',
+      phone_number: 0,
+      address: ''
     }
   }
 
@@ -129,6 +150,13 @@ export class DonationsComponent implements OnInit {
       });
   }
 
+  anyVanjiExist(donationList: any) {
+    return donationList.some((donation: any) => donation.item === 'vanji')
+  }
+  anyFestivalExist(donationList: any) {
+    return donationList.some((donation: any) => donation.item === 'festival')
+  }
+
   dateClicked(date: any) {
     console.log(date);
   }
@@ -141,6 +169,11 @@ export class DonationsComponent implements OnInit {
   incDatePicked(date: any) {
     this.vanjiDate = date;
     this.vanji.ist_YYYYMMDD = date.format('YYYY-MM-DD');
+  }
+
+  festDatePicked(date: any) {
+    this.festivalDate = date;
+    this.festival.ist_YYYYMMDD = date.format('YYYY-MM-DD');
   }
 
   datePicked(date: any) {
@@ -193,6 +226,13 @@ export class DonationsComponent implements OnInit {
     this.resetIncomeForm();
   }
   
+
+  onFestivalSave() {
+    this.festivalCopy = JSON.parse(JSON.stringify(this.festival));
+    this.store.dispatch(new fromDonations.DonationsAddQuery(this.festivalCopy));
+    this.resetFestivalForm();
+  }
+  
   getTotalAmount() {
     if (this.todaysDonationList && this.todaysDonationList.length > 0) {
       return this.todaysDonationList.reduce(((prev, current: any) => +(current.amount) + prev), 0);
@@ -201,7 +241,10 @@ export class DonationsComponent implements OnInit {
   }
   
   selectStar(star: string) {
-    this.donation.nakshatram = star;
+    this.donation.nakshatram = this.donation.nakshatram === star ? '' : star; 
+  }
+  selectfestivalStar(star: string) {
+    this.festival.nakshatram = this.festival.nakshatram === star ? '' : star; 
   }
 
   resetIncomeForm() {
@@ -210,6 +253,14 @@ export class DonationsComponent implements OnInit {
     this.initIncomeData();
     this.selectedDate = moment();
     this.vanjiDate = moment();
+  }
+
+  resetFestivalForm() {
+    this.festivalForm.reset(); 
+    this.festivalForm.controls.item.setValue('festival');
+    this.initFestivalData();
+    this.selectedDate = moment();
+    this.festivalDate = moment();
   }
 
   resetForm() {

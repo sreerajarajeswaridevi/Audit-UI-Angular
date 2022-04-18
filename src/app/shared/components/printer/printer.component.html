@@ -1,5 +1,5 @@
 <button #buttonRef [style.display]="hidden ? 'none': ''" (click)="triggerPrint()">
-    <span>{{text}}</span>
+    <span *ngIf="text !== ''">{{"POOJAS.Print" | translate}}</span>
     <mdb-icon fas icon="print" class="float-left fa-lg mr-2" alt="no data"></mdb-icon>
 </button>
 
@@ -67,7 +67,7 @@
                             </ng-container>
                         </tbody>
                         <tfoot *ngIf="j + 1 == splitPoojas.length">
-                            <tr style="border-bottom: 1px dashed black; margin-: 10px; background-color: whitesmoke;">
+                            <tr style="border-bottom: 1px dashed black; margin-top: 10px; background-color: whitesmoke;">
                                 <td colspan="3" style="font-weight: bold;"><b>{{"Total_Amount" | translate}}</b></td>
                                 <td style="font-weight: bold;"><b>&#x20B9; {{getTotalPrice(poojas,
                                         'pooja_price')}}</b></td>
@@ -161,11 +161,11 @@
                             <span class="label">{{"Name" | translate}} :</span>
                             <span class="value bold">{{donation.name}}</span>
                         </div>
-                        <div class="row" *ngIf="donation.nakshatram !== 'vanji'">
+                        <div class="row" *ngIf="donation.item !== 'vanji' && donation.nakshatram">
                             <span class="label">{{"Nakshathram" | translate}} :</span>
                             <span class="value bold">{{donation.nakshatram}}</span>
                         </div>
-                        <div class="row" *ngIf="donation.item !== 'vanji'">
+                        <div class="row" *ngIf="donation.item !== 'vanji' && donation.item !== 'festival'">
                             <span class="label">{{"DONATIONS.Item" | translate}} :</span>
                             <span class="value bold">{{donation.item}}</span>
                         </div>
@@ -173,12 +173,16 @@
                             <span class="label">{{"DONATIONS.Item" | translate}} :</span>
                             <span class="value bold">{{"DONATIONS.Vanji" | translate}}</span>
                         </div>
-                        <div class="row">
+                        <div class="row" *ngIf="donation.item === 'festival'">
+                            <span class="label">{{"DONATIONS.Item" | translate}} :</span>
+                            <span class="value bold">{{"DONATIONS.Festival" | translate}}</span>
+                        </div>
+                        <div class="row" *ngIf="donation.address">
                             <span class="label">{{"Address" | translate}} :</span>
                             <span class="value bold">{{donation.address}}</span>
                         </div>
                         
-                        <div class="row">
+                        <div class="row" *ngIf="donation.phone_number && donation.phone_number !== '0'">
                             <span class="label">{{"Phone_Number" | translate}} :</span>
                             <span class="value">{{donation.phone_number}}</span>
                         </div>
@@ -301,17 +305,39 @@
                             <td style="font-weight: bold;">{{"Address" | translate}}</td>
                             <td style="font-weight: bold;">{{"Amount" | translate}}</td>
                         </tr>
-                        <tr *ngFor="let donationRef of report.donations">
-                            <td>{{donationRef.donation_date}}</td>
-                            <td>{{donationRef.name}}</td>
-                            <td>{{donationRef.nakshatram}}</td>
-                            <td>{{donationRef.phone_number}}</td>
-                            <td>{{donationRef.item}}</td>
-                            <td>{{donationRef.address}}</td>
-                            <td><b appToFixed>&#x20B9; {{(donationRef.amount)}}</b></td>
+                        <tr *ngFor="let donationRef of report.donations?.grouped?.allDonations">
+                            <td>{{report.donations[donationRef].donation_date}}</td>
+                            <td>{{report.donations[donationRef].name}}</td>
+                            <td>{{report.donations[donationRef].nakshatram}}</td>
+                            <td>{{report.donations[donationRef].phone_number}}</td>
+                            <td>{{report.donations[donationRef].item}}</td>
+                            <td>{{report.donations[donationRef].address}}</td>
+                            <td><b appToFixed>&#x20B9; {{(report.donations[donationRef].amount)}}</b></td>
                         </tr>
+                        <ng-container *ngIf="report.donations?.grouped?.vanji.length > 0">
+                            <th style="padding-top: 20px">{{"DONATIONS.Vanji" | translate}}</th>
+                            <tr *ngFor="let donationRef of report.donations?.grouped?.vanji">
+                                <td>{{report.donations[donationRef].donation_date}}</td>
+                                <td colspan="4">{{report.donations[donationRef].name}}</td>
+                                <td>{{"DONATIONS.Vanji" | translate}}</td>
+                                <td><b appToFixed>&#x20B9; {{(report.donations[donationRef].amount)}}</b></td>
+                            </tr>
+                        </ng-container>
+                        
+                        <ng-container  *ngIf="report.donations?.grouped?.festival.length > 0">
+                            <th style="padding-top: 20px">{{"DONATIONS.Festival" | translate}}</th>
+                            <tr *ngFor="let donationRef of report.donations?.grouped?.festival">
+                                <td>{{report.donations[donationRef].donation_date}}</td>
+                                <td>{{report.donations[donationRef].name}}</td>
+                                <td>{{report.donations[donationRef].nakshatram}}</td>
+                                <td>{{report.donations[donationRef].description}}</td>
+                                <td colspan="2">{{"DONATIONS.Festival" | translate}}</td>
+                                <td><b appToFixed>&#x20B9; {{(report.donations[donationRef].amount)}}</b></td>
+                            </tr>
+                        </ng-container>
+
                         <tr>
-                            <td colspan="6" style="font-weight: bold;">{{"Total_Donations" | translate}}</td>
+                            <td colspan="6" style="font-weight: bold;">{{"DONATIONS.Total_Donations" | translate}}</td>
                             <td><b>&#x20B9; {{getTotalPrice(report.donations, 'amount')}}</b></td>
                         </tr>
                     </tbody>

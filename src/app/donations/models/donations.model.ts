@@ -8,4 +8,5 @@ export interface Donations {
     added_by?: string;
     expense_date?: string;
     item?: string;
+    description?: string;
 }

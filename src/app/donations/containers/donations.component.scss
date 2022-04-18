@@ -22,6 +22,24 @@ tr.vanji {
     background-color: rgb(187, 220, 241)!important;
 }
 
+.festival-row {
+    background-color: rgb(162, 232, 201)!important;
+    
+    &.header{ 
+        background-color: rgb(8, 141, 81)!important;
+        color: white;
+    }
+}
+
+.vanji-row {
+    background-color: rgb(162, 209, 232)!important;
+    
+    &.header{ 
+        background-color: rgb(8, 97, 141)!important;
+        color: white;
+    }
+}
+
 .star-container {
 
     .hidden {
