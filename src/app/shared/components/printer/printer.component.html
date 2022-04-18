@@ -217,7 +217,7 @@
           <ng-container *ngIf="reports.length > 0; else NoReport">
             <section *ngFor="let report of reports">
                 <p style="font-weight: bold;padding-bottom: 10px; border-bottom: 1px solid dimgray;">{{"Date" | translate}}:
-                    <b>{{report.date}}</b>
+                    <b appDateTransform [date]="report.date"></b>
                 </p>
                 <table *ngIf="report?.poojas.length">
                     <p class="heading">{{"MAIN.POOJAS" | translate}}</p>
