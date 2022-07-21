@@ -23,7 +23,7 @@ export class AccountHeadComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openUserDeleteConfirmModal(accountType_code: string) {
+  openUserDeleteConfirmModal() {
     this.modalRef = this.modalService.show(
       ConfirmModalComponent,
       this.modalConfig
@@ -38,7 +38,8 @@ export class AccountHeadComponent implements OnInit {
       });
   }
 
-  onDeleteAccountType(accountType_code: string) {
-    this.openUserDeleteConfirmModal(accountType_code);
+  onDeleteAccountType() {
+
+    this.openUserDeleteConfirmModal();
   }
 }
