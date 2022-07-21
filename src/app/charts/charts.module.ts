@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartsModule, CardsModule, ButtonsModule, TableModule, IconsModule } from 'angular-bootstrap-md';
+import { ChartsModule, CardsModule, ButtonsModule, TableModule, IconsModule, InputUtilitiesModule } from 'angular-bootstrap-md';
 import { ChartsComponent } from './containers/charts/charts.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { ChartsRoutingModule } from './charts-routing.module';
@@ -14,6 +14,7 @@ import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-cha
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -23,8 +24,10 @@ import { CoreModule } from '../core/core.module';
     ButtonsModule,
     TableModule,
     SharedModule,
+    FormsModule,
     CoreModule,
     ChartsRoutingModule,
+    InputUtilitiesModule,
     IconsModule,
     StoreModule.forFeature('charts', fromCharts.chartsReducer),
     EffectsModule.forFeature([ChartsEffects])

@@ -182,6 +182,11 @@
                             <span class="value bold">{{donation.address}}</span>
                         </div>
                         
+                        <div class="row" *ngIf="donation.description">
+                            <span class="label">{{"EXPENSES.Description" | translate}} :</span>
+                            <span class="value bold">{{donation.description}}</span>
+                        </div>
+                        
                         <div class="row" *ngIf="donation.phone_number && donation.phone_number !== '0'">
                             <span class="label">{{"Phone_Number" | translate}} :</span>
                             <span class="value">{{donation.phone_number}}</span>

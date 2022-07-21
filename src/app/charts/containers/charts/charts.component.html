@@ -31,6 +31,27 @@
         </div>
       </div>
     </div>
+    
+<div class="w-100">
+
+  <div class="d-flex-right">
+    <span>{{ "SETTINGS.accountType" | translate }}:</span>
+    <div class="md-form m-0 ml-2">
+      <select class="browser-default custom-select form-control py-0 pl-1" type="select" id="select_account_type"
+        name="accountType" [(ngModel)]="selectedAccountType" mdbSelect mdbValidate [validateSuccess]="false"
+        #accountType="ngModel" (change)="filterData()">
+        <option value="" selected>--ALL--</option>
+        <option value="festival">festival</option>
+        <option [value]="accountType.accountType_code" *ngFor="let accountType of accountTypeList">{{
+          accountType.accountType_name }}</option>
+      </select>
+      <mdb-error *ngIf="accountType && accountType.invalid && (accountType.dirty || accountType.touched)">accountType
+        {{"is_required" | translate}}</mdb-error>
+    </div>
+
+  </div>
+</div>
+    
   </div>
 </div>
 

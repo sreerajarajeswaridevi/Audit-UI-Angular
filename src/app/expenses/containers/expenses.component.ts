@@ -28,12 +28,15 @@ export class ExpensesComponent implements OnInit {
   isManager$: Observable<boolean>;
   user: User;
   
+  selectedAccountType = '';
+  accountTypeList:any = [];
+  
   expenseDate = moment();
   salaryDate = moment();
 
   defaultDate = moment();
   startDate = moment().subtract(60, 'days');
-  endDate = moment().add('30', 'days');
+  endDate = moment().add('180', 'days');
   selectedDate = moment();
   
   modalConfig = {

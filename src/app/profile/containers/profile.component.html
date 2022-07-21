@@ -71,13 +71,17 @@
   
   <div class="white px-4 py-2" >
     <blockquote class="text-left  blockquote bq-success">
-      <h3 class="header">Add or remove Users</h3>
+      <h3 class="header">{{"SETTINGS.addOrRemove" | translate}}</h3>
     </blockquote>
     <app-users-list [users]="users$ | async" (addUser)="openAddUserModal($event)"
     (deleteUser)="onDeleteUser($event)"></app-users-list>
   </div>
 
 </ng-container>
+
+<div class="container py-5 d-flex-center">
+  <app-account-head></app-account-head>
+</div>
 
 <div class="container py-5">
   <div class="row mx-auto py-5">

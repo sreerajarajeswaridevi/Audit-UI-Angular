@@ -153,6 +153,11 @@
         "printDuplicate": "Print duplicate copy in",
         "samePage": "Same Page",
         "nextPage": "Next Page",
-        "neverPrint": "Never"
+        "neverPrint": "Never",
+        "addOrRemove": "Add or Remove Users",
+
+        "accountHeader": "Account types",
+        "accountType": "Account type",
+        "accountDesc": "Financial account categories"
     }
 }

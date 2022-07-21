@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { ChartsService } from '../../services/charts.service';
 
 var moment = require('../../../../assets/datepicker/moment.js');
+const FILTERKEY = 'item';
 
 @Component({
   selector: 'app-charts',
@@ -19,6 +20,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
   recalculating = false;
   lineChartSub: Subscription;
   barChartSub: Subscription;
+  lastMethod = () => {};
+  lastArguments: any = [];
 
   dataset: DataSet[] = [{ data: [], label: ''}];
   chartLabels: any[] = [];
@@ -31,6 +34,9 @@ export class ChartsComponent implements OnInit, OnDestroy {
   rangeText = '';
 
   currency: string;
+
+  selectedAccountType = '';
+  accountTypeList:any = [];
 
   @ViewChild('totalProfitLoss', { static: true }) totalProfitLoss: ElementRef;
 
@@ -204,12 +210,13 @@ export class ChartsComponent implements OnInit, OnDestroy {
   
 
   getData(startDate: any, endDate: any, method: any) {
+    this.lastArguments = Array.from(arguments);
     this.rangeText = `${startDate.format('DD-MM-YYYY')} To ${endDate.format('DD-MM-YYYY')}`;
     this.isLoading$ = true;
     this.cs.getReconsiledBook({startDate: startDate.format('YYYY-MM-DD'), endDate: endDate.format('YYYY-MM-DD')})
     .subscribe((data: any) => {
-    this.response = data.book;
-     method(data);
+      this.response = data.book;
+      method(data);
       this.isLoading$ = false;
       this.recalculating = false;
     })
@@ -241,6 +248,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
         yearlyOverView.dataSet[0].data[indexOfMonth] += profitLoss;
       }
     });
+    this.extractWithTypeFromBook(book);
     this.pageData.thisYearsData = {...this.getReconsolidatedData(book), yearlyOverView};
   }
 
@@ -270,6 +278,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
         yearlyOverView.chartLabels.push(monthEl.date);
       }
     });
+    this.extractWithTypeFromBook(book);
     this.pageData.thisYearsData = {...this.getReconsolidatedData(book), yearlyOverView};
   }
 
@@ -315,6 +324,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
           });
       }
     });
+    this.extractWithTypeFromBook(book);
     this.pageData.thisMonthsData = {...this.getReconsolidatedData(book), monthlyOverView};
   }
 
@@ -345,6 +355,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
         weeklyOverView.chartLabels.push(weekEl.date);
       }
     });
+    this.extractWithTypeFromBook(book);
     this.pageData.thisWeeksData = {...this.getReconsolidatedData(book), weeklyOverView};
   }
 
@@ -353,6 +364,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
       this.pageData.todaysData = this.getReconsolidatedData(new Book());
       return;
     }
+    this.extractWithTypeFromBook(response.book[0]);
     this.pageData.todaysData = this.getReconsolidatedData(response.book[0]);
   }
 
@@ -441,6 +453,27 @@ export class ChartsComponent implements OnInit, OnDestroy {
     }
     return weeks;
 }
+
+
+  filterData = ()  => {
+    this.getData.call(this, ...this.lastArguments);
+  }
+
+  extractWithTypeFromBook(book: Book) {
+    book.donations = book.donations.filter(this.filterBook);
+    book.poojas = book.poojas.filter(this.filterBook);
+    book.expenses = book.expenses.filter(this.filterBook);
+  }
+
+  filterBook = (data: any) => {
+    if (data.hasOwnProperty(FILTERKEY) && this.selectedAccountType) {
+      if (data[FILTERKEY] === this.selectedAccountType) {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
 
   ngOnDestroy() {
     if (this.lineChartSub) {

@@ -34,10 +34,13 @@ export class DonationsComponent implements OnInit {
   isLoading$: Observable<boolean>;
   user: User;
 
+  selectedAccountType = '';
+  accountTypeList:any = [];
+
   donationDate = moment();
   defaultDate = moment();
   startDate = moment().subtract(60, 'days');
-  endDate = moment().add('30', 'days');
+  endDate = moment().add('180', 'days');
   selectedDate = moment();
   
   vanjiDate = moment();

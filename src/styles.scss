@@ -148,6 +148,12 @@ mdb-badge.count span {
   align-items: center;
 }
 
+.d-flex-right {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
 .blue-nav {
   background-color: #3e83cd;
 }
@@ -161,4 +167,8 @@ mdb-badge.count span {
 
 .align-items-start {
   align-items: start;
+}
+
+select {
+  min-width: 150px;
 }

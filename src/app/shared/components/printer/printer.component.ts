@@ -34,6 +34,7 @@ export class PrinterComponent implements AfterViewInit {
   splitPoojas: any = [];
   splitPoojasGrouped: any = [];
 
+
   constructor(private store: Store<any>, private cdr: ChangeDetectorRef) { 
     this.store.select(getUser).subscribe((user: any) => {
       this.temple = user;

@@ -62,7 +62,7 @@ export class PoojasComponent implements OnInit {
 
   defaultDate = moment();
   startDate = moment().subtract(60, 'days');
-  endDate = moment().add('30', 'days');
+  endDate = moment().add('180', 'days');
   selectedDate = moment();
   searchPlaceHolder = "Search Poojas";
 

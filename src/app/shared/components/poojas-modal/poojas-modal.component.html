@@ -8,7 +8,7 @@
         <span class="price">&#x20B9;{{ price }}</span>
         
         <button mdbWavesEffect mdbBtn type="button" color="white" rounded="true" class="pull-right text-lg" rrDatePicker [date]="selectedDate" 
-        (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)">
+        (click)="dateClicked($event)" header="Select Date" (dateSelected)="datePicked($event)" [endDate]="endDate">
         <mdb-icon fas icon="calendar-alt mr-2" size="lg" class="calendar" alt="date"></mdb-icon> <span appDateTransform [date]="response?.ist_YYYYMMDD"></span>
       </button>
       </div>

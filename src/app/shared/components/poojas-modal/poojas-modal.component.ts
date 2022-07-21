@@ -19,7 +19,7 @@ export class PoojasModalComponent implements OnInit {
 
   defaultDate = moment();
   startDate = moment();
-  endDate = moment().add('30', 'days');
+  endDate = moment().add('6', 'months');
   selectedDate = moment();
   pooja: PoojaTypes = {};
   poojasData: Subject<NewPoojaRequest> = new Subject();
